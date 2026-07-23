@@ -44,6 +44,7 @@ supporting materials.
 truthprint/
 ├── assets/     # project logo and shared images
 ├── code/       # reference implementation (Python, standard-library only) + tests
+├── docs/       # Korean-language explainer homepage (GitHub Pages ready)
 ├── paper/      # IEEEtran LaTeX source, references, and compiled PDF
 ├── patent/     # patent presentation materials
 └── ppt/        # project presentation slides
@@ -52,6 +53,7 @@ truthprint/
 | Directory | Contents | Start here |
 |---|---|---|
 | [`code/`](code/) | The `truthprint` package, CLI, examples, tests, and CI. No runtime dependencies. | [`code/README.md`](code/README.md) |
+| [`docs/`](docs/) | 한국어 소개 홈페이지 — a Korean-language explainer of the research idea, built from the project slides. Enable GitHub Pages on `/docs` to publish it. | [`docs/index.html`](docs/index.html) |
 | [`paper/`](paper/) | *Truthprint: An Invariant-Constrained Semantic Intermediate Representation for Translation- and Paraphrase-Robust Provenance Watermarking* — LaTeX source (`main.tex`), `references.bib`, and `main.pdf`. | [`paper/README.md`](paper/README.md) |
 | [`patent/`](patent/) | Patent presentation deck. | — |
 | [`ppt/`](ppt/) | Project presentation slides. | — |

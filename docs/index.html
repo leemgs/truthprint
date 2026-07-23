@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Truthprint — 번역·패러프레이즈에도 지워지지 않는 AI 텍스트 출처 워터마킹</title>
+<meta name="description" content="Truthprint: 토큰이 아니라 의미에 새기는 AI 생성 텍스트 출처(provenance) 워터마킹. 의미 불변식 계약과 인증형(MAC) 출처 표시를 한국어로 설명합니다.">
+<style>
+  :root{
+    --navy:#0f4c81; --teal:#12a48b; --ink:#243342; --muted:#5b6b78;
+    --bg:#ffffff; --soft:#f4f8fa; --line:#e3ebf0; --lock:#fdf1f0; --free:#eefaf6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;
+       color:var(--ink);background:var(--bg);line-height:1.7;word-break:keep-all}
+  a{color:var(--navy)}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+
+  header.hero{background:linear-gradient(135deg,#0f4c81 0%,#0d6a86 55%,#12a48b 100%);
+              color:#fff;padding:64px 0 56px;text-align:center}
+  .hero img{width:min(480px,88%);background:#fff;border-radius:14px;padding:14px 20px}
+  .hero h1{font-size:1.9rem;margin-top:26px;font-weight:800}
+  .hero p.tag{margin-top:12px;font-size:1.08rem;opacity:.94}
+  .hero .btns{margin-top:26px}
+  .hero .btns a{display:inline-block;margin:6px 8px;padding:11px 22px;border-radius:999px;
+                text-decoration:none;font-weight:700}
+  .btn-light{background:#fff;color:var(--navy)}
+  .btn-ghost{border:2px solid rgba(255,255,255,.75);color:#fff}
+
+  nav.toc{position:sticky;top:0;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);
+          border-bottom:1px solid var(--line);z-index:10}
+  nav.toc .wrap{display:flex;gap:4px;overflow-x:auto;padding:10px 20px;white-space:nowrap}
+  nav.toc a{text-decoration:none;color:var(--muted);font-size:.9rem;padding:6px 12px;border-radius:8px}
+  nav.toc a:hover{background:var(--soft);color:var(--navy)}
+
+  section{padding:56px 0;border-bottom:1px solid var(--line)}
+  section:nth-of-type(even){background:var(--soft)}
+  h2{font-size:1.5rem;color:var(--navy);margin-bottom:8px}
+  h2 .no{display:inline-block;background:var(--teal);color:#fff;border-radius:8px;
+         font-size:1rem;padding:2px 11px;margin-right:10px;vertical-align:3px}
+  .lead{color:var(--muted);margin-bottom:26px}
+  h3{font-size:1.08rem;color:var(--navy);margin-bottom:6px}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 22px;
+        box-shadow:0 1px 3px rgba(15,76,129,.06)}
+  .card .k{font-size:.8rem;font-weight:800;color:var(--teal);letter-spacing:.06em;margin-bottom:6px}
+  .card p{font-size:.95rem;color:var(--ink)}
+
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:700px){.twocol{grid-template-columns:1fr}}
+  .panel{border-radius:14px;padding:22px 24px;border:1px solid var(--line)}
+  .panel.lock{background:var(--lock);border-color:#f2d9d6}
+  .panel.free{background:var(--free);border-color:#cdeee4}
+  .panel h3 .badge{font-size:.75rem;border-radius:6px;padding:2px 8px;color:#fff;margin-left:8px;vertical-align:2px}
+  .lock .badge{background:#c0564a}
+  .free .badge{background:var(--teal)}
+  .panel ul{margin:10px 0 0 20px;font-size:.95rem}
+  .panel li{margin:4px 0}
+
+  .flow{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch;margin:18px 0}
+  .step{flex:1 1 150px;background:#fff;border:1px solid var(--line);border-radius:12px;
+        padding:14px;text-align:center;font-size:.88rem;position:relative}
+  .step b{display:block;color:var(--navy);margin-bottom:4px}
+  .step .n{display:inline-block;width:24px;height:24px;line-height:24px;border-radius:50%;
+           background:var(--navy);color:#fff;font-size:.8rem;font-weight:700;margin-bottom:8px}
+  .flow.detect .step .n{background:var(--teal)}
+  .arrow{align-self:center;color:var(--muted);font-weight:700}
+
+  .callout{background:#fff;border-left:5px solid var(--teal);border-radius:0 12px 12px 0;
+           padding:16px 20px;margin-top:18px;font-size:.97rem;border-top:1px solid var(--line);
+           border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .callout b{color:var(--navy)}
+
+  table{border-collapse:collapse;width:100%;background:#fff;font-size:.93rem}
+  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+  th,td{padding:10px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{background:var(--navy);color:#fff;font-weight:700}
+  tr:last-child td{border-bottom:none}
+  td.ok{color:var(--teal);font-weight:700}
+
+  .chart{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px}
+  .chart .bars{display:flex;align-items:flex-end;gap:4%;height:180px;padding:0 4px}
+  .bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}
+  .bar i{display:block;width:100%;background:linear-gradient(180deg,var(--teal),#0d8672);
+         border-radius:6px 6px 0 0;min-height:2px}
+  .bar.cliff i{background:linear-gradient(180deg,#e0897e,#c0564a)}
+  .bar b{font-size:.8rem;color:var(--ink);margin-bottom:4px}
+  .bar span{font-size:.78rem;color:var(--muted);margin-top:6px}
+  .chart .cap{font-size:.85rem;color:var(--muted);margin-top:14px;text-align:center}
+
+  .term{background:#fff;border:1px dashed var(--line);border-radius:12px;padding:14px 18px;
+        font-size:.9rem;color:var(--muted);margin-top:20px}
+  .term b{color:var(--navy)}
+
+  pre.shell{background:#132433;color:#d7e7e2;border-radius:12px;padding:18px 20px;
+            overflow-x:auto;font-size:.88rem;line-height:1.6;margin-top:16px}
+  pre.shell .p{color:#7fd4c1}
+  pre.shell .ok{color:#8be09f}
+
+  ol.roadmap{margin:12px 0 0 22px;font-size:.96rem}
+  ol.roadmap li{margin:6px 0}
+
+  footer{background:#132433;color:#b9c8d4;padding:40px 0;text-align:center;font-size:.9rem}
+  footer a{color:#8fd8c6}
+  .quote{font-size:1.25rem;font-weight:800;color:#fff;margin-bottom:12px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <img src="truthprint-logo.svg" alt="Truthprint 로고">
+    <h1>번역해도, 바꿔 써도 지워지지 않는<br>AI 생성 텍스트 출처 워터마킹</h1>
+    <p class="tag">토큰이 아니라 <b>‘의미’</b>에 새기는 provenance 워터마크 —
+       의미 불변식 계약 + 인증형(MAC) 출처 표시</p>
+    <div class="btns">
+      <a class="btn-light" href="https://github.com/leemgs/truthprint">GitHub 저장소</a>
+      <a class="btn-ghost" href="https://github.com/leemgs/truthprint/blob/main/paper/main.pdf">논문 PDF 보기</a>
+    </div>
+  </div>
+</header>
+
+<nav class="toc"><div class="wrap">
+  <a href="#why">왜 필요한가</a>
+  <a href="#idea">핵심 아이디어</a>
+  <a href="#how">동작 방식</a>
+  <a href="#robust">왜 강건한가</a>
+  <a href="#formal">형식적 보장</a>
+  <a href="#impl">구현·검증</a>
+  <a href="#compare">기존 방식과 차이</a>
+  <a href="#deploy">실용성</a>
+  <a href="#limits">한계·로드맵</a>
+</div></nav>
+
+<section id="why">
+  <div class="wrap">
+    <h2><span class="no">1</span>왜 필요한가</h2>
+    <p class="lead">AI가 쓴 글임을 표시하는 것은 이제 연구 주제가 아니라 <b>법적 의무이자 신뢰의 문제</b>입니다.</p>
+    <div class="cards">
+      <div class="card"><div class="k">규제</div>
+        <p><b>EU AI Act 제50조</b>는 생성물(텍스트 포함)을 <b>기계판독 가능·탐지 가능</b> 형식으로
+        표시하도록 의무화합니다 (2026년 8월 시행).</p></div>
+      <div class="card"><div class="k">신뢰·데이터</div>
+        <p>출처 불명의 합성 텍스트로 모델을 다시 학습시키면 세대를 거치며 <b>모델 품질이 붕괴</b>합니다
+        (<i>Nature</i>, 2024).</p></div>
+      <div class="card"><div class="k">기존 기술의 한계</div>
+        <p>토큰(단어 선택) 기반 워터마크는 <b>번역·패러프레이즈</b> 과정에서 토큰이 통째로 교체되어
+        신호가 쉽게 사라집니다.</p></div>
+    </div>
+    <div class="callout"><b>핵심 문제:</b> 기계가 읽을 수는 있지만 쉽게 지워지는 표시는 규제의 취지에
+      미달합니다. <b>변형에 대한 강건성(robustness)이 곧 준수 요건</b>입니다.</div>
+  </div>
+</section>
+
+<section id="idea">
+  <div class="wrap">
+    <h2><span class="no">2</span>핵심 아이디어 — 토큰이 아니라 ‘의미’에 새긴다</h2>
+    <p class="lead">문장의 내용을 두 부분으로 나눕니다. <b>절대 바뀌면 안 되는 의미</b>는 잠그고,
+      <b>의미를 바꾸지 않는 표현의 자유도</b>에만 워터마크를 싣습니다.</p>
+    <div class="twocol">
+      <div class="panel lock">
+        <h3>잠금 <span class="badge">Locked — 진리조건 불변식</span></h3>
+        <ul>
+          <li>개체 · 서술어 · 의미역 (누가 무엇을 했는가)</li>
+          <li>부정(negation) · 양화 · 수량</li>
+          <li>시간 순서 · 양상(modality) · 인과</li>
+          <li>출처·인용(attribution)</li>
+        </ul>
+      </div>
+      <div class="panel free">
+        <h3>자유 <span class="badge">Realization — 워터마크 캐리어</span></h3>
+        <ul>
+          <li>능동/수동 등 태(voice)</li>
+          <li>어순 · 부사구 위치</li>
+          <li>절 포장 · 접속 방식</li>
+          <li>어휘적 표현 변이</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout">의미를 바꾸지 않는 변형에만 워터마크가 실리므로, <b>번역·패러프레이즈로 표현이
+      바뀌어도 의미와 함께 신호가 살아남습니다.</b></div>
+    <div class="term"><b>용어:</b> 예를 들어 “개발자가 어제 서버 오류를 고쳤다”라는 문장에서
+      <b>‘개발자가 오류를 고쳤다’는 사실</b>(행위자·서술어·시점·긍정)은 잠금 대상이고,
+      이를 <b>능동으로 쓸지 수동으로 쓸지, 시간 표현을 문장 앞에 둘지 뒤에 둘지</b>는 자유 —
+      이 선택 하나하나가 비밀 키에 따라 0/1 비트를 실어 나르는 <b>캐리어(carrier)</b>가 됩니다.</div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <h2><span class="no">3</span>동작 방식 — 인코딩과 탐지</h2>
+    <p class="lead">인코딩은 의미를 잠근 뒤 인증된 페이로드를 표현 선택에 싣고,
+      탐지는 변형된 텍스트에서 그 페이로드를 복구해 암호학적으로 검증합니다.</p>
+    <h3>인코딩 (텍스트 생성 시)</h3>
+    <div class="flow">
+      <div class="step"><span class="n">1</span><b>불변식 추출</b>의미 계약을 잠금</div>
+      <div class="arrow">→</div>
+      <div class="step"><span class="n">2</span><b>인증 페이로드</b>p = m ‖ HMAC (MAC 태그)</div>
+      <div class="arrow">→</div>
+      <div class="step"><span class="n">3</span><b>ECC 부호화</b>여러 문장에 분산</div>
+      <div class="arrow">→</div>
+      <div class="step"><span class="n">4</span><b>키드 캐리어 실현</b>후보 검증 후 텍스트 y 출력</div>
+    </div>
+    <h3>탐지 (검증 시)</h3>
+    <div class="flow detect">
+      <div class="step"><span class="n">1</span><b>재파싱</b>불변식 I′ 복원</div>
+      <div class="arrow">→</div>
+      <div class="step"><span class="n">2</span><b>다이제스트 재계산</b>h<sub>I′</sub></div>
+      <div class="arrow">→</div>
+      <div class="step"><span class="n">3</span><b>키 역매핑</b>불확실 → 소거 처리</div>
+      <div class="arrow">→</div>
+      <div class="step"><span class="n">4</span><b>ECC 복호</b>페이로드 p̂ 복구</div>
+      <div class="arrow">→</div>
+      <div class="step"><span class="n">5</span><b>MAC 검증</b>통과 시에만 귀속</div>
+    </div>
+    <div class="callout"><b>불변식 다이제스트 h<sub>I</sub>가 페이로드를 결속합니다.</b>
+      잠긴 의미(예: 부정)를 바꾸면 h<sub>I</sub>가 변해 MAC 검증이 실패하므로 오귀속과 위조가
+      차단되고, 표현만 바뀌면 살아남은 캐리어로 페이로드가 그대로 복구됩니다.</div>
+  </div>
+</section>
+
+<section id="robust">
+  <div class="wrap">
+    <h2><span class="no">4</span>왜 번역·패러프레이즈에 강건한가</h2>
+    <div class="cards">
+      <div class="card"><div class="k">분산 + 오류정정 (ECC)</div>
+        <p>페이로드를 여러 문장에 나눠 심기 때문에, 번역이 일부 캐리어를 지워도
+        <b>살아남은 캐리어만으로 전체를 복구</b>합니다.</p></div>
+      <div class="card"><div class="k">소거(erasure) 모델</div>
+        <p>번역 과정에서 불확실해진 캐리어는 ‘틀린 값’이 아니라 <b>‘소거’로 처리</b>합니다.
+        오류가 전파되지 않아 복원이 안정적입니다.</p></div>
+      <div class="card"><div class="k">의미 변조 자동 차단</div>
+        <p>잠긴 불변식이 바뀌면 h<sub>I</sub>가 변해 <b>MAC이 실패</b>합니다.
+        의미를 훼손하면서 워터마크만 지우는 공격은 ‘성공한 제거’로 인정되지 않습니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="formal">
+  <div class="wrap">
+    <h2><span class="no">5</span>형식적 보장 — 수학적으로 증명된 성질</h2>
+    <div class="cards">
+      <div class="card"><div class="k">Ⅰ. 구성상 의미 보존</div>
+        <p>워터마킹은 잠긴 의미를 <b>절대 바꾸지 않습니다.</b> 유효한 표현이 없으면 강제로 문장을
+        비틀지 않고 그 자리를 ‘소거’로 기록합니다.</p></div>
+      <div class="card"><div class="k">Ⅱ. 위조 불가능성</div>
+        <p>귀속을 위조하려면 <b>MAC(HMAC-SHA256)을 위조</b>해야 합니다 — 표준 암호 가정
+        (EUF-CMA)으로 환원되는 안전성입니다.</p></div>
+      <div class="card"><div class="k">Ⅲ. 오탐 상한</div>
+        <p>암호학적 오탐률은 <b>2<sup>−τ</sup> 이하</b>입니다. τ=32 설정으로 독립 문서
+        2만 건을 검사했을 때 <b>오탐 0건</b>이 관측되었습니다.</p></div>
+      <div class="card"><div class="k">Ⅳ. 복구 절벽 (용량 모델)</div>
+        <p>부호율(code rate)까지는 소거를 허용하고 그 이상에서 급락합니다 —
+        문서가 가져야 할 <b>최소 신뢰 길이를 예측</b>할 수 있습니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="impl">
+  <div class="wrap">
+    <h2><span class="no">6</span>구현과 검증 — 실제로 재현된다</h2>
+    <p class="lead">파이썬 표준 라이브러리만으로 동작하는 참조 구현이 공개되어 있으며,
+      논문의 모든 수치는 이 코드로 재현됩니다. <b>실험 수치 조작 없이, 검증 가능한 것만 실측</b>했습니다.</p>
+    <div class="twocol">
+      <div>
+        <div class="tblwrap"><table>
+          <tr><th>검증 항목</th><th>내용</th><th>결과</th></tr>
+          <tr><td>P1</td><td>28/96 캐리어 소거 후에도 페이로드 완전 복구</td><td class="ok">통과</td></tr>
+          <tr><td>P2</td><td>잠긴 의미(극성) 변조 시 귀속 거부</td><td class="ok">통과</td></tr>
+          <tr><td>P3</td><td>독립 문서 20,000건 중 오탐 0건 (τ=32)</td><td class="ok">통과</td></tr>
+          <tr><td>P4</td><td>키드 맵이 문서마다 달라짐 — 전역 규칙 없음</td><td class="ok">통과</td></tr>
+          <tr><td>L1–L3</td><td>실제 문장 라운드트립: 의미 보존·복구·변조 탐지</td><td class="ok">통과</td></tr>
+          <tr><td>테스트</td><td>단위 테스트 15개 (재현 하네스 겸용)</td><td class="ok">15/15</td></tr>
+        </table></div>
+      </div>
+      <div class="chart">
+        <h3 style="text-align:center">소거율 대비 복구율 (rate-½ 부호, 500회/지점)</h3>
+        <div class="bars">
+          <div class="bar"><b>100%</b><i style="height:100%"></i><span>10%</span></div>
+          <div class="bar"><b>100%</b><i style="height:100%"></i><span>20%</span></div>
+          <div class="bar"><b>100%</b><i style="height:100%"></i><span>30%</span></div>
+          <div class="bar"><b>100%</b><i style="height:100%"></i><span>40%</span></div>
+          <div class="bar cliff"><b>25.8%</b><i style="height:26%"></i><span>50%</span></div>
+          <div class="bar cliff"><b>0%</b><i style="height:2%"></i><span>55%</span></div>
+          <div class="bar cliff"><b>0%</b><i style="height:2%"></i><span>60%</span></div>
+        </div>
+        <p class="cap">40% 소거까지 100% 복구, 부호율 한계(50%) 부근에서 급락 —
+          이론이 예측한 ‘복구 절벽’이 실측으로 확인됩니다.</p>
+      </div>
+    </div>
+    <pre class="shell"><span class="p">$</span> git clone https://github.com/leemgs/truthprint
+<span class="p">$</span> cd truthprint/code
+<span class="p">$</span> pip install -e ".[dev]"
+<span class="p">$</span> truthprint selftest
+  <span class="ok">SELFTEST: PASS</span>
+<span class="p">$</span> python -m pytest -q
+  <span class="ok">15 passed</span></pre>
+  </div>
+</section>
+
+<section id="compare">
+  <div class="wrap">
+    <h2><span class="no">7</span>기존 방식과의 차이</h2>
+    <div class="tblwrap"><table>
+      <tr><th>계열</th><th>대표 기법</th><th>한계 / Truthprint의 차별점</th></tr>
+      <tr><td>토큰 통계</td><td>SynthID-Text, KGW</td>
+        <td>번역·패러프레이즈로 토큰 결정이 교체되면 신호가 소실됩니다.</td></tr>
+      <tr><td>의미 임베딩</td><td>SIR, SemaMark</td>
+        <td>임베딩 유사도는 <b>어떤 핵심 사실(부정·수량·인과·출처)을 지킬지</b> 명시하지 못합니다.</td></tr>
+      <tr><td>구조 의미</td><td>SWAN (AMR)</td>
+        <td>기존 의미 형식을 그대로 채택할 뿐, 워터마크 전용 가변성 계약은 아닙니다.</td></tr>
+      <tr><td><b>본 연구</b></td><td><b>Truthprint</b></td>
+        <td><b>타입 지정 불변식 계약 + 인증 페이로드</b> — ‘무엇을 지킬지’를 기계가 필드 단위로
+        검증합니다.</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<section id="deploy">
+  <div class="wrap">
+    <h2><span class="no">8</span>실용성과 배포</h2>
+    <div class="cards">
+      <div class="card"><div class="k">통합 방식</div>
+        <p>샘플러를 수정하지 않고 <b>인라인 의미 실현 패스</b> 또는 <b>비동기 후처리 서비스</b>로
+        기존 생성 스택에 결합할 수 있습니다.</p></div>
+      <div class="card"><div class="k">우아한 성능 저하</div>
+        <p>코드·인용·수식처럼 표현 자유도가 낮은 구간은 소거로 처리하고, 필요 시
+        <b>토큰 워터마크(SynthID 등)로 계층 폴백</b>합니다.</p></div>
+      <div class="card"><div class="k">규제 준수 계층</div>
+        <p>EU AI Act 제50조가 요구하는 ‘기계판독 가능하고 강건한’ 표시를 위한
+        <b>강건성 계층</b>으로 배치할 수 있습니다.</p></div>
+      <div class="card"><div class="k">크기 독립 · 유한 지연</div>
+        <p>암호·코딩 계층은 <b>LLM 크기와 무관</b>하며 문서 길이에 선형입니다 —
+        추가 지연이 유한하게 제한됩니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="limits">
+  <div class="wrap">
+    <h2><span class="no">9</span>한계와 향후 과제</h2>
+    <div class="twocol">
+      <div class="panel lock">
+        <h3>현재 한계</h3>
+        <ul>
+          <li>언어 계층은 폐도메인 Stage-1 데모(캐리어 2종) — <b>광범위 의미 파서</b>가 핵심 과제</li>
+          <li>현재는 이진 캐리어 — 고차수 캐리어로 확장 가능</li>
+          <li>은닉성(undetectability)은 목표가 아님 — 목표는 <b>인증형·변형 강건 귀속</b></li>
+          <li>논문 결과표의 TBD는 실제 다국어 실험으로 채워야 함</li>
+        </ul>
+      </div>
+      <div class="panel free">
+        <h3>로드맵</h3>
+        <ol class="roadmap">
+          <li>광범위 도메인 의미 파서 연동</li>
+          <li>다국어 평가(번역·역번역) 수행</li>
+          <li>적대적 공격 벤치마크 구축</li>
+          <li>실서비스 파일럿 · SynthID 계층 결합</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="quote">“의미를 지키면서, 출처를 증명한다.”</p>
+    <p>Truthprint — 번역·패러프레이즈 강건 + 위조 불가 + 낮은 오탐.<br>
+       오픈소스(MIT)로 공개되어 누구나 재현·검증·확장할 수 있습니다 — 홍익인간(弘益人間)의 취지로.</p>
+    <p style="margin-top:14px">
+      <a href="https://github.com/leemgs/truthprint">github.com/leemgs/truthprint</a> ·
+      <a href="https://github.com/leemgs/truthprint/blob/main/paper/main.pdf">논문 PDF</a> ·
+      <a href="https://github.com/leemgs/truthprint/tree/main/code">참조 구현</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
