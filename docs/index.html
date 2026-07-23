@@ -30,8 +30,10 @@
 
   nav.toc{position:sticky;top:0;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);
           border-bottom:1px solid var(--line);z-index:10}
-  nav.toc .wrap{display:flex;gap:4px;overflow-x:auto;padding:10px 20px;white-space:nowrap}
-  nav.toc a{text-decoration:none;color:var(--muted);font-size:.9rem;padding:6px 12px;border-radius:8px}
+  nav.toc .wrap{display:flex;gap:4px 6px;flex-wrap:wrap;justify-content:center;
+                max-width:1120px;padding:9px 20px}
+  nav.toc a{text-decoration:none;color:var(--muted);font-size:.88rem;padding:5px 11px;
+            border-radius:8px;white-space:nowrap}
   nav.toc a:hover{background:var(--soft);color:var(--navy)}
 
   section{padding:56px 0;border-bottom:1px solid var(--line)}
