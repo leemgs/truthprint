@@ -1,12 +1,13 @@
 # Truthprint IEEEtran LaTeX Project
 
-This ZIP contains an IEEE conference-style LaTeX draft for:
+This directory contains an IEEE journal-style LaTeX manuscript (formatted for
+*IEEE Transactions on Computers*) for:
 
 **Truthprint: An Invariant-Constrained Semantic Intermediate Representation for Translation- and Paraphrase-Robust Provenance Watermarking**
 
 ## Files
 
-- `main.tex`: complete paper draft using `\documentclass[conference]{IEEEtran}`
+- `main.tex`: complete manuscript using `\documentclass[journal]{IEEEtran}`
 - `IEEEtran.cls`: local IEEEtran class file for reproducible compilation
 - `references.bib`: BibTeX database (kept in sync with the inline `thebibliography`)
 - `reference/truthprint_poc.py`: self-contained, dependency-free reference
@@ -37,8 +38,8 @@ python3 reference/truthprint_poc.py
 ```
 
 It verifies four properties referenced in the paper (Sec. "Reference
-Implementation and Verification"): (P1) full payload recovery under 30%
-carrier erasure, (P2) invariant binding — altering a locked field fails the
+Implementation and Verification"): (P1) full payload recovery with 28/96
+(~29%) carriers erased, (P2) invariant binding — altering a locked field fails the
 MAC, (P3) ~2^-tau cryptographic false-positive rate measured over 20,000
 independent documents, and (P4) the keyed carrier map is invariant-bound
 (no global rule). It exits non-zero if any property fails, so it doubles as
@@ -109,14 +110,16 @@ recovery. Environment: Python 3 (standard library only) and TeX Live with
 
 ## Important research note
 
-The paper remains a practical research proposal. It intentionally does not
-fabricate LLM detection results. The clean-text and translation result tables
-are templates whose `TBD` cells must be replaced with reproducible
-measurements before submission. The reference-implementation numbers (erasure
-tolerance, cryptographic false positives) ARE real and reproducible via the
-command above, and are clearly scoped to the language-independent core.
+The paper intentionally does not fabricate LLM detection results. The
+clean-text and translation result tables are explicitly framed as evaluation
+*protocol templates*; their `TBD` cells are to be populated once the
+wide-coverage semantic frontend (identified in the paper as future work)
+exists. The reference-implementation numbers (erasure tolerance, cryptographic
+false positives, P1–P4 and L1–L3) ARE real, were regenerated from the code in
+this repository, and are clearly scoped to the language-independent core.
 
 ## Author metadata
 
-Replace `Anonymous Author(s)` and the placeholder affiliation in `main.tex`
-before submission.
+The author name and contact e-mail are set in `main.tex`. Before submission,
+fill in the affiliation (and IEEE membership grade / funding, if applicable)
+in the `\thanks{}` block — see the `TODO` comment next to `\author{}`.

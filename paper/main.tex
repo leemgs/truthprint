@@ -1,4 +1,4 @@
-\documentclass[conference]{IEEEtran}
+\documentclass[journal]{IEEEtran}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -38,9 +38,14 @@
 
 \title{Truthprint: An Invariant-Constrained Semantic Intermediate Representation for Translation- and Paraphrase-Robust Provenance Watermarking}
 
-\author{\IEEEauthorblockN{Anonymous Author(s)}
-\IEEEauthorblockA{Affiliation withheld for review\\
-Email withheld for review}}
+\author{Geunsik~Lim%
+\thanks{G. Lim is the corresponding author (e-mail: leemgs@gmail.com).}%
+% TODO before submission: add affiliation and, if applicable, IEEE membership
+% grade and funding acknowledgment in the \thanks{} block above.
+}
+
+\markboth{IEEE Transactions on Computers}%
+{Lim: Truthprint: An Invariant-Constrained Semantic IR for Translation- and Paraphrase-Robust Provenance Watermarking}
 
 \begin{document}
 \maketitle
@@ -50,7 +55,7 @@ Text watermarking offers a scalable mechanism for identifying content generated 
 \end{abstract}
 
 \begin{IEEEkeywords}
-LLM watermarking, semantic watermarking, provenance, translation robustness, paraphrase robustness, intermediate representation, SynthID-Text
+Intermediate representation, LLM watermarking, paraphrase robustness, provenance, semantic watermarking, SynthID-Text, translation robustness
 \end{IEEEkeywords}
 
 \section{Introduction}
@@ -494,7 +499,7 @@ To make the guarantees above concrete and reproducible, we provide a self-contai
   \item \textbf{P1 (round-trip recovery).} An invariant-preserving transform that re-realizes carriers and erases $28/96$ sites still yields exact payload recovery and a verifying MAC.
   \item \textbf{P2 (invariant binding).} Flipping a locked field (polarity positive$\to$negative) changes $h_I$, so the MAC fails and the document is \emph{not} attributed, illustrating Proposition~\ref{prop:fidelity}'s contract.
   \item \textbf{P3 (cryptographic false positives).} Over $20{,}000$ independent documents, $0$ were attributed (rate $<2.3\times10^{-10}$), matching Theorem~\ref{thm:fpr}.
-  \item \textbf{P4 (no global rule).} For a fixed symbol, $49/96\approx N/2$ realized options differ between two documents whose invariants differ, confirming the map is bound to $(K,h_I,n)$.
+  \item \textbf{P4 (no global rule).} For a fixed symbol, $43/96\approx N/2$ realized options differ between two documents whose invariants differ, confirming the map is bound to $(K,h_I,n)$.
 \end{itemize}
 Table~\ref{tab:erasure} reports decode success versus carrier erasure rate and confirms the cliff predicted by Proposition~\ref{prop:cliff}: near-perfect recovery up to $40\%$ erasure for the rate-$\tfrac12$ code, collapsing as $\epsilon\to 1-R=0.5$. These are properties of the authenticated coding layer and are \emph{not} claims about detection performance on model-generated text, which requires the full semantic frontend and is specified as future measurement in Section~\ref{sec:eval}.
 
@@ -581,7 +586,9 @@ python3 reference/truthprint_poc.py             # P1-P4
 python3 reference/truthprint_linguistic_demo.py # L1-L3
 make                                            # build main.pdf
 \end{lstlisting}
-Expected results are those reported in Section~\ref{sec:impl}: P1--P4 hold, Table~\ref{tab:erasure} reproduces the recovery cliff, and L1--L3 hold on sentence strings.
+Expected results are those reported in Section~\ref{sec:impl}: P1--P4 hold, and L1--L3 hold on sentence strings.
+
+The same primitives are also packaged as an installable Python distribution (\texttt{code/} in the accompanying repository) with a unit-test suite and continuous integration. Its command-line interface reruns all properties (\texttt{truthprint selftest}) and regenerates Table~\ref{tab:erasure} deterministically from a fixed seed with $500$ trials per erasure rate (\texttt{truthprint repro-table}).
 
 \section{Practical Software Architecture}
 A prototype can use the following modular layout:
@@ -711,7 +718,7 @@ A weighted invariant error rate can be defined as
 where critical categories such as polarity and numeric value receive larger weights or are treated as hard failures.
 
 \subsection{Result Tables}
-No unmeasured performance values are claimed in this proposal. Tables~\ref{tab:clean} and~\ref{tab:translation} are templates to be populated after experiments.
+No unmeasured performance values are claimed in this paper. Tables~\ref{tab:clean} and~\ref{tab:translation} are protocol templates that fix the reporting format for the multilingual evaluation; their cells are deliberately left unpopulated (TBD) because filling them requires the wide-coverage semantic frontend identified as future work.
 
 \begin{table}[t]
 \centering
@@ -773,9 +780,6 @@ Multilingual semantic parsing remains imperfect. Not every proposition admits mu
 Truthprint is a language-independent, typed semantic IR for provenance watermarking. Its key contribution is a machine-checkable separation between immutable meaning and controlled realization choices. A secret-keyed encoder maps authenticated payload symbols to admissible realization classes, and a detector recovers those symbols after translation or paraphrasing through semantic parsing, canonicalization, error correction, and MAC verification.
 
 The method cannot guarantee detection after arbitrary rewriting or semantic destruction. It instead targets a narrower and defensible objective: preserving provenance evidence across transformations that retain a substantial portion of the original meaning. Its value must be established through multilingual experiments, calibrated false-positive analysis, strong adaptive attacks, semantic-integrity evaluation, and direct comparison with token-, embedding-, and structure-based baselines.
-
-\section*{Acknowledgment}
-This draft is a research proposal. All empirical result fields marked TBD must be populated through reproducible experiments before submission.
 
 \balance
 \begin{thebibliography}{99}

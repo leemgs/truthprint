@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/truthprint-logo.svg" alt="Truthprint logo" width="560">
+</p>
+
 # Truthprint
 
 **Invariant-constrained semantic provenance watermarking for LLM-generated text.**
@@ -38,6 +42,7 @@ supporting materials.
 
 ```
 truthprint/
+├── assets/     # project logo and shared images
 ├── code/       # reference implementation (Python, standard-library only) + tests
 ├── paper/      # IEEEtran LaTeX source, references, and compiled PDF
 ├── patent/     # patent presentation materials

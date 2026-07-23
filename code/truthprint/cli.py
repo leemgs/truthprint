@@ -79,10 +79,10 @@ def _repro_table(seed: int = 11) -> bool:
     rng = random.Random(seed)
     tp = Truthprint(_KEY, msg_len=16, tag_bits=32, code_n=96)
     inv = {"events": [{"predicate": "FIX", "polarity": "positive"}]}
-    print("erasure_frac  recovery_rate (300 trials)")
+    print("erasure_frac  recovery_rate (500 trials)")
     for frac in (0.10, 0.20, 0.30, 0.40, 0.50, 0.55, 0.60):
         ok = 0
-        trials = 300
+        trials = 500
         for _ in range(trials):
             msg = [rng.randint(0, 1) for _ in range(16)]
             nonce = tp.new_nonce()

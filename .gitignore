@@ -1,1 +1,13 @@
 .env
+
+# Python
+__pycache__/
+
+# LaTeX build artifacts (paper/)
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.synctex.gz
