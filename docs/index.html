@@ -11,7 +11,7 @@
     --bg:#ffffff; --soft:#f4f8fa; --line:#e3ebf0; --lock:#fdf1f0; --free:#eefaf6;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;overflow-x:hidden}
   body{font-family:"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;
        color:var(--ink);background:var(--bg);line-height:1.7;word-break:keep-all}
   a{color:var(--navy)}
@@ -29,10 +29,10 @@
   .btn-ghost{border:2px solid rgba(255,255,255,.75);color:#fff}
 
   nav.toc{position:sticky;top:0;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);
-          border-bottom:1px solid var(--line);z-index:10}
-  nav.toc .wrap{display:flex;gap:4px 6px;flex-wrap:wrap;justify-content:center;
-                max-width:1120px;padding:9px 20px}
-  nav.toc a{text-decoration:none;color:var(--muted);font-size:.88rem;padding:5px 11px;
+          border-bottom:1px solid var(--line);z-index:10;overflow:hidden}
+  nav.toc .wrap{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 4px;
+                width:100%;max-width:none;margin:0;padding:7px 16px}
+  nav.toc a{text-decoration:none;color:var(--muted);font-size:.84rem;padding:4px 9px;
             border-radius:8px;white-space:nowrap}
   nav.toc a:hover{background:var(--soft);color:var(--navy)}
 
