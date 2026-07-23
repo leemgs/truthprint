@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "truthprint"
+version = "0.1.0"
+description = "Invariant-constrained semantic provenance watermarking for LLM text (reference implementation)"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Truthprint contributors" }]
+keywords = ["watermarking", "provenance", "llm", "ai-generated-text",
+            "semantic-watermark", "eu-ai-act"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = []   # core is standard-library only
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+[project.urls]
+Homepage = "https://github.com/leemgs/truthprint"
+Repository = "https://github.com/leemgs/truthprint"
+
+[project.scripts]
+truthprint = "truthprint.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["truthprint*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

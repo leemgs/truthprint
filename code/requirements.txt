@@ -1,0 +1,3 @@
+# Core has no runtime dependencies (Python standard library only).
+# For running the test suite:
+pytest>=7.0

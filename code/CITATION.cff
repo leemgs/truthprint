@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the accompanying paper."
+title: "Truthprint: Invariant-Constrained Semantic Provenance Watermarking"
+authors:
+  - family-names: "Truthprint contributors"
+version: 0.1.0
+license: MIT
+repository-code: "https://github.com/leemgs/truthprint"
+keywords:
+  - watermarking
+  - provenance
+  - large language models
+  - EU AI Act
+preferred-citation:
+  type: article
+  title: "Truthprint: An Invariant-Constrained Semantic Intermediate Representation for Translation- and Paraphrase-Robust Provenance Watermarking"
+  year: 2026
