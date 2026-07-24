@@ -129,11 +129,20 @@ The bibliography contains 26 verified references with clickable URLs
 
 ## Research integrity note
 
-The paper does **not** fabricate LLM detection results. The clean-text and translation
-result tables are explicitly framed as evaluation *protocol templates*; their `TBD`
-cells are to be populated once a wide-coverage semantic frontend exists. All
-reported numbers (P1–P4, L1–L3, erasure-cliff table) are real, reproduced from the
-code in this repository, and clearly scoped to the language-independent core.
+The paper does **not** fabricate LLM detection results. Every reported number
+(P1–P4, L1–L3, the erasure-cliff table, and the Table V/VI detection and
+translation-robustness values) is measured by code in this repository and
+reproducible from a fixed seed.
+
+Tables V and VI are a **controlled Stage-1 comparison, not a neural benchmark**:
+Truthprint and the four baselines (SynthID-Text/KGW, DEW, SemStamp, SWAN) are run
+from one shared harness (`code/scripts/eval_baselines.py`) on the same
+closed-domain testbed under one shared meaning-preserving channel. The baselines
+are faithful reductions of each method's *detection statistic* and *signal
+placement*; they abstract the neural frontend (LM sampler, sentence encoder, AMR
+parser) exactly as the Truthprint Stage-1 numbers do. Full neural-scale
+evaluation with a wide-coverage semantic frontend remains the paper's future
+work, and the tables carry `†` footnotes stating this scope.
 
 ---
 

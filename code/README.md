@@ -55,9 +55,10 @@ truthprint/
 │   ├── carriers.py        # secret-keyed, invariant-bound carrier map
 │   ├── core.py            # Truthprint codec (encode / detect) over carriers
 │   ├── linguistic.py      # closed-domain realize/parse on real sentences
+│   ├── baselines.py       # faithful reductions of KGW/SynthID, DEW, SemStamp, SWAN
 │   └── cli.py             # `truthprint {selftest,demo-core,demo-linguistic,repro-table}`
 ├── examples/              # minimal runnable examples
-├── scripts/               # reproduce the paper's erasure-cliff table
+├── scripts/               # reproduce-table + eval_baselines (paper Tables V/VI)
 ├── tests/                 # pytest suite (also the reproducibility harness)
 └── .github/workflows/     # CI running tests on Python 3.9/3.11/3.12
 ```
@@ -239,6 +240,45 @@ truthprint repro-table    # erasure-rate vs recovery-rate (confirms the cliff)
 
 Expected `repro-table` shape (rate-1/2 code): ~1.00 recovery up to 40% erasure,
 collapsing near 50% — the recovery cliff at `erasure ≈ 1 − rate`.
+
+---
+
+## Baseline comparison (paper Tables V & VI)
+
+`truthprint/baselines.py` provides faithful, standard-library-only reductions
+of four published watermarks — evaluated on the **same** closed-domain Stage-1
+testbed as Truthprint so the comparison is apples-to-apples in the absence of a
+neural frontend. Each baseline reproduces its method's *detection statistic* and
+*signal placement*:
+
+| Baseline | Signal layer | Translation survival |
+|---|---|---|
+| `KGWGreenList` (SynthID-Text/KGW) | token identity (green-list bigram) | `~(1−τ)²` → collapses |
+| `DEWEditRobust` (DEW) | edit-aligned token bit | `~(1−τ)` up to an edit budget, then collapses |
+| `SemStampLSH` (SemStamp) | sentence-embedding LSH region | meaning-dominant → robust |
+| `SWANStructural` (SWAN) | AMR / meaning structure | unaffected by τ; loses only `ε` parse fraction |
+
+A single meaning-preserving channel `channel(doc, tau_tok, eps_inv)` drives all
+methods; each one's survival is *derived* from where its signal lives, so the
+ordering is forced by signal placement rather than tuned per method.
+
+```bash
+python scripts/eval_baselines.py   # regenerates Tables V (clean) and VI (translation)
+pytest -q tests/test_baselines.py  # qualitative regression bounds
+```
+
+Measured outcome (500 docs × 32 sentences, threshold at 1% FPR): on **clean
+text** all methods detect at TPR = 1.000 / ROC-AUC = 1.000; under **translation**
+the token-level marks (SynthID-Text/KGW, DEW) collapse to the noise floor while
+the semantic-layer marks (SemStamp, SWAN, Truthprint) survive. Truthprint is
+comparable to SWAN on raw detection; its advantage over these semantic baselines
+is the **authenticated, invariant-bound recovery** (P2/P3) that they lack —
+neither SWAN nor SemStamp carries a MAC or an erasure code.
+
+> **Scope.** These are controlled reference reductions, not neural benchmarks.
+> They abstract each method's neural frontend (LM sampler, sentence encoder, AMR
+> parser) in exactly the way the Truthprint Stage-1 numbers do. Full neural
+> evaluation is the paper's future work.
 
 ---
 
