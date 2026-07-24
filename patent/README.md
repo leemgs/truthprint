@@ -71,6 +71,19 @@ Encoding unit (100)                         Detection unit (200)
 | Attribution | Statistical threshold test | MAC verification (unforgeable) |
 | Meaning protection | None explicit | Truth-conditional invariant bound to `h_I`, auto-detected |
 
+### Measured supporting evidence (deck slides 12–13)
+
+The disclosure now cites the Stage-1 reference-implementation measurements
+(from [`code/scripts/eval_baselines.py`](../code/)) as support for the inventive
+step — under a shared translation channel, prior-art token watermarks collapse
+while the invention survives and additionally authenticates:
+
+| Method (signal layer) | Translation TPR |
+|---|---|
+| SynthID-Text/KGW, DEW (token) | 0.00 – 0.02 (collapses) |
+| SemStamp (embedding), SWAN (AMR) | 0.99 – 1.00 (survives, no authentication) |
+| **Truthprint (invariant + MAC)** | **1.00 + authenticated / unforgeable** |
+
 ## Status and next steps
 
 > **This deck is a draft for patent attorney review.** Claim language and scope must

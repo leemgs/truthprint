@@ -26,8 +26,8 @@ audiences.
 | 4 | 동작 방식 | 인코딩 5단계 + 탐지 5단계 파이프라인 |
 | 5 | 왜 강건한가 | 번역·패러프레이즈는 ECC로 복구; 의미 훼손은 MAC 실패로 차단 |
 | 6 | 형식적 보장 | Thm. 1 위조 불가, Thm. 2 오탐 상한 2⁻ᵗᵃᵘ, Prop. 2 소거 절벽 |
-| 7 | 구현·검증 | P1–P4 + L1–L3 속성, 15/15 테스트 통과, 소거율 vs 복구율 표 |
-| 8 | 기존 방식과 차이 | 토큰 통계 / 임베딩 방식 대비 반송파·강건성·귀속 판정 비교 |
+| 7 | 구현·검증 | P1–P4 + L1–L3 속성, 18/18 테스트 통과, 세밀 소거 절벽(42%→100%, 50%→29%) + 베이스라인 4종 대비 |
+| 8 | 기존 방식과 차이 | 측정된 번역 강건성: 토큰 방식(SynthID/KGW·DEW) TPR 0.00–0.02 붕괴 vs 의미층(SemStamp·SWAN·Truthprint) 생존, Truthprint만 인증(MAC) |
 | 9 | 실용성 | LLM 재학습 불필요, 인라인/비동기 배포, 단락별 위치 확인 |
 | 10 | 한계·로드맵 | Stage-1 한정 파서 / 고차수 캐리어 / 다국어 인터링구아 확장 |
 | 11 | 참고 자료 | 핵심 참고문헌 목록 |
@@ -44,9 +44,9 @@ three-column layout, navy + teal palette).
 
 | Column | Sections |
 |---|---|
-| Left | (1) Provenance is now a compliance property — (2) Core idea: lock meaning, carry signal in realization — (3) Formal guarantees |
-| Center | (4) Encoding & detection pipeline — (5) Worked linguistic example — (6) Prior-art comparison |
-| Right | (7) Verified implementation results — (8) Erasure cliff chart — (9) Scope & next steps |
+| Left | (1) Provenance is now a compliance property — (2) Core idea: lock meaning, carry signal in realization — (3) Worked example |
+| Center | (4) Encoding & detection pipeline — (5) Formal guarantees — (6) Measured recovery cliff (fine resolution) |
+| Right | (7) Verified implementation results — (8) Measured translation robustness vs. baselines — (9) Deployment path & open problems |
 
 ### Verified results shown
 
@@ -57,6 +57,20 @@ three-column layout, navy + teal palette).
 | P3 | 0 / 20,000 false positives at τ = 32 (bound 2.3 × 10⁻¹⁰) |
 | P4 | Keyed map is invariant-bound: 43/96 options differ across documents |
 | L1–L3 | Sentence-string round-trip: fidelity, recovery (19/64 erased), tamper detection |
+| Tests | 18/18 unit tests pass |
+
+### Measured translation robustness (poster section 8)
+
+Under a shared Stage-1 channel (EN→KO, TPR @ 1% FPR), token-level marks collapse
+while semantic-layer marks survive — reproduced from `code/scripts/eval_baselines.py`:
+
+| Method | Signal layer | TPR |
+|---|---|---|
+| SynthID-Text/KGW | token identity | 0.02 |
+| DEW | edit-aligned token | 0.00 |
+| SemStamp | sentence embedding | 0.99 |
+| SWAN | AMR / meaning | 1.00 |
+| **Truthprint** | **invariant + MAC** | **1.00** (only one that authenticates) |
 
 ---
 

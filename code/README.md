@@ -207,14 +207,16 @@ sequenceDiagram
     U->>E: invariants I, message m, nonce n
     E->>E: h_I = digest(I)
     E->>E: p = m || MAC_K(m, n, h_I)
-    E->>E: c = ECC(p); options = keyedMap(c, K, h_I, n)
+    E->>E: c = ECC(p)
+    E->>E: options = keyedMap(c, K, h_I, n)
     E-->>T: watermarked text y
     T-->>D: transformed text y'
-    D->>D: parse y' -> I'; h_I' = digest(I')
+    D->>D: parse y' -> I'
+    D->>D: h_I' = digest(I')
     D->>D: invert keyed map (erasures) -> received
     D->>D: p_hat = ECC.decode(received)
     D->>D: ok = verify MAC_K(p_hat, n, h_I')
-    D-->>U: attributed = ok; message = p_hat[:len(m)]
+    D-->>U: attributed = ok, message = p_hat[:len(m)]
 ```
 
 ---
@@ -238,8 +240,9 @@ pytest -q                 # all properties
 truthprint repro-table    # erasure-rate vs recovery-rate (confirms the cliff)
 ```
 
-Expected `repro-table` shape (rate-1/2 code): ~1.00 recovery up to 40% erasure,
-collapsing near 50% — the recovery cliff at `erasure ≈ 1 − rate`.
+Expected `repro-table` shape (rate-1/2 code): full recovery to 42% erasure,
+then a graceful transition (98% at 44%, 77% at 48%, 29% at 50%) and collapse at
+`erasure ≈ 1 − rate = 0.5` — the recovery cliff.
 
 ---
 

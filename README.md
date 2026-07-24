@@ -74,9 +74,10 @@ python -m pip install -e ".[dev]"     # editable install + pytest
 ### 60-second check
 
 ```bash
-truthprint selftest          # runs properties P1–P4 and L1–L3, prints PASS
-pytest -q                    # full test suite
-truthprint repro-table       # regenerate the erasure-cliff table
+truthprint selftest              # runs properties P1–P4 and L1–L3, prints PASS
+pytest -q                        # full test suite (18/18)
+truthprint repro-table           # regenerate the erasure-cliff table
+python scripts/eval_baselines.py # regenerate the baseline comparison (paper Tables V/VI)
 ```
 
 ### Build the paper
@@ -99,8 +100,27 @@ formal analysis and reproducibility notes.
 | Semantic fidelity by construction | Watermarking never alters locked meaning; carriers with no valid realization become erasures |
 | Unforgeability | Forging attribution reduces to forging the MAC (HMAC-SHA256) |
 | Bounded false positives | Cryptographic FP rate ≤ 2⁻ᵗᵃᵘ (0 observed over 20k trials at τ=32) |
-| Erasure resilience | Full payload recovery up to a code-rate-dependent erasure cliff |
+| Erasure resilience | Full payload recovery to 42% carrier erasure, collapsing at the rate-½ cliff (≈50%) |
 | No global carrier rule | Keyed map is bound to (key, invariant digest, nonce) |
+
+## Measured baseline comparison
+
+On a shared closed-domain Stage-1 testbed (`code/scripts/eval_baselines.py`,
+paper Tables V–VI), token-level watermarks collapse under translation while
+semantic-layer marks survive — the ordering is forced by where each method
+places its signal, not tuned per method:
+
+| Method | Signal layer | Clean-text TPR | Translation TPR (EN→KO) |
+|---|---|---|---|
+| SynthID-Text / KGW | token identity | 1.00 | **0.02** |
+| DEW | edit-aligned token | 1.00 | **0.00** |
+| SemStamp | sentence embedding | 1.00 | 0.99 |
+| SWAN | AMR / meaning | 1.00 | 1.00 |
+| **Truthprint** | **invariant + MAC** | **1.00** | **1.00** (only one that authenticates) |
+
+> Controlled reference comparison, not a neural benchmark: each baseline is a
+> faithful reduction of its published detection statistic, evaluated on the same
+> testbed and channel. Full neural-scale evaluation is future work.
 
 ## Scope & limitations
 
