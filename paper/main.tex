@@ -501,17 +501,33 @@ To make the guarantees above concrete and reproducible, we provide a self-contai
   \item \textbf{P3 (cryptographic false positives).} Over $20{,}000$ independent documents, $0$ were attributed (rate $<2.3\times10^{-10}$), matching Theorem~\ref{thm:fpr}.
   \item \textbf{P4 (no global rule).} For a fixed symbol, $43/96\approx N/2$ realized options differ between two documents whose invariants differ, confirming the map is bound to $(K,h_I,n)$.
 \end{itemize}
-Table~\ref{tab:erasure} reports decode success versus carrier erasure rate and confirms the cliff predicted by Proposition~\ref{prop:cliff}: near-perfect recovery up to $40\%$ erasure for the rate-$\tfrac12$ code, collapsing as $\epsilon\to 1-R=0.5$. These are properties of the authenticated coding layer and are \emph{not} claims about detection performance on model-generated text, which requires the full semantic frontend and is specified as future measurement in Section~\ref{sec:eval}.
+Table~\ref{tab:erasure} reports decode success versus carrier erasure rate with fine resolution near the cliff predicted by Proposition~\ref{prop:cliff}: full recovery (${\ge}0.998$) up to $\epsilon=0.42$, gradual degradation ($0.982$ at $\epsilon=0.44$; $0.774$ at $\epsilon=0.48$; $0.290$ at $\epsilon=0.50$), and complete collapse at $\epsilon\ge 0.52$, consistent with the predicted rate-$\tfrac12$ boundary. These are properties of the authenticated coding layer and are \emph{not} claims about detection performance on model-generated text, which requires the full semantic frontend and is specified as future measurement in Section~\ref{sec:eval}.
 
 \begin{table}[t]
 \centering
-\caption{Reference-implementation decode success vs.\ carrier erasure rate ($[96,48]$ GF(2) code, 500 trials per point). Confirms the rate-limit cliff of Proposition~\ref{prop:cliff}.}
+\caption{Reference-implementation decode success vs.\ carrier erasure rate
+  ($[96,48]$ GF(2) code, 500 trials per point, seeded). Fine resolution
+  near the cliff reveals a gradual transition from full recovery at
+  $\epsilon=0.42$ to collapse at $\epsilon\ge0.52$, as predicted by
+  Proposition~\ref{prop:cliff}.}
 \label{tab:erasure}
-\begin{tabular}{lccccccc}
+\begin{tabular}{cc}
 \toprule
-Erasure $\epsilon$ & 0.10 & 0.20 & 0.30 & 0.40 & 0.50 & 0.55 & 0.60 \\
+Carrier erasure $\epsilon$ & Recovery rate \\
 \midrule
-Recovery rate & 1.00 & 1.00 & 1.00 & 1.00 & 0.26 & 0.00 & 0.00 \\
+0.10 & 1.000 \\
+0.20 & 1.000 \\
+0.30 & 1.000 \\
+0.40 & 1.000 \\
+0.42 & 0.998 \\
+0.44 & 0.982 \\
+0.45 & 0.968 \\
+0.46 & 0.950 \\
+0.48 & 0.774 \\
+0.50 & 0.290 \\
+0.52 & 0.000 \\
+0.55 & 0.000 \\
+0.60 & 0.000 \\
 \bottomrule
 \end{tabular}
 \end{table}
