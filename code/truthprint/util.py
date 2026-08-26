@@ -1,7 +1,17 @@
 """Bit/byte helpers shared across Truthprint modules."""
 from __future__ import annotations
 
-__all__ = ["bits_to_bytes", "bytes_to_bits", "bits_to_str", "str_to_bits"]
+__all__ = ["bits_to_bytes", "bytes_to_bits", "bits_to_str", "str_to_bits",
+           "zero_success_upper_bound"]
+
+
+def zero_success_upper_bound(trials: int, confidence: float = 0.95) -> float:
+    """Return the exact one-sided binomial bound after zero successes."""
+    if trials <= 0:
+        raise ValueError("trials must be positive")
+    if not 0.0 < confidence < 1.0:
+        raise ValueError("confidence must be between zero and one")
+    return 1.0 - (1.0 - confidence) ** (1.0 / trials)
 
 
 def bits_to_bytes(bits: list[int]) -> bytes:

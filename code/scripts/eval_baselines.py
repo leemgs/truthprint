@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Fill the paper's comparison tables (Table V clean-text, Table VI translation)
-for Truthprint and the four baselines, measured on the shared Stage-1 testbed.
+for Truthprint and four method-inspired proxies in a diagnostic simulator.
 
 Every method faces the identical meaning-preserving channel characterised by
 ``(tau_tok, eps_inv)`` and is scored with the identical protocol:
@@ -10,8 +10,7 @@ Every method faces the identical meaning-preserving channel characterised by
   * ROC-AUC from watermarked vs null score populations.
 
 Truthprint is run through its real linguistic codec (actual sentences); the
-baselines through the faithful ``truthprint.baselines`` reductions. The relative
-translation ordering is *derived* from where each method places its signal --
+baselines through the faithful ``truthprint.baselines`` reductions. The simulated ordering is *derived* from where each method places its signal --
 token identity (KGW/SynthID, DEW), sentence embedding (SemStamp), or meaning
 structure (SWAN, Truthprint) -- not chosen per method.
 
@@ -170,7 +169,7 @@ def main():
     rows = []  # (name, tpr_clean, auc, quality, {label: tpr})
 
     methods = [
-        ("SynthID-Text/KGW", KGWGreenList(), 2001),
+        ("KGW proxy",        KGWGreenList(), 2001),
         ("DEW",              DEWEditRobust(), 2002),
         ("SemStamp",         SemStampLSH(),   2003),
         ("SWAN",             SWANStructural(), 2004),
@@ -188,7 +187,7 @@ def main():
         qs = f"{q:.2f}" if q is not None else "  --"
         print(f"{name:20} {tpr:>10.3f} {auc:>9.3f} {qs:>9}")
 
-    print("\n=== TABLE VI: translation-robustness (TPR @ 1% FPR) ===")
+    print("\n=== TABLE VI: diagnostic transformed-channel simulation (TPR @ 1% FPR) ===")
     hdr = "".join(f"{lab:>10}" for lab, _, _ in TRANSLATION)
     print(f"{'Method':20}{hdr}")
     for name, _, _, _, trans in rows:

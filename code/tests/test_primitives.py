@@ -5,6 +5,18 @@ import pytest
 from truthprint import (GF2Code, canonical_digest, invariant_eq,
                         authenticate_payload, verify_payload,
                         keyed_bit, realize_option, recover_symbol)
+from truthprint.util import zero_success_upper_bound
+
+
+def test_zero_success_upper_bound():
+    assert 0.000149 < zero_success_upper_bound(20_000) < 0.000150
+
+
+def test_zero_success_upper_bound_rejects_invalid_inputs():
+    with pytest.raises(ValueError):
+        zero_success_upper_bound(0)
+    with pytest.raises(ValueError):
+        zero_success_upper_bound(10, confidence=1.0)
 
 
 def test_invariant_digest_is_order_independent():

@@ -8,7 +8,7 @@ the same closed-domain Stage-1 testbed used for Truthprint
 it abstracts the neural frontend (LM sampling, sentence encoder, AMR parser)
 exactly as the Truthprint Stage-1 numbers do.
 
-    SynthID-Text / KGW  -- token-level green-list   (signal in token identity)
+    KGW proxy  -- token-level green-list   (signal in token identity)
     DEW                 -- distortion-free, edit-aligned token watermark
     SemStamp            -- sentence-embedding LSH region (signal in embedding)
     SWAN                -- AMR / semantic-structure slots (signal in meaning)
@@ -135,11 +135,11 @@ def _zscore(matches: int, n: int, p0: float) -> float:
 
 
 # --------------------------------------------------------------------------- #
-# 1. SynthID-Text / KGW  -- token-level green-list watermark
+# 1. KGW proxy  -- token-level green-list watermark
 # --------------------------------------------------------------------------- #
 class KGWGreenList:
-    """Green-red list watermark (Kirchenbauer et al.); SynthID-Text shares the
-    same token-identity-keyed detection statistic (tournament sampling changes
+    """Green-red list watermark (Kirchenbauer et al.); This proxy uses the
+    KGW token-identity-keyed detection statistic (tournament sampling changes
     the *sampler*, not the token-level dependence exploited here).
 
     Green bit of a token depends on the previous token (context seed) and the

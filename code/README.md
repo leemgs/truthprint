@@ -256,7 +256,7 @@ neural frontend. Each baseline reproduces its method's *detection statistic* and
 
 | Baseline | Signal layer | Translation survival |
 |---|---|---|
-| `KGWGreenList` (SynthID-Text/KGW) | token identity (green-list bigram) | `~(1−τ)²` → collapses |
+| `KGWGreenList` (KGW proxy) | token identity (green-list bigram) | `~(1−τ)²` → collapses |
 | `DEWEditRobust` (DEW) | edit-aligned token bit | `~(1−τ)` up to an edit budget, then collapses |
 | `SemStampLSH` (SemStamp) | sentence-embedding LSH region | meaning-dominant → robust |
 | `SWANStructural` (SWAN) | AMR / meaning structure | unaffected by τ; loses only `ε` parse fraction |
@@ -272,7 +272,7 @@ pytest -q tests/test_baselines.py  # qualitative regression bounds
 
 Measured outcome (500 docs × 32 sentences, threshold at 1% FPR): on **clean
 text** all methods detect at TPR = 1.000 / ROC-AUC = 1.000; under **translation**
-the token-level marks (SynthID-Text/KGW, DEW) collapse to the noise floor while
+the token-level marks (KGW proxy, DEW) collapse to the noise floor while
 the semantic-layer marks (SemStamp, SWAN, Truthprint) survive. Truthprint is
 comparable to SWAN on raw detection; its advantage over these semantic baselines
 is the **authenticated, invariant-bound recovery** (P2/P3) that they lack —
@@ -309,7 +309,7 @@ erasure decoding.
   `realize`/`parse` and adding a robust parser is the main open problem.
 - Binary carriers only in this reference; higher-arity carriers are a natural
   extension of `carriers.py` and `coding.py`.
-- Truthprint provides **authenticated, transformation-robust attribution**; it
+- Truthprint provides **authenticated attribution designed for transformation robustness**; it
   does **not** claim cryptographic *undetectability*.
 
 ## Contributing

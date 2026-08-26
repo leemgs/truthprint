@@ -103,24 +103,23 @@ formal analysis and reproducibility notes.
 | Erasure resilience | Full payload recovery to 42% carrier erasure, collapsing at the rate-½ cliff (≈50%) |
 | No global carrier rule | Keyed map is bound to (key, invariant digest, nonce) |
 
-## Measured baseline comparison
+## Diagnostic Stage-1 simulation
 
-On a shared closed-domain Stage-1 testbed (`code/scripts/eval_baselines.py`,
-paper Tables V–VI), token-level watermarks collapse under translation while
-semantic-layer marks survive — the ordering is forced by where each method
+In a shared closed-domain diagnostic simulation (`code/scripts/eval_baselines.py`,
+paper Tables V–VI), a diagnostic simulator illustrates how token- and semantic-layer proxies respond to stipulated channel parameters — the ordering is forced by where each method
 places its signal, not tuned per method:
 
 | Method | Signal layer | Clean-text TPR | Translation TPR (EN→KO) |
 |---|---|---|---|
-| SynthID-Text / KGW | token identity | 1.00 | **0.02** |
+| KGW proxy | token identity | 1.00 | **0.02** |
 | DEW | edit-aligned token | 1.00 | **0.00** |
 | SemStamp | sentence embedding | 1.00 | 0.99 |
 | SWAN | AMR / meaning | 1.00 | 1.00 |
-| **Truthprint** | **invariant + MAC** | **1.00** | **1.00** (only one that authenticates) |
+| **Truthprint** | **invariant + MAC** | **1.00** | **1.00** (simulated channel; authenticates) |
 
-> Controlled reference comparison, not a neural benchmark: each baseline is a
-> faithful reduction of its published detection statistic, evaluated on the same
-> testbed and channel. Full neural-scale evaluation is future work.
+> Diagnostic simulation, not a neural or translation benchmark: each baseline is a
+> method-inspired proxy evaluated on the same simulated channel. End-to-end
+> evaluation with official implementations and real transformations is future work.
 
 ## Scope & limitations
 
@@ -129,7 +128,7 @@ places its signal, not tuned per method:
   wide-coverage semantic parser.
 - Binary carriers only in this reference; higher-arity carriers are a natural
   extension.
-- Truthprint provides **authenticated, transformation-robust attribution**; it
+- Truthprint provides **authenticated attribution designed for transformation robustness**; it
   does **not** claim cryptographic *undetectability*.
 
 ## Contributing

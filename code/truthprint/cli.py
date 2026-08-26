@@ -9,6 +9,7 @@ from .invariants import canonical_digest
 from .linguistic import (Fact, LinguisticCodec, invariant_preserving_transform,
                          negate_transform, doc_invariants)
 from .payload import verify_payload
+from .util import zero_success_upper_bound
 
 _KEY = b"truthprint-demo-key-0123456789abc"
 
@@ -42,8 +43,10 @@ def _demo_core(seed: int = 7) -> bool:
         ropts = [rng.randint(0, 1) for _ in range(tp.n_carriers)]
         if tp.detect(rinv, ropts, tp.new_nonce()).attributed:
             fp += 1
-    print(f"[P3] cryptographic FP over {trials} docs -> {fp} "
-          f"(bound 2^-32={2**-32:.1e})")
+    observed_upper = zero_success_upper_bound(trials)
+    print(f"[P3] authenticated false positives over {trials} docs -> {fp}; "
+          f"95% zero-count upper bound={observed_upper:.1e}; "
+          f"per-test tag bound=2^-32={2**-32:.1e}")
     return r.attributed and r.message == msg and not rt.attributed and fp == 0
 
 
