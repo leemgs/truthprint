@@ -39,13 +39,11 @@
 \title{Truthprint: Designing an Invariant-Constrained Semantic Intermediate Representation for Provenance Watermarking}
 
 \author{Geunsik~Lim%
-\thanks{G. Lim is the corresponding author (e-mail: leemgs@gmail.com).}%
-% TODO before submission: add affiliation and, if applicable, IEEE membership
-% grade and funding acknowledgment in the \thanks{} block above.
+\thanks{Independent researcher. Corresponding author: leemgs@gmail.com.}%
 }
 
 \markboth{IEEE Transactions on Computers}%
-{Lim: Truthprint: An Invariant-Constrained Semantic IR for Translation- and Paraphrase-Robust Provenance Watermarking}
+{Lim: Truthprint: Designing an Invariant-Constrained Semantic IR for Provenance Watermarking}
 
 \begin{document}
 \maketitle
@@ -86,7 +84,7 @@ This work makes the following contributions:
   \item A detector that treats uncertain carriers as erasures and combines structural recovery, error correction, message authentication, and statistical scoring.
   \item A formal analysis establishing, conditional on sound invariant extraction and validation, protected-field fidelity; payload unforgeability by reduction to the message-authentication code; and a per-test authenticated false-positive bound of $2^{-\tau}$, together with an erasure-channel capacity model.
   \item A self-contained reference implementation whose properties are empirically verified at two levels: the language-independent cryptographic and coding core, and a closed-domain linguistic round-trip through actual sentence strings that exercises invariant-preserving carriers, erasure recovery, and tamper detection.
-  \item Reproducible Stage-1 evidence for the coding core and closed-domain linguistic composition, plus a preregistered protocol for the multilingual evaluation still required to test robustness claims.
+  \item Reproducible Stage-1 evidence for the coding core and closed-domain linguistic composition, plus a specified protocol for the multilingual evaluation still required to test robustness claims.
 \end{itemize}
 
 \begin{figure*}[t]
@@ -138,7 +136,7 @@ attribution (Theorem~\ref{thm:fpr}).}
 
 \section{Background and Related Work}
 \subsection{Regulatory Context}
-Text watermarking has moved from a research topic to a compliance mechanism. Under Article~50 of the EU AI Act, providers of generative systems must mark synthetic outputs in a machine-readable, detectable format \cite{euaiact2024}; the accompanying policy discussion stresses that a mark is only useful if it is \emph{robust}, since a signal that dissolves under paraphrasing or translation cannot support reliable downstream attribution \cite{liu2024survey}. This frames the technical problem addressed here: existing production watermarks are machine-readable but fragile to meaning-preserving edits, whereas the regulatory intent presumes durability. Truthprint is positioned as a robustness layer for exactly this requirement, complementary to token-level marks rather than a replacement for them.
+Text watermarking is relevant to emerging transparency regulation, but no watermark design alone establishes legal compliance. Under Article~50 of the EU AI Act, providers of generative systems must mark synthetic outputs in a machine-readable, detectable format \cite{euaiact2024}; the accompanying policy discussion stresses that a mark is only useful if it is \emph{robust}, since a signal that dissolves under paraphrasing or translation cannot support reliable downstream attribution \cite{liu2024survey}. This motivates the technical problem addressed here without treating robustness as a legal conclusion. Truthprint is proposed as a possible semantic layer complementary to token-level marks, not as a compliance product.
 
 \subsection{SynthID-Text}
 Dathathri et al. introduced SynthID-Text as a scalable watermarking system for LLM outputs \cite{dathathri2024synthid}. The method modifies the sampling process rather than model training and uses a keyed scoring mechanism together with tournament sampling. Its design includes a pseudorandom score generator, a watermark-aware sampler, and a detector that aggregates token-level evidence. The original work considered both non-distortionary and distortionary operating regimes and also addressed speculative sampling for production throughput.
@@ -190,7 +188,7 @@ A valid removal attack should satisfy both conditions:
 This prevents meaning-destroying rewrites from being counted as successful semantic-preserving attacks.
 
 \subsection{Provable and Cryptographic Watermarking}
-The token-level lineage begins with the green--red list watermark of Kirchenbauer et al. \cite{kirchenbauer2023kgw}, which SynthID-Text generalizes through tournament sampling. A parallel line seeks formal guarantees: Zhao et al. prove robustness for a fixed-grouping unigram watermark \cite{zhao2023provable}, Kuditipudi et al. give distortion-free watermarks robust to editing \cite{kuditipudi2024distortionfree}, and Christ et al. introduce cryptographically \emph{undetectable} watermarks whose presence is indistinguishable without the key \cite{christ2024undetectable}. Closest in aim, Liu et al. propose an unforgeable publicly verifiable watermark that separates generation and detection keys \cite{liu2024unforgeable}, and Fernandez et al. consolidate statistical tests with guarantees that hold at very low false-positive rates \cite{fernandez2023threebricks}. Truthprint inherits the spirit of this line at the provenance layer rather than the token layer: its unforgeability and false-positive guarantees (Theorems~\ref{thm:unforge} and~\ref{thm:fpr}) reduce to standard cryptographic assumptions on the MAC rather than to the calibration of a similarity threshold. It does not claim undetectability; its aim is authenticated, transformation-robust attribution.
+The token-level lineage begins with the green--red list watermark of Kirchenbauer et al. \cite{kirchenbauer2023kgw}, which SynthID-Text generalizes through tournament sampling. A parallel line seeks formal guarantees: Zhao et al. prove robustness for a fixed-grouping unigram watermark \cite{zhao2023provable}, Kuditipudi et al. give distortion-free watermarks robust to editing \cite{kuditipudi2024distortionfree}, and Christ et al. introduce cryptographically \emph{undetectable} watermarks whose presence is indistinguishable without the key \cite{christ2024undetectable}. Closest in aim, Liu et al. propose an unforgeable publicly verifiable watermark that separates generation and detection keys \cite{liu2024unforgeable}, and Fernandez et al. consolidate statistical tests with guarantees that hold at very low false-positive rates \cite{fernandez2023threebricks}. Truthprint inherits the spirit of this line at the provenance layer rather than the token layer: its unforgeability and false-positive guarantees (Theorems~\ref{thm:unforge} and~\ref{thm:fpr}) reduce to standard cryptographic assumptions on the MAC rather than to the calibration of a similarity threshold. It does not claim undetectability; its aim is authenticated attribution designed to retain evidence under some transformations, a property not established by the present Stage-1 evaluation.
 
 \subsection{Positioning of Truthprint}
 Table~\ref{tab:positioning} summarizes the principal carrier used by representative systems.
@@ -235,7 +233,7 @@ The design targets four objectives:
   \item \textbf{Semantic fidelity:} $I(P(y))=I(x)$ for invariant extractor $I$.
   \item \textbf{Natural-language quality:} fluency, relevance, and style remain above deployment thresholds.
   \item \textbf{Robust detection:} detection remains reliable under transformations preserving sufficient invariant and carrier evidence.
-  \item \textbf{Low false-positive rate:} independently authored text rarely matches a keyed carrier pattern.
+  \item \textbf{Controlled authenticated false positives:} under the stated PRF and independence assumptions, an independently produced decoded payload rarely passes the keyed tag check; the statistical fallback requires separate empirical calibration.
 \end{enumerate}
 
 \section{Threat Model}
@@ -467,10 +465,11 @@ Model the tag as $t=\mathrm{MAC}_K(m\parallel n\parallel h_I)$ truncated to $\ta
 Attribution requires a recovered payload whose tag equals $\mathrm{MAC}_K(m\parallel n\parallel h_I)$ on a triple not produced by the generator. An adversary achieving this yields a MAC forgery: the reduction forwards the adversary's document, parses $(m,n,h_I)$, and outputs the tag as a forgery on a fresh input. Blind guessing over $q$ independent queries contributes the additive $q\,2^{-\tau}$.
 \end{proof}
 
-\begin{theorem}[Cryptographic false-positive bound]
+\begin{theorem}[Authenticated acceptance under an ideal-PRF model]
 \label{thm:fpr}
-For text authored independently of $K$, the probability that erasure decoding yields a payload whose MAC verifies is at most $2^{-\tau}$ per (key, nonce) test. Consequently the authenticated tag check has false-positive probability at most $2^{-\tau}$ per fixed (key, nonce) test. This is distinct from the end-to-end statistical detector's FPR, which depends on parsing, candidate search, carrier dependence, threshold calibration, and the number of keys and nonces tested.
+Assume the truncated MAC is a pseudorandom function on a fresh input and the decoded candidate tag is independent of its output. For a fixed (key, nonce) test, an independently produced candidate payload passes the $\tau$-bit tag check with probability $2^{-\tau}$, up to the PRF distinguishing advantage. For $Q$ tested key--nonce pairs, the union bound is $Q2^{-\tau}$ plus that advantage.
 \end{theorem}
+This statement concerns only a candidate that reaches tag verification. It is not an end-to-end detector FPR bound: parsing, candidate search, replay, carrier dependence, threshold calibration, and the number of tested keys and nonces all affect system-level error. Replayed generator outputs are also not fresh forgeries and require a nonce registry or provenance ledger.
 The per-test bound is a design constant, not a tuned threshold: at $\tau=32$ it is $2.3\times10^{-10}$. The $0/20000$ observation in Section~\ref{sec:impl} is consistent with that bound but does not estimate such a small probability; its approximate 95\% binomial upper bound is $1.5\times10^{-4}$. When full payload recovery fails, the fallback statistic of Eq.~\eqref{eq:zscore} is used. Under the null hypothesis of no watermark, the keyed match count over $n$ reliable independent binary carriers is $k\sim\mathrm{Binomial}(n,\tfrac12)$, so by Hoeffding's inequality $\Pr[z\ge t\mid H_0]\le e^{-t^2/2}$, giving a calibrated operating point. Dependence among carriers is an idealization that production calibration must correct (Sec.~\ref{sec:detection}).
 
 \subsection{Capacity and Minimum Reliable Length}
@@ -483,14 +482,26 @@ With a rate-$R$ code protecting an authenticated payload of $|p|=\mu+\tau$ bits,
 (1-\epsilon)N \ \gtrsim\ k \quad\Longleftrightarrow\quad \epsilon \ \lesssim\ 1-R .
 \label{eq:cliff}
 \end{equation}
-\begin{proposition}[Recovery cliff]
+\begin{proposition}[Erasure recovery condition]
 \label{prop:cliff}
-A systematic rate-$R$ GF(2) code over binary carriers recovers the full payload w.h.p. iff the carrier erasure rate satisfies $\epsilon\lesssim 1-R$; beyond this the surviving equations are rank-deficient and recovery fails abruptly.
+For a fixed linear $[N,k]$ code, erasure decoding succeeds exactly when the
+generator-matrix rows corresponding to the surviving positions have rank $k$.
+Consequently at least $k$ positions must survive, giving the necessary bound
+$\epsilon\leq 1-R$ for a realized erasure pattern.  Whether recovery occurs
+near that boundary depends on the code construction and erasure distribution;
+the reference code's finite-length transition is measured rather than claimed
+as a universal threshold.
 \end{proposition}
-Equation~(\ref{eq:cliff}) yields an operational \emph{minimum reliable length}: a document must contain at least $\lceil (\mu+\tau)/((1-\epsilon)R\log_2 \bar q)\rceil$ discourse units of average carrier arity $\bar q$. This explains hypotheses H3 and H5---short or heavily summarized text falls below the capacity floor---and the predicted cliff at $\epsilon\approx 1-R$ is confirmed by the measurement in Table~\ref{tab:erasure}.
+Equation~(\ref{eq:cliff}) yields a necessary carrier-count condition
+$N\geq\lceil(\mu+\tau)/((1-\epsilon)\log_2\bar q)\rceil$ for average carrier
+arity $\bar q$, together with the code-design constraint $R\leq1-\epsilon$.
+This is a planning bound, not a guarantee for a particular finite code.  It
+explains why short or heavily summarized text can fall below capacity; the
+transition in Table~\ref{tab:erasure} is specific to the implemented code and
+seeded erasure experiment.
 
 \subsection{Complexity}
-Let a document have $S$ discourse units, $|C|$ carriers, $\kappa$ candidates per carrier, and $N$ code positions. Encoding cost is $O(S\cdot|C|\cdot\kappa\cdot c_{\mathrm{val}})$, dominated by the validator cost $c_{\mathrm{val}}$ (a parse plus entailment check). Detection cost is $O(S\cdot c_{\mathrm{parse}} + N\cdot c_{\mathrm{map}} + D_{\mathrm{ECC}})$, where the keyed map $c_{\mathrm{map}}$ is one HMAC evaluation and $D_{\mathrm{ECC}}=O(N k)$ for GF(2) erasure elimination (worst case $O(Nk^2)$). Crucially, the cryptographic and coding layers are linear in document length and \emph{independent of the underlying LLM size}; the dominant cost is the semantic frontend, which is a bounded multiple of a single semantic parse and can be run asynchronously with respect to generation.
+Let a document have $S$ discourse units, $|C|$ carriers, $\kappa$ candidates per carrier, and $N$ code positions. Encoding cost is $O(S\cdot|C|\cdot\kappa\cdot c_{\mathrm{val}})$, dominated by the validator cost $c_{\mathrm{val}}$ (a parse plus entailment check). Detection cost is $O(S\cdot c_{\mathrm{parse}} + N\cdot c_{\mathrm{map}} + D_{\mathrm{ECC}})$, where the keyed map $c_{\mathrm{map}}$ is one HMAC evaluation and $D_{\mathrm{ECC}}=O(N k)$ for GF(2) erasure elimination (worst case $O(Nk^2)$). The cryptographic and coding operations scale with the number of carriers and are independent of the generator parameter count. End-to-end latency is nevertheless unknown because candidate generation, reparsing, and validation dominate and may themselves invoke large models; it must be measured for each implementation.
 
 \section{Reference Implementation and Verification}
 \label{sec:impl}
@@ -501,7 +512,14 @@ To make the guarantees above concrete and reproducible, we provide a self-contai
   \item \textbf{P3 (cryptographic false positives).} Over $20{,}000$ independent documents, $0$ were attributed. This is consistent with Theorem~\ref{thm:fpr}; statistically, the observation alone only gives an approximate 95\% binomial upper bound of $1.5\times10^{-4}$.
   \item \textbf{P4 (no global rule).} For a fixed symbol, $43/96\approx N/2$ realized options differ between two documents whose invariants differ, confirming the map is bound to $(K,h_I,n)$.
 \end{itemize}
-Table~\ref{tab:erasure} reports decode success versus carrier erasure rate with fine resolution near the cliff predicted by Proposition~\ref{prop:cliff}: full recovery (${\ge}0.998$) up to $\epsilon=0.42$, gradual degradation ($0.982$ at $\epsilon=0.44$; $0.774$ at $\epsilon=0.48$; $0.290$ at $\epsilon=0.50$), and complete collapse at $\epsilon\ge 0.52$, consistent with the predicted rate-$\tfrac12$ boundary. These are properties of the authenticated coding layer and are \emph{not} claims about detection performance on model-generated text, which requires the full semantic frontend and is specified as future measurement in Section~\ref{sec:eval}.
+Table~\ref{tab:erasure} reports decode success versus carrier erasure rate for
+the implemented $[96,48]$ code and seeded random-erasure protocol: full
+recovery ($\geq0.998$) through $\epsilon=0.42$, followed by $0.982$ at
+$\epsilon=0.44$, $0.774$ at $\epsilon=0.48$, $0.290$ at $\epsilon=0.50$, and
+zero observed recovery at $\epsilon\geq0.52$. The location and shape are
+finite-code measurements; only the necessary survivor-count boundary follows
+from Proposition~\ref{prop:cliff}. These values characterize the coding layer,
+not detection on model-generated text.
 
 \begin{table}[t]
 \centering
@@ -740,8 +758,8 @@ Truthprint \emph{and} four baselines on a shared closed-domain Stage-1
 testbed (500 documents, 32 sentences each). To keep the comparison
 apples-to-apples in the absence of a wide-coverage neural frontend, every
 method is evaluated under one identical meaning-preserving channel and one
-identical protocol; the baselines are faithful reductions of each published
-method's \emph{detection statistic} and \emph{signal placement}, run from the
+identical protocol; the baselines are method-inspired proxies for selected aspects of each published
+method's signal placement, run from the
 same harness (\texttt{scripts/eval\_baselines.py}), and abstract the neural
 frontend (LM sampler, sentence encoder, AMR parser) in exactly the way the
 Truthprint Stage-1 numbers do. This diagnostic checks code paths and illustrates hypotheses under explicitly
@@ -776,20 +794,14 @@ unigram BLEU between the watermarked and an unconstrained realization of the
 same facts. Baseline fluency/quality is not measured because it requires each
 method's neural generator, absent from the Stage-1 abstraction.
 
-\textbf{Reading the tables.} On clean text (Table~\ref{tab:clean}) detection
-saturates for every method: all are functional watermarks with ample carriers
-on 32-sentence documents. The discriminating axis is
-Table~\ref{tab:translation}. The token-proxy signals collapse under the simulated high-replacement setting
-because this behavior follows directly from the channel equations; therefore
-the table does not confirm H1. The
-semantic-layer methods survive: SemStamp, SWAN, and Truthprint all remain
-detectable because their signal is carried above the token surface. Truthprint
-is comparable to SWAN on raw detection here; its distinguishing advantage over
-these semantic baselines is not detection rate but the authenticated,
-invariant-bound recovery quantified separately by P2 and P3
-(Section~\ref{sec:impl}) --- SWAN and SemStamp carry neither a MAC nor an
-erasure code, so they cannot resist forgery or bound the false-positive rate
-cryptographically.
+\textbf{Reading the tables.} The clean setting saturates because the proxy
+generators deliberately select matching symbols and provide many carriers.
+Under the stipulated high-replacement setting, token proxies lose signal by
+construction while semantic proxies retain it according to the chosen erasure
+parameter.  These outcomes validate the simulator implementation, not H1 and
+not any comparison among the named published systems.  P2 and P3 separately
+exercise Truthprint's authenticated coding core (Section~\ref{sec:impl}); this
+harness does not evaluate the security properties of the other systems.
 
 \begin{table}[t]
 \centering
@@ -810,7 +822,8 @@ Truthprint       & 1.000 & 1.000 & $0.84$ \\
 \multicolumn{4}{p{0.92\columnwidth}}{\footnotesize $^\dagger$Controlled
   simulation only, not a neural or translation benchmark. BLEU-1 measured only for
   Truthprint (real sentences); baseline fluency needs each method's neural
-  generator. Truthprint additionally authenticates (FPR\,$<\!2^{-20}$).}
+  generator. Truthprint additionally applies a 20-bit tag check; this is not
+  a measured end-to-end FPR.}
 \end{tabular}
 \end{table}
 
@@ -834,8 +847,8 @@ Truthprint       & 1.000 & 0.972 & 0.998 \\
 \multicolumn{4}{p{0.92\columnwidth}}{\footnotesize $^\dagger$Controlled
   Stage-1 channel; $\tau_{\mathrm{tok}}$ (token replacement) and
   $\epsilon_{\mathrm{inv}}$ (meaning-carrier erasure) per translation event.
-  Truthprint additionally provides authenticated recovery (MAC), which the
-  baselines do not.}
+  Only the Truthprint proxy in this harness exercises authenticated recovery;
+  this table does not evaluate baseline security.}
 \end{tabular}
 \end{table}
 
@@ -858,12 +871,17 @@ Carrier mappings should depend on the secret key, invariant digest, document non
 Watermarks should support transparency rather than automated punishment. Every detection report should include the tested key and scheme version, text length, number of reliable carriers, calibrated false-positive rate, language and attack assumptions, confidence, and MAC verification status. User identifiers, raw prompts, and exact timestamps should not be embedded.
 
 \subsection{Deployment Path and Graceful Degradation}
-Truthprint is designed to slot into a serving stack as a semantic realization pass rather than as a modification of the token sampler. Two integration modes are practical. In the \emph{inline} mode, the generator emits a draft, the encoder re-realizes admissible discourse units to carry payload symbols, and the validator gates each candidate; because the coding and cryptographic layers are independent of model size (Sec.~\ref{sec:analysis}), their overhead is bounded and does not grow with the LLM. In the \emph{asynchronous} mode, watermarking runs as a post-generation service, which decouples watermark latency from the user-facing generation latency at the cost of a short delay before provenance is finalized.
+Truthprint is designed to slot into a serving stack as a semantic realization pass rather than as a modification of the token sampler. Two integration modes are practical. In the \emph{inline} mode, the generator emits a draft, the encoder re-realizes admissible discourse units to carry payload symbols, and the validator gates each candidate; although the coding and cryptographic layers are independent of model size (Sec.~\ref{sec:analysis}), the unmeasured generation and validation overhead may be substantial. In the \emph{asynchronous} mode, watermarking runs as a post-generation service, which decouples watermark latency from the user-facing generation latency at the cost of a short delay before provenance is finalized.
 
-Because capacity is unevenly distributed across text (Eq.~\ref{eq:cliff}), a deployable system must degrade gracefully. Low-capacity spans---code, formulas, legal clauses, and verbatim quotations---admit few invariant-preserving realizations and are therefore poor carriers. For such spans Truthprint records erasures and can optionally fall back to a token-level watermark such as SynthID-Text, yielding a layered scheme in which the semantic layer provides translation and paraphrase robustness while the token layer provides short-span coverage. The detector localizes evidence per paragraph, reports the number of reliable carriers alongside the calibrated false-positive rate, and abstains rather than guessing when the recovered capacity falls below the minimum reliable length. This makes the system's competence explicit at detection time, which is the behavior an auditor or platform integrator requires.
+Because capacity is unevenly distributed across text (Eq.~\ref{eq:cliff}), a deployable system must degrade gracefully. Low-capacity spans---code, formulas, legal clauses, and verbatim quotations---admit few invariant-preserving realizations and are therefore poor carriers. For such spans Truthprint records erasures and can optionally fall back to a token-level watermark such as SynthID-Text, yielding a layered scheme intended to combine semantic-layer transformation tolerance with token-layer short-span coverage; both properties require end-to-end evaluation. The detector localizes evidence per paragraph, reports the number of reliable carriers alongside the calibrated false-positive rate, and abstains rather than guessing when the recovered capacity falls below the minimum reliable length. This makes the system's competence explicit at detection time, which is the behavior an auditor or platform integrator requires.
+
+\section{Ethical Considerations}
+A provenance detector can be misused to accuse authors, censor content, or make automated disciplinary decisions. Truthprint therefore treats a positive result as evidence about a participating keyed generation system, not proof of AI authorship or of misconduct. Deployments should expose the tested scheme and key identifier, use independently calibrated error rates, preserve an appeal path, and avoid adverse decisions based on the detector alone. Absence of a mark is likewise not evidence of human authorship.
+
+The design has dual-use risks: public carrier families can aid removal attacks, while secret or overly detailed payloads can enable tracking. Payloads should exclude personal identifiers, prompts, and precise timestamps; keys and nonce registries require access control, rotation, and audit. Evaluation text should be licensed or consented, human annotation should be compensated and documented, and language-specific error disparities should be reported rather than hidden in an aggregate score. The present artifact uses synthetic template facts, no personal data, no human subjects, and no model inference.
 
 \section{Limitations}
-Multilingual semantic parsing remains imperfect. Not every proposition admits multiple safe realization alternatives. Highly constrained text has low carrier capacity. Some apparently stylistic alternations change emphasis or information structure. Translation can omit modality, evidentiality, subjects, or discourse relations. Strong summarization can destroy both content and watermark evidence. Finally, candidate generation and semantic validation add computational overhead compared with direct token-level methods.
+Multilingual semantic parsing remains imperfect. Not every proposition admits multiple safe realization alternatives. Highly constrained text has low carrier capacity. Some apparently stylistic alternations change emphasis or information structure. Translation can omit modality, evidentiality, subjects, or discourse relations. Strong summarization can destroy both content and watermark evidence. Finally, candidate generation and semantic validation add computational overhead compared with direct token-level methods. The current artifact does not evaluate real generators, translators, multilingual parsers, human judgments, official baselines, replay defenses, or adaptive attacks; consequently it supports feasibility claims about the coding core only, not comparative robustness or deployment readiness.
 
 \section{Conclusion}
 Truthprint is a proposed language-neutral, typed semantic IR for provenance watermarking. Its key contribution is a machine-checkable separation between immutable meaning and controlled realization choices. A secret-keyed encoder maps authenticated payload symbols to admissible realization classes, and a detector recovers those symbols after translation or paraphrasing through semantic parsing, canonicalization, error correction, and MAC verification.

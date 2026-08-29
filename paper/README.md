@@ -1,7 +1,7 @@
 # Paper — Truthprint
 
-**Truthprint: An Invariant-Constrained Semantic Intermediate Representation for
-Translation- and Paraphrase-Robust Provenance Watermarking**
+**Truthprint: Designing an Invariant-Constrained Semantic Intermediate
+Representation for Provenance Watermarking**
 
 Manuscript formatted for *IEEE Transactions on Computers*
 (`\documentclass[journal]{IEEEtran}`).
@@ -15,7 +15,7 @@ Manuscript formatted for *IEEE Transactions on Computers*
 | `main.tex` | Complete manuscript source |
 | `IEEEtran.cls` | Local IEEEtran class file for reproducible compilation |
 | `references.bib` | BibTeX database (kept in sync with the inline `thebibliography`) |
-| `main.pdf` | Compiled preview (11 pages) |
+| `main.pdf` | Previously compiled preview; rebuild it after source changes before submission |
 | `Makefile` | Build and cleanup commands |
 | `reference/truthprint_poc.py` | Self-contained Python reference core (stdlib only) |
 | `reference/truthprint_linguistic_demo.py` | Linguistic layer end-to-end demo |
@@ -37,6 +37,9 @@ pdflatex -interaction=nonstopmode -halt-on-error main.tex
 
 Two passes are required for cross-references and the bibliography.
 
+Run `make check` before submission to verify that the generated ACL source is
+synchronized and does not contain the journal author's identifying metadata.
+
 ---
 
 ## Run the reference implementation
@@ -55,7 +58,7 @@ Verifies four properties of the language-independent coding/crypto layer:
 |---|---|
 | P1 | Full payload recovery with 28/96 (~29%) carriers erased |
 | P2 | Invariant binding — altering a locked field fails the MAC |
-| P3 | ~2⁻ᵗᵃᵘ cryptographic false-positive rate (0 / 20,000 trials at τ = 32) |
+| P3 | 0 authenticated accepts in 20,000 trials; 95% zero-count upper bound ≈ 1.5×10⁻⁴ (distinct from the ideal-PRF tag bound) |
 | P4 | Keyed carrier map is invariant-bound (43/96 options differ across documents) |
 
 ### Linguistic layer (L1–L3)
@@ -84,7 +87,7 @@ Both scripts exit non-zero on failure and double as regression tests.
 | Introduction | Motivation (EU AI Act Art. 50), problem statement, contributions |
 | Background | Semantic IR, token-level and embedding-based watermarks, cryptographic watermarks |
 | Method | Invariant contract, authenticated payload, ECC encoding, keyed carrier map |
-| Formal Analysis | Prop. 1 (semantic fidelity), Thm. 1 (unforgeability), Thm. 2 (FP bound), Prop. 2 (erasure cliff) |
+| Formal Analysis | Conditional fidelity, fresh-payload unforgeability, ideal-PRF tag acceptance, and finite-code erasure condition |
 | Implementation | Packaged CLI, erasure-cliff table (measured), P1–P4 and L1–L3 |
 | Deployment | Inline vs. asynchronous, graceful degradation, per-paragraph localization |
 | Evaluation matrix | Research questions mapped to decisive comparisons and outcome measures |
@@ -144,6 +147,4 @@ The anonymous ACL-format source and the outstanding evidence checklist are in
 
 ## Author metadata
 
-The author name and contact e-mail are set in `main.tex`. Before submission, fill in
-the affiliation (and IEEE membership grade / funding acknowledgement if applicable)
-in the `\thanks{}` block — see the `TODO` comment next to `\author{}` in `main.tex`.
+The journal source identifies the author as an independent researcher. The ACL source is generated anonymously from the same manuscript body with `make_acl_source.py`.

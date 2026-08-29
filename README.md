@@ -106,8 +106,7 @@ formal analysis and reproducibility notes.
 ## Diagnostic Stage-1 simulation
 
 In a shared closed-domain diagnostic simulation (`code/scripts/eval_baselines.py`,
-paper Tables V–VI), a diagnostic simulator illustrates how token- and semantic-layer proxies respond to stipulated channel parameters — the ordering is forced by where each method
-places its signal, not tuned per method:
+paper Tables V–VI), method-inspired proxies respond to stipulated channel parameters. The outputs validate simulator behavior; they are not real translation results or method rankings:
 
 | Method | Signal layer | Clean-text TPR | Translation TPR (EN→KO) |
 |---|---|---|---|

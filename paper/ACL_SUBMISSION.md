@@ -4,6 +4,10 @@
 all Stage-1 qualifications from `main.tex`; the diagnostic simulation is not an
 end-to-end multilingual result.
 
+The manuscript body has a single source of truth in `main.tex`. Run
+`python3 make_acl_source.py` after editing it; CI-style synchronization can be
+checked with `python3 make_acl_source.py --check`.
+
 Build with:
 
 ```bash
