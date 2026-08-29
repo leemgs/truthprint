@@ -48,6 +48,33 @@ This work makes the following contributions:
   \item \textbf{Stage-1 evidence and falsifiable protocol.} A self-contained implementation verifies the coding and cryptographic core, while a closed-domain English realization demonstrates composition on sentence strings. We explicitly separate these measured results from a diagnostic simulation and specify the multilingual, official-baseline evaluation needed to test---not presume---translation and paraphrase robustness.
 \end{itemize}
 
+\subsection{Claim--Evidence Boundary}
+To prevent the design goal from being mistaken for an empirical result,
+Table~\ref{tab:claims} separates what the present artifact demonstrates, what
+the analysis proves only under explicit assumptions, and what remains a
+hypothesis. In particular, ``language-neutral'' describes the intended schema
+interface rather than a measured property of the current English template
+frontend.
+
+\begin{table*}[t]
+\centering
+\caption{Claim--evidence map for the present submission. ``Not established''
+means that the claim must not be inferred from the diagnostic simulation.}
+\label{tab:claims}
+\begin{tabular}{p{3.5cm}p{3.2cm}p{8.5cm}}
+\toprule
+Claim & Status & Supporting evidence or missing test \\
+\midrule
+Coding/authentication round trip & Demonstrated & Deterministic core tests P1--P4 and closed-domain string tests L1--L3. \\
+Protected-field fidelity & Conditional & Proposition~\ref{prop:fidelity}, assuming a sound invariant extractor and validator; frontend soundness is not measured. \\
+Fresh-payload unforgeability & Conditional & Reduction to EUF-CMA security of the MAC; replay and nonce discovery are separate deployment concerns. \\
+Multilingual translation robustness & Not established & Requires real MT output, multilingual parsing, human invariant annotations, and official baselines. \\
+Paraphrase/adaptive-attack robustness & Not established & Requires meaning-preserving attack outputs, held-out detector calibration, and ValidRemoval evaluation. \\
+System-level false-positive rate & Not established & The tag bound is per tested fresh candidate; parser search, tested key--nonce pairs, and fallback scores require end-to-end calibration. \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
 \begin{figure*}[t]
 \centering
 \begin{tikzpicture}[
@@ -149,7 +176,7 @@ A valid removal attack should satisfy both conditions:
 This prevents meaning-destroying rewrites from being counted as successful semantic-preserving attacks.
 
 \subsection{Provable and Cryptographic Watermarking}
-The token-level lineage begins with the green--red list watermark of Kirchenbauer et al. \cite{kirchenbauer2023kgw}, which SynthID-Text generalizes through tournament sampling. A parallel line seeks formal guarantees: Zhao et al. prove robustness for a fixed-grouping unigram watermark \cite{zhao2023provable}, Kuditipudi et al. give distortion-free watermarks robust to editing \cite{kuditipudi2024distortionfree}, and Christ et al. introduce cryptographically \emph{undetectable} watermarks whose presence is indistinguishable without the key \cite{christ2024undetectable}. Closest in aim, Liu et al. propose an unforgeable publicly verifiable watermark that separates generation and detection keys \cite{liu2024unforgeable}, and Fernandez et al. consolidate statistical tests with guarantees that hold at very low false-positive rates \cite{fernandez2023threebricks}. Truthprint inherits the spirit of this line at the provenance layer rather than the token layer: its unforgeability and false-positive guarantees (Theorems~\ref{thm:unforge} and~\ref{thm:fpr}) reduce to standard cryptographic assumptions on the MAC rather than to the calibration of a similarity threshold. It does not claim undetectability; its aim is authenticated attribution designed to retain evidence under some transformations, a property not established by the present Stage-1 evaluation.
+The token-level lineage begins with the green--red list watermark of Kirchenbauer et al. \cite{kirchenbauer2023kgw}, which SynthID-Text generalizes through tournament sampling. A parallel line seeks formal guarantees: Zhao et al. prove robustness for a fixed-grouping unigram watermark \cite{zhao2023provable}, Kuditipudi et al. give distortion-free watermarks robust to editing \cite{kuditipudi2024distortionfree}, and Christ et al. introduce cryptographically \emph{undetectable} watermarks whose presence is indistinguishable without the key \cite{christ2024undetectable}. Closest in aim, Liu et al. propose an unforgeable publicly verifiable watermark that separates generation and detection keys \cite{liu2024unforgeable}, and Fernandez et al. consolidate statistical tests with guarantees that hold at very low false-positive rates \cite{fernandez2023threebricks}. Truthprint inherits the spirit of this line at the provenance layer rather than the token layer: fresh-payload unforgeability and per-candidate tag acceptance (Theorems~\ref{thm:unforge} and~\ref{thm:fpr}) reduce to standard cryptographic assumptions on the MAC. These are not guarantees for the fallback score or the end-to-end detector, both of which require empirical calibration. Truthprint does not claim undetectability; its aim is authenticated attribution designed to retain evidence under some transformations, a property not established by the present Stage-1 evaluation.
 
 \subsection{Positioning of Truthprint}
 Table~\ref{tab:positioning} summarizes the principal carrier used by representative systems.
@@ -418,19 +445,19 @@ Encoding commits a candidate only if $V$ accepts it, and carriers with no accept
 This is the structural property that logit-biasing methods cannot offer: they have no invariant checker in the loop, so quality preservation is measured post hoc rather than enforced.
 
 \subsection{Unforgeability and False Positives}
-\begin{theorem}[Payload unforgeability]
+\begin{theorem}[Fresh-payload unforgeability]
 \label{thm:unforge}
-Model the tag as $t=\mathrm{MAC}_K(m\parallel n\parallel h_I)$ truncated to $\tau$ bits. If the MAC is existentially unforgeable under chosen-message attack (EUF-CMA) with advantage $\varepsilon_{\mathrm{MAC}}$, then any PPT adversary without $K$, making $q$ detector queries, causes the detector to attribute a \emph{fresh} payload with probability at most $\varepsilon_{\mathrm{MAC}}+q\,2^{-\tau}$.
+Model the tag as $t=\mathrm{MAC}_K(m\parallel n\parallel h_I)$ truncated to $\tau$ bits. Any PPT adversary that causes authenticated attribution for a tuple $(m,n,h_I)$ not previously tagged by the generator yields an EUF-CMA forgery against this truncated MAC with the same success probability (up to simulation overhead). Thus its success is bounded by the EUF-CMA advantage of the instantiated truncated MAC; guessing loss is already part of that advantage and is not added a second time.
 \end{theorem}
 \begin{proof}[Proof sketch]
-Attribution requires a recovered payload whose tag equals $\mathrm{MAC}_K(m\parallel n\parallel h_I)$ on a triple not produced by the generator. An adversary achieving this yields a MAC forgery: the reduction forwards the adversary's document, parses $(m,n,h_I)$, and outputs the tag as a forgery on a fresh input. Blind guessing over $q$ independent queries contributes the additive $q\,2^{-\tau}$.
+Attribution requires a recovered payload whose tag equals $\mathrm{MAC}_K(m\parallel n\parallel h_I)$ on a triple not produced by the generator. The reduction answers authorized generation requests with its tagging oracle and, when the detector accepts a fresh tuple, outputs that tuple and recovered tag as its forgery. Replay of a previously tagged tuple is excluded by freshness and must instead be handled by deployment policy.
 \end{proof}
 
 \begin{theorem}[Authenticated acceptance under an ideal-PRF model]
 \label{thm:fpr}
 Assume the truncated MAC is a pseudorandom function on a fresh input and the decoded candidate tag is independent of its output. For a fixed (key, nonce) test, an independently produced candidate payload passes the $\tau$-bit tag check with probability $2^{-\tau}$, up to the PRF distinguishing advantage. For $Q$ tested key--nonce pairs, the union bound is $Q2^{-\tau}$ plus that advantage.
 \end{theorem}
-This statement concerns only a candidate that reaches tag verification. It is not an end-to-end detector FPR bound: parsing, candidate search, replay, carrier dependence, threshold calibration, and the number of tested keys and nonces all affect system-level error. Replayed generator outputs are also not fresh forgeries and require a nonce registry or provenance ledger.
+This statement concerns only a candidate that reaches tag verification. For $q$ distinct fresh candidates whose proposed tags are independent of ideal-PRF outputs, the union bound is $q2^{-\tau}$; adaptivity or repeated inputs must be covered by the concrete security game rather than assumed away. It is not an end-to-end detector FPR bound: parsing, candidate search, replay, carrier dependence, threshold calibration, and the number of tested keys and nonces all affect system-level error. Replayed generator outputs are also not fresh forgeries and require a nonce registry or provenance ledger.
 The per-test bound is a design constant, not a tuned threshold: at $\tau=32$ it is $2.3\times10^{-10}$. The $0/20000$ observation in Section~\ref{sec:impl} is consistent with that bound but does not estimate such a small probability; its approximate 95\% binomial upper bound is $1.5\times10^{-4}$. When full payload recovery fails, the fallback statistic of Eq.~\eqref{eq:zscore} is used. Under the null hypothesis of no watermark, the keyed match count over $n$ reliable independent binary carriers is $k\sim\mathrm{Binomial}(n,\tfrac12)$, so by Hoeffding's inequality $\Pr[z\ge t\mid H_0]\le e^{-t^2/2}$, giving a calibrated operating point. Dependence among carriers is an idealization that production calibration must correct (Sec.~\ref{sec:detection}).
 
 \subsection{Capacity and Minimum Reliable Length}
@@ -828,6 +855,8 @@ with real transformation systems:
 
 \section{Security and Deployment Considerations}
 Carrier mappings should depend on the secret key, invariant digest, document nonce, and carrier identity. This prevents simple global carrier rules and reduces forgery risk. Exact detector scores should be access controlled or coarsened to reduce oracle attacks. The detector should localize evidence by paragraph and avoid attributing a mixed document to one source.
+
+The reference API supplies the nonce to the detector out of band; natural-language carrier recovery alone does not discover it. A deployment must therefore define an authenticated nonce-resolution mechanism, such as a bounded time-bucket search plus deployment identifier or a provenance-ledger lookup. Every tested key--nonce pair consumes false-positive budget and must be included in calibration. A ledger should reject duplicate nonces and distinguish exact replay from fresh attribution. Splicing requires finer-grained binding (for example, paragraph identifiers and a document Merkle root); without it, a valid paragraph proves only that the participating generator produced that paragraph, not the provenance of the surrounding document.
 
 Watermarks should support transparency rather than automated punishment. Every detection report should include the tested key and scheme version, text length, number of reliable carriers, calibrated false-positive rate, language and attack assumptions, confidence, and MAC verification status. User identifiers, raw prompts, and exact timestamps should not be embedded.
 

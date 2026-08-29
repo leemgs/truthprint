@@ -37,6 +37,11 @@ exactly this gap: a durable, authenticated provenance mark.
 
 ## Repository layout
 
+The two Korean mock reviews provide complementary ACL perspectives:
+[`ACL_REVIEW_KO.md`](ACL_REVIEW_KO.md) focuses on empirical readiness and
+[`ACL_REVIEW_2_KO.md`](ACL_REVIEW_2_KO.md) audits theoretical scope, security
+games, nonce resolution, and novelty.
+
 This repository bundles the reference implementation, the paper, and
 supporting materials.
 
