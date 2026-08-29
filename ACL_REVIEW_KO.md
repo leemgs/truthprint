@@ -108,17 +108,17 @@ challenge set을 만들고 다음 ablation을 수행한다.
 
 이 결과로 각 구성요소가 fidelity, robustness, forgery resistance에 기여함을 보여야 한다.
 
-### 5. 논문 형식과 제출 준비가 ACL 상태가 아니다
+### 5. ACL 형식은 마련됐지만 제출 준비는 아직 끝나지 않았다
 
-원고가 `IEEEtran` journal 형식이고 저자 이름·이메일 및 IEEE header가 노출되어 있다.
-ACL/ARR 제출용 익명화, ACL style, 페이지 예산, limitations/ethics/responsible NLP
-checklist, artifact 정보에 맞춘 별도 소스가 필요하다. 현재 분량과 폭넓은 background,
-roadmap, software architecture는 ACL 본문 예산에서 핵심 실험을 밀어낼 가능성이 크다.
+저장소에는 이제 `acl` review option을 사용하고 저자 정보를 제거한
+`paper/acl_main.tex`이 있으며, canonical 원고로부터 재생성·동기화 검사도 가능하다.
+다만 현재 분량과 폭넓은 background, roadmap, software architecture는 ACL 본문 예산에서
+핵심 실험을 밀어낼 가능성이 크다. 실제 제출 연도의 페이지 제한,
+limitations/ethics/responsible NLP checklist, artifact 정보도 최종 확인해야 한다.
 
-**필수 수정:** ACL 템플릿으로 완전히 이식한 익명 submission branch를 만들고,
-background를 축약한다. “Prototype Roadmap”, 미래형 “Experimental Methodology”, 상세
-software skeleton은 appendix로 이동하고, 확보한 공간을 실제 experiments와 error
-analysis에 사용한다.
+**필수 수정:** 익명 ACL source의 형식 검사는 유지하되 background를 축약한다.
+“Prototype Roadmap”, 미래형 “Experimental Methodology”, 상세 software skeleton은
+appendix로 이동하고, 확보한 공간을 실제 experiments와 error analysis에 사용한다.
 
 ## 주장별 위험도
 
@@ -179,8 +179,8 @@ analysis에 사용한다.
 
 ## 더 날카로운 기여문 예시
 
-현재의 7개 contribution bullet은 너무 많고 설계·계획·구현이 섞여 있다. 다음 3개로
-줄이는 편이 좋다.
+기존의 7개 contribution bullet은 너무 많고 설계·계획·구현이 섞여 있었다. 원고에서는
+이를 다음 세 범주(method, conditional analysis, Stage-1 evidence/protocol)로 줄였다.
 
 1. **Method:** “We formulate semantic watermark carriers as key-dependent
    realization choices constrained by a typed, field-level invariant contract.”
@@ -215,3 +215,20 @@ analysis에 사용한다.
 계약이고, 가장 큰 결함은 그 계약이 실제 자연어 파이프라인에서도 성립한다는 증거가
 없다는 점이다.** ACL accept를 위해서는 더 많은 설명보다 실제 end-to-end evidence가
 우선이다.
+
+## 이번 리뷰를 반영해 원고에 적용한 수정
+
+- ACL review 형식의 익명 원고와 canonical source 동기화 검사를 마련했다.
+- 초록과 본문 전반에서 translation/paraphrase robustness를 실증 결과가 아니라 향후
+  검증할 설계 목표로 제한했다.
+- contribution을 세 항목으로 압축해 제안 방법, 조건부 분석, 실제로 확보한 Stage-1
+  증거를 분리했다.
+- fallback 통계 검출기의 시스템 FPR까지 암호학적 tag bound가 보장하는 듯한 표현을
+  제거하고, held-out calibration이 별도로 필요함을 명시했다.
+- EU AI Act를 준수 보장이나 법률 해석으로 연결하지 않고 연구 동기로만 한정했다.
+- 합성 baseline 표를 diagnostic simulation으로 명시하고 실제 모델·공식 baseline의
+  성능 비교로 인용해서는 안 된다고 표시했다.
+
+이 수정은 과장과 제출 형식 위험을 줄이지만, 위 1--4번의 핵심 실증 결손을 해결하지는
+않는다. 따라서 현재 모의 판정은 그대로 Reject이며, 실제 다국어 end-to-end 실험 없이
+표현 수정만으로 점수를 상향해서는 안 된다.
