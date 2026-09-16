@@ -37,10 +37,15 @@ exactly this gap: a durable, authenticated provenance mark.
 
 ## Repository layout
 
-The two Korean mock reviews provide complementary ACL perspectives:
-[`ACL_REVIEW_KO.md`](ACL_REVIEW_KO.md) focuses on empirical readiness and
+The three Korean mock reviews provide complementary ACL perspectives:
+[`ACL_REVIEW_KO.md`](ACL_REVIEW_KO.md) focuses on empirical readiness,
 [`ACL_REVIEW_2_KO.md`](ACL_REVIEW_2_KO.md) audits theoretical scope, security
-games, nonce resolution, and novelty.
+games, nonce resolution, and novelty, and
+[`ACL_REVIEW_3_KO.md`](ACL_REVIEW_3_KO.md) re-judges the paper along the ARR
+review-form axes (Soundness / Excitement / Reproducibility / Overall), reports a
+reviewer reproduction of the artifact, and locates the honest track (main-track
+with real experiments vs. Findings/workshop for the current design-and-core
+contribution).
 
 This repository bundles the reference implementation, the paper, and
 supporting materials.
