@@ -55,10 +55,12 @@ truthprint/
 │   ├── carriers.py        # secret-keyed, invariant-bound carrier map
 │   ├── core.py            # Truthprint codec (encode / detect) over carriers
 │   ├── linguistic.py      # closed-domain realize/parse on real sentences
+│   ├── challenge.py       # 6-field challenge set + tamper/embedding ablation (C1–C3)
+│   ├── stats.py           # bootstrap + Wilson confidence intervals
 │   ├── baselines.py       # diagnostic method-inspired signal proxies
-│   └── cli.py             # `truthprint {selftest,demo-core,demo-linguistic,repro-table}`
+│   └── cli.py             # `truthprint {selftest,demo-core,demo-linguistic,repro-table,challenge}`
 ├── examples/              # minimal runnable examples
-├── scripts/               # reproduce-table + eval_baselines (paper Tables V/VI)
+├── scripts/               # reproduce-table + eval_baselines + eval_challenge
 ├── tests/                 # pytest suite (also the reproducibility harness)
 └── .github/workflows/     # CI running tests on Python 3.9/3.11/3.12
 ```

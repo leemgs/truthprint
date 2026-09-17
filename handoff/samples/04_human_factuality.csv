@@ -1,0 +1,7 @@
+pair_id,doc_id,sent_id,transform_id,kind,field_if_altering,human_equivalent,annotator_id,notes
+P0001,D0001,D0001-s1,D0001-s1-ko,benign,,1,A1,"의미 보존된 번역"
+P0002,D0001,D0001-s1,D0001-s1-hi,benign,,1,A2,"의미 보존된 번역"
+P0003,D0001,D0001-s1,D0001-s1-rt,benign,,1,A1,"round-trip, 의미 보존"
+P0004,D0001,D0001-s1,D0001-s1-para,benign,,1,A1,"수동태 패러프레이즈, 의미 동일"
+P0005,D0002,D0002-s2,D0002-s2-summary,benign,,1,A2,"요약이지만 핵심 사실 보존"
+P0006,D0001,D0001-s1,D0001-s1-adv,altering,polarity,0,A1,"극성 반전: 의미가 달라짐(동일하지 않음)"
