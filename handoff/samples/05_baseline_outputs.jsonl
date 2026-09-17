@@ -1,0 +1,4 @@
+{"method": "SynthID-Text", "doc_id": "D0001", "condition": "clean", "score": 4.21, "decision": "watermarked", "fpr_operating_point": 0.01, "impl": "google-deepmind/synthid-text@REPLACE_COMMIT", "notes": "예시 점수. 공식 구현 출력으로 교체."}
+{"method": "SynthID-Text", "doc_id": "D0001", "condition": "en->ko", "score": 0.12, "decision": "not_watermarked", "fpr_operating_point": 0.01, "impl": "google-deepmind/synthid-text@REPLACE_COMMIT", "notes": ""}
+{"method": "SemStamp", "doc_id": "D0001", "condition": "clean", "score": 5.02, "decision": "watermarked", "fpr_operating_point": 0.01, "impl": "REPLACE_WITH_OFFICIAL_REPO", "notes": ""}
+{"method": "SemStamp", "doc_id": "D0001", "condition": "en->ko", "score": 3.10, "decision": "watermarked", "fpr_operating_point": 0.01, "impl": "REPLACE_WITH_OFFICIAL_REPO", "notes": ""}

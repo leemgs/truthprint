@@ -561,6 +561,44 @@ parser; it establishes that the contract, keyed carriers, and erasure-aware
 decoder compose correctly once realized as text, and it isolates the remaining
 open problem as robust wide-coverage semantic parsing (Section~\ref{sec:eval}).
 
+\subsection{Field-Level Challenge Set and Component Ablation}
+\label{sec:challenge}
+To test---rather than assume---that a \emph{typed} invariant contract catches
+what an embedding \emph{similarity} judge misses, we extend the closed-domain
+frontend to six independently protected fields (polarity, quantity, temporal
+direction, modality, attribution, causation) and generate minimal-pair probes
+(\texttt{reference} is packaged as \texttt{truthprint.challenge}; regenerate
+with \texttt{scripts/eval\_challenge.py}). For each field we compare a
+meaning-preserving realization change against a single-field meaning-altering
+edit, and judge each with three detectors that differ only in the admissibility
+rule: the full typed$+$MAC contract, a decode-only ablation that drops the
+$h_I$-bound MAC, and an embedding-similarity gate (bag-of-words cosine)
+\emph{calibrated} to reject at most $5\%$ of legitimate paraphrases. On $300$
+documents of $24$ facts ($[48,24]$ code), with $95\%$ confidence intervals
+(Wilson for rates, bootstrap for cosines) at a fixed seed, we measure:
+\begin{itemize}[leftmargin=*]
+  \item \textbf{C1 (typed tamper detection).} The typed$+$MAC contract detects
+  every single-field tamper across all six fields (aggregate
+  $1.000$, CI $[0.998,1.000]$) while retaining attribution across benign
+  paraphrases ($0.990$, CI $[0.971,0.997]$).
+  \item \textbf{C2 (MAC is load-bearing).} The decode-only ablation detects
+  \emph{no} tamper (aggregate $0.000$, CI $[0.000,0.002]$): the carriers still
+  recover, so the $h_I$-bound MAC---not the coding layer---is what resists a
+  meaning-altering edit.
+  \item \textbf{C3 (similarity cannot separate meaning).} The calibrated
+  embedding gate catches almost no tamper (aggregate $0.012$, CI
+  $[0.008,0.018]$), because a single-field edit is lexically smaller than a
+  legitimate voice/time reflow: in $48.6\%$ of cases (CI $[0.463,0.509]$) the
+  tamper is at least as cosine-similar to the source as the paraphrase is, so
+  \emph{no} similarity threshold can separate them.
+\end{itemize}
+This isolates the interaction the design relies on---typed invariants supply the
+decision an embedding metric cannot, and the MAC binding converts that decision
+into tamper resistance---on real strings. It remains a closed-domain result;
+the wide-coverage multilingual analogue requires the neural frontend and human
+annotations specified in Section~\ref{sec:eval} and the accompanying data
+templates.
+
 \section{Reproducibility and Notation}
 \label{sec:repro}
 This section pins every choice needed to reimplement the language-independent core exactly, so that the reference scripts and the paper agree symbol for symbol. Nothing here is left to interpretation; the two scripts in \texttt{reference/} realize precisely these definitions.

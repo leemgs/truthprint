@@ -99,6 +99,31 @@ def _repro_table(seed: int = 11) -> bool:
     return True
 
 
+def _challenge(seed: int = 20270101) -> bool:
+    """Field-level tamper vs. embedding-similarity ablation (Stage-1)."""
+    from .challenge import run_challenge, FIELDS
+    r = run_challenge(n_docs=150, seed=seed, num_resamples=500)
+    a, b = r["aggregate"], r["benign"]
+    print(f"[challenge] theta*={r['embedding_theta']:.3f} "
+          f"benign_retention={b['typed_retention'][0]:.3f} "
+          f"embed_false_reject={b['embed_false_reject'][0]:.3f}")
+    print(f"[challenge] tamper-detect: typed={a['typed_tamper_detect'][0]:.3f} "
+          f"no_mac={a['nomac_tamper_detect'][0]:.3f} "
+          f"embed={a['embed_tamper_detect'][0]:.3f} "
+          f"threshold_inversion={a['threshold_inversion_rate'][0]:.3f}")
+    for f in FIELDS:
+        d = r["per_field"][f]
+        print(f"    {f:<12} typed={d['typed_tamper_detect'][0]:.2f} "
+              f"no_mac={d['nomac_tamper_detect'][0]:.2f} "
+              f"embed={d['embed_tamper_detect'][0]:.2f} "
+              f"tamper_cos={d['mean_cosine_tamper'][0]:.3f}")
+    ok = (a["typed_tamper_detect"][0] == 1.0
+          and a["nomac_tamper_detect"][0] == 0.0
+          and a["embed_tamper_detect"][0] < 0.1
+          and b["typed_retention"][0] >= 0.95)
+    return ok
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="truthprint",
                                      description="Truthprint reference CLI")
@@ -107,6 +132,7 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("demo-core", help="crypto/coding core demo")
     sub.add_parser("demo-linguistic", help="sentence-level round-trip demo")
     sub.add_parser("repro-table", help="regenerate the erasure-cliff table")
+    sub.add_parser("challenge", help="field-level tamper vs. embedding ablation")
     args = parser.parse_args(argv)
 
     if args.cmd == "demo-core":
@@ -115,6 +141,8 @@ def main(argv: list[str] | None = None) -> int:
         return 0 if _demo_linguistic() else 1
     if args.cmd == "repro-table":
         return 0 if _repro_table() else 1
+    if args.cmd == "challenge":
+        return 0 if _challenge() else 1
     if args.cmd == "selftest":
         ok = _demo_core() and _demo_linguistic()
         print("SELFTEST:", "PASS" if ok else "FAIL")

@@ -55,6 +55,7 @@ truthprint/
 ├── assets/     # project logo and shared images
 ├── code/       # reference implementation (Python, standard-library only) + tests
 ├── docs/       # Korean-language explainer homepage (GitHub Pages ready)
+├── handoff/    # data handoff kit: what to collect for the real end-to-end eval
 ├── paper/      # IEEEtran LaTeX source, references, and compiled PDF
 ├── patent/     # patent presentation materials
 └── ppt/        # project presentation slides
@@ -65,6 +66,7 @@ truthprint/
 | [`code/`](code/) | The `truthprint` package, CLI, examples, tests, and CI. No runtime dependencies. | [`code/README.md`](code/README.md) |
 | [`docs/`](docs/) | 한국어 소개 홈페이지 — a Korean-language explainer of the research idea, built from the project slides. Enable GitHub Pages on `/docs` to publish it. | [`docs/index.html`](docs/index.html) |
 | [`paper/`](paper/) | *Truthprint: An Invariant-Constrained Semantic Intermediate Representation for Translation- and Paraphrase-Robust Provenance Watermarking* — LaTeX source (`main.tex`), `references.bib`, and `main.pdf`. | [`paper/README.md`](paper/README.md) |
+| [`handoff/`](handoff/) | Data handoff kit — example sample files, a field schema, and a validator describing exactly what real MT/paraphrase outputs and human annotations to collect for the real multilingual end-to-end evaluation. | [`handoff/README_KO.md`](handoff/README_KO.md) |
 | [`patent/`](patent/) | Patent presentation deck. | — |
 | [`ppt/`](ppt/) | Project presentation slides. | — |
 
@@ -85,9 +87,11 @@ python -m pip install -e ".[dev]"     # editable install + pytest
 
 ```bash
 truthprint selftest              # runs properties P1–P4 and L1–L3, prints PASS
-pytest -q                        # full test suite (18/18)
+pytest -q                        # full test suite
 truthprint repro-table           # regenerate the erasure-cliff table
+truthprint challenge             # field-level tamper vs. embedding ablation (C1–C3)
 python scripts/eval_baselines.py # regenerate the baseline comparison (paper Tables V/VI)
+python scripts/eval_challenge.py # regenerate the field-level challenge results
 ```
 
 ### Build the paper
