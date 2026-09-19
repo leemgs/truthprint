@@ -10,6 +10,10 @@
 >
 > **➡ 복사/붙여넣기용 단계별 실행 순서는 [`QUICKSTART_KO.md`](QUICKSTART_KO.md)를 보세요.**
 > 이 문서(README_KO)는 "무엇을·왜", QUICKSTART는 "어떤 명령을 순서대로".
+>
+> **🚀 Google Colab 원클릭:**
+> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/leemgs/truthprint/blob/main/handoff/Truthprint_Handoff_Colab.ipynb)
+> — 브라우저에서 셀만 실행하면 실제 번역·주석 초안·검증·zip 다운로드까지 끝납니다.
 
 ---
 
