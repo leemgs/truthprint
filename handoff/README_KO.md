@@ -11,9 +11,14 @@
 > **➡ 복사/붙여넣기용 단계별 실행 순서는 [`QUICKSTART_KO.md`](QUICKSTART_KO.md)를 보세요.**
 > 이 문서(README_KO)는 "무엇을·왜", QUICKSTART는 "어떤 명령을 순서대로".
 >
-> **🚀 Google Colab 원클릭:**
-> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/leemgs/truthprint/blob/main/handoff/Truthprint_Handoff_Colab.ipynb)
-> — 브라우저에서 셀만 실행하면 실제 번역·주석 초안·검증·zip 다운로드까지 끝납니다.
+> **🚀 노트북으로 원클릭 (Kaggle / Colab / 로컬 모두 자동 감지):**
+> - **Colab:** [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/leemgs/truthprint/blob/main/handoff/Truthprint_Handoff_Colab.ipynb)
+> - **Kaggle:** `kaggle.com/code` → **New Notebook → File → Import Notebook → Link(GitHub)** 에 아래 URL 붙여넣기:
+>   `https://raw.githubusercontent.com/leemgs/truthprint/main/handoff/Truthprint_Handoff_Kaggle.ipynb`
+>   그리고 오른쪽 **Settings → Internet → On** (전화 인증 계정 필요), Accelerator는 None(CPU).
+>
+> 두 노트북 모두 환경(경로)을 자동 감지하므로 어디서 열어도 셀 실행만으로 실제 번역·주석
+> 초안·검증·zip 다운로드까지 끝납니다.
 
 ---
 
