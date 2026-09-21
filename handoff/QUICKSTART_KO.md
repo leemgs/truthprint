@@ -1,9 +1,13 @@
 # QUICKSTART — 복사/붙여넣기용 단계별 실행 가이드
 
-> **🚀 터미널이 부담되면 Google Colab에서 셀만 실행하세요:**
-> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/leemgs/truthprint/blob/main/handoff/Truthprint_Handoff_Colab.ipynb)
-> — `handoff/Truthprint_Handoff_Colab.ipynb`. 클론·설치·번역(무료 Google 번역)·주석 초안·
-> 검증·zip 다운로드까지 셀 실행만으로 끝납니다. 아래는 로컬 터미널용 동일 절차입니다.
+> **🚀 터미널이 부담되면 브라우저 노트북에서 셀만 실행하세요 (Kaggle/Colab 모두 지원):**
+> - **Colab:** [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/leemgs/truthprint/blob/main/handoff/Truthprint_Handoff_Colab.ipynb)
+> - **Kaggle:** New Notebook → File → Import Notebook → Link 에
+>   `https://raw.githubusercontent.com/leemgs/truthprint/main/handoff/Truthprint_Handoff_Kaggle.ipynb`
+>   붙여넣고, **Settings → Internet → On**.
+>
+> 노트북은 클론·설치·번역(무료 Google 번역)·주석 초안·검증·zip 다운로드까지 셀 실행만으로
+> 끝나며 환경을 자동 감지합니다. 아래는 로컬 터미널용 동일 절차입니다.
 
 당신이 **직접 실행만 하면 되는** 순서입니다. 각 블록을 그대로 복사해 터미널에 붙여넣으세요.
 (macOS/Linux 기준. Windows는 PowerShell에서 `python3`→`python`으로 바꾸세요.)
