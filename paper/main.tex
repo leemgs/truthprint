@@ -680,6 +680,34 @@ from ``not established'' to a measured, positive finding on real translations.
 The extractor and this evaluation ship with the artifact
 (\texttt{scripts/eval\_multilingual.py}).
 
+\subsection{Meaning-Based Provenance Authentication Survives Real Translation}
+\label{sec:provenance}
+Recovering the meaning layer lets us realize the paper's actual objective---%
+\emph{verifying consistency with a participating keyed generator}---without a
+surface payload that translation would erase. The producer registers, per
+sentence, a keyed $\tau$-bit tag over the canonical digest of a declared
+\emph{invariant contract} (a chosen field subset), stored in the out-of-band
+provenance ledger (like the nonce). The verifier re-extracts the invariants from
+the transformed sentence (Stage-2) and authenticates iff the tag reproduces.
+Authentication thus succeeds exactly when the contract's meaning is preserved
+and recovered; a meaning-altering edit changes a contract field and is rejected;
+an unrelated document matches only with probability $2^{-\tau}$. On the same
+$192$ real NLLB translations (Wilson $95\%$ CI, $\tau=32$), a compact contract
+(polarity, quantity, temporal direction, attribution, predicate, agent) yields
+sentence-level authentication TPR of $0.953$ (HI), $0.828$ (round-trip), and
+$0.797$ (KO); tamper rejection $\ge 0.98$; and false positives consistent with
+the cryptographic bound ($0$--$0.016$). Aggregating to the document level (a
+document is attributed when at least half of its sentences authenticate) gives
+$1.000$ attribution for all three conditions on this pilot (wide CI at four
+documents; more documents are needed to tighten it). Widening the contract to
+all nine fields lowers TPR (e.g.\ $0.625$ for KO) but authenticates more meaning:
+an explicit, measured fidelity/robustness trade-off. This is the translation-%
+robust counterpart to the surface-carrier pilot's $0/192$: provenance verified
+on the meaning layer survives real machine translation. It remains a closed-%
+domain Stage-2 result; a wide-coverage semantic parser and more documents/%
+languages are the next steps. The method and evaluation ship with the artifact
+(\texttt{scripts/eval\_provenance.py}).
+
 \section{Reproducibility and Notation}
 \label{sec:repro}
 This section pins every choice needed to reimplement the language-independent core exactly, so that the reference scripts and the paper agree symbol for symbol. Nothing here is left to interpretation; the two scripts in \texttt{reference/} realize precisely these definitions.

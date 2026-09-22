@@ -25,7 +25,7 @@ from .carriers import keyed_bit, realize_option, recover_symbol
 from .linguistic import (Fact, LinguisticCodec, realize, parse,
                          doc_invariants, invariant_preserving_transform,
                          negate_transform)
-from . import challenge, stats, multilingual
+from . import challenge, stats, multilingual, provenance
 
 __version__ = "0.1.0"
 

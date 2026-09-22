@@ -57,6 +57,7 @@ truthprint/
 │   ├── linguistic.py      # closed-domain realize/parse on real sentences
 │   ├── challenge.py       # 6-field challenge set + tamper/embedding ablation (C1–C3)
 │   ├── multilingual.py    # Stage-2 EN/KO/HI invariant extractor (semantic frontend)
+│   ├── provenance.py      # meaning-based provenance authentication (contracts)
 │   ├── stats.py           # bootstrap + Wilson confidence intervals
 │   ├── baselines.py       # diagnostic method-inspired signal proxies
 │   └── cli.py             # `truthprint {selftest,demo-core,demo-linguistic,repro-table,challenge}`
