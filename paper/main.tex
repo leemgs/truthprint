@@ -656,6 +656,30 @@ itself: an annotation that merely \emph{asserts} carrier survival can report a
 spurious perfect score. The pilot harness and the objective measurement ship
 with the artifact.
 
+\subsection{Stage-2 Multilingual Invariant Extractor}
+\label{sec:stage2}
+The pilot's negative result is a property of the rigid Stage-1 \emph{surface}
+parser, not of the meaning layer. To test whether the typed invariants
+\emph{themselves} survive real translation, we add a closed-domain, lexicon-based
+multilingual extractor (English, Korean, Hindi) that reads a translated sentence
+and recovers the nine invariant fields directly, and we evaluate it on the same
+$192$ real NLLB outputs. Where the Stage-1 parser recovered $0/192$, the Stage-2
+extractor recovers the meaning layer at high rates (aggregate over all
+conditions, Wilson $95\%$ CI): temporal direction $1.000$ $[0.980,1.000]$,
+attribution $0.995$, agent $0.984$, quantity $0.979$, patient $0.958$, predicate
+$0.948$, polarity $0.943$, modality $0.901$, and causation $0.891$
+$[0.839,0.927]$. Residual errors are concentrated where the MT system renders an
+entity inconsistently (e.g.\ ``config drift''). This is direct real-data
+evidence for the central hypothesis: meaning-layer fields survive machine
+translation and are machine-recoverable, whereas the surface carriers of
+Section~\ref{sec:realmt} do not. Because the recovered fields determine the
+invariant digest, a meaning-altering edit to any recovered field is detected
+across languages. It remains a closed-domain result---a wide-coverage neural
+semantic parser is the next step---but it moves multilingual invariant recovery
+from ``not established'' to a measured, positive finding on real translations.
+The extractor and this evaluation ship with the artifact
+(\texttt{scripts/eval\_multilingual.py}).
+
 \section{Reproducibility and Notation}
 \label{sec:repro}
 This section pins every choice needed to reimplement the language-independent core exactly, so that the reference scripts and the paper agree symbol for symbol. Nothing here is left to interpretation; the two scripts in \texttt{reference/} realize precisely these definitions.
