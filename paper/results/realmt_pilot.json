@@ -1,0 +1,40 @@
+{
+  "folder": "/tmp/claude-0/-home-user-truthprint/df5ccbb5-a042-5853-a7ef-904490e3dadc/scratchpad/inc4",
+  "mode": "objective",
+  "n_transformations": 192,
+  "conditions": {
+    "hi": {
+      "parse_coverage": [
+        0.0,
+        0.0,
+        0.05662405981787651
+      ],
+      "parseable": 0,
+      "n": 64
+    },
+    "ko": {
+      "parse_coverage": [
+        0.0,
+        0.0,
+        0.05662405981787651
+      ],
+      "parseable": 0,
+      "n": 64
+    },
+    "rt": {
+      "parse_coverage": [
+        0.0,
+        0.0,
+        0.05662405981787651
+      ],
+      "parseable": 0,
+      "n": 64
+    }
+  },
+  "overall_parse_coverage": [
+    0.0,
+    0.0,
+    0.019615146075779723
+  ],
+  "note": "Carrier recovery requires the frontend to read the transformed text. 0% parse coverage means the closed-domain Stage-1 frontend cannot recover any carrier from real MT output, so payload recovery is impossible without a wide-coverage semantic frontend."
+}

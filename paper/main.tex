@@ -634,6 +634,28 @@ the wide-coverage multilingual analogue requires the neural frontend and human
 annotations specified in Section~\ref{sec:eval} and the accompanying data
 templates.
 
+\subsection{Real-MT Pilot: An Honest Negative Result}
+\label{sec:realmt}
+To test the closed-domain frontend against \emph{real} machine translation
+rather than a channel model, we ran a small end-to-end pilot: $4$ documents of
+$16$ templated sentences were translated with a real neural MT system
+(NLLB-200-distilled-600M) into Korean and Hindi and back-translated
+(round-trip), yielding $192$ real translation outputs. Measuring objectively---%
+by attempting to re-parse each translated sentence with the Stage-1 frontend,
+so that a carrier counts as recovered only if the frontend can actually read
+it---the frontend parsed $0/192$ outputs (parse coverage $0.000$, $95\%$ CI
+$[0.000,0.020]$), including the round-trip English, which the rigid template
+parser cannot read once a neural system rephrases it. Consequently no payload
+was recovered from real MT. This is a deliberately honest negative result: it
+confirms with real translations what Table~\ref{tab:claims} lists as ``not
+established,'' and it localizes the bottleneck precisely at wide-coverage
+semantic parsing rather than at the coding or cryptographic core (which
+Sections~\ref{sec:impl} and~\ref{sec:challenge} validate). It also shows why a
+naive evaluation must measure carrier survival from the transformed text
+itself: an annotation that merely \emph{asserts} carrier survival can report a
+spurious perfect score. The pilot harness and the objective measurement ship
+with the artifact.
+
 \section{Reproducibility and Notation}
 \label{sec:repro}
 This section pins every choice needed to reimplement the language-independent core exactly, so that the reference scripts and the paper agree symbol for symbol. Nothing here is left to interpretation; the two scripts in \texttt{reference/} realize precisely these definitions.
