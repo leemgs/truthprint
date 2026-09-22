@@ -186,6 +186,69 @@ def evaluate(folder: str, key: bytes = REFERENCE_KEY) -> dict:
     }
 
 
+def objective_evaluate(folder: str) -> dict:
+    """OBJECTIVE real-MT measurement (no reliance on human carrier annotation).
+
+    For each transformation, try to re-parse ``output_text`` with the
+    closed-domain frontend (``challenge.parse``). A carrier site is only
+    recoverable if the frontend can actually read the transformed text; a
+    sentence the frontend cannot parse is an unavoidable erasure. This turns the
+    annotation's *claimed* carrier survival into a *measured* one, so a draft
+    that (incorrectly) marks every carrier reliable cannot inflate the result.
+    """
+    base = Path(folder)
+    tf = _read_jsonl(base / "02_transformations.jsonl")
+    if not tf:
+        return {"error": "02_transformations.jsonl is empty."}
+    from collections import defaultdict
+    cov = defaultdict(lambda: [0, 0])  # tag -> [parseable, total]
+    for t in tf:
+        tag = _condition_tag(t["transform_id"], t["sent_id"])
+        cov[tag][1] += 1
+        try:
+            ch.parse(t.get("output_text", ""))
+            cov[tag][0] += 1
+        except Exception:
+            pass
+    conditions = {}
+    tot_p = tot_n = 0
+    for tag, (p, n) in sorted(cov.items()):
+        conditions[tag] = {"parse_coverage": wilson_ci(p, n), "parseable": p, "n": n}
+        tot_p += p; tot_n += n
+    return {
+        "folder": str(base), "mode": "objective",
+        "n_transformations": len(tf),
+        "conditions": conditions,
+        "overall_parse_coverage": wilson_ci(tot_p, tot_n),
+        "note": ("Carrier recovery requires the frontend to read the "
+                 "transformed text. 0% parse coverage means the closed-domain "
+                 "Stage-1 frontend cannot recover any carrier from real MT "
+                 "output, so payload recovery is impossible without a "
+                 "wide-coverage semantic frontend."),
+    }
+
+
+def _fmt_objective(res: dict) -> str:
+    if "error" in res:
+        return f"# Real-MT pilot (objective)\n\n**{res['error']}**\n"
+    L = ["# Real-MT pilot — objective frontend measurement", "",
+         f"- transformations: {res['n_transformations']}",
+         "- Metric: fraction of transformed sentences the closed-domain frontend",
+         "  can actually parse (a carrier is unrecoverable if its text cannot be",
+         "  read). This is measured from the real translation output, not asserted",
+         "  by annotation.", "",
+         "| Condition | Frontend parse coverage (95% CI) | parseable/total |",
+         "|---|---|---|"]
+    for tag, c in res["conditions"].items():
+        pc = c["parse_coverage"]
+        L.append(f"| {tag} | {pc[0]:.3f} [{pc[1]:.3f}, {pc[2]:.3f}] | "
+                 f"{c['parseable']}/{c['n']} |")
+    oc = res["overall_parse_coverage"]
+    L.append(f"| **all** | **{oc[0]:.3f} [{oc[1]:.3f}, {oc[2]:.3f}]** | |")
+    L += ["", f"> {res['note']}", ""]
+    return "\n".join(L)
+
+
 def _fmt(res: dict) -> str:
     if "error" in res:
         return f"# Handoff evaluation\n\n**{res['error']}**\n"
@@ -220,12 +283,19 @@ def main() -> int:
     ap.add_argument("--key", default=None,
                     help="detector key (utf-8, padded/truncated to 32 bytes)")
     ap.add_argument("--out", default=None, help="markdown output path")
+    ap.add_argument("--objective", action="store_true",
+                    help="measure frontend parse-coverage from real output_text "
+                         "instead of trusting annotation carrier flags")
     args = ap.parse_args()
     key = REFERENCE_KEY
     if args.key:
         key = args.key.encode("utf-8")[:32].ljust(32, b"0")
-    res = evaluate(args.folder, key=key)
-    md = _fmt(res)
+    if args.objective:
+        res = objective_evaluate(args.folder)
+        md = _fmt_objective(res)
+    else:
+        res = evaluate(args.folder, key=key)
+        md = _fmt(res)
     print(md)
     out = Path(args.out) if args.out else Path(args.folder) / "handoff_eval.md"
     out.write_text(md, encoding="utf-8")
