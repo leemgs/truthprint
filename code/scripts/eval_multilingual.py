@@ -28,7 +28,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from truthprint.multilingual import extract_invariants, FIELDS
 from truthprint.stats import wilson_ci
 
-_LANG_OF = {"ko": "ko", "hi": "hi", "rt": "en"}  # transform tag -> extractor lang
+_LANG_OF = {"ko": "ko", "hi": "hi", "zh": "zh", "ar": "ar", "de": "de", "rt": "en"}  # transform tag -> extractor lang
 
 
 def _read_jsonl(p: Path):

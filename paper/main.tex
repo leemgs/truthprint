@@ -662,9 +662,11 @@ with the artifact.
 The pilot's negative result is a property of the rigid Stage-1 \emph{surface}
 parser, not of the meaning layer. To test whether the typed invariants
 \emph{themselves} survive real translation, we add a closed-domain, lexicon-based
-multilingual extractor (English, Korean, Hindi) that reads a translated sentence
-and recovers the nine invariant fields directly, and we evaluate it on the same
-$192$ real NLLB outputs. Where the Stage-1 parser recovered $0/192$, the Stage-2
+multilingual extractor (English, Korean, Hindi, Chinese, Arabic, and German)
+that reads a translated sentence and recovers the nine invariant fields
+directly, and we evaluate it on the same $192$ real NLLB outputs (Korean, Hindi,
+and round-trip; the Chinese/Arabic/German lexicons are in place and awaiting the
+next data-collection round). Where the Stage-1 parser recovered $0/192$, the Stage-2
 extractor recovers the meaning layer at high rates (aggregate over all
 conditions, Wilson $95\%$ CI): temporal direction $1.000$ $[0.980,1.000]$,
 attribution $0.995$, agent $0.984$, quantity $0.979$, patient $0.958$, predicate
