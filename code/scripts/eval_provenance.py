@@ -34,7 +34,7 @@ from truthprint.provenance import (CONTRACTS, register_tag, authenticate,
 from truthprint.stats import wilson_ci
 
 REFERENCE_KEY = b"truthprint-challenge-key-01234567"[:32]
-_LANG = {"ko": "ko", "hi": "hi", "rt": "en"}
+_LANG = {"ko": "ko", "hi": "hi", "zh": "zh", "ar": "ar", "de": "de", "rt": "en"}
 TAG_BITS = 32
 
 

@@ -62,6 +62,48 @@ def test_tamper_changes_a_field():
     assert base["polarity"] == "positive" and neg["polarity"] == "negative"
 
 
+def test_chinese_fields():
+    # "According to the report, the next day the engineer had to fix 3 server
+    #  errors to prevent an outage."
+    inv = extract_invariants(
+        "根据报告，第二天工程师必须修复3个服务器错误以防止故障。", "zh")
+    assert inv["attribution"] == "report"
+    assert inv["time_dir"] == "following"
+    assert inv["modality"] == "necessary"
+    assert inv["quantity"] == 3
+    assert inv["patient"] == "server error"
+    assert inv["predicate"] == "FIX"
+    assert inv["causation"] == "purpose"
+
+
+def test_arabic_fields():
+    # "The previous day, the developer did not fix the server error."
+    inv = extract_invariants(
+        "في اليوم السابق، لم يصلح المطور خطأ الخادم.", "ar")
+    assert inv["time_dir"] == "previous"
+    assert inv["polarity"] == "negative"
+    assert inv["agent"] == "the developer"
+    assert inv["patient"] == "server error"
+
+
+def test_german_fields():
+    # "According to the vendor, the operator could fix two memory leaks the
+    #  next day."
+    inv = extract_invariants(
+        "Laut Anbieter könnte der Betreiber am nächsten Tag zwei Speicherlecks "
+        "beheben.", "de")
+    assert inv["attribution"] == "vendor"
+    assert inv["modality"] == "possible"
+    assert inv["time_dir"] == "following"
+    assert inv["quantity"] == 2
+    assert inv["predicate"] == "FIX"
+
+
+def test_arabic_indic_digits():
+    inv = extract_invariants("المطور أصلح ٥ أخطاء.", "ar")
+    assert inv["quantity"] == 5
+
+
 def test_abstention_is_not_a_guess():
     # unknown entity -> agent/patient None rather than a wrong guess
     inv = extract_invariants("Someone changed something yesterday.", "en")
