@@ -2,7 +2,12 @@
 
 > **B2는 사람 주석이 필요 없습니다.** 의미 추출기가 번역문에서 불변량을 직접 복원하고
 > 정답은 소스(`01`)에 있으므로, **소스 생성 → 번역 → eval 실행 → zip** 만 하면 됩니다.
-> 아래 셀을 Kaggle 새 노트북에 **순서대로 붙여넣고 실행**하세요.
+> **바로 실행되는 노트북:** [`Truthprint_B2_Multilingual_Kaggle.ipynb`](Truthprint_B2_Multilingual_Kaggle.ipynb)
+> — Kaggle: New Notebook → File → Import Notebook → Link 에
+> `https://raw.githubusercontent.com/leemgs/truthprint/main/handoff/Truthprint_B2_Multilingual_Kaggle.ipynb`
+> / Colab: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/leemgs/truthprint/blob/main/handoff/Truthprint_B2_Multilingual_Kaggle.ipynb)
+>
+> 아래는 동일 내용의 복사/붙여넣기 버전입니다. 새 노트북에 **순서대로 붙여넣고 실행**하세요.
 > (Settings → **Internet: On**, Accelerator: None(CPU)로 충분. GPU 있으면 번역이 더 빠름.)
 
 ---
