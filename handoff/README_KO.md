@@ -8,7 +8,10 @@
 > 형식만 맞춰서 `handoff/` 폴더를 채워 주시면, 나머지(코덱 실행, 검출, 통계, 표 채우기,
 > 논문 반영)는 제가 합니다.
 >
-> **➡ 복사/붙여넣기용 단계별 실행 순서는 [`QUICKSTART_KO.md`](QUICKSTART_KO.md)를 보세요.**
+> **➡ 다국어(ZH/AR/DE 포함) 의미기반 실측(B2)은 [`KAGGLE_B2_STEPS_KO.md`](KAGGLE_B2_STEPS_KO.md)**
+> — 사람 주석 없이 소스 생성 → 번역 → eval → zip 만 하면 됩니다(복사/붙여넣기 5셀).
+>
+> **➡ (표면 carrier 핸드오프) 복사/붙여넣기용 단계는 [`QUICKSTART_KO.md`](QUICKSTART_KO.md)를 보세요.**
 > 이 문서(README_KO)는 "무엇을·왜", QUICKSTART는 "어떤 명령을 순서대로".
 >
 > **🚀 노트북으로 원클릭 (Kaggle / Colab / 로컬 모두 자동 감지):**
