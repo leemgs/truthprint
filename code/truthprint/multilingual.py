@@ -48,7 +48,8 @@ _AGENT = {
 _PATIENT = {
     "server error": {"en": ["server error", "server bug"], "ko": ["서버 오류", "서버 에러"],
                      "hi": ["सर्वर त्रुटि", "सर्वर एरर"], "zh": ["服务器错误", "服务器故障"],
-                     "ar": ["خطأ الخادم", "خطأ في الخادم"],
+                     "ar": ["خطأ الخادم", "خطأ في الخادم", "خطأ خادم", "أخطاء خادم",
+                            "أخطاء الخادم", "أخطاء في الخادم", "خادم"],
                      "de": ["serverfehler", "server-fehler"]},
     "memory leak":  {"en": ["memory leak"], "ko": ["메모리 누출", "메모리 누수", "메모리 유출"],
                      "hi": ["मेमोरी लीक"], "zh": ["内存泄漏", "内存泄露"],
@@ -56,24 +57,30 @@ _PATIENT = {
                      "de": ["speicherleck", "speicherleck", "memory leak"]},
     "config drift": {"en": ["config", "configuration"], "ko": ["구성", "구성 드리프트", "컨피그"],
                      "hi": ["कॉन्फ़िग", "कॉन्फ़िगरेशन", "विन्यास"],
-                     "zh": ["配置漂移", "配置"], "ar": ["انحراف التكوين", "التكوين", "التهيئة"],
+                     "zh": ["配置漂移", "配置"],
+                     "ar": ["انحراف التكوين", "التكوين", "التهيئة", "الإعداد",
+                            "إعداد", "إعدادي", "التكوينات"],
                      "de": ["konfigurationsabweichung", "konfiguration"]},
     "cache miss":   {"en": ["cache"], "ko": ["캐시"], "hi": ["कैश"],
-                     "zh": ["缓存未命中", "缓存"], "ar": ["فقدان ذاكرة التخزين", "الكاش", "التخزين المؤقت"],
+                     "zh": ["缓存未命中", "缓存"],
+                     "ar": ["فقدان ذاكرة التخزين", "الكاش", "التخزين المؤقت",
+                            "ذاكرة التخزين", "التخزين الاحتياطي"],
                      "de": ["cache-fehl", "cache-miss", "cache"]},
 }
 _NEG = {"en": [" not ", "n't", "never", "should not", "not fix"],
         "ko": ["않", "없", "안 "],
         "hi": ["नहीं", "मत "],
         "zh": ["没有", "未", "不", "沒"],
-        "ar": ["لم", "لا", "ليس", "لن"],
+        # space-delimited: bare "لا"/"لم" would false-match inside common words
+        # (e.g. الانقطاع "outage", لمنع "to prevent"); the search text is padded.
+        "ar": [" لا ", " لم ", " ليس ", " لن ", " لمْ "],
         "de": ["nicht", "kein"]}
 _FIX = {"en": ["fix", "correct", "modif", "resolv", "repair", "set up", "setup",
                "address"],
         "ko": ["수정", "고정", "설정", "정정", "해결", "복구"],
         "hi": ["ठीक", "तय", "सुधार", "हल", "समाधान"],
         "zh": ["修复", "修正", "解决", "修好", "修理"],
-        "ar": ["أصلح", "إصلاح", "صحح", "حل", "عالج", "تصحيح"],
+        "ar": ["صلح", "إصلاح", "تصليح", "صحح", "صحّح", "تصحيح", "حل", "عالج"],
         "de": ["behob", "behoben", "beheben", "korrigier", "reparier", "löste",
                "gelöst"]}
 _TIME = {
@@ -94,7 +101,8 @@ _MOD_POSSIBLE = {"en": ["may ", "might", "could", "can be", "possibly", "perhaps
                  "ko": ["수 있", "수도 있", "지도 모"],
                  "hi": ["सकत", "शायद"],
                  "zh": ["可能", "也许", "或许", "大概"],
-                 "ar": ["قد ", "ربما", "يمكن أن", "من الممكن"],
+                 "ar": ["قد لا", "قد ي", "ربما", "يمكن أن", "من الممكن",
+                        "من المحتمل"],
                  "de": ["könnte", "könnten", "kann ", "möglicherweise", "vielleicht",
                         "dürfte"]}
 _MOD_NECESSARY = {"en": ["must", "should", "has to", "have to", "need to",
@@ -111,14 +119,16 @@ _ATTR = {
                "ko": ["보고서에 따르면", "보고서에", "보고서"],
                "hi": ["रिपोर्ट के अनुसार", "रिपोर्ट के मुताबिक", "रिपोर्ट"],
                "zh": ["根据报告", "据报告", "报告称", "报告"],
-               "ar": ["وفقًا للتقرير", "حسب التقرير", "بحسب التقرير", "وفقا للتقرير", "التقرير"],
+               "ar": ["وفقًا للتقرير", "حسب التقرير", "بحسب التقرير", "وفقا للتقرير",
+                      "التقرير", "للتقرير", "تقرير"],
                "de": ["laut bericht", "dem bericht zufolge", "bericht"]},
     "vendor": {"en": ["according to the vendor", "the vendor", "vendor says",
                       "according to the seller", "the seller", "supplier"],
                "ko": ["판매자", "공급업체", "공급자", "벤더", "판매업체"],
                "hi": ["विक्रेता के अनुसार", "विक्रेता", "आपूर्तिकर्ता", "वेंडर"],
                "zh": ["根据供应商", "据供应商", "供应商", "卖方", "厂商"],
-               "ar": ["وفقًا للبائع", "حسب المورد", "البائع", "المورد", "المورّد"],
+               "ar": ["وفقًا للبائع", "حسب المورد", "البائع", "المورد", "المورّد",
+                      "للبائع", "بائع", "للمورد", "مورد"],
                "de": ["laut anbieter", "laut verkäufer", "dem anbieter zufolge",
                       "anbieter", "verkäufer", "lieferant"]},
 }
@@ -191,7 +201,9 @@ def extract_invariants(text: str, lang: str) -> dict:
     out["patient"] = _first_value(norm, _PATIENT, lang)
     if _find(norm, _FIX.get(lang, [])):
         out["predicate"] = "FIX"
-    out["polarity"] = "negative" if _find(norm, _NEG.get(lang, [])) else "positive"
+    # pad so space-delimited negation markers can match at string boundaries
+    padded = f" {norm} "
+    out["polarity"] = "negative" if _find(padded, _NEG.get(lang, [])) else "positive"
 
     digits = text.translate(_ARABIC_DIGITS)
     m = re.search(r"\d+", digits)
