@@ -104,6 +104,38 @@ def test_arabic_indic_digits():
     assert inv["quantity"] == 5
 
 
+def test_arabic_morphology_variants():
+    # Standard-MSA variants a translator commonly emits: definite article
+    # assimilation after the preposition la- (للتقرير, للبائع), plural /
+    # indefinite patient nouns (أخطاء خادم), and the imperfect verb form
+    # (يصلح) rather than the perfect (أصلح). These are dictionary morphology,
+    # not any one MT system's quirks.
+    inv = extract_invariants(
+        "وفقاً للتقرير، في اليوم التالي، لم يصلح المهندس أخطاء خادم.", "ar")
+    assert inv["attribution"] == "report"
+    assert inv["time_dir"] == "following"
+    assert inv["polarity"] == "negative"
+    assert inv["patient"] == "server error"
+    assert inv["predicate"] == "FIX"
+
+
+def test_arabic_vendor_and_possible_modality():
+    inv = extract_invariants(
+        "وفقاً للبائع، قد لا يكون المشغل قد أصلح خطأ الخادم.", "ar")
+    assert inv["attribution"] == "vendor"
+    assert inv["modality"] == "possible"
+    assert inv["polarity"] == "negative"
+
+
+def test_arabic_perfective_qad_is_not_possible():
+    # "قد" before a past-tense verb is the perfective particle ("has"),
+    # not the modal "might"; with a necessity marker present the modality
+    # must resolve to necessary, not possible.
+    inv = extract_invariants(
+        "يجب أن يكون المهندس قد أصلح خطأ الخادم.", "ar")
+    assert inv["modality"] == "necessary"
+
+
 def test_abstention_is_not_a_guess():
     # unknown entity -> agent/patient None rather than a wrong guess
     inv = extract_invariants("Someone changed something yesterday.", "en")

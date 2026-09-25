@@ -6,22 +6,25 @@ Field-level recovery of the typed invariants from **real** NLLB translations, pe
 
 | Field | Recovery (95% CI) | |
 |---|---|---|
-| agent | 0.984 [0.955, 0.995] | `####################` |
-| patient | 0.958 [0.920, 0.979] | `###################.` |
-| predicate | 0.948 [0.907, 0.971] | `###################.` |
-| polarity | 0.943 [0.900, 0.968] | `###################.` |
-| quantity | 0.979 [0.948, 0.992] | `####################` |
-| time_dir | 1.000 [0.980, 1.000] | `####################` |
-| modality | 0.901 [0.851, 0.936] | `##################..` |
-| attribution | 0.995 [0.971, 0.999] | `####################` |
-| causation | 0.891 [0.839, 0.927] | `##################..` |
+| agent | 0.996 [0.989, 0.998] | `####################` |
+| patient | 0.899 [0.878, 0.916] | `##################..` |
+| predicate | 0.932 [0.915, 0.947] | `###################.` |
+| polarity | 0.950 [0.934, 0.962] | `###################.` |
+| quantity | 0.956 [0.941, 0.967] | `###################.` |
+| time_dir | 0.997 [0.991, 0.999] | `####################` |
+| modality | 0.841 [0.816, 0.862] | `#################...` |
+| attribution | 0.939 [0.922, 0.952] | `###################.` |
+| causation | 0.957 [0.943, 0.968] | `###################.` |
 
 ## Per-condition detail
 
 | Condition (lang) | agent | patient | predicate | polarity | quantity | time_dir | modality | attribution | causation | all-exact |
 |---|---|---|---|---|---|---|---|---|---|---|
-| hi (hi) | 0.97 | 0.97 | 0.98 | 1.00 | 1.00 | 1.00 | 0.91 | 1.00 | 0.89 | 0.73 |
-| ko (ko) | 0.98 | 0.98 | 0.91 | 0.92 | 0.95 | 1.00 | 0.91 | 1.00 | 0.88 | 0.62 |
-| rt (en) | 1.00 | 0.92 | 0.95 | 0.91 | 0.98 | 1.00 | 0.89 | 0.98 | 0.91 | 0.69 |
+| ar (ar) | 0.98 | 0.54 | 0.89 | 1.00 | 0.88 | 1.00 | 0.99 | 0.84 | 0.99 | 0.34 |
+| de (de) | 1.00 | 1.00 | 0.79 | 1.00 | 1.00 | 1.00 | 0.77 | 1.00 | 1.00 | 0.64 |
+| hi (hi) | 0.99 | 1.00 | 0.97 | 0.97 | 1.00 | 1.00 | 0.73 | 1.00 | 0.92 | 0.65 |
+| ko (ko) | 1.00 | 1.00 | 0.98 | 0.87 | 0.99 | 1.00 | 0.89 | 1.00 | 0.90 | 0.68 |
+| rt (en) | 1.00 | 0.94 | 0.99 | 0.86 | 1.00 | 0.98 | 0.79 | 0.98 | 0.94 | 0.59 |
+| zh (zh) | 1.00 | 0.91 | 0.96 | 0.99 | 0.87 | 1.00 | 0.88 | 0.81 | 1.00 | 0.49 |
 
 > Meaning-layer fields (polarity, quantity, temporal direction, attribution, causation, modality) survive real translation and are recoverable by a lexicon-level semantic frontend; entities a translator renders inconsistently (e.g. config drift) are recovered less reliably. This is a closed-domain Stage-2 result, not a wide-coverage parser.
