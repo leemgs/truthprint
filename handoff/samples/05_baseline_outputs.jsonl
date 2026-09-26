@@ -1,4 +1,6 @@
-{"method": "SynthID-Text", "doc_id": "D0001", "condition": "clean", "score": 4.21, "decision": "watermarked", "fpr_operating_point": 0.01, "impl": "google-deepmind/synthid-text@REPLACE_COMMIT", "notes": "예시 점수. 공식 구현 출력으로 교체."}
-{"method": "SynthID-Text", "doc_id": "D0001", "condition": "en->ko", "score": 0.12, "decision": "not_watermarked", "fpr_operating_point": 0.01, "impl": "google-deepmind/synthid-text@REPLACE_COMMIT", "notes": ""}
-{"method": "SemStamp", "doc_id": "D0001", "condition": "clean", "score": 5.02, "decision": "watermarked", "fpr_operating_point": 0.01, "impl": "REPLACE_WITH_OFFICIAL_REPO", "notes": ""}
-{"method": "SemStamp", "doc_id": "D0001", "condition": "en->ko", "score": 3.10, "decision": "watermarked", "fpr_operating_point": 0.01, "impl": "REPLACE_WITH_OFFICIAL_REPO", "notes": ""}
+{"method": "KGW", "impl": "self-contained KGW (Kirchenbauer 2023), gamma=0.25 delta=2.0, LLM=gpt2, NLLB=distilled-600M", "doc_id": "D0001", "condition": "clean", "watermarked": true, "score": 6.31}
+{"method": "KGW", "impl": "self-contained KGW (Kirchenbauer 2023), gamma=0.25 delta=2.0, LLM=gpt2, NLLB=distilled-600M", "doc_id": "D0001", "condition": "clean", "watermarked": false, "score": -0.12}
+{"method": "KGW", "impl": "self-contained KGW (Kirchenbauer 2023), gamma=0.25 delta=2.0, LLM=gpt2, NLLB=distilled-600M", "doc_id": "D0001", "condition": "ko", "watermarked": true, "score": 0.20}
+{"method": "KGW", "impl": "self-contained KGW (Kirchenbauer 2023), gamma=0.25 delta=2.0, LLM=gpt2, NLLB=distilled-600M", "doc_id": "D0001", "condition": "ko", "watermarked": false, "score": 0.05}
+{"method": "SynthID", "impl": "MarkLLM SynthID, LLM=gpt2", "doc_id": "D0001", "condition": "clean", "watermarked": true, "score": 4.21}
+{"method": "SynthID", "impl": "MarkLLM SynthID, LLM=gpt2", "doc_id": "D0001", "condition": "ko", "watermarked": true, "score": 0.12}
