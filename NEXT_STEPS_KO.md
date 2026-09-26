@@ -64,9 +64,16 @@
 ---
 
 ## C. Claude가 이어서 할 수 있는 것 (요청 시, 사람 데이터 없이도 일부 가능)
-- **경량 neural/광역 파서**로 `multilingual.py` 확장(현재는 lexicon 규칙). 단, 이 환경엔
-  GPU·모델 다운로드 제약이 있어, 저자 환경(Colab/Kaggle GPU)에서 돌릴 학습·평가 노트북을
-  Claude가 작성해 드리는 형태가 현실적입니다.
+- **W5 neural/광역 파서 — ✅ 실행 패키지 준비 완료.** 어휘집을 대체하는 드롭인 neural
+  파서(`code/truthprint/neural_parser.py`, 동일 `extract(text,lang)->dict` 인터페이스),
+  채점기 `code/scripts/eval_neural_parser.py`(lexicon vs neural head-to-head + 도메인별
+  복원율, +테스트), 노트북 `handoff/Truthprint_W5_NeuralParser_Kaggle.ipynb`,
+  스키마/절차 `handoff/W5_SCHEMA_KO.md`·`KAGGLE_W5_STEPS_KO.md`.
+  - **저자 작업(GPU):** 노트북 Run All(Internet On, GPU T4) → `w5_results.zip` 전달.
+    instruct LLM 백엔드가 real-MT 번역 + 개방 도메인 문장(어휘집이 실패하는 out-of-vocab)에서
+    9필드를 추출. 개방 도메인 gold는 노트북에 내장(사람 주석 불필요).
+  - **Claude가 받으면:** CI 확정 후 §Stage-2에 개방 도메인 복원율 반영, "wide-coverage
+    파서는 다음 단계" 문장을 실측으로 갱신.
 - **W6 원고 재구성 — ✅ 완료:** 진단 시뮬레이션 표(Appendix A), Reproducibility·Notation
   (Appendix B), Software Architecture(C), Prototype Roadmap(D), Extended Evaluation
   Protocol=baselines/languages/attacks/metrics(E)를 부록으로 이동. 본문은 16개 섹션
