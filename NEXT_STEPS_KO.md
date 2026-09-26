@@ -13,9 +13,9 @@
 | 암호·코딩 코어 P1–P4 | 위양성 0/20k, per-test 2⁻³² | `paper/reference/`, `code/` |
 | 필드별 challenge ablation C1–C3 | typed tamper 1.000 / no-MAC 0.000 / embedding 0.012 (CI 포함) | `paper/results/challenge_results.md` |
 | real-MT 파일럿 (표면 carrier) | 파서 커버리지 **0/192** (정직한 음의 결과) | `paper/results/realmt_pilot.md` |
-| **Stage-2 다국어 불변량 추출기** | 실제 NLLB 192건에서 필드 복원 **0.89–1.00** | `paper/results/stage2_multilingual.md` |
-| **의미기반 provenance 인증** | 문서 귀속 **1.000** (KO/HI/round-trip), 문장 TPR 0.80–0.95, tamper 거부 ≥0.98, FPR~0 | `paper/results/provenance_realmt.md` |
-| 리뷰·원고 정직성 정비 | 초록·Claim–Evidence 표·윤리 절에 실측 반영, acl 동기화 | `paper/main.tex`, `paper/acl_main.tex` |
+| **Stage-2 다국어 불변량 추출기 (6개 언어 완료)** | 실제 NLLB **960건**(EN-RT + KO/HI/ZH/AR/DE)에서 필드 복원 **0.90–1.00** (모든 필드 ≥0.90) | `paper/results/stage2_multilingual.md` |
+| **의미기반 provenance 인증 (6개 언어)** | 문서 귀속 6개 중 5개 **1.000**(AR 0.900), 문장 TPR 5개 언어 ≥0.93 (AR 0.656), tamper 거부 ≥0.99, FPR≤0.013 | `paper/results/provenance_realmt.md` |
+| 리뷰·원고 정직성 정비 | 초록·Claim–Evidence 표·Stage-2/provenance 절·윤리 절에 6개 언어 실측 반영, acl 동기화 | `paper/main.tex`, `paper/acl_main.tex` |
 
 재현: `cd code && pip install -e ".[dev]" && pytest -q && truthprint selftest`.
 새 스크립트: `scripts/eval_multilingual.py`, `scripts/eval_provenance.py`,
@@ -27,19 +27,19 @@
 
 우선순위 순. 각 항목은 **왜 필요한지 + 정확히 무엇을 하면 되는지**를 적었습니다.
 
-### B1. CI 강화용 데이터 규모 확대 ⭐ (가장 효과 큼)
-- **왜:** 현재 문서 4개라 문서-단위 귀속 CI가 [0.51, 1.00]로 넓습니다. 문서 수를 늘리면
-  같은 파이프라인으로 CI가 좁혀집니다(수치 조작 아님, 표본만 증가).
-- **어떻게:** Kaggle 노트북 STEP 2에서 `N_DOCS=30`, `SENTS_PER_DOC=16`로 올리고
-  STEP 3 → **STEP 4B(로컬 NLLB)** → STEP 5 → STEP 5B → STEP 7 → STEP 7B → STEP 8 실행 후
-  zip 전달. (번역·주석 초안은 노트북이 자동 처리, 사람은 STEP 5 검토만.)
+### B1. CI 강화용 데이터 규모 확대 ⭐ (지금 남은 유일한 필수 작업, 가장 효과 큼)
+- **왜:** 현재 문서 10개라 문서-단위 귀속 CI가 여전히 넓습니다([0.722, 1.000]).
+  문서 수를 늘리면 **같은 파이프라인으로 CI만 좁혀집니다**(수치 조작 아님, 표본만 증가).
+- **어떻게 (제일 쉬움):** `handoff/Truthprint_B2_Multilingual_Kaggle.ipynb`를 Kaggle에서
+  열고 (Settings → Internet: On, Accelerator: **GPU T4**) **Run All** →
+  마지막 셀에서 `b2_results.zip` 다운로드 → 저에게 전달. 기본 `N_DOCS=50`입니다.
+  복사/붙여넣기 절차는 `handoff/KAGGLE_B2_STEPS_KO.md` 참고.
 - Claude가 받으면 `eval_multilingual.py`/`eval_provenance.py`로 재측정해 CI를 갱신합니다.
 
-### B2. 언어 축 확대 (ZH/AR/DE 등)
-- **왜:** "다국어" 주장을 3개 언어쌍 이상으로 뒷받침(리뷰 W1/W7).
-- **어떻게:** 노트북 STEP 4B의 NLLB 타깃 언어 코드에 `zho_Hans`, `arb_Arab`, `deu_Latn`
-  등을 추가(코드 한 줄). Claude가 원하면 그 셀 변형을 만들어 드립니다. 새 언어는
-  `multilingual.py`에 해당 언어 lexicon 추가가 필요 → Claude가 작성 가능(요청만).
+### B2. 언어 축 확대 (ZH/AR/DE) — ✅ 완료
+- 6개 언어(EN round-trip + KO/HI/ZH/AR/DE) lexicon 구축·실측 완료. 아랍어 약점(개체
+  번역 편차)까지 정직하게 진단·보고됨. **추가로 언어를 더 넣고 싶으면** 노트북 셀 3의
+  `TGT`/`NLLB`에 언어 코드를 추가하고 요청 주세요(해당 lexicon은 제가 작성).
 
 ### B3. 사람 factual-equivalence 주석 (RQ1 / ValidRemoval)
 - **왜:** "의미 보존" 판단을 사람 기준으로 검증(리뷰 W1). 자동 판단만으론 부족.
@@ -89,7 +89,8 @@
 ---
 
 ## E. 한 줄 요약
-- **Claude 자율 완료:** 코어 검증 + 오프라인 ablation + real-MT 음의 결과 + **Stage-2/
-  provenance 양의 실측** + 원고 정직 반영(모두 `main`).
-- **저자 최소 작업:** (B1) 문서 수 늘려 CI 강화가 가장 효과적, 나머지 B2–B5는 여력에 따라.
+- **Claude 자율 완료:** 코어 검증 + 오프라인 ablation + real-MT 음의 결과 + **6개 언어
+  Stage-2/provenance 양의 실측**(어휘 완성·버그 수정 포함) + 원고 정직 반영(모두 `main`).
+- **저자 최소 작업:** (B1) 노트북 Run All로 문서 수 늘려 CI 강화 — 지금 남은 **유일한 필수**
+  작업. 나머지 B3–B5는 여력에 따라.
 - **윤리:** D의 7개 항목은 저자 서명·판단 필요.
