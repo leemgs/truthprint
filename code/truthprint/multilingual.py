@@ -52,7 +52,8 @@ _PATIENT = {
                             "أخطاء الخادم", "أخطاء في الخادم", "خادم"],
                      "de": ["serverfehler", "server-fehler"]},
     "memory leak":  {"en": ["memory leak"], "ko": ["메모리 누출", "메모리 누수", "메모리 유출"],
-                     "hi": ["मेमोरी लीक"], "zh": ["内存泄漏", "内存泄露"],
+                     "hi": ["मेमोरी लीक"],
+                     "zh": ["内存泄漏", "内存泄露", "记忆泄漏", "记忆泄露", "记忆泄"],
                      "ar": ["تسرب الذاكرة", "تسرّب الذاكرة"],
                      "de": ["speicherleck", "speicherleck", "memory leak"]},
     "config drift": {"en": ["config", "configuration"], "ko": ["구성", "구성 드리프트", "컨피그"],
@@ -67,8 +68,9 @@ _PATIENT = {
                             "ذاكرة التخزين", "التخزين الاحتياطي"],
                      "de": ["cache-fehl", "cache-miss", "cache"]},
 }
-_NEG = {"en": [" not ", "n't", "never", "should not", "not fix"],
-        "ko": ["않", "없", "안 "],
+_NEG = {"en": [" not ", "n't", "never", "should not", "not fix",
+               "failed to", "fail to", "unable to", "did not", "was not able"],
+        "ko": ["않", "없", "안 ", "못"],
         "hi": ["नहीं", "मत "],
         "zh": ["没有", "未", "不", "沒"],
         # space-delimited: bare "لا"/"لم" would false-match inside common words
@@ -81,8 +83,8 @@ _FIX = {"en": ["fix", "correct", "modif", "resolv", "repair", "set up", "setup",
         "hi": ["ठीक", "तय", "सुधार", "हल", "समाधान"],
         "zh": ["修复", "修正", "解决", "修好", "修理"],
         "ar": ["صلح", "إصلاح", "تصليح", "صحح", "صحّح", "تصحيح", "حل", "عالج"],
-        "de": ["behob", "behoben", "beheben", "korrigier", "reparier", "löste",
-               "gelöst"]}
+        "de": ["behob", "behoben", "beheben", "behebt", "korrigier", "reparier",
+               "löste", "gelöst", "fixier"]}
 _TIME = {
     "following": {"en": ["next day", "following day", "day after"],
                   "ko": ["다음 날", "다음날", "이튿날"],
@@ -103,22 +105,23 @@ _MOD_POSSIBLE = {"en": ["may ", "might", "could", "can be", "possibly", "perhaps
                  "zh": ["可能", "也许", "或许", "大概"],
                  "ar": ["قد لا", "قد ي", "ربما", "يمكن أن", "من الممكن",
                         "من المحتمل"],
-                 "de": ["könnte", "könnten", "kann ", "möglicherweise", "vielleicht",
-                        "dürfte"]}
-_MOD_NECESSARY = {"en": ["must", "should", "has to", "have to", "need to",
-                         "ought to", "required"],
+                 "de": ["könnte", "könnten", "konnte", "konnten", "kann ",
+                        "möglicherweise", "vielleicht", "dürfte"]}
+_MOD_NECESSARY = {"en": ["must", "should", "has to", "have to", "had to",
+                         "need to", "ought to", "required"],
                   "ko": ["해야", "않아야", "야 합니다", "야 한다", "필요", "해야 합니다"],
-                  "hi": ["चाहिए", "करना होगा", "करना पड़", "आवश्यक", "ज़रूरी"],
+                  "hi": ["चाहिए", "करना होगा", "करना पड़", "आवश्यक", "ज़रूरी",
+                         "किया होगा", "होंगे", "होगा", "होगी"],
                   "zh": ["必须", "应该", "需要", "得 "],
                   "ar": ["يجب", "ينبغي", "عليه أن", "لا بد", "لا بدّ", "ضروري"],
                   "de": ["muss", "müssen", "sollte", "sollten", "notwendig",
-                         "erforderlich"]}
+                         "erforderlich", "darf nicht", "dürfen nicht", "darf kein"]}
 _ATTR = {
     "report": {"en": ["according to the report", "the report", "report says",
                       "per the report"],
                "ko": ["보고서에 따르면", "보고서에", "보고서"],
                "hi": ["रिपोर्ट के अनुसार", "रिपोर्ट के मुताबिक", "रिपोर्ट"],
-               "zh": ["根据报告", "据报告", "报告称", "报告"],
+               "zh": ["根据报告", "据报告", "报告称", "报告", "根据报道", "据报道", "报道"],
                "ar": ["وفقًا للتقرير", "حسب التقرير", "بحسب التقرير", "وفقا للتقرير",
                       "التقرير", "للتقرير", "تقرير"],
                "de": ["laut bericht", "dem bericht zufolge", "bericht"]},
@@ -135,7 +138,7 @@ _ATTR = {
 _CAUSE = {
     "purpose": {"en": ["to prevent", "to avoid", "in order to", "so as to",
                        "to stop"],
-                "ko": ["방지하기 위해", "막기 위해", "위해", "위하여"],
+                "ko": ["방지하기 위해", "막기 위해", "위해", "위하여", "방지", "막기"],
                 "hi": ["रोकने के लिए", "बचने के लिए", "के लिए"],
                 "zh": ["为了防止", "为防止", "以防止", "为了避免", "为了"],
                 "ar": ["لمنع", "من أجل منع", "لتجنب", "من أجل"],
@@ -205,9 +208,15 @@ def extract_invariants(text: str, lang: str) -> dict:
     padded = f" {norm} "
     out["polarity"] = "negative" if _find(padded, _NEG.get(lang, [])) else "positive"
 
-    digits = text.translate(_ARABIC_DIGITS)
+    # quantity: strip temporal phrases first, else an ordinal inside a time
+    # expression is misread as a count (e.g. Chinese 第二天 "next day" -> 二 -> 2).
+    qtext = norm
+    for _tv in _TIME.values():
+        for _tm in _tv.get(lang, []):
+            qtext = qtext.replace(_tm, " ")
+    digits = qtext.translate(_ARABIC_DIGITS)
     m = re.search(r"\d+", digits)
-    out["quantity"] = int(m.group()) if m else _spelled_number(norm, lang)
+    out["quantity"] = int(m.group()) if m else _spelled_number(qtext, lang)
 
     out["time_dir"] = _first_value(norm, _TIME, lang)
     if _find(norm, _MOD_POSSIBLE.get(lang, [])):
