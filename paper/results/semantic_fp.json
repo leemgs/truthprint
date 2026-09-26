@@ -1,0 +1,66 @@
+{
+  "n_facts": 800,
+  "seed": 7,
+  "tau_bits": 32,
+  "crypto_floor": 2.3283064365386963e-10,
+  "contracts": {
+    "core6": {
+      "fields": [
+        "polarity",
+        "quantity",
+        "time_dir",
+        "attribution",
+        "predicate",
+        "agent"
+      ],
+      "space_size": 192,
+      "max_entropy_bits": 7.584962500721156,
+      "distinct_observed": 191,
+      "shannon_entropy_bits": 7.419025309719072,
+      "collision_entropy_bits": 7.2891219498041195,
+      "collision_prob": 0.005150187734668335,
+      "uniform_floor": 0.005208333333333333,
+      "crypto_floor_ratio": 22119887.888660826
+    },
+    "robust7": {
+      "fields": [
+        "agent",
+        "predicate",
+        "polarity",
+        "quantity",
+        "time_dir",
+        "modality",
+        "attribution"
+      ],
+      "space_size": 576,
+      "max_entropy_bits": 9.169925001442312,
+      "distinct_observed": 436,
+      "shannon_entropy_bits": 8.57623576476953,
+      "collision_entropy_bits": 8.392894616241511,
+      "collision_prob": 0.0017271589486858574,
+      "uniform_floor": 0.001736111111111111,
+      "crypto_floor_ratio": 7418091.1995995
+    },
+    "full9": {
+      "fields": [
+        "agent",
+        "patient",
+        "predicate",
+        "polarity",
+        "quantity",
+        "time_dir",
+        "modality",
+        "attribution",
+        "causation"
+      ],
+      "space_size": 6912,
+      "max_entropy_bits": 12.754887502163468,
+      "distinct_observed": 748,
+      "shannon_entropy_bits": 9.510081752263906,
+      "collision_entropy_bits": 9.454822365384688,
+      "collision_prob": 0.00017521902377972467,
+      "uniform_floor": 0.00014467592592592592,
+      "crypto_floor_ratio": 752559.9767709638
+    }
+  }
+}
