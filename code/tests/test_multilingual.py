@@ -136,6 +136,49 @@ def test_arabic_perfective_qad_is_not_possible():
     assert inv["modality"] == "necessary"
 
 
+def test_korean_ability_negation_and_purpose():
+    # "못" is the standard ability-negation particle; a result clause expressing
+    # prevention still carries the purpose relation.
+    inv = extract_invariants(
+        "다음 날 엔지니어는 5개의 캐시 오류를 수정하여 장애를 방지했습니다.", "ko")
+    assert inv["causation"] == "purpose"
+    inv2 = extract_invariants("개발자는 서버 오류를 수정하지 못했습니다.", "ko")
+    assert inv2["polarity"] == "negative"
+
+
+def test_english_action_negation_and_past_necessity():
+    inv = extract_invariants(
+        "The next day the developer failed to fix the server error.", "en")
+    assert inv["polarity"] == "negative"
+    inv2 = extract_invariants(
+        "The day before, the operator had to fix five config drifts.", "en")
+    assert inv2["modality"] == "necessary"
+    assert inv2["quantity"] == 5
+
+
+def test_german_simple_past_modal_and_anglicism_verb():
+    inv = extract_invariants(
+        "Laut Bericht konnte der Entwickler am Vortag drei Serverfehler fixieren.",
+        "de")
+    assert inv["modality"] == "possible"
+    assert inv["predicate"] == "FIX"
+
+
+def test_chinese_ordinal_not_counted_and_report_variant():
+    # 第二天 ("next day") must not be read as quantity 2; 报道 is a report variant.
+    inv = extract_invariants(
+        "据报道，第二天，工程师修复了服务器错误。", "zh")
+    assert inv["quantity"] == 1
+    assert inv["attribution"] == "report"
+    assert inv["time_dir"] == "following"
+
+
+def test_hindi_presumptive_necessity():
+    inv = extract_invariants(
+        "रिपोर्ट के अनुसार, अगले दिन, इंजीनियर ने 5 सर्वर त्रुटि ठीक की होगी।", "hi")
+    assert inv["modality"] == "necessary"
+
+
 def test_abstention_is_not_a_guess():
     # unknown entity -> agent/patient None rather than a wrong guess
     inv = extract_invariants("Someone changed something yesterday.", "en")
