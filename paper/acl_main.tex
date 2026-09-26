@@ -874,105 +874,18 @@ A weighted invariant error rate can be defined as
 where critical categories such as polarity and numeric value receive larger weights or are treated as hard failures.
 
 \subsection{Diagnostic Simulation (Not an End-to-End Benchmark)}
-
-Tables~\ref{tab:clean} and~\ref{tab:translation} report simulator outputs for
-Truthprint \emph{and} four baselines on a shared closed-domain Stage-1
-testbed (500 documents, 32 sentences each). To keep the comparison
-apples-to-apples in the absence of a wide-coverage neural frontend, every
-method is evaluated under one identical meaning-preserving channel and one
-identical protocol; the baselines are method-inspired proxies for selected aspects of each published
-method's signal placement, run from the
-same harness (\texttt{scripts/eval\_baselines.py}), and abstract the neural
-frontend (LM sampler, sentence encoder, AMR parser) in exactly the way the
-Truthprint Stage-1 numbers do. This diagnostic checks code paths and illustrates hypotheses under explicitly
-chosen channel parameters. It is not evidence that any named method attains the
-reported performance on real translation, and it must not be used to rank the
-methods. End-to-end evaluation with real generators, translation systems,
-parsers, official baseline implementations, held-out calibration data, and
-confidence intervals remains future work.
-
-\textbf{Shared channel.} A single meaning-preserving transform is
-characterised by two physical quantities that all methods see identically:
-the fraction $\tau_{\mathrm{tok}}$ of surface tokens the transform replaces
-(cross-script translation replaces almost all tokens) and the fraction
-$\epsilon_{\mathrm{inv}}$ of meaning-layer carriers lost to parse
-normalisation (the quantity Truthprint's own analysis uses). Each method's
-survival is then \emph{derived} from these two numbers through its own signal
-dependence, so the relative ordering is forced by where the signal lives, not
-tuned per method: a KGW-style token-identity green-list proxy survives at
-$(1-\tau_{\mathrm{tok}})^2$; an edit-aligned token watermark (DEW) at
-$(1-\tau_{\mathrm{tok}})$ up to an edit budget then collapses; a
-sentence-embedding region (SemStamp) flips near the LSH boundary at a rate
-$\propto\tau_{\mathrm{tok}}$ but is meaning-dominant; and meaning-layer
-signals (SWAN, Truthprint) are unaffected by $\tau_{\mathrm{tok}}$, losing
-only the $\epsilon_{\mathrm{inv}}$ parse fraction.
-
-\textbf{Protocol.} For each method a decision threshold is calibrated at
-$1\%$ FPR on null (un-watermarked) documents; TPR is measured at that
-threshold after the channel; ROC-AUC is computed from watermarked-vs-null
-score populations. Truthprint is run through its real linguistic codec on
-actual sentences ($\mu=12$, $\tau=20$, $[64,32]$ GF(2) code); its quality is
-unigram BLEU between the watermarked and an unconstrained realization of the
-same facts. Baseline fluency/quality is not measured because it requires each
-method's neural generator, absent from the Stage-1 abstraction.
-
-\textbf{Reading the tables.} The clean setting saturates because the proxy
-generators deliberately select matching symbols and provide many carriers.
-Under the stipulated high-replacement setting, token proxies lose signal by
-construction while semantic proxies retain it according to the chosen erasure
-parameter.  These outcomes validate the simulator implementation, not H1 and
-not any comparison among the named published systems.  P2 and P3 separately
-exercise Truthprint's authenticated coding core (Section~\ref{sec:impl}); this
-harness does not evaluate the security properties of the other systems.
-
-\begin{table}[t]
-\centering
-\caption{Diagnostic clean-channel simulation
-  (500 docs $\times$ 32 sentences; threshold at $1\%$ FPR)$^\dagger$.
-  Detection saturates for all methods on clean text; the discriminating
-  transformed setting appears in Table~\ref{tab:translation}.}
-\label{tab:clean}
-\begin{tabular}{lccc}
-\toprule
-Method & TPR@1\%FPR & ROC-AUC & BLEU-1 \\
-\midrule
-KGW proxy        & 1.000 & 1.000 & --- \\
-SemStamp         & 1.000 & 1.000 & --- \\
-SWAN             & 1.000 & 1.000 & --- \\
-Truthprint       & 1.000 & 1.000 & $0.84$ \\
-\bottomrule
-\multicolumn{4}{p{0.92\columnwidth}}{\footnotesize $^\dagger$Controlled
-  simulation only, not a neural or translation benchmark. BLEU-1 measured only for
-  Truthprint (real sentences); baseline fluency needs each method's neural
-  generator. Truthprint additionally applies a 20-bit tag check; this is not
-  a measured end-to-end FPR.}
-\end{tabular}
-\end{table}
-
-\begin{table}[t]
-\centering
-\caption{Diagnostic transformed-channel simulation (TPR at $1\%$ FPR)
-  $(\tau_{\mathrm{tok}},\epsilon_{\mathrm{inv}})$ per language pair$^\dagger$:
-  EN$\to$KO $(0.92,0.30)$, EN$\to$HI $(0.95,0.35)$, KO$\to$EN $(0.90,0.28)$.
-  Outputs illustrate the stipulated channel equations, not real translation.}
-\label{tab:translation}
-\begin{tabular}{lccc}
-\toprule
-Method & EN$\rightarrow$KO & EN$\rightarrow$HI & KO$\rightarrow$EN \\
-\midrule
-KGW proxy        & 0.020 & 0.018 & 0.030 \\
-DEW              & 0.000 & 0.000 & 0.000 \\
-SemStamp         & 0.996 & 0.988 & 0.994 \\
-SWAN             & 1.000 & 1.000 & 1.000 \\
-Truthprint       & 1.000 & 0.972 & 0.998 \\
-\bottomrule
-\multicolumn{4}{p{0.92\columnwidth}}{\footnotesize $^\dagger$Controlled
-  Stage-1 channel; $\tau_{\mathrm{tok}}$ (token replacement) and
-  $\epsilon_{\mathrm{inv}}$ (meaning-carrier erasure) per translation event.
-  Only the Truthprint proxy in this harness exercises authenticated recovery;
-  this table does not evaluate baseline security.}
-\end{tabular}
-\end{table}
+A controlled Stage-1 simulator checks the evaluation code paths and
+illustrates, under explicitly stipulated channel parameters, how signal
+placement (token vs.\ meaning layer) reacts to surface replacement and
+carrier erasure. Because the ``baselines'' are method-inspired proxies run
+from a shared harness rather than the published systems, the simulator
+\emph{must not be used to rank methods} and is not evidence of
+real-translation performance. To keep this diagnostic from being mistaken
+for a benchmark, its full protocol and outputs
+(Tables~\ref{tab:clean} and~\ref{tab:translation}) are deferred to
+Appendix~\ref{app:diagnostic}; the measured results this paper relies on are
+the real-MT findings of Sections~\ref{sec:realmt}--\ref{sec:provenance} and
+the coding-core verification of Section~\ref{sec:impl}.
 
 \section{Falsifiable Hypotheses}
 The following are hypotheses to be tested at scale with the neural frontend.
@@ -1093,4 +1006,111 @@ Y. Cheng, V. S. Sadasivan, M. Saberi, S. Saha, and S. Feizi, ``Adversarial parap
 L. Pan \emph{et al.}, ``MarkLLM: An open-source toolkit for LLM watermarking,'' in \emph{Proc. EMNLP (System Demonstrations)}, 2024. \url{https://arxiv.org/abs/2405.10051}
 
 \end{thebibliography}
+\appendix
+\section{Diagnostic Simulation: Full Protocol and Outputs}
+\label{app:diagnostic}
+This appendix gives the full protocol and outputs of the controlled
+Stage-1 diagnostic summarized in the main text. It validates the simulator
+implementation only; it is not a neural or translation benchmark and must
+not be used to rank the named published systems.
+
+Tables~\ref{tab:clean} and~\ref{tab:translation} report simulator outputs for
+Truthprint \emph{and} four baselines on a shared closed-domain Stage-1
+testbed (500 documents, 32 sentences each). To keep the comparison
+apples-to-apples in the absence of a wide-coverage neural frontend, every
+method is evaluated under one identical meaning-preserving channel and one
+identical protocol; the baselines are method-inspired proxies for selected aspects of each published
+method's signal placement, run from the
+same harness (\texttt{scripts/eval\_baselines.py}), and abstract the neural
+frontend (LM sampler, sentence encoder, AMR parser) in exactly the way the
+Truthprint Stage-1 numbers do. This diagnostic checks code paths and illustrates hypotheses under explicitly
+chosen channel parameters. It is not evidence that any named method attains the
+reported performance on real translation, and it must not be used to rank the
+methods. End-to-end evaluation with real generators, translation systems,
+parsers, official baseline implementations, held-out calibration data, and
+confidence intervals remains future work.
+
+\textbf{Shared channel.} A single meaning-preserving transform is
+characterised by two physical quantities that all methods see identically:
+the fraction $\tau_{\mathrm{tok}}$ of surface tokens the transform replaces
+(cross-script translation replaces almost all tokens) and the fraction
+$\epsilon_{\mathrm{inv}}$ of meaning-layer carriers lost to parse
+normalisation (the quantity Truthprint's own analysis uses). Each method's
+survival is then \emph{derived} from these two numbers through its own signal
+dependence, so the relative ordering is forced by where the signal lives, not
+tuned per method: a KGW-style token-identity green-list proxy survives at
+$(1-\tau_{\mathrm{tok}})^2$; an edit-aligned token watermark (DEW) at
+$(1-\tau_{\mathrm{tok}})$ up to an edit budget then collapses; a
+sentence-embedding region (SemStamp) flips near the LSH boundary at a rate
+$\propto\tau_{\mathrm{tok}}$ but is meaning-dominant; and meaning-layer
+signals (SWAN, Truthprint) are unaffected by $\tau_{\mathrm{tok}}$, losing
+only the $\epsilon_{\mathrm{inv}}$ parse fraction.
+
+\textbf{Protocol.} For each method a decision threshold is calibrated at
+$1\%$ FPR on null (un-watermarked) documents; TPR is measured at that
+threshold after the channel; ROC-AUC is computed from watermarked-vs-null
+score populations. Truthprint is run through its real linguistic codec on
+actual sentences ($\mu=12$, $\tau=20$, $[64,32]$ GF(2) code); its quality is
+unigram BLEU between the watermarked and an unconstrained realization of the
+same facts. Baseline fluency/quality is not measured because it requires each
+method's neural generator, absent from the Stage-1 abstraction.
+
+\textbf{Reading the tables.} The clean setting saturates because the proxy
+generators deliberately select matching symbols and provide many carriers.
+Under the stipulated high-replacement setting, token proxies lose signal by
+construction while semantic proxies retain it according to the chosen erasure
+parameter.  These outcomes validate the simulator implementation, not H1 and
+not any comparison among the named published systems.  P2 and P3 separately
+exercise Truthprint's authenticated coding core (Section~\ref{sec:impl}); this
+harness does not evaluate the security properties of the other systems.
+
+\begin{table}[t]
+\centering
+\caption{Diagnostic clean-channel simulation
+  (500 docs $\times$ 32 sentences; threshold at $1\%$ FPR)$^\dagger$.
+  Detection saturates for all methods on clean text; the discriminating
+  transformed setting appears in Table~\ref{tab:translation}.}
+\label{tab:clean}
+\begin{tabular}{lccc}
+\toprule
+Method & TPR@1\%FPR & ROC-AUC & BLEU-1 \\
+\midrule
+KGW proxy        & 1.000 & 1.000 & --- \\
+SemStamp         & 1.000 & 1.000 & --- \\
+SWAN             & 1.000 & 1.000 & --- \\
+Truthprint       & 1.000 & 1.000 & $0.84$ \\
+\bottomrule
+\multicolumn{4}{p{0.92\columnwidth}}{\footnotesize $^\dagger$Controlled
+  simulation only, not a neural or translation benchmark. BLEU-1 measured only for
+  Truthprint (real sentences); baseline fluency needs each method's neural
+  generator. Truthprint additionally applies a 20-bit tag check; this is not
+  a measured end-to-end FPR.}
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Diagnostic transformed-channel simulation (TPR at $1\%$ FPR)
+  $(\tau_{\mathrm{tok}},\epsilon_{\mathrm{inv}})$ per language pair$^\dagger$:
+  EN$\to$KO $(0.92,0.30)$, EN$\to$HI $(0.95,0.35)$, KO$\to$EN $(0.90,0.28)$.
+  Outputs illustrate the stipulated channel equations, not real translation.}
+\label{tab:translation}
+\begin{tabular}{lccc}
+\toprule
+Method & EN$\rightarrow$KO & EN$\rightarrow$HI & KO$\rightarrow$EN \\
+\midrule
+KGW proxy        & 0.020 & 0.018 & 0.030 \\
+DEW              & 0.000 & 0.000 & 0.000 \\
+SemStamp         & 0.996 & 0.988 & 0.994 \\
+SWAN             & 1.000 & 1.000 & 1.000 \\
+Truthprint       & 1.000 & 0.972 & 0.998 \\
+\bottomrule
+\multicolumn{4}{p{0.92\columnwidth}}{\footnotesize $^\dagger$Controlled
+  Stage-1 channel; $\tau_{\mathrm{tok}}$ (token replacement) and
+  $\epsilon_{\mathrm{inv}}$ (meaning-carrier erasure) per translation event.
+  Only the Truthprint proxy in this harness exercises authenticated recovery;
+  this table does not evaluate baseline security.}
+\end{tabular}
+\end{table}
+
 \end{document}
