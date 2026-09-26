@@ -72,6 +72,7 @@ Surface-carrier translation robustness & Refuted (real MT) & Stage-1 surface par
 Meaning-layer recovery under real MT & Demonstrated (closed-domain, six languages) & Stage-2 extractor recovers fields at $0.90$--$1.00$ over $4{,}800$ real NLLB translations in six languages, document attribution $1.000$ (CI $[0.929,1.000]$) for five of six languages, and meaning-based authentication attributes cross-lingually (Secs.~\ref{sec:stage2},~\ref{sec:provenance}); wide-coverage parsing and larger document counts remain open. \\
 Paraphrase/adaptive-attack robustness & Not established & Requires meaning-preserving attack outputs, held-out detector calibration, and ValidRemoval evaluation. \\
 System-level false-positive rate & Not established & The tag bound is per tested fresh candidate; parser search, tested key--nonce pairs, and fallback scores require end-to-end calibration. \\
+Semantic-level false-positive rate (contract collision) & Not established & The $2^{-\tau}$ bound covers cryptographic tag collision only. Distinct legitimate generations that share a low-entropy invariant contract collide \emph{before} the tag, so short or formulaic text requires a measured contract-entropy / semantic-collision analysis not yet performed (Sec.~\ref{sec:provenance}). \\
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -679,7 +680,17 @@ over $50$ documents.
 Widening the contract to all nine fields lowers TPR (e.g.\ $0.289$ for AR) but authenticates more meaning:
 an explicit, measured fidelity/robustness trade-off. This is the translation-%
 robust counterpart to the surface-carrier pilot's $0/192$: provenance verified
-on the meaning layer survives real machine translation. It remains a closed-%
+on the meaning layer survives real machine translation. One caveat is essential:
+the reported false positives ($0.001$--$0.010$) reflect the \emph{cryptographic}
+$2^{-\tau}$ tag collision, not the \emph{semantic} collision rate. Because
+authentication reproduces a tag over an invariant contract, two genuinely
+distinct but low-entropy generations that share the same compact contract (a
+short or formulaic factual sentence) would collide \emph{before} the tag is
+tested; the achievable semantic-level false-positive rate is therefore bounded
+by the entropy of the chosen contract, not by $\tau$. Measuring contract entropy
+and the induced semantic-collision rate on open-domain text is an open item
+(Table~\ref{tab:claims}) and a prerequisite for any deployment on short text.
+It remains a closed-%
 domain Stage-2 result; a wide-coverage semantic parser and more documents/%
 languages are the next steps. The method and evaluation ship with the artifact
 (\texttt{scripts/eval\_provenance.py}).
