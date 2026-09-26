@@ -101,7 +101,7 @@ means that the claim must not be inferred from the diagnostic simulation.}
 Claim & Status & Supporting evidence or missing test \\
 \midrule
 Coding/authentication round trip & Demonstrated & Deterministic core tests P1--P4 and closed-domain string tests L1--L3. \\
-Protected-field fidelity & Conditional & Proposition~\ref{prop:fidelity}, assuming a sound invariant extractor and validator; frontend soundness is not measured. \\
+Protected-field fidelity & Conditional (validator soundness measured) & Proposition~\ref{prop:fidelity}, assuming a sound invariant extractor and validator. The soundness assumption is measured as the validator's false-accept rate on meaning-altering edits: $0$ observed on the closed domain (C1) and $\le 0.01$ under real MT (Sec.~\ref{sec:provenance}); wide-coverage soundness remains open. \\
 Fresh-payload unforgeability & Conditional & Reduction to EUF-CMA security of the MAC; replay and nonce discovery are separate deployment concerns. \\
 Surface-carrier translation robustness & Refuted (real MT) & Stage-1 surface parser recovers $0/192$ real NLLB translations (Sec.~\ref{sec:realmt}). \\
 Meaning-layer recovery under real MT & Demonstrated (closed-domain, six languages) & Stage-2 extractor recovers fields at $0.90$--$1.00$ over $4{,}800$ real NLLB translations in six languages, document attribution $1.000$ (CI $[0.929,1.000]$) for five of six languages, and meaning-based authentication attributes cross-lingually (Secs.~\ref{sec:stage2},~\ref{sec:provenance}); wide-coverage parsing and larger document counts remain open. \\
@@ -480,6 +480,23 @@ Under Assumption~\ref{as:validator}, every committed output $y=R_\ell(E_K(x,m))$
 Encoding commits a candidate only if $V$ accepts it, and carriers with no accepted candidate are recorded as erasures rather than realized (Sec.~\ref{sec:validation}). By soundness, acceptance implies invariant equality for that unit; taking the conjunction over committed units gives $I(P(y))=I(x)$.
 \end{proof}
 This is the structural property that logit-biasing methods cannot offer: they have no invariant checker in the loop, so quality preservation is measured post hoc rather than enforced.
+
+\paragraph{Empirical validator soundness.}
+Assumption~\ref{as:validator} is load-bearing, so we measure its empirical
+proxy---the validator's \emph{false-accept rate} on meaning-altering edits---
+rather than assume it silently. A false accept is a single-field tamper that the
+re-extracted invariants fail to flag. On the closed domain the typed contract
+detects every single-field tamper across all six protected fields (property C1,
+aggregate $1.000$, CI $[0.998,1.000]$: zero observed false accepts) while
+retaining attribution across benign paraphrases ($0.990$); the decode-only
+ablation accepts every tamper (property C2, $0.000$), confirming that the
+invariant re-extraction---not the coding layer---is what supplies soundness.
+Under real NLLB translation the Stage-2 extractor still rejects meaning-altering
+edits at $\ge 0.99$ per condition (Sec.~\ref{sec:provenance}). These are
+empirical soundness measurements on the closed and machine-translated domains; a
+\emph{wide-coverage} validator's soundness remains open and is what the neural
+frontend of Appendix~\ref{app:roadmap} must establish, so Proposition~\ref{prop:fidelity}
+stays conditional rather than absolute.
 
 \subsection{Unforgeability and False Positives}
 \begin{theorem}[Fresh-payload unforgeability]
