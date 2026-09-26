@@ -67,9 +67,13 @@
 - **경량 neural/광역 파서**로 `multilingual.py` 확장(현재는 lexicon 규칙). 단, 이 환경엔
   GPU·모델 다운로드 제약이 있어, 저자 환경(Colab/Kaggle GPU)에서 돌릴 학습·평가 노트북을
   Claude가 작성해 드리는 형태가 현실적입니다.
-- **W6 원고 재구성**(roadmap·software architecture·진단 시뮬레이션 표를 appendix로 이동해
-  ACL 8쪽 본문 예산 맞춤). LaTeX 컴파일러가 이 환경엔 없어, Claude가 편집안을 만들고
-  저자가 로컬에서 `make acl`로 컴파일 확인하는 방식을 권장.
+- **W6 원고 재구성 — ✅ 완료:** 진단 시뮬레이션 표(Appendix A), Reproducibility·Notation
+  (Appendix B), Software Architecture(C), Prototype Roadmap(D), Extended Evaluation
+  Protocol=baselines/languages/attacks/metrics(E)를 부록으로 이동. 본문은 16개 섹션
+  (Intro–Conclusion)으로 축소하고 RQ+평가 매트릭스는 본문 유지, 부록 포인터 한 줄 추가.
+  상호참조·환경 균형·동기화 가드 모두 통과. 이 환경엔 `pdflatex`가 없으므로 **저자가
+  로컬에서 `make acl`로 실제 8쪽 이내 여부만 최종 확인** 권장(초과 시 Related Work 압축이
+  다음 후보).
 
 ---
 

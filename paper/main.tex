@@ -739,127 +739,13 @@ domain Stage-2 result; a wide-coverage semantic parser and more documents/%
 languages are the next steps. The method and evaluation ship with the artifact
 (\texttt{scripts/eval\_provenance.py}).
 
-\section{Reproducibility and Notation}
-\label{sec:repro}
-This section pins every choice needed to reimplement the language-independent core exactly, so that the reference scripts and the paper agree symbol for symbol. Nothing here is left to interpretation; the two scripts in \texttt{reference/} realize precisely these definitions.
-
-\subsection{Primitive Instantiation}
-The reference implementation fixes the following concrete choices.
-\begin{itemize}[leftmargin=*]
-  \item \textbf{Invariant digest.} $h_I=\mathrm{SHA\text{-}256}(\mathrm{JSON}(I))$, where $\mathrm{JSON}$ is canonical: keys sorted, separators ``\texttt{,}'' and ``\texttt{:}'', UTF-8 encoded. Canonicalization makes $h_I$ order- and whitespace-independent.
-  \item \textbf{Authentication.} $\mathrm{MAC}=\mathrm{HMAC\text{-}SHA256}$; the tag is the first $\tau$ bits of the MAC over $m\parallel n\parallel h_I$. The payload is $p=m\parallel\mathrm{tag}$ (length $|p|=\mu+\tau$).
-  \item \textbf{Keyed carrier map (binary carriers).} $\pi_j=\mathrm{LSB}\big(\mathrm{HMAC\text{-}SHA256}(K,\,h_I\parallel n\parallel \mathrm{ID}_j)\big)$ with $\mathrm{ID}_j$ the 4-byte big-endian carrier index. The realized option is $a_j^\star=\pi_j\oplus c_j$ and the recovered symbol is $\hat c_j=\pi_j\oplus a_j^{obs}$.
-  \item \textbf{Error-correcting code.} A systematic $[N,k]$ linear code over $\mathrm{GF}(2)$ with generator $G=[\,I_k\mid P\,]$, where $P$ is drawn once from a fixed pseudo-random seed. Erasure decoding solves the surviving linear equations by Gaussian elimination over $\mathrm{GF}(2)$; it succeeds iff the retained rows have rank $k$ (Proposition~\ref{prop:cliff}).
-  \item \textbf{Detection decision.} Attribute iff erasure decoding returns some $\hat p$ \emph{and} $\mathrm{MAC}$ verifies on $(\hat m,n,h_I)$; otherwise report the calibrated statistic $z$ of Eq.~\eqref{eq:zscore} against a threshold $\tau_z$ without asserting authenticated attribution.
-\end{itemize}
-
-\subsection{Notation-to-Code Map}
-Table~\ref{tab:notation} maps paper symbols to identifiers in \texttt{reference/truthprint\_poc.py}, removing any ambiguity between the formalism and the code.
-
-\begin{table}[t]
-\centering
-\caption{Mapping between paper notation and reference-implementation identifiers.}
-\label{tab:notation}
-\renewcommand{\arraystretch}{1.2}
-\footnotesize
-\begin{tabular}{p{0.8cm}p{2.5cm}p{3.7cm}}
-\toprule
-Symbol & Meaning & Code identifier \\
-\midrule
-$h_I$ & canonical invariant digest & \texttt{canonical\_\allowbreak invariant\_\allowbreak digest} \\
-$p$ & authenticated payload & \texttt{authenticate\_\allowbreak payload} \\
-$\mathrm{MAC}$ & tag verification & \texttt{verify\_payload} \\
-$\mathrm{ECC}$ & systematic GF(2) code & \texttt{GF2Code.encode} \\
-decode & erasure decoding & \texttt{GF2Code.\allowbreak decode\_\allowbreak erasure} \\
-$\pi_j$ & keyed carrier offset & \texttt{keyed\_bit} \\
-$a_j^\star$ & realized option & \texttt{realize\_option} \\
-$\hat c_j$ & recovered symbol & \texttt{recover\_symbol} \\
-$D_K$ & detector & \texttt{detect\_document} \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{Parameters, Determinism, and How to Run}
-The core script uses $\mu=16$, $\tau=32$, $[N,k]=[96,48]$; the linguistic script uses $\mu=12$, $\tau=20$, $[N,k]=[64,32]$ over $32$ sentences with two carriers each. All randomness is seeded: message bits and erasure sampling use fixed seeds, and the code matrix $P$ uses a fixed seed, so every reported number is reproducible. The document nonce $n$ is freshly sampled per run and passed explicitly to the detector; recovery is invariant to its value, so success does not depend on the nonce. Both scripts return a non-zero exit code if any asserted property fails, so they double as regression tests. Reproduction requires only Python~3 (standard library only); the paper builds with \texttt{pdflatex} via \texttt{make}. The exact commands are:
-\begin{lstlisting}
-python3 reference/truthprint_poc.py             # P1-P4
-python3 reference/truthprint_linguistic_demo.py # L1-L3
-make                                            # build main.pdf
-\end{lstlisting}
-Expected results are those reported in Section~\ref{sec:impl}: P1--P4 hold, and L1--L3 hold on sentence strings.
-
-The same primitives are also packaged as an installable Python distribution (\texttt{code/} in the accompanying repository) with a unit-test suite and continuous integration. Its command-line interface reruns all properties (\texttt{truthprint selftest}) and regenerates Table~\ref{tab:erasure} deterministically from a fixed seed with $500$ trials per erasure rate (\texttt{truthprint repro-table}).
-
-\section{Practical Software Architecture}
-A prototype can use the following modular layout:
-\begin{lstlisting}
-truthprint/
-  schema/        # entities, events, relations, mutability
-  parser/        # multilingual parser and canonicalizer
-  carriers/      # voice, packaging, discourse, ordering
-  encoding/      # payload, keyed mapping, ECC
-  realization/   # candidate generation and ranking
-  validation/    # hard constraints, NLI, numbers, quality
-  detection/     # extraction, decoding, statistics
-  attacks/       # translation, paraphrase, summary, splice
-  experiments/   # datasets, metrics, runners
-\end{lstlisting}
-
-\subsection{Core Data Model}
-\begin{lstlisting}[language=Python,caption={Illustrative Python data model.}]
-from enum import Enum
-from pydantic import BaseModel, Field
-
-class Mutability(str, Enum):
-    LOCKED = "locked"
-    CONDITIONAL = "conditional"
-    REALIZATION_ONLY = "realization_only"
-
-class Event(BaseModel):
-    id: str
-    predicate: str
-    roles: dict[str, str]
-    polarity: str = "positive"
-    modality: str = "asserted"
-    time: dict = Field(default_factory=dict)
-    quantity: dict | None = None
-    attribution: str | None = None
-
-class CarrierSite(BaseModel):
-    carrier_id: str
-    family: str
-    target_node_ids: list[str]
-    alternatives: list[str]
-    recoverability: float
-    quality_cost: float
-\end{lstlisting}
-
-\subsection{Keyed Mapping Skeleton}
-\begin{lstlisting}[language=Python,caption={Secret-keyed carrier assignment skeleton.}]
-import hmac
-from hashlib import sha256
-
-def keyed_index(key, invariant_hash, nonce,
-                carrier_id, symbol, option_count):
-    msg = b"|".join([
-        invariant_hash,
-        nonce,
-        carrier_id.encode(),
-        symbol.to_bytes(4, "big")
-    ])
-    digest = hmac.new(key, msg, sha256).digest()
-    return int.from_bytes(digest[:8], "big") % option_count
-\end{lstlisting}
-
-\section{Prototype Roadmap}
-\subsection{Stage 1: Closed-Domain Proof of Concept}
-Begin with technical or news-style factual statements. Support entities, events, agent/patient roles, polarity, number, time, and causality. Start with carriers that are easy to validate: active/passive voice, proposition order for independent facts, causal connective family, clause splitting/merging, and nominal/verbal realization.
-
-\subsection{Stage 2: Multilingual Parsing}
-Map English, Korean, and Hindi into one predicate and role inventory using a combination of multilingual structured extraction, dependency parsing, semantic-role labeling, named-entity normalization, numerical and temporal normalization, and multilingual embeddings as a fallback alignment mechanism.
-
-\subsection{Stage 3: Document-Level Coding}
-Introduce multi-ary carrier alphabets, BCH or Reed--Solomon codes, carrier interleaving, synchronization markers, order-independent anchors, partial payload recovery, and provenance database lookup.
+To respect the page budget, three supporting parts are placed in the
+appendices: full reproducibility and notation (Appendix~\ref{app:repro}),
+the reference software architecture and staged prototype roadmap
+(Appendices~\ref{app:arch}--\ref{app:roadmap}), and the extended evaluation
+protocol---baselines, languages, attacks, and metrics
+(Appendix~\ref{app:protocol}). The body retains the research questions and
+the decisive evaluation matrix.
 
 \section{Experimental Methodology}
 \label{sec:eval}
@@ -896,26 +782,6 @@ RQ7 & Adaptive attacker with vs.\ without invariant constraint & ValidRemoval ra
 \end{table}
 
 Table~\ref{tab:matrix} fixes, for each question, the single manipulated factor and the outcome that would confirm or falsify the corresponding hypothesis, so that results cannot be reported selectively.
-
-\subsection{Baselines}
-Experiments should include unwatermarked decoding, a representative Red--Green token watermark, SynthID-Text, SemStamp, SemaMark, semantic-invariant watermarking, SWAN, DEW, Truthprint without invariant validation, Truthprint without ECC, embedding-only Truthprint, and structure-only Truthprint. Standardized baseline implementations from an open watermarking toolkit should be used where available to ensure comparability \cite{pan2024markllm}.
-
-\subsection{Languages and Domains}
-Recommended languages include English, Korean, Hindi, Chinese, Arabic, and German or French. Domains should include factual news, encyclopedic explanations, technical documentation, scientific summaries, policy-style prose, dialogue, and creative writing. Code, formulas, legal clauses, and direct quotations should be reported separately due to low semantic carrier capacity.
-
-\subsection{Attacks}
-The evaluation should cover Unicode and punctuation edits, spelling correction, direct translation, round-trip and two-hop translation, lexical and syntactic paraphrasing, sentence splitting/merging, proposition reordering, deletion, insertion, splicing, summarization at multiple compression ratios, regeneration from bullet points, repeated detector-guided paraphrasing, and carrier-targeted rewriting.
-
-\subsection{Metrics}
-Detection metrics include ROC-AUC, true-positive rate at 1\%, 0.1\%, and 0.01\% false-positive rates, false-negative rate, payload bit-error rate, complete and partial recovery rates, minimum reliable text length, and detector latency.
-
-Semantic integrity metrics include entity consistency, role consistency, polarity accuracy, numerical accuracy, temporal consistency, causal-direction consistency, attribution consistency, bidirectional entailment, contradiction rate, and human factual-equivalence judgment.
-
-A weighted invariant error rate can be defined as
-\begin{equation}
-\mathrm{IER}=\frac{\sum_i w_iE_i}{\sum_i w_i},
-\end{equation}
-where critical categories such as polarity and numeric value receive larger weights or are treated as hard failures.
 
 \subsection{Diagnostic Simulation (Not an End-to-End Benchmark)}
 A controlled Stage-1 simulator checks the evaluation code paths and
@@ -1157,5 +1023,156 @@ Truthprint       & 1.000 & 0.972 & 0.998 \\
   this table does not evaluate baseline security.}
 \end{tabular}
 \end{table}
+
+
+\section{Reproducibility and Notation}
+\label{app:repro}\label{sec:repro}
+This section pins every choice needed to reimplement the language-independent core exactly, so that the reference scripts and the paper agree symbol for symbol. Nothing here is left to interpretation; the two scripts in \texttt{reference/} realize precisely these definitions.
+
+\subsection{Primitive Instantiation}
+The reference implementation fixes the following concrete choices.
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Invariant digest.} $h_I=\mathrm{SHA\text{-}256}(\mathrm{JSON}(I))$, where $\mathrm{JSON}$ is canonical: keys sorted, separators ``\texttt{,}'' and ``\texttt{:}'', UTF-8 encoded. Canonicalization makes $h_I$ order- and whitespace-independent.
+  \item \textbf{Authentication.} $\mathrm{MAC}=\mathrm{HMAC\text{-}SHA256}$; the tag is the first $\tau$ bits of the MAC over $m\parallel n\parallel h_I$. The payload is $p=m\parallel\mathrm{tag}$ (length $|p|=\mu+\tau$).
+  \item \textbf{Keyed carrier map (binary carriers).} $\pi_j=\mathrm{LSB}\big(\mathrm{HMAC\text{-}SHA256}(K,\,h_I\parallel n\parallel \mathrm{ID}_j)\big)$ with $\mathrm{ID}_j$ the 4-byte big-endian carrier index. The realized option is $a_j^\star=\pi_j\oplus c_j$ and the recovered symbol is $\hat c_j=\pi_j\oplus a_j^{obs}$.
+  \item \textbf{Error-correcting code.} A systematic $[N,k]$ linear code over $\mathrm{GF}(2)$ with generator $G=[\,I_k\mid P\,]$, where $P$ is drawn once from a fixed pseudo-random seed. Erasure decoding solves the surviving linear equations by Gaussian elimination over $\mathrm{GF}(2)$; it succeeds iff the retained rows have rank $k$ (Proposition~\ref{prop:cliff}).
+  \item \textbf{Detection decision.} Attribute iff erasure decoding returns some $\hat p$ \emph{and} $\mathrm{MAC}$ verifies on $(\hat m,n,h_I)$; otherwise report the calibrated statistic $z$ of Eq.~\eqref{eq:zscore} against a threshold $\tau_z$ without asserting authenticated attribution.
+\end{itemize}
+
+\subsection{Notation-to-Code Map}
+Table~\ref{tab:notation} maps paper symbols to identifiers in \texttt{reference/truthprint\_poc.py}, removing any ambiguity between the formalism and the code.
+
+\begin{table}[t]
+\centering
+\caption{Mapping between paper notation and reference-implementation identifiers.}
+\label{tab:notation}
+\renewcommand{\arraystretch}{1.2}
+\footnotesize
+\begin{tabular}{p{0.8cm}p{2.5cm}p{3.7cm}}
+\toprule
+Symbol & Meaning & Code identifier \\
+\midrule
+$h_I$ & canonical invariant digest & \texttt{canonical\_\allowbreak invariant\_\allowbreak digest} \\
+$p$ & authenticated payload & \texttt{authenticate\_\allowbreak payload} \\
+$\mathrm{MAC}$ & tag verification & \texttt{verify\_payload} \\
+$\mathrm{ECC}$ & systematic GF(2) code & \texttt{GF2Code.encode} \\
+decode & erasure decoding & \texttt{GF2Code.\allowbreak decode\_\allowbreak erasure} \\
+$\pi_j$ & keyed carrier offset & \texttt{keyed\_bit} \\
+$a_j^\star$ & realized option & \texttt{realize\_option} \\
+$\hat c_j$ & recovered symbol & \texttt{recover\_symbol} \\
+$D_K$ & detector & \texttt{detect\_document} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Parameters, Determinism, and How to Run}
+The core script uses $\mu=16$, $\tau=32$, $[N,k]=[96,48]$; the linguistic script uses $\mu=12$, $\tau=20$, $[N,k]=[64,32]$ over $32$ sentences with two carriers each. All randomness is seeded: message bits and erasure sampling use fixed seeds, and the code matrix $P$ uses a fixed seed, so every reported number is reproducible. The document nonce $n$ is freshly sampled per run and passed explicitly to the detector; recovery is invariant to its value, so success does not depend on the nonce. Both scripts return a non-zero exit code if any asserted property fails, so they double as regression tests. Reproduction requires only Python~3 (standard library only); the paper builds with \texttt{pdflatex} via \texttt{make}. The exact commands are:
+\begin{lstlisting}
+python3 reference/truthprint_poc.py             # P1-P4
+python3 reference/truthprint_linguistic_demo.py # L1-L3
+make                                            # build main.pdf
+\end{lstlisting}
+Expected results are those reported in Section~\ref{sec:impl}: P1--P4 hold, and L1--L3 hold on sentence strings.
+
+The same primitives are also packaged as an installable Python distribution (\texttt{code/} in the accompanying repository) with a unit-test suite and continuous integration. Its command-line interface reruns all properties (\texttt{truthprint selftest}) and regenerates Table~\ref{tab:erasure} deterministically from a fixed seed with $500$ trials per erasure rate (\texttt{truthprint repro-table}).
+
+\section{Practical Software Architecture}
+\label{app:arch}
+A prototype can use the following modular layout:
+\begin{lstlisting}
+truthprint/
+  schema/        # entities, events, relations, mutability
+  parser/        # multilingual parser and canonicalizer
+  carriers/      # voice, packaging, discourse, ordering
+  encoding/      # payload, keyed mapping, ECC
+  realization/   # candidate generation and ranking
+  validation/    # hard constraints, NLI, numbers, quality
+  detection/     # extraction, decoding, statistics
+  attacks/       # translation, paraphrase, summary, splice
+  experiments/   # datasets, metrics, runners
+\end{lstlisting}
+
+\subsection{Core Data Model}
+\begin{lstlisting}[language=Python,caption={Illustrative Python data model.}]
+from enum import Enum
+from pydantic import BaseModel, Field
+
+class Mutability(str, Enum):
+    LOCKED = "locked"
+    CONDITIONAL = "conditional"
+    REALIZATION_ONLY = "realization_only"
+
+class Event(BaseModel):
+    id: str
+    predicate: str
+    roles: dict[str, str]
+    polarity: str = "positive"
+    modality: str = "asserted"
+    time: dict = Field(default_factory=dict)
+    quantity: dict | None = None
+    attribution: str | None = None
+
+class CarrierSite(BaseModel):
+    carrier_id: str
+    family: str
+    target_node_ids: list[str]
+    alternatives: list[str]
+    recoverability: float
+    quality_cost: float
+\end{lstlisting}
+
+\subsection{Keyed Mapping Skeleton}
+\begin{lstlisting}[language=Python,caption={Secret-keyed carrier assignment skeleton.}]
+import hmac
+from hashlib import sha256
+
+def keyed_index(key, invariant_hash, nonce,
+                carrier_id, symbol, option_count):
+    msg = b"|".join([
+        invariant_hash,
+        nonce,
+        carrier_id.encode(),
+        symbol.to_bytes(4, "big")
+    ])
+    digest = hmac.new(key, msg, sha256).digest()
+    return int.from_bytes(digest[:8], "big") % option_count
+\end{lstlisting}
+
+\section{Prototype Roadmap}
+\label{app:roadmap}
+\subsection{Stage 1: Closed-Domain Proof of Concept}
+Begin with technical or news-style factual statements. Support entities, events, agent/patient roles, polarity, number, time, and causality. Start with carriers that are easy to validate: active/passive voice, proposition order for independent facts, causal connective family, clause splitting/merging, and nominal/verbal realization.
+
+\subsection{Stage 2: Multilingual Parsing}
+Map English, Korean, and Hindi into one predicate and role inventory using a combination of multilingual structured extraction, dependency parsing, semantic-role labeling, named-entity normalization, numerical and temporal normalization, and multilingual embeddings as a fallback alignment mechanism.
+
+\subsection{Stage 3: Document-Level Coding}
+Introduce multi-ary carrier alphabets, BCH or Reed--Solomon codes, carrier interleaving, synchronization markers, order-independent anchors, partial payload recovery, and provenance database lookup.
+
+\section{Extended Evaluation Protocol}
+\label{app:protocol}
+The following enumerations complete the falsifiable protocol summarized in
+Section~\ref{sec:eval}; they are the baselines, languages, attacks, and
+metrics a full evaluation must cover.
+
+\subsection{Baselines}
+Experiments should include unwatermarked decoding, a representative Red--Green token watermark, SynthID-Text, SemStamp, SemaMark, semantic-invariant watermarking, SWAN, DEW, Truthprint without invariant validation, Truthprint without ECC, embedding-only Truthprint, and structure-only Truthprint. Standardized baseline implementations from an open watermarking toolkit should be used where available to ensure comparability \cite{pan2024markllm}.
+
+\subsection{Languages and Domains}
+Recommended languages include English, Korean, Hindi, Chinese, Arabic, and German or French. Domains should include factual news, encyclopedic explanations, technical documentation, scientific summaries, policy-style prose, dialogue, and creative writing. Code, formulas, legal clauses, and direct quotations should be reported separately due to low semantic carrier capacity.
+
+\subsection{Attacks}
+The evaluation should cover Unicode and punctuation edits, spelling correction, direct translation, round-trip and two-hop translation, lexical and syntactic paraphrasing, sentence splitting/merging, proposition reordering, deletion, insertion, splicing, summarization at multiple compression ratios, regeneration from bullet points, repeated detector-guided paraphrasing, and carrier-targeted rewriting.
+
+\subsection{Metrics}
+Detection metrics include ROC-AUC, true-positive rate at 1\%, 0.1\%, and 0.01\% false-positive rates, false-negative rate, payload bit-error rate, complete and partial recovery rates, minimum reliable text length, and detector latency.
+
+Semantic integrity metrics include entity consistency, role consistency, polarity accuracy, numerical accuracy, temporal consistency, causal-direction consistency, attribution consistency, bidirectional entailment, contradiction rate, and human factual-equivalence judgment.
+
+A weighted invariant error rate can be defined as
+\begin{equation}
+\mathrm{IER}=\frac{\sum_i w_iE_i}{\sum_i w_i},
+\end{equation}
+where critical categories such as polarity and numeric value receive larger weights or are treated as hard failures.
 
 \end{document}
