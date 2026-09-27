@@ -9,7 +9,7 @@ import json
 from truthprint.multilingual import FIELDS
 from truthprint.neural_parser import (build_prompt, parse_response,
                                       normalize_fields, NeuralInvariantExtractor,
-                                      StubBackend)
+                                      StubBackend, APIBackend)
 from scripts.eval_neural_parser import score
 
 
@@ -62,6 +62,42 @@ def test_extractor_with_stub_backend():
     # unmatched sentence -> stub returns {} -> abstentions
     d2 = ext.extract("Totally unrelated sentence.", "en")
     assert d2["agent"] is None
+
+
+def test_api_backend_builds_request_and_extracts_content():
+    captured = {}
+
+    class FakeAPI(APIBackend):
+        def _post(self, url, data, headers):
+            captured["url"] = url
+            captured["data"] = data
+            captured["auth"] = headers.get("Authorization")
+            return {"choices": [{"message": {"content":
+                    '{"agent":"the analyst","predicate":"fix","polarity":"positive"}'}}]}
+
+    be = FakeAPI(model="free-model", base_url="https://example/api/v1/",
+                 api_key="k123")
+    ext = NeuralInvariantExtractor(be)
+    d = ext.extract("The analyst fixed the cache miss.", "en")
+    assert d["agent"] == "the analyst"
+    assert d["predicate"] == "FIX"
+    # request was well-formed
+    assert captured["url"] == "https://example/api/v1/chat/completions"
+    assert captured["auth"] == "Bearer k123"
+    assert captured["data"]["model"] == "free-model"
+    assert captured["data"]["messages"][-1]["role"] == "user"
+
+
+def test_api_backend_retries_then_raises():
+    class FailingAPI(APIBackend):
+        def _post(self, url, data, headers):
+            raise ConnectionError("boom")
+    be = FailingAPI(model="m", base_url="http://x/v1", api_key="k", retries=2)
+    try:
+        be("hi")
+        assert False, "expected failure"
+    except RuntimeError as e:
+        assert "failed after 2 tries" in str(e)
 
 
 def test_scorer_field_and_domain_breakdown(tmp_path):
