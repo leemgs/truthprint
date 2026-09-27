@@ -114,13 +114,32 @@ def _norm_str(val):
     return s or None
 
 
+# Map a predicate surface form (any inflection) to its canonical uppercase lemma,
+# so an extractor that returns "fixed"/"raises" compares fairly against gold "FIX"/
+# "RAISE". Matched by stem prefix; unknown predicates fall back to uppercase.
+_PREDICATE_STEMS = {
+    "fix": "FIX", "broke": "BREAK", "break": "BREAK", "broken": "BREAK",
+    "rais": "RAISE", "reduc": "REDUCE", "clos": "CLOSE", "detect": "DETECT",
+    "overturn": "OVERTURN", "patch": "PATCH",
+}
+
+
+def _norm_predicate(pred):
+    if pred in (None, ""):
+        return None
+    s = str(pred).strip().lower()
+    for stem, lemma in _PREDICATE_STEMS.items():
+        if s.startswith(stem):
+            return lemma
+    return str(pred).strip().upper()
+
+
 def normalize_fields(d: dict) -> dict:
     """Coerce a raw extracted dict to the canonical FIELDS schema."""
     out = {f: None for f in FIELDS}
     out["agent"] = _norm_str(d.get("agent"))
     out["patient"] = _norm_str(d.get("patient"))
-    pred = d.get("predicate")
-    out["predicate"] = str(pred).strip().upper() if pred not in (None, "") else None
+    out["predicate"] = _norm_predicate(d.get("predicate"))
     out["polarity"] = _norm_choice(d.get("polarity"), _POLARITY) or (
         "positive" if d.get("polarity") is None else None)
     out["quantity"] = _norm_quantity(d.get("quantity"))
