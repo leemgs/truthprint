@@ -46,7 +46,14 @@
 - **어떻게:** `handoff/samples/04_human_factuality.csv` 형식대로 benign/altering 쌍에
   `human_equivalent`(0/1)를 사람 2명이 채움. Claude가 κ(일치도)와 ValidRemoval을 계산.
 
-### B4. 공식 baseline 비교 (리뷰 W4) — ⭐ 실행 패키지 준비 완료
+### B4. 공식 baseline 비교 (리뷰 W4) — ✅ 실측 완료 (Kaggle GPU)
+- **결과 반영됨:** 실제 KGW 토큰 워터마크가 실제 NLLB 번역에서 붕괴(clean 0.960 → 번역
+  0.000–0.380), Truthprint 의미-digest는 생존(0.502–0.980). §Real Baseline Comparison
+  (`sec:baselines`, Table `tab:baselines`) + Table 1 행 + 초록에 반영. 결과 파일
+  `paper/results/baselines_real.{md,json}`. 진단 시뮬레이터는 부록으로 강등됨.
+- **남은 확장(선택):** SynthID/SemStamp/SWAN 공식 구현 추가(현재는 단일 KGW baseline).
+
+### B4-old. (참고) 공식 baseline 비교 실행 패키지
 - **왜:** SynthID/SemStamp 등과 동일 조건 비교가 있어야 우열 주장 가능. 주 트랙 최대 관문.
 - **준비됨(Claude):** 노트북 `handoff/Truthprint_W4_Baselines_Kaggle.ipynb`,
   스키마 `handoff/W4_SCHEMA_KO.md`, 절차 `handoff/KAGGLE_W4_STEPS_KO.md`,

@@ -16,7 +16,7 @@
 \maketitle
 
 \begin{abstract}
-Token-level watermarks for large language models (LLMs) are fragile under translation and paraphrasing because their signal lives in surface token choices. This paper proposes \emph{Truthprint}, a semantic intermediate representation (IR) that separates \emph{locked invariants} (polarity, quantity, time, attribution, roles) from \emph{controlled realization variables} through a machine-checkable, typed mutability contract. We evaluate two provenance mechanisms that share this IR and are careful to distinguish them. (i)~A \emph{realization-carrier} scheme embeds an authenticated, error-corrected payload in realization freedom; against real neural machine translation this is an \emph{honest negative}---the Stage-1 surface parser recovers $0/192$ NLLB outputs---because translation rewrites the carriers. (ii)~A \emph{meaning-digest} scheme instead registers a keyed tag over the invariant digest in an out-of-band ledger and re-verifies it after transformation, carrying no realization payload. On $4{,}800$ real NLLB translations across six languages, a Stage-2 lexicon-based extractor recovers invariant fields at $0.90$--$1.00$ and the meaning-digest scheme authenticates translated documents cross-lingually ($1.000$ document-level attribution for five of six languages; Arabic weaker) while rejecting single-field tampering. We prove three \emph{conditional} properties (protected-field fidelity under a sound validator, fresh-payload unforgeability reducing to the MAC, and a per-key--nonce tag-acceptance bound $2^{-\tau}$), and ship a seeded, self-testing cryptographic/coding core (zero authenticated false positives in $20{,}000$ trials; $95\%$ upper bound $1.5\!\times\!10^{-4}$). All results are closed-domain and small-scale; wide-coverage neural parsing, semantic-level false-positive analysis, official baselines, and adaptive attacks remain necessary before any comparative robustness claim. Truthprint does not identify arbitrary AI text; it verifies consistency with a participating keyed generator.
+Token-level watermarks for large language models (LLMs) are fragile under translation and paraphrasing because their signal lives in surface token choices. This paper proposes \emph{Truthprint}, a semantic intermediate representation (IR) that separates \emph{locked invariants} (polarity, quantity, time, attribution, roles) from \emph{controlled realization variables} through a machine-checkable, typed mutability contract. We evaluate two provenance mechanisms that share this IR and are careful to distinguish them. (i)~A \emph{realization-carrier} scheme embeds an authenticated, error-corrected payload in realization freedom; against real neural machine translation this is an \emph{honest negative}---the Stage-1 surface parser recovers $0/192$ NLLB outputs---because translation rewrites the carriers. (ii)~A \emph{meaning-digest} scheme instead registers a keyed tag over the invariant digest in an out-of-band ledger and re-verifies it after transformation, carrying no realization payload. On $4{,}800$ real NLLB translations across six languages, a Stage-2 lexicon-based extractor recovers invariant fields at $0.90$--$1.00$ and the meaning-digest scheme authenticates translated documents cross-lingually ($1.000$ document-level attribution for five of six languages; Arabic weaker) while rejecting single-field tampering. We prove three \emph{conditional} properties (protected-field fidelity under a sound validator, fresh-payload unforgeability reducing to the MAC, and a per-key--nonce tag-acceptance bound $2^{-\tau}$), and ship a seeded, self-testing cryptographic/coding core (zero authenticated false positives in $20{,}000$ trials; $95\%$ upper bound $1.5\!\times\!10^{-4}$). On the same real-MT pipeline, a real KGW token watermark collapses under translation (TPR@$1\%$FPR $0.96$ clean to $0.00$--$0.38$ translated) while the meaning-digest scheme survives ($0.50$--$0.98$), a real single-baseline comparison. All results are closed-domain and small-scale; wide-coverage neural parsing, broader official baselines (SynthID, SemStamp, SWAN), and adaptive attacks remain necessary before a general comparative-robustness claim. Truthprint does not identify arbitrary AI text; it verifies consistency with a participating keyed generator.
 \end{abstract}
 
 \paragraph{Keywords.} Intermediate representation, LLM watermarking, provenance, semantic watermarking, translation robustness
@@ -74,6 +74,7 @@ Wide-coverage neural parsing on open-domain text & Pilot (positive on open domai
 Paraphrase/adaptive-attack robustness & Not established & Requires meaning-preserving attack outputs, held-out detector calibration, and ValidRemoval evaluation. \\
 System-level false-positive rate & Not established & The tag bound is per tested fresh candidate; parser search, tested key--nonce pairs, and fallback scores require end-to-end calibration. \\
 Semantic-level false-positive rate (contract collision) & Measured (closed-domain) & The $2^{-\tau}$ bound covers cryptographic tag collision only; the meaning-digest floor is the contract-collision probability. On the closed-domain corpus this floor is $5.2\times10^{-3}$ ($\approx1/192$) for the six-field contract---matching the measured $0.001$--$0.010$ real-MT false positives and $\sim\!2\times10^{7}\times$ the $2^{-32}$ bound (Sec.~\ref{sec:provenance}). Open-domain text has lower contract entropy, so estimating it per corpus is a deployment prerequisite. \\
+Comparative robustness vs.\ a real token watermark & Demonstrated (single baseline, real MT) & On the same pipeline a real KGW watermark collapses under real NLLB translation (TPR@$1\%$FPR $0.960$ clean $\to$ $0.000$--$0.380$ translated) while the meaning-digest scheme survives ($0.502$--$0.980$); Table~\ref{tab:baselines}, Sec.~\ref{sec:baselines}. Broader official baselines (SynthID, SemStamp, SWAN) remain future work. \\
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -749,6 +750,46 @@ It remains a closed-%
 domain Stage-2 result; a wide-coverage semantic parser and more documents/%
 languages are the next steps. The method and evaluation ship with the artifact
 (\texttt{scripts/eval\_provenance.py}).
+
+\subsection{Real Baseline Comparison: Token Watermark vs.\ Meaning Digest}
+\label{sec:baselines}
+To compare against a \emph{real} token-level watermark on the same pipeline---%
+rather than the diagnostic simulator of Appendix~\ref{app:diagnostic}, which must
+not rank methods---we embed a self-contained KGW watermark
+\cite{kirchenbauer2023kgw} ($\gamma{=}0.25$, $\delta{=}2.0$) during generation by
+a real model via logit biasing, translate the output with the same real
+NLLB-200-distilled-600M system into the six conditions, and detect on the
+translated text. Each method's threshold is calibrated at $1\%$ FPR on its null
+(unwatermarked) population; the meaning-digest scheme is shown at its own
+measured operating point (the contract-collision floor of Sec.~\ref{sec:provenance},
+not a tunable threshold). Table~\ref{tab:baselines} reports the result. The token
+watermark is detectable on clean text ($0.960$) but its signal is destroyed by
+real translation ($0.000$--$0.380$ across the six conditions), whereas the
+meaning-digest scheme survives ($0.502$--$0.980$). This is the real-data
+counterpart to the surface-carrier pilot's $0/192$ (Sec.~\ref{sec:realmt}) and
+confirms, with a real token watermark and real MT, the cross-lingual
+token-watermark removal reported by He et al.~\cite{he2024crosslingual}. It
+remains a single token baseline (SynthID/SIR via an open watermarking toolkit are
+an optional extension), a small generator, a closed-domain source, and one MT
+system; Arabic is weakest for the meaning-digest scheme too ($0.502$). The
+harness and scorer ship with the artifact (\texttt{scripts/eval\_baselines\_real.py}).
+
+\begin{table}[t]
+\centering
+\caption{Real head-to-head on real NLLB translation: TPR at $1\%$ FPR. A real
+KGW token watermark collapses under translation while the meaning-digest scheme
+survives. Replaces the diagnostic simulator (Appendix~\ref{app:diagnostic}).}
+\label{tab:baselines}
+\footnotesize
+\begin{tabular}{lccccccc}
+\toprule
+Method & clean & RT & KO & HI & ZH & AR & DE \\
+\midrule
+KGW (token) & 0.960 & 0.380 & 0.040 & 0.040 & 0.020 & 0.000 & 0.080 \\
+Truthprint (meaning) & --- & 0.941 & 0.958 & 0.980 & 0.922 & 0.502 & 0.948 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 To respect the page budget, three supporting parts are placed in the
 appendices: full reproducibility and notation (Appendix~\ref{app:repro}),
