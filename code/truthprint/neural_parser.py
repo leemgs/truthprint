@@ -33,7 +33,7 @@ from .multilingual import FIELDS, LANGS
 
 __all__ = [
     "build_prompt", "parse_response", "normalize_fields",
-    "NeuralInvariantExtractor", "StubBackend", "APIBackend",
+    "NeuralInvariantExtractor", "StubBackend", "APIBackend", "SeparatedPipeline",
 ]
 
 _SCHEMA_DOC = """Extract the meaning of the sentence into these fields (JSON):
@@ -277,3 +277,41 @@ class StubBackend:
             if needle in prompt:
                 return reply
         return "{}"
+
+
+class SeparatedPipeline:
+    """Enforce *separate* translation and extraction models (review W5 / Task 1).
+
+    The first neural pilot let one model both translate a sentence and extract
+    invariants from its own output, a self-consistency confound. This wrapper
+    makes model separation a checked contract: the translation backend and the
+    extraction backend must be distinct model identifiers, or construction fails.
+    The GPU handoff notebook instantiates this with two different models (e.g. one
+    system for ``translate`` and a different instruction model for ``extract``),
+    so the reported neural numbers are unconfounded.
+
+    ``translate_backend`` maps ``(text, target_lang) -> translated_text``;
+    ``extractor`` is a :class:`NeuralInvariantExtractor` over the *other* model.
+    """
+
+    def __init__(self, translate_backend: Callable[[str, str], str],
+                 translate_model_id: str,
+                 extractor: "NeuralInvariantExtractor",
+                 extract_model_id: str):
+        if translate_model_id == extract_model_id:
+            raise ValueError(
+                "translation and extraction must use different models "
+                f"(both were {translate_model_id!r}); this is the self-"
+                "consistency confound W5 asks to remove.")
+        self.translate_backend = translate_backend
+        self.translate_model_id = translate_model_id
+        self.extractor = extractor
+        self.extract_model_id = extract_model_id
+
+    def run(self, text: str, target_lang: str) -> dict:
+        """Translate with one model, extract invariants with a different one."""
+        translated = self.translate_backend(text, target_lang)
+        fields = self.extractor.extract(translated, target_lang)
+        return {"translated": translated, "fields": fields,
+                "translate_model": self.translate_model_id,
+                "extract_model": self.extract_model_id}

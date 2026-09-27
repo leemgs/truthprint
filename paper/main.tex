@@ -49,7 +49,7 @@
 \maketitle
 
 \begin{abstract}
-Token-level watermarks for large language models (LLMs) are fragile under translation and paraphrasing because their signal lives in surface token choices. This paper proposes \emph{Truthprint}, a semantic intermediate representation (IR) that separates \emph{locked invariants} (polarity, quantity, time, attribution, roles) from \emph{controlled realization variables} through a machine-checkable, typed mutability contract. We evaluate two provenance mechanisms that share this IR and are careful to distinguish them. (i)~A \emph{realization-carrier} scheme embeds an authenticated, error-corrected payload in realization freedom; against real neural machine translation this is an \emph{honest negative}---the Stage-1 surface parser recovers $0/192$ NLLB outputs---because translation rewrites the carriers. (ii)~A \emph{meaning-digest} scheme instead registers a keyed tag over the invariant digest in an out-of-band ledger and re-verifies it after transformation, carrying no realization payload. On $4{,}800$ real NLLB translations across six languages, a Stage-2 lexicon-based extractor recovers invariant fields at $0.90$--$1.00$ and the meaning-digest scheme authenticates translated documents cross-lingually ($1.000$ document-level attribution for five of six languages; Arabic weaker) while rejecting single-field tampering. We prove three \emph{conditional} properties (protected-field fidelity under a sound validator, fresh-payload unforgeability reducing to the MAC, and a per-key--nonce tag-acceptance bound $2^{-\tau}$), and ship a seeded, self-testing cryptographic/coding core (zero authenticated false positives in $20{,}000$ trials; $95\%$ upper bound $1.5\!\times\!10^{-4}$). On the same real-MT pipeline, a real KGW token watermark collapses under translation (TPR@$1\%$FPR $0.96$ clean to $0.00$--$0.38$ translated) while the meaning-digest scheme survives ($0.50$--$0.98$), a real single-baseline comparison. All results are closed-domain and small-scale; wide-coverage neural parsing, broader official baselines (SynthID, SemStamp, SWAN), and adaptive attacks remain necessary before a general comparative-robustness claim. Truthprint does not identify arbitrary AI text; it verifies consistency with a participating keyed generator.
+Token-level watermarks for large language models (LLMs) are fragile under translation and paraphrasing because their signal lives in surface token choices. This paper proposes \emph{Truthprint}, a semantic intermediate representation (IR) that separates \emph{locked invariants} (polarity, quantity, time, attribution, roles) from \emph{controlled realization variables} through a machine-checkable, typed mutability contract. We evaluate two provenance mechanisms that share this IR and are careful to distinguish them. (i)~A \emph{realization-carrier} scheme embeds an authenticated, error-corrected payload in realization freedom; against real neural machine translation this is an \emph{honest negative}---the Stage-1 surface parser recovers $0/192$ NLLB outputs---because translation rewrites the carriers. (ii)~A \emph{meaning-digest} scheme instead registers a keyed tag over the invariant digest in an out-of-band ledger and re-verifies it after transformation, carrying no realization payload. On $4{,}800$ real NLLB translations across six languages, a Stage-2 lexicon-based extractor recovers invariant fields at $0.90$--$1.00$ and the meaning-digest scheme authenticates translated documents cross-lingually ($1.000$ document-level attribution for five of six languages; Arabic weaker) while rejecting single-field tampering. We prove three \emph{conditional} properties (protected-field fidelity under a sound validator, fresh-payload unforgeability reducing to the MAC, and a per-key--nonce tag-acceptance bound $2^{-\tau}$), and ship a seeded, self-testing cryptographic/coding core (zero authenticated false positives in $20{,}000$ trials; $95\%$ upper bound $1.5\!\times\!10^{-4}$). On the same real-MT pipeline, a real KGW token watermark collapses under translation (TPR@$1\%$FPR $0.96$ clean to $0.00$--$0.38$ translated) while the meaning-digest scheme survives ($0.50$--$0.98$), a real single-baseline comparison. At a \emph{matched} $1\%$ FPR on real LLM-MT, a real embedding-region baseline (SemStamp) survives round-trip ($1.00$) but degrades cross-lingually ($0.94$ Korean to $0.38$ Arabic) as embedding buckets drift, while the typed meaning-digest survives all conditions and, unlike similarity/robust hashing, rejects single-field tampers (typed $1.00$ vs.\ SimHash/MinHash $0.00$). All results are closed-domain and small-scale; wide-coverage neural parsing, broader official baselines (SynthID, SemStamp, SWAN), and adaptive attacks remain necessary before a general comparative-robustness claim. Truthprint does not identify arbitrary AI text; it verifies consistency with a participating keyed generator.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -109,7 +109,9 @@ Wide-coverage neural parsing on open-domain text & Pilot (positive on open domai
 Paraphrase/adaptive-attack robustness & Not established & Requires meaning-preserving attack outputs, held-out detector calibration, and ValidRemoval evaluation. \\
 System-level false-positive rate & Not established & The tag bound is per tested fresh candidate; parser search, tested key--nonce pairs, and fallback scores require end-to-end calibration. \\
 Semantic-level false-positive rate (contract collision) & Measured (closed-domain) & The $2^{-\tau}$ bound covers cryptographic tag collision only; the meaning-digest floor is the contract-collision probability. On the closed-domain corpus this floor is $5.2\times10^{-3}$ ($\approx1/192$) for the six-field contract---matching the measured $0.001$--$0.010$ real-MT false positives and $\sim\!2\times10^{7}\times$ the $2^{-32}$ bound (Sec.~\ref{sec:provenance}). Open-domain text has lower contract entropy, so estimating it per corpus is a deployment prerequisite. \\
-Comparative robustness vs.\ a real token watermark & Demonstrated (single baseline, real MT) & On the same pipeline a real KGW watermark collapses under real NLLB translation (TPR@$1\%$FPR $0.960$ clean $\to$ $0.000$--$0.380$ translated) while the meaning-digest scheme survives ($0.502$--$0.980$); Table~\ref{tab:baselines}, Sec.~\ref{sec:baselines}. Broader official baselines (SynthID, SemStamp, SWAN) remain future work. \\
+Comparative robustness vs.\ token and semantic baselines & Demonstrated (real MT: KGW token; matched-FPR SemStamp $+$ robust hashing) & On the same pipeline a real KGW watermark collapses under real NLLB translation (TPR@$1\%$FPR $0.960$ clean $\to$ $0.000$--$0.380$ translated) while the meaning-digest scheme survives ($0.502$--$0.980$); Table~\ref{tab:baselines}, Sec.~\ref{sec:baselines}. At a matched $1\%$ FPR a real embedding-region baseline (SemStamp) survives round-trip but degrades cross-lingually ($0.937$ KO $\to$ $0.377$ AR) while the typed scheme survives, and only the typed contract rejects single-field tampers (Table~\ref{tab:matched}, Sec.~\ref{sec:matched}). Official implementations (SynthID, SWAN) remain future work. \\
+Distinction from robust/semantic hashing & Demonstrated (closed-domain, real MT) & Robust hashes (exact, MinHash, SimHash) either die under translation or cannot localize a typed field change (reject $0\%$ of single-field tampers vs.\ typed $1.000$); the meaning-digest is a typed, keyed member of the family with an analyzed collision floor (Secs.~\ref{sec:relhash},~\ref{sec:matched}). \\
+Translator-independent (separated) frontend & Pilot (open-domain positive on one field) & A model-separated embedding frontend recovers open-domain temporal direction ($0.944$) where the lexicon abstains ($0.000$); static embeddings remain insufficient for the full contract, motivating the separated-backend LLM frontend (Sec.~\ref{sec:neural}). \\
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -216,6 +218,26 @@ This prevents meaning-destroying rewrites from being counted as successful seman
 
 \subsection{Provable and Cryptographic Watermarking}
 The token-level lineage begins with the green--red list watermark of Kirchenbauer et al. \cite{kirchenbauer2023kgw}, which SynthID-Text generalizes through tournament sampling. A parallel line seeks formal guarantees: Zhao et al. prove robustness for a fixed-grouping unigram watermark \cite{zhao2023provable}, Kuditipudi et al. give distortion-free watermarks robust to editing \cite{kuditipudi2024distortionfree}, and Christ et al. introduce cryptographically \emph{undetectable} watermarks whose presence is indistinguishable without the key \cite{christ2024undetectable}. Closest in aim, Liu et al. propose an unforgeable publicly verifiable watermark that separates generation and detection keys \cite{liu2024unforgeable}, and Fernandez et al. consolidate statistical tests with guarantees that hold at very low false-positive rates \cite{fernandez2023threebricks}. Truthprint inherits the spirit of this line at the provenance layer rather than the token layer: fresh-payload unforgeability and per-candidate tag acceptance (Theorems~\ref{thm:unforge} and~\ref{thm:fpr}) reduce to standard cryptographic assumptions on the MAC. These are not guarantees for the fallback score or the end-to-end detector, both of which require empirical calibration. Truthprint does not claim undetectability; its aim is authenticated attribution designed to retain evidence under some transformations, a property not established by the present Stage-1 evaluation.
+
+\subsection{Robust and Semantic Hashing}
+\label{sec:relhash}
+Registering a meaning-digest tag in a ledger and re-verifying it after
+transformation resembles \emph{robust hashing}: perceptual or semantic
+fingerprints that map near-duplicate content to near-identical digests for copy
+detection and deduplication, from MinHash \cite{broder1997minhash} and SimHash
+\cite{charikar2002simhash} to learned semantic hashing. The difference is
+\emph{what} is hashed. Robust hashing answers ``is this the same string, the same
+token set, or a nearby point in embedding space?''---a \emph{similarity} question
+whose tolerance both admits false matches on low-entropy content and, decisively,
+\emph{cannot localize which typed fact changed}: a single-field meaning-altering
+edit stays within tolerance, which we measure directly in
+Section~\ref{sec:matched} (SimHash and MinHash reject $0\%$ of such edits).
+Truthprint instead hashes a \emph{typed invariant contract} and authenticates
+with a keyed MAC, so a change to any contract field breaks verification while
+realization-only variation and translation do not. The meaning-digest scheme is
+thus a \emph{typed, keyed} member of this family whose false-positive floor is the
+contract-collision probability (Sec.~\ref{sec:provenance})---analyzed here rather
+than left implicit as in generic robust hashing.
 
 \subsection{Positioning of Truthprint}
 Table~\ref{tab:positioning} summarizes the principal carrier used by representative systems.
@@ -738,6 +760,28 @@ frontend generalizes to open-domain wording where the lexicon abstains. The
 pilot backend and scorer ship with the artifact
 (\texttt{scripts/eval\_neural\_parser.py}).
 
+\paragraph{Separated backends and a translator-independent frontend.}
+That pilot let one model both translate and read its own output, a
+self-consistency confound. We address it two ways. First, the neural harness now
+enforces \emph{separate} translation and extraction models as a checked contract
+(\texttt{neural\_parser.SeparatedPipeline} rejects a shared model id), and the GPU
+handoff instantiates it with two distinct model families, so the wide-coverage
+numbers are unconfounded. Second, we add a frontend that is \emph{model-separated
+by construction}: it reads the cached real translations with a real multilingual
+sentence \emph{embedding} (\texttt{model2vec})---not the translating model---and
+classifies the categorical invariant fields by nearest prototype
+(\texttt{scripts/eval\_separated\_frontend.py}). On open-domain wording this
+translator-independent frontend recovers \emph{temporal direction} at $0.944$
+(Wilson CI $[0.819,0.985]$) where the closed lexicon abstains ($0.000$
+$[0.000,0.096]$): a semantic frontend separated from the translator reads a field
+the lexicon cannot. Honestly, a \emph{static} embedding is insufficient for the
+full contract---polarity and modality sit near chance, aggregate $0.59$ against
+the lexicon's $0.69$ on open domain---because a whole-sentence static vector
+encodes topic more than a single logical field. This quantitatively motivates the
+instruction-LLM frontend on the separated-backend harness rather than a static
+embedding, while removing the self-consistency confound from the in-repo
+measurement.
+
 \subsection{Meaning-Based Provenance Authentication Survives Real Translation}
 \label{sec:provenance}
 Recovering the meaning layer lets us realize the paper's actual objective---%
@@ -811,9 +855,14 @@ harness and scorer ship with the artifact (\texttt{scripts/eval\_baselines\_real
 
 \begin{table}[t]
 \centering
-\caption{Real head-to-head on real NLLB translation: TPR at $1\%$ FPR. A real
-KGW token watermark collapses under translation while the meaning-digest scheme
-survives. Replaces the diagnostic simulator (Appendix~\ref{app:diagnostic}).}
+\caption{Real head-to-head on real NLLB translation. A real KGW token watermark
+collapses under translation while the meaning-digest scheme survives. KGW is at a
+calibrated $1\%$ FPR; the meaning-digest row is at its contract-collision
+operating point ($\sim\!5\times10^{-3}$), so the two rows are not at a matched
+FPR and the clean cell (---) is undefined for a ledger scheme with no in-text
+signal. Section~\ref{sec:matched} (Table~\ref{tab:matched}) gives the matched-FPR
+comparison, all methods at $1\%$ FPR, adding a real semantic baseline and robust
+hashing. Replaces the diagnostic simulator (Appendix~\ref{app:diagnostic}).}
 \label{tab:baselines}
 \footnotesize
 \begin{tabular}{lccccccc}
@@ -822,6 +871,77 @@ Method & clean & RT & KO & HI & ZH & AR & DE \\
 \midrule
 KGW (token) & 0.960 & 0.380 & 0.040 & 0.040 & 0.020 & 0.000 & 0.080 \\
 Truthprint (meaning) & --- & 0.941 & 0.958 & 0.980 & 0.922 & 0.502 & 0.948 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Because Table~\ref{tab:baselines} reports KGW at a calibrated $1\%$ FPR but the
+meaning-digest scheme at its contract-collision operating point, and because KGW
+is a \emph{token} baseline, Section~\ref{sec:matched} adds a matched-FPR
+comparison (every method at $1\%$ FPR) that also includes a real \emph{semantic}
+baseline (SemStamp) and the robust-hashing family.
+
+\subsection{Matched-FPR Semantic and Robust-Hashing Baselines}
+\label{sec:matched}
+To answer the matched-operating-point question and to compare against a real
+semantic---not only token---baseline, we run an in-repo head-to-head in which
+\emph{every} method is calibrated at the \emph{same} $1\%$ FPR on a null
+(unrelated-content) population, on the same cached real LLM-MT translations, with
+a real multilingual sentence embedding (\texttt{model2vec}). Alongside SemStamp
+\cite{hou2024semstamp} we include the robust-hashing family the meaning-digest
+scheme is naturally compared to (Sec.~\ref{sec:relhash}): an exact SHA-256
+surface hash, a char-shingle MinHash \cite{broder1997minhash}, and an embedding
+SimHash \cite{charikar2002simhash}. Documents are $16$-sentence bootstrap samples
+($300$ per condition, seeded); Table~\ref{tab:matched} reports TPR at matched
+$1\%$ FPR with Wilson $95\%$ CIs.
+
+Three findings follow. First, a real embedding-region watermark (SemStamp)
+survives English round-trip ($1.000$) and a near language (Korean $0.937$) but
+degrades as the embedding buckets drift cross-lingually (Hindi $0.617$, Chinese
+$0.460$, Arabic $0.377$), whereas the typed meaning-digest survives all six
+conditions ($1.000$ at matched FPR). Second, robust hashing behaves as its
+surface dependence predicts: the exact hash and token MinHash collapse under any
+cross-script translation ($0.000$), and the embedding SimHash is partial and
+unstable ($0.000$--$0.883$). Third---decisive for positioning against robust
+hashing---a single-field, meaning-altering edit is \emph{rejected} by the typed
+contract ($1.000$, CI $[0.981,1.000]$) but by \emph{neither} similarity hash
+(SimHash and MinHash both $0.000$): a near-duplicate fingerprint cannot see which
+typed field changed. The exact hash rejects every tamper ($1.000$) but also
+rejects every legitimate translation ($0.000$ TPR cross-lingually)---the classic
+robustness/sensitivity trade-off that the meaning-digest resolves by hashing a
+\emph{typed invariant contract} rather than a surface or a similarity region.
+This is the real-baseline, matched-FPR counterpart to challenge result~C3. It
+shares the closed-domain, small-substrate ($16$ base items) caveats and uses a
+static embedding: a stronger encoder or a wide-coverage frontend may shift the
+baseline numbers, but the qualitative ordering---typed contract $>$ embedding
+region $>$ token/surface hash under translation, and typed contract \emph{alone}
+rejecting single-field tampers---follows from where each signal lives. The
+harness ships with the artifact (\texttt{scripts/eval\_semantic\_baselines.py}).
+
+\begin{table}[t]
+\centering
+\caption{Matched-FPR head-to-head on cached real LLM-MT translations: TPR at a
+common $1\%$ FPR ($300$ bootstrap documents of $16$ sentences, seeded; real
+multilingual embedding). RT $=$ English round-trip; KO/HI/ZH/AR $=$ direct
+translation. Bottom: fraction of single-field meaning-altering edits correctly
+rejected. Only the typed contract both survives translation and rejects a typed
+tamper.}
+\label{tab:matched}
+\footnotesize
+\begin{tabular}{lccccc}
+\toprule
+Method & RT & KO & HI & ZH & AR \\
+\midrule
+Meaning-digest (typed)    & 1.000 & 1.000 & 1.000 & 1.000 & 1.000 \\
+SemStamp (embed.\ region) & 1.000 & 0.937 & 0.617 & 0.460 & 0.377 \\
+SimHash (robust hash)     & 1.000 & 0.590 & 0.000 & 0.883 & 0.633 \\
+MinHash (robust hash)     & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+Exact SHA-256             & 0.867 & 0.000 & 0.000 & 0.000 & 0.000 \\
+\midrule
+\multicolumn{6}{l}{\emph{Single-field tamper rejection (closed domain, $n{=}200$):}}\\
+Meaning-digest            & \multicolumn{5}{c}{$1.000$\ \ [$0.981,1.000$]} \\
+SimHash / MinHash         & \multicolumn{5}{c}{$0.000$\ \ [$0.000,0.019$]} \\
+Exact SHA-256             & \multicolumn{5}{c}{$1.000$ (but $0.0$ TPR under MT)} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1002,6 +1122,12 @@ Y. Cheng, V. S. Sadasivan, M. Saberi, S. Saha, and S. Feizi, ``Adversarial parap
 
 \bibitem{pan2024markllm}
 L. Pan \emph{et al.}, ``MarkLLM: An open-source toolkit for LLM watermarking,'' in \emph{Proc. EMNLP (System Demonstrations)}, 2024. \url{https://arxiv.org/abs/2405.10051}
+
+\bibitem{broder1997minhash}
+A. Z. Broder, ``On the resemblance and containment of documents,'' in \emph{Proc. Compression and Complexity of Sequences}, 1997.
+
+\bibitem{charikar2002simhash}
+M. S. Charikar, ``Similarity estimation techniques from rounding algorithms,'' in \emph{Proc. ACM STOC}, 2002.
 
 \end{thebibliography}
 \appendix

@@ -22,6 +22,11 @@ dependencies = []   # core is standard-library only
 
 [project.optional-dependencies]
 dev = ["pytest>=7.0"]
+# Real multilingual sentence embedding for the semantic/robust-hash baselines
+# (SemStamp, SimHash) and the translator-independent neural frontend. Optional:
+# the stdlib-only core, its tests, and CI run without it; baseline scripts and
+# their tests skip cleanly when it is absent.
+baselines = ["model2vec>=0.3"]
 
 [project.urls]
 Homepage = "https://github.com/leemgs/truthprint"

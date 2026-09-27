@@ -1,0 +1,325 @@
+{
+  "config": {
+    "docs": 300,
+    "doc_len": 16,
+    "fpr": 0.01,
+    "semstamp_bits": 4,
+    "simhash_bits": 64,
+    "simhash_tol": 19,
+    "minhash_thr": 0.5,
+    "seed": 20270101,
+    "model": "minishlab/potion-multilingual-128M",
+    "n_items": 16,
+    "tamper_n": 200
+  },
+  "conditions": {
+    "rt": {
+      "meaning-digest": {
+        "tpr_at_fpr": 1.0,
+        "ci": [
+          0.9874,
+          1.0
+        ],
+        "threshold": 0.0,
+        "achieved_fpr": 0.0,
+        "mean_pos": 0.6471,
+        "mean_null": 0.0
+      },
+      "SemStamp": {
+        "tpr_at_fpr": 1.0,
+        "ci": [
+          0.9874,
+          1.0
+        ],
+        "threshold": 0.6484,
+        "achieved_fpr": 0.01,
+        "mean_pos": 0.8265,
+        "mean_null": 0.5071
+      },
+      "SimHash-hash": {
+        "tpr_at_fpr": 1.0,
+        "ci": [
+          0.9874,
+          1.0
+        ],
+        "threshold": 0.4375,
+        "achieved_fpr": 0.0067,
+        "mean_pos": 1.0,
+        "mean_null": 0.1929
+      },
+      "MinHash-hash": {
+        "tpr_at_fpr": 1.0,
+        "ci": [
+          0.9874,
+          1.0
+        ],
+        "threshold": 0.0625,
+        "achieved_fpr": 0.0067,
+        "mean_pos": 1.0,
+        "mean_null": 0.0085
+      },
+      "exact-hash": {
+        "tpr_at_fpr": 0.8667,
+        "ci": [
+          0.8235,
+          0.9005
+        ],
+        "threshold": 0.0,
+        "achieved_fpr": 0.0,
+        "mean_pos": 0.1237,
+        "mean_null": 0.0
+      }
+    },
+    "ko": {
+      "meaning-digest": {
+        "tpr_at_fpr": 1.0,
+        "ci": [
+          0.9874,
+          1.0
+        ],
+        "threshold": 0.0,
+        "achieved_fpr": 0.0,
+        "mean_pos": 0.6208,
+        "mean_null": 0.0
+      },
+      "SemStamp": {
+        "tpr_at_fpr": 0.9367,
+        "ci": [
+          0.9032,
+          0.9591
+        ],
+        "threshold": 0.6641,
+        "achieved_fpr": 0.01,
+        "mean_pos": 0.7361,
+        "mean_null": 0.5464
+      },
+      "SimHash-hash": {
+        "tpr_at_fpr": 0.59,
+        "ci": [
+          0.5335,
+          0.6442
+        ],
+        "threshold": 0.25,
+        "achieved_fpr": 0.0,
+        "mean_pos": 0.3123,
+        "mean_null": 0.0602
+      },
+      "MinHash-hash": {
+        "tpr_at_fpr": 0.0,
+        "ci": [
+          0.0,
+          0.0126
+        ],
+        "threshold": 0.0,
+        "achieved_fpr": 0.0,
+        "mean_pos": 0.0,
+        "mean_null": 0.0
+      },
+      "exact-hash": {
+        "tpr_at_fpr": 0.0,
+        "ci": [
+          0.0,
+          0.0126
+        ],
+        "threshold": 0.0,
+        "achieved_fpr": 0.0,
+        "mean_pos": 0.0,
+        "mean_null": 0.0
+      }
+    },
+    "hi": {
+      "meaning-digest": {
+        "tpr_at_fpr": 1.0,
+        "ci": [
+          0.9874,
+          1.0
+        ],
+        "threshold": 0.0,
+        "achieved_fpr": 0.0,
+        "mean_pos": 0.6185,
+        "mean_null": 0.0
+      },
+      "SemStamp": {
+        "tpr_at_fpr": 0.6167,
+        "ci": [
+          0.5605,
+          0.6699
+        ],
+        "threshold": 0.7031,
+        "achieved_fpr": 0.0033,
+        "mean_pos": 0.7204,
+        "mean_null": 0.5679
+      },
+      "SimHash-hash": {
+        "tpr_at_fpr": 0.0,
+        "ci": [
+          0.0,
+          0.0126
+        ],
+        "threshold": 0.0,
+        "achieved_fpr": 0.0,
+        "mean_pos": 0.0,
+        "mean_null": 0.0
+      },
+      "MinHash-hash": {
+        "tpr_at_fpr": 0.0,
+        "ci": [
+          0.0,
+          0.0126
+        ],
+        "threshold": 0.0,
+        "achieved_fpr": 0.0,
+        "mean_pos": 0.0,
+        "mean_null": 0.0
+      },
+      "exact-hash": {
+        "tpr_at_fpr": 0.0,
+        "ci": [
+          0.0,
+          0.0126
+        ],
+        "threshold": 0.0,
+        "achieved_fpr": 0.0,
+        "mean_pos": 0.0,
+        "mean_null": 0.0
+      }
+    },
+    "zh": {
+      "meaning-digest": {
+        "tpr_at_fpr": 1.0,
+        "ci": [
+          0.9874,
+          1.0
+        ],
+        "threshold": 0.0,
+        "achieved_fpr": 0.0,
+        "mean_pos": 0.5625,
+        "mean_null": 0.0
+      },
+      "SemStamp": {
+        "tpr_at_fpr": 0.46,
+        "ci": [
+          0.4045,
+          0.5165
+        ],
+        "threshold": 0.7344,
+        "achieved_fpr": 0.0033,
+        "mean_pos": 0.7366,
+        "mean_null": 0.5731
+      },
+      "SimHash-hash": {
+        "tpr_at_fpr": 0.8833,
+        "ci": [
+          0.8421,
+          0.9149
+        ],
+        "threshold": 0.3125,
+        "achieved_fpr": 0.0033,
+        "mean_pos": 0.4954,
+        "mean_null": 0.1054
+      },
+      "MinHash-hash": {
+        "tpr_at_fpr": 0.0,
+        "ci": [
+          0.0,
+          0.0126
+        ],
+        "threshold": 0.0,
+        "achieved_fpr": 0.0,
+        "mean_pos": 0.0,
+        "mean_null": 0.0
+      },
+      "exact-hash": {
+        "tpr_at_fpr": 0.0,
+        "ci": [
+          0.0,
+          0.0126
+        ],
+        "threshold": 0.0,
+        "achieved_fpr": 0.0,
+        "mean_pos": 0.0,
+        "mean_null": 0.0
+      }
+    },
+    "ar": {
+      "meaning-digest": {
+        "tpr_at_fpr": 1.0,
+        "ci": [
+          0.9874,
+          1.0
+        ],
+        "threshold": 0.0,
+        "achieved_fpr": 0.0,
+        "mean_pos": 0.439,
+        "mean_null": 0.0
+      },
+      "SemStamp": {
+        "tpr_at_fpr": 0.3767,
+        "ci": [
+          0.3237,
+          0.4327
+        ],
+        "threshold": 0.7188,
+        "achieved_fpr": 0.0067,
+        "mean_pos": 0.7055,
+        "mean_null": 0.5817
+      },
+      "SimHash-hash": {
+        "tpr_at_fpr": 0.6333,
+        "ci": [
+          0.5774,
+          0.6859
+        ],
+        "threshold": 0.0,
+        "achieved_fpr": 0.0,
+        "mean_pos": 0.065,
+        "mean_null": 0.0
+      },
+      "MinHash-hash": {
+        "tpr_at_fpr": 0.0,
+        "ci": [
+          0.0,
+          0.0126
+        ],
+        "threshold": 0.0,
+        "achieved_fpr": 0.0,
+        "mean_pos": 0.0,
+        "mean_null": 0.0
+      },
+      "exact-hash": {
+        "tpr_at_fpr": 0.0,
+        "ci": [
+          0.0,
+          0.0126
+        ],
+        "threshold": 0.0,
+        "achieved_fpr": 0.0,
+        "mean_pos": 0.0,
+        "mean_null": 0.0
+      }
+    }
+  },
+  "tamper_rejection": {
+    "meaning-digest": [
+      1.0,
+      0.9812,
+      1.0
+    ],
+    "SimHash-hash": [
+      0.0,
+      0.0,
+      0.0188
+    ],
+    "MinHash-hash": [
+      0.0,
+      0.0,
+      0.0188
+    ],
+    "exact-hash": [
+      1.0,
+      0.9812,
+      1.0
+    ]
+  },
+  "tamper_n": 200
+}
