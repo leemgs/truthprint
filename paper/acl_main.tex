@@ -70,6 +70,7 @@ Protected-field fidelity & Conditional (validator soundness measured) & Proposit
 Fresh-payload unforgeability & Conditional & Reduction to EUF-CMA security of the MAC; replay and nonce discovery are separate deployment concerns. \\
 Surface-carrier translation robustness & Refuted (real MT) & Stage-1 surface parser recovers $0/192$ real NLLB translations (Sec.~\ref{sec:realmt}). \\
 Meaning-layer recovery under real MT & Demonstrated (closed-domain, six languages) & Stage-2 extractor recovers fields at $0.90$--$1.00$ over $4{,}800$ real NLLB translations in six languages, document attribution $1.000$ (CI $[0.929,1.000]$) for five of six languages, and meaning-based authentication attributes cross-lingually (Secs.~\ref{sec:stage2},~\ref{sec:provenance}); wide-coverage parsing and larger document counts remain open. \\
+Wide-coverage neural parsing on open-domain text & Pilot (positive on open domain) & In a small LLM-MT pilot ($96$ sentences, six conditions) a neural extractor beats the lexicon on open-domain wording ($0.614$ vs.\ $0.481$ field recovery) while the lexicon leads on closed templates; single-model and small-scale caveats apply (Sec.~\ref{sec:neural}). \\
 Paraphrase/adaptive-attack robustness & Not established & Requires meaning-preserving attack outputs, held-out detector calibration, and ValidRemoval evaluation. \\
 System-level false-positive rate & Not established & The tag bound is per tested fresh candidate; parser search, tested key--nonce pairs, and fallback scores require end-to-end calibration. \\
 Semantic-level false-positive rate (contract collision) & Measured (closed-domain) & The $2^{-\tau}$ bound covers cryptographic tag collision only; the meaning-digest floor is the contract-collision probability. On the closed-domain corpus this floor is $5.2\times10^{-3}$ ($\approx1/192$) for the six-field contract---matching the measured $0.001$--$0.010$ real-MT false positives and $\sim\!2\times10^{7}\times$ the $2^{-32}$ bound (Sec.~\ref{sec:provenance}). Open-domain text has lower contract entropy, so estimating it per corpus is a deployment prerequisite. \\
@@ -672,6 +673,34 @@ semantic parser is the next step---but it moves multilingual invariant recovery
 from ``not established'' to a measured, positive finding on real translations.
 The extractor and this evaluation ship with the artifact
 (\texttt{scripts/eval\_multilingual.py}).
+
+\subsection{Preliminary Neural-Frontend Pilot}
+\label{sec:neural}
+To probe whether a \emph{wide-coverage} neural parser recovers the invariants
+where the closed lexicon cannot, we ran a small pilot with an instruction LLM as
+a drop-in extractor (\texttt{truthprint.neural\_parser}, same
+\texttt{extract(text,lang)} interface). Sixteen sentences---ten closed-domain
+templates plus six \emph{open-domain} facts (news/science/policy) with
+out-of-vocabulary wording---were machine-translated into six conditions (English
+clean and round-trip, and Korean/Arabic/Hindi/Chinese) by a hosted open model,
+and each translation was re-parsed by the neural extractor ($96$ sentences;
+Wilson $95\%$ CI). The head-to-head against the in-repo lexicon extractor on the
+same text shows the expected crossover: on the \emph{closed template} domain the
+hand-built lexicon still leads (field recovery $0.970$ vs.\ the neural
+$0.726$), but on the \emph{open domain} the lexicon degrades below the neural
+frontend ($0.481$ $[0.428,0.536]$ vs.\ $0.614$ $[0.560,0.666]$). By field, the
+neural parser is stronger on the typed relational fields (predicate $0.896$,
+causation $0.948$, attribution and modality $0.938$, temporal direction $0.688$)
+and weaker on open-string agent/patient ($0.094$/$0.177$) and quantity
+($0.500$), where an exact match across translation is hardest; consequently its
+strict all-nine-field exact rate is low. This is a feasibility pilot, not the
+NLLB-scale evaluation: it is small, one open model served both translation and
+extraction (a self-consistency caveat), German was dropped for translation-format
+failures, and it is machine translation by an LLM rather than NLLB. It
+nonetheless gives direct evidence for the paper's stated next step---a neural
+frontend generalizes to open-domain wording where the lexicon abstains. The
+pilot backend and scorer ship with the artifact
+(\texttt{scripts/eval\_neural\_parser.py}).
 
 \subsection{Meaning-Based Provenance Authentication Survives Real Translation}
 \label{sec:provenance}
