@@ -24,9 +24,27 @@
   개방 도메인 복원율**을 추가하고, "wide-coverage 파서는 다음 단계"라는 문장을
   실측 결과로 갱신합니다.
 
+## 무료 API로 실행 (GPU 불필요, 권장)
+Cell 4는 기본으로 **OpenAI 호환 무료 API**를 씁니다(파서는 구조화 추출이라 호스팅 모델로
+대체해도 결과 타당성 동일). 무료 제공자 중 하나의 키를 발급받아 넣으세요:
+- OpenRouter: `BASE=https://openrouter.ai/api/v1`, `MODEL=meta-llama/llama-3.3-70b-instruct:free`
+- Groq: `BASE=https://api.groq.com/openai/v1`, `MODEL=llama-3.3-70b-versatile`
+- Gemini(OpenAI 호환): `BASE=https://generativelanguage.googleapis.com/v1beta/openai`, `MODEL=gemini-2.0-flash`
+
+설정법(둘 중 하나):
+```python
+import os
+os.environ['TRUTHPRINT_API_KEY']='<발급받은 무료 키>'
+os.environ['TRUTHPRINT_API_BASE']='https://openrouter.ai/api/v1'
+os.environ['TRUTHPRINT_API_MODEL']='meta-llama/llama-3.3-70b-instruct:free'
+```
+또는 Cell 4 상단 `API_KEY/BASE/MODEL`을 직접 편집. 이 경로면 **GPU 없이 노트북/로컬에서**
+실행됩니다(번역 NLLB-600M도 소형이라 CPU로 수 분). 로컬 모델을 쓰려면 Cell 4의
+`USE_API=False`로 바꾸세요(그땐 GPU 권장).
+
 ## 조절 포인트
-- `LLM_ID`(Cell 4): 기본 `Qwen/Qwen2.5-1.5B-Instruct`. 더 크게(정확도↑) 또는 더 작게
-  (속도↑) 교체 가능. instruct 계열이면 무엇이든 동작(백엔드는 `fn(prompt)->str`).
+- 무료 API 모델 교체: `TRUTHPRINT_API_MODEL`(또는 Cell 4 `MODEL`). instruct 계열 권장.
+- 로컬 모드(`USE_API=False`)의 `LLM_ID`: 기본 `Qwen/Qwen2.5-1.5B-Instruct`, 교체 가능.
 - 개방 도메인 문장 수(Cell 2 `OPEN`): 늘리면 개방 도메인 CI가 좁아집니다. 문장·gold를
   추가하고 요청 주시면 됩니다.
 - Cell 2의 `template`/`open` 비율로 폐쇄 vs 개방 대비를 조절.

@@ -33,7 +33,7 @@ from .multilingual import FIELDS, LANGS
 
 __all__ = [
     "build_prompt", "parse_response", "normalize_fields",
-    "NeuralInvariantExtractor", "StubBackend",
+    "NeuralInvariantExtractor", "StubBackend", "APIBackend",
 ]
 
 _SCHEMA_DOC = """Extract the meaning of the sentence into these fields (JSON):
@@ -181,6 +181,66 @@ class NeuralInvariantExtractor:
     # match the module-level function name used elsewhere
     def extract_invariants(self, text: str, lang: str) -> dict:
         return self.extract(text, lang)
+
+
+class APIBackend:
+    """OpenAI-compatible chat-completions backend (no GPU, no local weights).
+
+    Works with any OpenAI-compatible endpoint, including free providers:
+    OpenRouter (``https://openrouter.ai/api/v1``), Groq
+    (``https://api.groq.com/openai/v1``), Google Gemini's OpenAI-compat endpoint,
+    Together, or a local Ollama (``http://localhost:11434/v1``). The neural
+    invariant parser is a structured-extraction task, so an API model is a valid
+    substitute for a local model---where the model runs does not affect the
+    result, only extraction accuracy does.
+
+    ``api_key`` falls back to the ``TRUTHPRINT_API_KEY`` environment variable.
+    Uses only the standard library (``urllib``), so it adds no dependency.
+    """
+
+    def __init__(self, model: str, base_url: str, api_key: str | None = None,
+                 system: str = "You extract structured meaning as compact JSON.",
+                 timeout: int = 60, max_tokens: int = 200, retries: int = 2):
+        import os
+        self.model = model
+        self.base_url = base_url.rstrip("/")
+        self.api_key = api_key or os.environ.get("TRUTHPRINT_API_KEY")
+        self.system = system
+        self.timeout = timeout
+        self.max_tokens = max_tokens
+        self.retries = retries
+
+    def _post(self, url: str, data: dict, headers: dict) -> dict:
+        """HTTP POST returning parsed JSON. Overridden in tests."""
+        import urllib.request
+        req = urllib.request.Request(
+            url, data=json.dumps(data).encode("utf-8"), headers=headers,
+            method="POST")
+        with urllib.request.urlopen(req, timeout=self.timeout) as r:
+            return json.loads(r.read().decode("utf-8"))
+
+    def __call__(self, prompt: str) -> str:
+        url = self.base_url + "/chat/completions"
+        headers = {"Content-Type": "application/json"}
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+        data = {
+            "model": self.model,
+            "messages": [
+                {"role": "system", "content": self.system},
+                {"role": "user", "content": prompt},
+            ],
+            "temperature": 0,
+            "max_tokens": self.max_tokens,
+        }
+        last = None
+        for _ in range(max(1, self.retries)):
+            try:
+                resp = self._post(url, data, headers)
+                return resp["choices"][0]["message"]["content"]
+            except Exception as e:  # noqa: BLE001 - network/parse errors are retryable
+                last = e
+        raise RuntimeError(f"APIBackend call failed after {self.retries} tries: {last}")
 
 
 class StubBackend:

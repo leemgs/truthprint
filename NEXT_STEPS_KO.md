@@ -69,9 +69,12 @@
   채점기 `code/scripts/eval_neural_parser.py`(lexicon vs neural head-to-head + 도메인별
   복원율, +테스트), 노트북 `handoff/Truthprint_W5_NeuralParser_Kaggle.ipynb`,
   스키마/절차 `handoff/W5_SCHEMA_KO.md`·`KAGGLE_W5_STEPS_KO.md`.
-  - **저자 작업(GPU):** 노트북 Run All(Internet On, GPU T4) → `w5_results.zip` 전달.
-    instruct LLM 백엔드가 real-MT 번역 + 개방 도메인 문장(어휘집이 실패하는 out-of-vocab)에서
-    9필드를 추출. 개방 도메인 gold는 노트북에 내장(사람 주석 불필요).
+  - **저자 작업(GPU 불필요):** 파서는 구조화 추출이라 Cell 4가 기본으로 **무료 OpenAI 호환
+    API**(OpenRouter/Groq/Gemini)를 사용 — 무료 키만 넣고 Run All 하면 노트북/로컬에서 실행
+    (`USE_API=False`로 로컬 모델도 선택 가능). real-MT 번역 + 개방 도메인 문장에서 9필드 추출,
+    개방 도메인 gold 내장(사람 주석 불필요). 산출물 `w5_results.zip` 전달.
+    - 참고(W4): 워터마크 *임베딩*(KGW/SynthID)만은 logit 조작이 필요해 chat API로 대체 불가 —
+      소형 로컬 모델(gpt2, CPU 수 분)로 수행. 그 외(번역·검출·W5 추출)는 API/CPU로 가능.
   - **Claude가 받으면:** CI 확정 후 §Stage-2에 개방 도메인 복원율 반영, "wide-coverage
     파서는 다음 단계" 문장을 실측으로 갱신.
 - **W6 원고 재구성 — ✅ 완료:** 진단 시뮬레이션 표(Appendix A), Reproducibility·Notation
