@@ -269,6 +269,27 @@ model outputs, real transformations, held-out threshold calibration, quality
 metrics, and uncertainty intervals. The present artifact does not supply that
 evidence.
 
+### Real semantic / robust-hashing baselines (ACL revision, optional extra)
+
+The major-revision baselines run *in-repo* on the cached real LLM-MT
+translations with a real multilingual sentence embedding. They need the optional
+`baselines` extra (`pip install model2vec` or `pip install .[baselines]`); the
+stdlib-only core, its tests, and CI do **not** require it and skip these cleanly.
+
+```bash
+pip install model2vec                              # optional embedding backend
+# Matched-FPR head-to-head: meaning-digest vs SemStamp vs robust hashing (W2/W3/Task4)
+python scripts/eval_semantic_baselines.py --out ../paper/results/semantic_baselines.md
+# Translator-independent (separated) embedding frontend vs lexicon (W5/Task1)
+python scripts/eval_separated_frontend.py  --out ../paper/results/separated_frontend.md
+```
+
+`SemStamp` is a faithful embedding-LSH region watermark; `SimHash`/`MinHash`/
+`exact` are the robust-hashing family the meaning-digest scheme is positioned
+against. Every method is calibrated at the same 1% FPR, and a single-field
+tamper-rejection column shows why a typed contract separates from any
+similarity/hash gate.
+
 ---
 
 ## Mapping to the paper

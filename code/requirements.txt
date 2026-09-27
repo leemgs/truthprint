@@ -1,3 +1,10 @@
 # Core has no runtime dependencies (Python standard library only).
 # For running the test suite:
 pytest>=7.0
+
+# Optional: real multilingual sentence embedding for the ACL-revision baselines
+# (SemStamp, SimHash robust hashing) and the translator-independent neural
+# frontend. Install with `pip install model2vec` or `pip install .[baselines]`.
+# The core and its tests do NOT require this; baseline scripts/tests skip when
+# it is unavailable.
+# model2vec>=0.3
