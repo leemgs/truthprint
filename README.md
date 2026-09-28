@@ -90,8 +90,10 @@ truthprint selftest              # runs properties P1–P4 and L1–L3, prints P
 pytest -q                        # full test suite
 truthprint repro-table           # regenerate the erasure-cliff table
 truthprint challenge             # field-level tamper vs. embedding ablation (C1–C3)
+truthprint paraphrase            # paraphrase (RQ4) + adaptive-attack (RQ7) robustness
 python scripts/eval_baselines.py # regenerate the baseline comparison (paper Tables V/VI)
 python scripts/eval_challenge.py # regenerate the field-level challenge results
+python scripts/eval_paraphrase.py # regenerate the paraphrase/adaptive-attack table
 ```
 
 ### Build the paper

@@ -58,11 +58,12 @@ truthprint/
 │   ├── challenge.py       # 6-field challenge set + tamper/embedding ablation (C1–C3)
 │   ├── multilingual.py    # Stage-2 EN/KO/HI invariant extractor (semantic frontend)
 │   ├── provenance.py      # meaning-based provenance authentication (contracts)
+│   ├── paraphrase.py      # paraphrase + schema-aware adaptive-attack transforms (RQ4/RQ7)
 │   ├── stats.py           # bootstrap + Wilson confidence intervals
 │   ├── baselines.py       # diagnostic method-inspired signal proxies
-│   └── cli.py             # `truthprint {selftest,demo-core,demo-linguistic,repro-table,challenge}`
+│   └── cli.py             # `truthprint {selftest,demo-core,demo-linguistic,repro-table,challenge,paraphrase}`
 ├── examples/              # minimal runnable examples
-├── scripts/               # reproduce-table + eval_baselines + eval_challenge
+├── scripts/               # reproduce-table + eval_baselines + eval_challenge + eval_paraphrase
 ├── tests/                 # pytest suite (also the reproducibility harness)
 └── .github/workflows/     # CI running tests on Python 3.9/3.11/3.12
 ```
