@@ -124,6 +124,42 @@ def _challenge(seed: int = 20270101) -> bool:
     return ok
 
 
+def _paraphrase(seed: int = 20270201) -> bool:
+    """Paraphrase (RQ4) and schema-aware adaptive-attack (RQ7) robustness."""
+    import importlib.util
+    from pathlib import Path
+    spec = importlib.util.spec_from_file_location(
+        "eval_paraphrase",
+        Path(__file__).resolve().parent.parent / "scripts" / "eval_paraphrase.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    from .multilingual import extract_invariants as closed
+    from .multilingual_ext import extract_invariants as extended
+    r = mod.evaluate(n_docs=120, sents_per_doc=12, contracts=("core6",),
+                     seed=seed, num_resamples=400, extractor=closed,
+                     frontend="closed")
+    re = mod.evaluate(n_docs=120, sents_per_doc=12, contracts=("core6",),
+                      seed=seed, num_resamples=400, extractor=extended,
+                      frontend="extended")
+    a = r["contracts"]["core6"]["aggregate"]
+    e = re["contracts"]["core6"]["aggregate"]
+    print(f"[paraphrase] benign auth TPR={a['benign_auth_tpr'][0]:.3f} "
+          f"(RQ4)  altering tamper-rej={a['altering_tamper_rejection'][0]:.3f}")
+    print(f"[paraphrase] adaptive ValidRemoval (RQ7): closed="
+          f"{a['adaptive_valid_removal'][0]:.3f} -> extended="
+          f"{e['adaptive_valid_removal'][0]:.3f} (defended); "
+          f"held-out novel={e['adaptive_novel_valid_removal'][0]:.3f} "
+          f"(coverage bound); literal-Eq4={a['adaptive_valid_removal_literalEq4'][0]:.3f}")
+    # closed vulnerable, extended defends without breaking tamper/benign, novel bound
+    return (a["benign_auth_tpr"][0] >= 0.99
+            and a["altering_tamper_rejection"][0] >= 0.99
+            and a["adaptive_valid_removal"][0] >= 0.9
+            and a["adaptive_valid_removal_literalEq4"][0] == 0.0
+            and e["adaptive_valid_removal"][0] <= 0.02
+            and e["altering_tamper_rejection"][0] >= 0.99
+            and e["adaptive_novel_valid_removal"][0] >= 0.9)
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="truthprint",
                                      description="Truthprint reference CLI")
@@ -133,6 +169,7 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("demo-linguistic", help="sentence-level round-trip demo")
     sub.add_parser("repro-table", help="regenerate the erasure-cliff table")
     sub.add_parser("challenge", help="field-level tamper vs. embedding ablation")
+    sub.add_parser("paraphrase", help="paraphrase (RQ4) + adaptive-attack (RQ7) robustness")
     args = parser.parse_args(argv)
 
     if args.cmd == "demo-core":
@@ -143,6 +180,8 @@ def main(argv: list[str] | None = None) -> int:
         return 0 if _repro_table() else 1
     if args.cmd == "challenge":
         return 0 if _challenge() else 1
+    if args.cmd == "paraphrase":
+        return 0 if _paraphrase() else 1
     if args.cmd == "selftest":
         ok = _demo_core() and _demo_linguistic()
         print("SELFTEST:", "PASS" if ok else "FAIL")

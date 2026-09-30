@@ -49,7 +49,7 @@
 \maketitle
 
 \begin{abstract}
-Token-level watermarks for large language models (LLMs) are fragile under translation and paraphrasing because their signal lives in surface token choices. This paper proposes \emph{Truthprint}, a semantic intermediate representation (IR) that separates \emph{locked invariants} (polarity, quantity, time, attribution, roles) from \emph{controlled realization variables} through a machine-checkable, typed mutability contract. We evaluate two provenance mechanisms that share this IR and are careful to distinguish them. (i)~A \emph{realization-carrier} scheme embeds an authenticated, error-corrected payload in realization freedom; against real neural machine translation this is an \emph{honest negative}---the Stage-1 surface parser recovers $0/192$ NLLB outputs---because translation rewrites the carriers. (ii)~A \emph{meaning-digest} scheme instead registers a keyed tag over the invariant digest in an out-of-band ledger and re-verifies it after transformation, carrying no realization payload. On $4{,}800$ real NLLB translations across six languages, a Stage-2 lexicon-based extractor recovers invariant fields at $0.90$--$1.00$ and the meaning-digest scheme authenticates translated documents cross-lingually ($1.000$ document-level attribution for five of six languages; Arabic weaker) while rejecting single-field tampering. We prove three \emph{conditional} properties (protected-field fidelity under a sound validator, fresh-payload unforgeability reducing to the MAC, and a per-key--nonce tag-acceptance bound $2^{-\tau}$), and ship a seeded, self-testing cryptographic/coding core (zero authenticated false positives in $20{,}000$ trials; $95\%$ upper bound $1.5\!\times\!10^{-4}$). On the same real-MT pipeline, a real KGW token watermark collapses under translation (TPR@$1\%$FPR $0.96$ clean to $0.00$--$0.38$ translated) while the meaning-digest scheme survives ($0.50$--$0.98$), a real single-baseline comparison. At a \emph{matched} $1\%$ FPR on real LLM-MT, a real embedding-region baseline (SemStamp) survives round-trip ($1.00$) but degrades cross-lingually ($0.94$ Korean to $0.38$ Arabic) as embedding buckets drift, while the typed meaning-digest survives all conditions and, unlike similarity/robust hashing, rejects single-field tampers (typed $1.00$ vs.\ SimHash/MinHash $0.00$). All results are closed-domain and small-scale; wide-coverage neural parsing, broader official baselines (SynthID, SemStamp, SWAN), and adaptive attacks remain necessary before a general comparative-robustness claim. Truthprint does not identify arbitrary AI text; it verifies consistency with a participating keyed generator.
+Token-level watermarks for large language models (LLMs) are fragile under translation and paraphrasing because their signal lives in surface token choices. This paper proposes \emph{Truthprint}, a semantic intermediate representation (IR) that separates \emph{locked invariants} (polarity, quantity, time, attribution, roles) from \emph{controlled realization variables} through a machine-checkable, typed mutability contract. We evaluate two provenance mechanisms that share this IR and are careful to distinguish them. (i)~A \emph{realization-carrier} scheme embeds an authenticated, error-corrected payload in realization freedom; against real neural machine translation this is an \emph{honest negative}---the Stage-1 surface parser recovers $0/192$ NLLB outputs---because translation rewrites the carriers. (ii)~A \emph{meaning-digest} scheme instead registers a keyed tag over the invariant digest in an out-of-band ledger and re-verifies it after transformation, carrying no realization payload. On $4{,}800$ real NLLB translations across six languages, a Stage-2 lexicon-based extractor recovers invariant fields at $0.90$--$1.00$ and the meaning-digest scheme authenticates translated documents cross-lingually ($1.000$ document-level attribution for five of six languages; Arabic weaker) while rejecting single-field tampering. We prove three \emph{conditional} properties (protected-field fidelity under a sound validator, fresh-payload unforgeability reducing to the MAC, and a per-key--nonce tag-acceptance bound $2^{-\tau}$), and ship a seeded, self-testing cryptographic/coding core (zero authenticated false positives in $20{,}000$ trials; $95\%$ upper bound $1.5\!\times\!10^{-4}$). On the same real-MT pipeline, a real KGW token watermark collapses under translation (TPR@$1\%$FPR $0.96$ clean to $0.00$--$0.38$ translated) while the meaning-digest scheme survives ($0.50$--$0.98$), a real single-baseline comparison. At a \emph{matched} $1\%$ FPR on real LLM-MT, a real embedding-region baseline (SemStamp) survives round-trip ($1.00$) but degrades cross-lingually ($0.94$ Korean to $0.38$ Arabic) as embedding buckets drift, while the typed meaning-digest survives all conditions and, unlike similarity/robust hashing, rejects single-field tampers (typed $1.00$ vs.\ SimHash/MinHash $0.00$). On real English strings we further separate paraphrase from translation: benign meaning-preserving paraphrase is authenticated (TPR $1.00$) and single-field tampers rejected ($1.00$), but a schema-aware adaptive attacker that swaps out-of-lexicon synonyms achieves full removal (ValidRemoval $1.00$ under the closed lexicon). We then defend it directly: an extended-coverage frontend recovers the same invariants and drives adaptive ValidRemoval to $0.00$ while still rejecting tampers ($1.00$), confirming the vulnerability is lexicon \emph{coverage}, not the meaning-digest principle; a held-out out-of-inventory attack still evades any fixed lexicon, motivating the open-vocabulary neural frontend. All results are closed-domain and small-scale; wide-coverage neural parsing, broader official baselines (SynthID, SemStamp, SWAN), and open-vocabulary adaptive robustness remain necessary before a general comparative-robustness claim. Truthprint does not identify arbitrary AI text; it verifies consistency with a participating keyed generator.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -106,7 +106,8 @@ Fresh-payload unforgeability & Conditional & Reduction to EUF-CMA security of th
 Surface-carrier translation robustness & Refuted (real MT) & Stage-1 surface parser recovers $0/192$ real NLLB translations (Sec.~\ref{sec:realmt}). \\
 Meaning-layer recovery under real MT & Demonstrated (closed-domain, six languages) & Stage-2 extractor recovers fields at $0.90$--$1.00$ over $4{,}800$ real NLLB translations in six languages, document attribution $1.000$ (CI $[0.929,1.000]$) for five of six languages, and meaning-based authentication attributes cross-lingually (Secs.~\ref{sec:stage2},~\ref{sec:provenance}); wide-coverage parsing and larger document counts remain open. \\
 Wide-coverage neural parsing on open-domain text & Pilot (positive on open domain) & In a small LLM-MT pilot ($96$ sentences, six conditions) a neural extractor beats the lexicon on open-domain wording ($0.614$ vs.\ $0.481$ field recovery) while the lexicon leads on closed templates; single-model and small-scale caveats apply (Sec.~\ref{sec:neural}). \\
-Paraphrase/adaptive-attack robustness & Not established & Requires meaning-preserving attack outputs, held-out detector calibration, and ValidRemoval evaluation. \\
+Benign paraphrase robustness & Demonstrated (closed-domain) & On $200$ documents $\times16$ sentences, meaning-preserving in-lexicon paraphrase (voice, time reflow, verb/time synonyms, discourse hedge) authenticates at TPR $1.000$ and document attribution $1.000$; single-field altering edits rejected $1.000$ (Sec.~\ref{sec:paraphrase}). \\
+Adaptive-attack robustness & Closed lexicon refuted; defended by extended coverage; open-vocabulary open & A schema-aware attacker swapping out-of-lexicon content synonyms (``took care of'' for ``fixed'') reaches ValidRemoval $1.000$ (Eq.~\ref{eq:validremoval}) under the closed lexicon, localized to the stripped predicate/time/attribution fields (polarity and agent survive $100\%$). An extended-coverage frontend recovers those fields, driving adaptive ValidRemoval to $0.000$ while benign auth ($1.000$) and tamper rejection ($1.000$) are unchanged; a held-out out-of-inventory attack still evades any fixed lexicon (ValidRemoval $1.000$). Coverage, not the meaning-digest, is the lever; open-vocabulary robustness needs the neural frontend (Sec.~\ref{sec:paraphrase}). \\
 System-level false-positive rate & Not established & The tag bound is per tested fresh candidate; parser search, tested key--nonce pairs, and fallback scores require end-to-end calibration. \\
 Semantic-level false-positive rate (contract collision) & Measured (closed-domain) & The $2^{-\tau}$ bound covers cryptographic tag collision only; the meaning-digest floor is the contract-collision probability. On the closed-domain corpus this floor is $5.2\times10^{-3}$ ($\approx1/192$) for the six-field contract---matching the measured $0.001$--$0.010$ real-MT false positives and $\sim\!2\times10^{7}\times$ the $2^{-32}$ bound (Sec.~\ref{sec:provenance}). Open-domain text has lower contract entropy, so estimating it per corpus is a deployment prerequisite. \\
 Comparative robustness vs.\ token and semantic baselines & Demonstrated (real MT: KGW token; matched-FPR SemStamp $+$ robust hashing) & On the same pipeline a real KGW watermark collapses under real NLLB translation (TPR@$1\%$FPR $0.960$ clean $\to$ $0.000$--$0.380$ translated) while the meaning-digest scheme survives ($0.502$--$0.980$); Table~\ref{tab:baselines}, Sec.~\ref{sec:baselines}. At a matched $1\%$ FPR a real embedding-region baseline (SemStamp) survives round-trip but degrades cross-lingually ($0.937$ KO $\to$ $0.377$ AR) while the typed scheme survives, and only the typed contract rejects single-field tampers (Table~\ref{tab:matched}, Sec.~\ref{sec:matched}). Official implementations (SynthID, SWAN) remain future work. \\
@@ -946,6 +947,86 @@ Exact SHA-256             & \multicolumn{5}{c}{$1.000$ (but $0.0$ TPR under MT)}
 \end{tabular}
 \end{table}
 
+\subsection{Paraphrase and Adaptive-Attack Robustness}
+\label{sec:paraphrase}
+Real machine translation is not paraphrase, yet the threat model and
+Eq.~\eqref{eq:validremoval} promise robustness to meaning-preserving
+\emph{paraphrase} and to an \emph{adaptive} attacker (RQ4, RQ7). We test both
+directly on real English strings, fully offline and seeded
+(\texttt{scripts/eval\_paraphrase.py}): each closed-domain watermarked sentence
+is paraphrased and the meaning-digest scheme re-authenticated on the paraphrase.
+A \emph{benign} paraphrase keeps every locked field with in-lexicon content
+(voice, time-position reflow, verb/time synonyms the Stage-2 extractor knows, a
+discourse hedge); a \emph{schema-aware adaptive} attacker (RQ7) keeps meaning but
+swaps the predicate verb and time expression for \emph{out-of-lexicon} synonyms
+(``took care of'' for ``fixed'', ``24 hours earlier'' for ``the previous day'');
+an \emph{altering} edit changes one locked field.
+
+Over $200$ documents of $16$ sentences (Wilson $95\%$ CI, contract core6;
+Table~\ref{tab:paraphrase}), benign paraphrase authenticates at TPR $1.000$ and
+document attribution $1.000$ (RQ4): syntactic and in-vocabulary lexical
+paraphrase does not remove the mark, and a single-field altering edit is rejected
+at $1.000$. The adaptive attacker, however, achieves ValidRemoval $1.000$
+(Eq.~\eqref{eq:validremoval}): stripping the content words the closed lexicon keys
+on removes the mark while preserving meaning. This is an honest \emph{negative} we
+localize precisely---every removal is the extractor abstaining on exactly the
+fields whose surface markers were stripped (predicate and time direction in all
+cases, attribution when present), recorded as erasures rather than wrong bits,
+while polarity and agent (function-word and named-reference markers the attacker
+cannot restyle without changing meaning) are recovered in $100\%$ of adaptive
+attacks. The literal Eq.~\eqref{eq:validremoval} rate under the \emph{parser's}
+own InvariantEq is $0.000$, because for a meaning-digest losing detection and the
+parser judging the meaning changed are the same event; the oracle (gold-contract)
+ValidRemoval above is therefore the honest metric. Surface Stage-1 carriers do not
+survive content paraphrase (recovery $\le0.04$), the paraphrase counterpart of the
+$0/192$ translation negative (Sec.~\ref{sec:realmt}). The adaptive vulnerability is
+thus a property of the \emph{closed lexicon}, not of the meaning-digest principle:
+the invariants remain present in the paraphrase (a reader recovers them), and the
+neural frontend (Sec.~\ref{sec:neural}) already recovers predicate ($0.896$) and
+related relational fields on open-domain wording where the lexicon collapses.
+
+We verify this defense directly. Swapping the closed lexicon for an
+\emph{extended-coverage} frontend---a broader English predicate/time/attribution
+inventory with word-boundary quantity matching (\texttt{multilingual\_ext}), a
+drop-in for the same authentication path---recovers the very fields the attacker
+stripped and drives adaptive ValidRemoval from $1.000$ to $0.000$, while benign
+authentication ($1.000$) and altering-edit rejection ($1.000$) are unchanged:
+coverage is widened, not tolerance (Table~\ref{tab:paraphrase}). Crucially, a
+\emph{held-out} attack whose synonyms lie outside the extended inventory too still
+evades it (ValidRemoval $1.000$), confirming that any \emph{fixed} lexicon is
+escapable by an out-of-inventory synonym and that the general defense is the
+open-vocabulary neural frontend (\texttt{neural\_parser}, e.g.\ via an
+instruction-LLM backend); the extension merely quantifies the mechanism---each
+added synonym family restores authentication for that family. Establishing
+adaptive-paraphrase robustness at open vocabulary and scale with that frontend is
+the sharpest remaining open problem. The harness ships with the artifact.
+
+\begin{table}[t]
+\centering
+\caption{Paraphrase, adaptive attack, and extended-lexicon defense on real
+English strings ($200$ documents $\times16$ sentences, contract core6, Wilson
+$95\%$ CI). Benign meaning-preserving paraphrase is authenticated (RQ4); a
+schema-aware adaptive attacker (RQ7) removes the mark under the \emph{closed}
+lexicon (ValidRemoval $1.000$), but an \emph{extended-coverage} frontend recovers
+the same invariants and drives ValidRemoval to $0.000$ while still rejecting
+altering edits; a held-out attack whose synonyms lie outside the extended
+inventory still evades (coverage bound). Auth TPR is over meaning-preserving
+paraphrases; tamper rejection for the altering row.}
+\label{tab:paraphrase}
+\footnotesize
+\begin{tabular}{lccc}
+\toprule
+Transform family & Auth TPR & ValidRemoval & Surface carrier \\
+\midrule
+Benign paraphrase              & $1.000$ & $0.000$ & $0.015$ \\
+Adaptive (RQ7), closed lexicon & $0.000$ & $1.000$ & $0.000$ \\
+Adaptive (RQ7), extended       & $1.000$ & $0.000$ & $0.000$ \\
+Held-out novel, extended       & $0.000$ & $1.000$ & $0.000$ \\
+Altering (tamper), extended    & $0.000$ & --- ($1.000$ rej.) & $0.000$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 To respect the page budget, three supporting parts are placed in the
 appendices: full reproducibility and notation (Appendix~\ref{app:repro}),
 the reference software architecture and staged prototype roadmap
@@ -988,7 +1069,7 @@ RQ7 & Adaptive attacker with vs.\ without invariant constraint & ValidRemoval ra
 \end{tabular}
 \end{table}
 
-Table~\ref{tab:matrix} fixes, for each question, the single manipulated factor and the outcome that would confirm or falsify the corresponding hypothesis, so that results cannot be reported selectively.
+Table~\ref{tab:matrix} fixes, for each question, the single manipulated factor and the outcome that would confirm or falsify the corresponding hypothesis, so that results cannot be reported selectively. RQ4 (paraphrase) and RQ7 (adaptive removal, Eq.~\ref{eq:validremoval}) are measured on the closed domain in Section~\ref{sec:paraphrase}; the remaining questions await the wide-coverage frontend.
 
 \subsection{Diagnostic Simulation (Not an End-to-End Benchmark)}
 A controlled Stage-1 simulator checks the evaluation code paths and
@@ -1035,7 +1116,7 @@ A provenance detector can be misused to accuse authors, censor content, or make 
 The design has dual-use risks: public carrier families can aid removal attacks, while secret or overly detailed payloads can enable tracking. Payloads should exclude personal identifiers, prompts, and precise timestamps; keys and nonce registries require access control, rotation, and audit. Evaluation text should be licensed or consented, human annotation should be compensated and documented, and language-specific error disparities should be reported rather than hidden in an aggregate score. The present artifact uses synthetic template facts, no personal data, and no human subjects; the real-MT pilot (Secs.~\ref{sec:realmt}--\ref{sec:provenance}) translates those synthetic facts with a public open-weights model (NLLB-200-distilled-600M) and involves no personal data or human subjects. Any scaled evaluation that adds human invariant or factual-equivalence annotation must use licensed or consented text and compensated, documented annotation.
 
 \section{Limitations}
-Multilingual semantic parsing remains imperfect. Not every proposition admits multiple safe realization alternatives. Highly constrained text has low carrier capacity. Some apparently stylistic alternations change emphasis or information structure. Translation can omit modality, evidentiality, subjects, or discourse relations. Strong summarization can destroy both content and watermark evidence. Finally, candidate generation and semantic validation add computational overhead compared with direct token-level methods. The current artifact does not evaluate real generators, translators, multilingual parsers, human judgments, official baselines, replay defenses, or adaptive attacks; consequently it supports feasibility claims about the coding core only, not comparative robustness or deployment readiness.
+Multilingual semantic parsing remains imperfect. Not every proposition admits multiple safe realization alternatives. Highly constrained text has low carrier capacity. Some apparently stylistic alternations change emphasis or information structure. Translation can omit modality, evidentiality, subjects, or discourse relations. Strong summarization can destroy both content and watermark evidence. Finally, candidate generation and semantic validation add computational overhead compared with direct token-level methods. The closed-domain adaptive paraphrase of Section~\ref{sec:paraphrase} shows the sharpest limitation directly: a schema-aware attacker who swaps out-of-lexicon content synonyms fully removes the meaning-digest under the closed lexicon while preserving meaning. An extended-coverage frontend defends that specific attack (ValidRemoval $1.000\!\to\!0.000$ without weakening tamper rejection), but a held-out out-of-inventory attack still evades any fixed lexicon, so wide-coverage \emph{open-vocabulary} semantic parsing is a prerequisite---not an enhancement---for general adaptive robustness. The current artifact still does not evaluate real generators, human judgments, all official baselines, replay defenses, or open-vocabulary adaptive attacks; consequently it supports feasibility and closed-domain robustness claims, not comparative robustness or deployment readiness at wide coverage.
 
 \section{Conclusion}
 Truthprint is a proposed language-neutral, typed semantic IR for provenance watermarking. Its key contribution is a machine-checkable separation between immutable meaning and controlled realization choices. A secret-keyed encoder maps authenticated payload symbols to admissible realization classes, and a detector recovers those symbols after translation or paraphrasing through semantic parsing, canonicalization, error correction, and MAC verification.
