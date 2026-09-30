@@ -57,6 +57,7 @@ truthprint/
 │   ├── linguistic.py      # closed-domain realize/parse on real sentences
 │   ├── challenge.py       # 6-field challenge set + tamper/embedding ablation (C1–C3)
 │   ├── multilingual.py    # Stage-2 EN/KO/HI invariant extractor (semantic frontend)
+│   ├── multilingual_ext.py # extended-coverage frontend (adaptive-attack defense)
 │   ├── provenance.py      # meaning-based provenance authentication (contracts)
 │   ├── paraphrase.py      # paraphrase + schema-aware adaptive-attack transforms (RQ4/RQ7)
 │   ├── stats.py           # bootstrap + Wilson confidence intervals

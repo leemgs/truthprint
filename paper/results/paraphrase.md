@@ -1,63 +1,55 @@
-# Paraphrase and adaptive-attack robustness (RQ4 / RQ7)
+# Paraphrase and adaptive-attack robustness + extended-lexicon defense (RQ4 / RQ7)
 
-Closed-domain, offline, seeded: 200 documents of 16 watermarked sentences are paraphrased on real English strings, and the meaning-digest provenance authentication is re-run on the paraphrase. Benign = meaning-preserving, in-lexicon; adaptive (RQ7) = meaning-preserving but out-of-lexicon (schema-aware attacker); altering = one locked field changed. `ValidRemoval` (Eq. validremoval) = meaning preserved (oracle) AND detection lost.
+Closed-domain, offline, seeded: 200 documents of 16 watermarked sentences are paraphrased on real English strings; meaning-digest provenance authentication is re-run on each paraphrase. `ValidRemoval` (Eq. validremoval) = meaning preserved (oracle gold contract) AND detection lost. The **closed** frontend is the Stage-2 lexicon; the **extended** frontend widens the English predicate/time/attribution inventory (coverage, not tolerance). `adv_novel` is a held-out attack whose synonyms lie outside the extended inventory too (the honest coverage bound).
 
-## Headline (contract `core6`)
+## Headline: extended-lexicon frontend defends the adaptive attack
 
-* Benign paraphrase authentication TPR: **1.000 [1.000,1.000]** (RQ4: paraphrase does not remove the mark).
-* Adaptive-attack ValidRemoval (oracle): **1.000 [1.000,1.000]**; literal Eq.4 (parser InvariantEq): 0.000 [0.000,0.000] (~0 by construction: for a meaning-digest, losing detection and the parser judging meaning changed are the same event).
-* Altering-edit tamper rejection: **1.000 [0.999,1.000]**.
-* Surface-carrier (Stage-1) recovery under paraphrase: benign 0.015 [0.013,0.017], adaptive 0.000 [0.000,0.000] (the paraphrase counterpart of the 0/192 translation negative).
+| Metric (contract core6) | Closed frontend | Extended frontend |
+|---|---|---|
+| Benign paraphrase auth TPR (RQ4) | 1.000 [1.000,1.000] | 1.000 [1.000,1.000] |
+| **Adaptive ValidRemoval (RQ7)** | **1.000 [1.000,1.000]** | **0.000 [0.000,0.000]** |
+| Adaptive auth TPR | 0.000 [0.000,0.000] | 1.000 [1.000,1.000] |
+| Held-out novel ValidRemoval (coverage bound) | 1.000 [0.999,1.000] | 1.000 [0.999,1.000] |
+| Altering-edit tamper rejection | 1.000 [0.999,1.000] | 1.000 [0.999,1.000] |
 
-## Contract `core6` = ['polarity', 'quantity', 'time_dir', 'attribution', 'predicate', 'agent']
+Reading: the closed lexicon lets the schema-aware adaptive attacker remove the mark (high ValidRemoval), but the extended-coverage frontend recovers the same invariants and drives adaptive ValidRemoval to ~0 while **still rejecting tampers** (coverage widened, tolerance not) and keeping benign paraphrase authenticated. This is direct evidence that the vulnerability is closed-lexicon coverage, not the meaning-digest principle. The held-out `adv_novel` attack still succeeds under both frontends: any *fixed* lexicon is evadable by an out-of-inventory synonym, which is why the general answer is the open-vocabulary neural frontend (`truthprint.neural_parser`, e.g. via `APIBackend`); the extension quantifies the mechanism (each added synonym family recovers authentication for that family).
 
-| Operator | Mode | Auth TPR | Doc attribution | ValidRemoval | Surface-carrier | Mean cosine |
-|---|---|---|---|---|---|---|
-| voice | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.000 [0.000,0.001] | 0.878 [0.876,0.879] |
-| time_reflow | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.000 [0.000,0.001] | 0.920 [0.918,0.921] |
-| verb_syn | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.036 [0.030,0.043] | 0.920 [0.918,0.921] |
-| time_syn | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.036 [0.030,0.043] | 0.920 [0.918,0.921] |
-| hedge | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.017 [0.013,0.022] | 0.908 [0.907,0.910] |
-| combo_benign | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.000 [0.000,0.001] | 0.878 [0.876,0.879] |
-| adv_verb | adaptive | 0.000 [0.000,0.001] | 0.000 [0.000,0.019] | 1.000 [0.999,1.000] | 0.000 [0.000,0.001] | 0.893 [0.891,0.894] |
-| adv_time | adaptive | 0.000 [0.000,0.001] | 0.000 [0.000,0.019] | 1.000 [0.999,1.000] | 0.000 [0.000,0.001] | 0.845 [0.843,0.847] |
-| adv_combo | adaptive | 0.000 [0.000,0.001] | 0.000 [0.000,0.019] | 1.000 [0.999,1.000] | 0.000 [0.000,0.001] | 0.721 [0.718,0.723] |
-| alter | altering | 0.000 [0.000,0.001] | 0.000 [0.000,0.019] | 1.000 [0.999,1.000] (tamper rej.) | 0.000 [0.000,0.001] | 0.889 [0.888,0.891] |
+## Per-operator detail
 
-Adaptive-removal field breakdown (which contract field the closed lexicon failed to recover): predicate: 6400, time_dir: 6400, attribution: 2145, quantity: 1506.
-
-## Contract `robust7` = ['agent', 'predicate', 'polarity', 'quantity', 'time_dir', 'modality', 'attribution']
+### Frontend `closed` (contract `core6`)
 
 | Operator | Mode | Auth TPR | Doc attribution | ValidRemoval | Surface-carrier | Mean cosine |
 |---|---|---|---|---|---|---|
-| voice | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.000 [0.000,0.001] | 0.878 [0.876,0.879] |
-| time_reflow | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.000 [0.000,0.001] | 0.920 [0.918,0.921] |
-| verb_syn | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.036 [0.030,0.043] | 0.920 [0.918,0.921] |
-| time_syn | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.036 [0.030,0.043] | 0.920 [0.918,0.921] |
-| hedge | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.017 [0.013,0.022] | 0.908 [0.907,0.910] |
-| combo_benign | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.000 [0.000,0.001] | 0.878 [0.876,0.879] |
-| adv_verb | adaptive | 0.000 [0.000,0.001] | 0.000 [0.000,0.019] | 1.000 [0.999,1.000] | 0.000 [0.000,0.001] | 0.893 [0.891,0.894] |
-| adv_time | adaptive | 0.000 [0.000,0.001] | 0.000 [0.000,0.019] | 1.000 [0.999,1.000] | 0.000 [0.000,0.001] | 0.845 [0.843,0.847] |
-| adv_combo | adaptive | 0.000 [0.000,0.001] | 0.000 [0.000,0.019] | 1.000 [0.999,1.000] | 0.000 [0.000,0.001] | 0.721 [0.718,0.723] |
+| voice | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.000 [0.000,0.001] | 0.880 [0.879,0.882] |
+| time_reflow | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.000 [0.000,0.001] | 0.922 [0.920,0.923] |
+| verb_syn | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.042 [0.035,0.049] | 0.922 [0.920,0.923] |
+| time_syn | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.041 [0.034,0.048] | 0.921 [0.919,0.922] |
+| hedge | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.018 [0.014,0.024] | 0.910 [0.909,0.912] |
+| combo_benign | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.000 [0.000,0.001] | 0.879 [0.877,0.881] |
+| adv_verb | adaptive | 0.000 [0.000,0.001] | 0.000 [0.000,0.019] | 1.000 [0.999,1.000] | 0.000 [0.000,0.001] | 0.894 [0.893,0.896] |
+| adv_time | adaptive | 0.000 [0.000,0.001] | 0.000 [0.000,0.019] | 1.000 [0.999,1.000] | 0.000 [0.000,0.001] | 0.847 [0.845,0.850] |
+| adv_combo | adaptive | 0.000 [0.000,0.001] | 0.000 [0.000,0.019] | 1.000 [0.999,1.000] | 0.000 [0.000,0.001] | 0.723 [0.721,0.725] |
 | alter | altering | 0.000 [0.000,0.001] | 0.000 [0.000,0.019] | 1.000 [0.999,1.000] (tamper rej.) | 0.000 [0.000,0.001] | 0.889 [0.888,0.891] |
+| adv_novel | adaptive | 0.000 [0.000,0.001] | 0.000 [0.000,0.019] | 1.000 [0.999,1.000] | 0.000 [0.000,0.001] | 0.805 [0.802,0.807] |
 
-Adaptive-removal field breakdown (which contract field the closed lexicon failed to recover): predicate: 6400, time_dir: 6400, attribution: 2145, quantity: 1506.
+Residual adaptive-removal field breakdown (fields the `closed` frontend failed to recover): predicate: 9600, time_dir: 9600, quantity: 2200, attribution: 2154.
 
-## Contract `full9` = ['agent', 'patient', 'predicate', 'polarity', 'quantity', 'time_dir', 'modality', 'attribution', 'causation']
+### Frontend `extended` (contract `core6`)
 
 | Operator | Mode | Auth TPR | Doc attribution | ValidRemoval | Surface-carrier | Mean cosine |
 |---|---|---|---|---|---|---|
-| voice | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.000 [0.000,0.001] | 0.878 [0.876,0.879] |
-| time_reflow | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.000 [0.000,0.001] | 0.920 [0.918,0.921] |
-| verb_syn | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.036 [0.030,0.043] | 0.920 [0.918,0.921] |
-| time_syn | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.036 [0.030,0.043] | 0.920 [0.918,0.921] |
-| hedge | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.017 [0.013,0.022] | 0.908 [0.907,0.910] |
-| combo_benign | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.000 [0.000,0.001] | 0.878 [0.876,0.879] |
-| adv_verb | adaptive | 0.000 [0.000,0.001] | 0.000 [0.000,0.019] | 1.000 [0.999,1.000] | 0.000 [0.000,0.001] | 0.893 [0.891,0.894] |
-| adv_time | adaptive | 0.000 [0.000,0.001] | 0.000 [0.000,0.019] | 1.000 [0.999,1.000] | 0.000 [0.000,0.001] | 0.845 [0.843,0.847] |
-| adv_combo | adaptive | 0.000 [0.000,0.001] | 0.000 [0.000,0.019] | 1.000 [0.999,1.000] | 0.000 [0.000,0.001] | 0.721 [0.718,0.723] |
+| voice | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.000 [0.000,0.001] | 0.880 [0.879,0.882] |
+| time_reflow | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.000 [0.000,0.001] | 0.922 [0.920,0.923] |
+| verb_syn | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.042 [0.035,0.049] | 0.922 [0.920,0.923] |
+| time_syn | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.041 [0.034,0.048] | 0.921 [0.919,0.922] |
+| hedge | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.018 [0.014,0.024] | 0.910 [0.909,0.912] |
+| combo_benign | benign | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.000 [0.000,0.001] | 0.879 [0.877,0.881] |
+| adv_verb | adaptive | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.000 [0.000,0.001] | 0.894 [0.893,0.896] |
+| adv_time | adaptive | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.000 [0.000,0.001] | 0.847 [0.845,0.850] |
+| adv_combo | adaptive | 1.000 [0.999,1.000] | 1.000 [0.981,1.000] | 0.000 [0.000,0.001] | 0.000 [0.000,0.001] | 0.723 [0.721,0.725] |
 | alter | altering | 0.000 [0.000,0.001] | 0.000 [0.000,0.019] | 1.000 [0.999,1.000] (tamper rej.) | 0.000 [0.000,0.001] | 0.889 [0.888,0.891] |
+| adv_novel | adaptive | 0.000 [0.000,0.001] | 0.000 [0.000,0.019] | 1.000 [0.999,1.000] | 0.000 [0.000,0.001] | 0.805 [0.802,0.807] |
 
-Adaptive-removal field breakdown (which contract field the closed lexicon failed to recover): predicate: 6400, time_dir: 6400, attribution: 2145, quantity: 1506.
+Residual adaptive-removal field breakdown (fields the `extended` frontend failed to recover): time_dir: 3200, predicate: 3200, quantity: 673.
 
-> Benign paraphrase is authenticated at high rates (RQ4). The adaptive attacker's residual ValidRemoval is not a defeat of the meaning-digest principle but a measurement of the *closed lexicon's* coverage: it is localized to the predicate/time fields whose surface markers the attacker strips, which is exactly what the wide-coverage neural frontend (truthprint.neural_parser) is designed to close. Surface carriers do not survive content paraphrase, mirroring translation. Closed-domain Stage-2; wide-coverage paraphrase robustness is future work.
+> Extended coverage is still a fixed lexicon (held-out `adv_novel` removal stays high); the open-vocabulary neural frontend is the general defense. Closed-domain Stage-2; wide-coverage paraphrase robustness at scale remains future work.

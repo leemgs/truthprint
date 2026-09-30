@@ -14,6 +14,8 @@ import random
 from truthprint import paraphrase as pp
 from truthprint import challenge as ch
 from truthprint.multilingual import extract_invariants, _TIME
+from truthprint.multilingual_ext import extract_invariants as extract_ext, \
+    _FIX_EXT, _TIME_EXT
 from truthprint.provenance import CONTRACTS, register_tag, authenticate
 
 KEY = b"truthprint-challenge-key-01234567"[:32]
@@ -108,6 +110,66 @@ def test_altering_edit_is_rejected():
     assert rej / tot >= 0.99, f"tamper rejection {rej/tot:.3f}"
 
 
+def _defense_key(auth_fn, gold, text):
+    return auth_fn(text, gold)
+
+
+def test_novel_pools_lie_outside_the_extended_inventory():
+    # The held-out attack must actually be out-of-inventory, or the coverage bound
+    # is fake. No novel verb form may contain an extended fix stem; no novel time
+    # phrase may contain an extended time marker.
+    for vf in pp.ADAPTIVE_VERBS_NOVEL:
+        for form in (vf.past, vf.participle, vf.base):
+            assert not any(stem in form.lower() for stem in _FIX_EXT), form
+    ext_time = set(_TIME_EXT["previous"]) | set(_TIME_EXT["following"])
+    for direction, phrases in pp.ADAPTIVE_TIME_NOVEL.items():
+        for phrase in phrases:
+            low = phrase.lower()
+            assert not any(m in low for m in ext_time), phrase
+
+
+def test_extended_frontend_defends_adaptive_and_keeps_soundness():
+    rng = random.Random(5)
+    fields = CONTRACTS["core6"]
+
+    def auth(extractor, text, gold):
+        tag = register_tag(KEY, gold, NONCE, "s1", "core6", 32)
+        return authenticate(KEY, extractor(text, "en"), NONCE, "s1", tag,
+                            "core6", 32)
+
+    adv_removed_closed = adv_removed_ext = adv_n = 0
+    novel_removed_ext = novel_n = 0
+    tamper_rej_ext = tamper_n = 0
+    benign_ok_ext = benign_n = 0
+    for _ in range(150):
+        f = ch.sample_fact(rng)
+        gold = ch.ext_invariants(f)
+        vb, tb = rng.randrange(2), rng.randrange(2)
+        for v in pp.paraphrase_variants(f, vb, tb, rng):
+            if v["mode"] == "adaptive":
+                adv_n += 1
+                adv_removed_closed += 0 if auth(extract_invariants, v["text"], gold) else 1
+                adv_removed_ext += 0 if auth(extract_ext, v["text"], gold) else 1
+            elif v["mode"] == "benign":
+                benign_n += 1
+                benign_ok_ext += 1 if auth(extract_ext, v["text"], gold) else 0
+            elif v["op"] == "alter":
+                tamper_n += 1
+                tamper_rej_ext += 0 if auth(extract_ext, v["text"], gold) else 1
+        nv = pp.novel_adaptive_variant(f, vb, tb, rng)
+        novel_n += 1
+        novel_removed_ext += 0 if auth(extract_ext, nv["text"], gold) else 1
+
+    # closed lexicon is broken by the adaptive attack; extended defends it
+    assert adv_removed_closed / adv_n >= 0.9
+    assert adv_removed_ext / adv_n <= 0.02, adv_removed_ext / adv_n
+    # extended widened coverage, not tolerance: tampers still rejected, benign kept
+    assert tamper_rej_ext / tamper_n >= 0.99
+    assert benign_ok_ext / benign_n >= 0.99
+    # held-out novel synonyms still evade the extended lexicon (coverage bound)
+    assert novel_removed_ext / novel_n >= 0.9
+
+
 def test_eval_paraphrase_smoke_and_determinism():
     import importlib.util
     from pathlib import Path
@@ -127,3 +189,12 @@ def test_eval_paraphrase_smoke_and_determinism():
     assert agg["altering_tamper_rejection"][0] >= 0.99
     # literal Eq.4 ValidRemoval is ~0 by construction for a meaning-digest
     assert agg["adaptive_valid_removal_literalEq4"][0] == 0.0
+
+    # extended frontend defends the adaptive attack in the eval harness too
+    re = mod.evaluate(n_docs=15, sents_per_doc=8, contracts=("core6",),
+                      num_resamples=200, extractor=extract_ext, frontend="extended")
+    age = re["contracts"]["core6"]["aggregate"]
+    assert age["adaptive_valid_removal"][0] <= 0.02
+    assert age["adaptive_auth_tpr"][0] >= 0.98
+    assert age["altering_tamper_rejection"][0] >= 0.99
+    assert age["adaptive_novel_valid_removal"][0] >= 0.9

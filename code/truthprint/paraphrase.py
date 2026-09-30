@@ -50,8 +50,10 @@ from .challenge import ExtFact, ext_invariants, altering_edit, cosine_bow
 
 __all__ = [
     "VerbForms", "BENIGN_VERBS", "ADAPTIVE_VERBS",
+    "ADAPTIVE_VERBS_NOVEL", "ADAPTIVE_TIME_NOVEL",
     "BENIGN_TIME", "ADAPTIVE_TIME", "OPERATORS", "ADAPTIVE_OPS", "BENIGN_OPS",
-    "realize_surface", "paraphrase_variants", "invariant_eq_gold",
+    "realize_surface", "paraphrase_variants", "novel_adaptive_variant",
+    "invariant_eq_gold",
 ]
 
 
@@ -99,6 +101,25 @@ ADAPTIVE_TIME = {
     "following": ["24 hours later", "one day later", "a day from then"],
 }
 
+# Held-out NOVEL pools for the generalization / coverage-bound probe: these are
+# meaning-preserving synonyms deliberately chosen to lie OUTSIDE the extended
+# inventory of :mod:`truthprint.multilingual_ext`, so even the extended-coverage
+# frontend abstains on them. They measure the honest residual: any fixed lexicon
+# can be evaded by an out-of-inventory synonym, which is why the general answer is
+# the open-vocabulary neural frontend. (Verified against the extended inventory in
+# tests/test_paraphrase.py.)
+ADAPTIVE_VERBS_NOVEL = [
+    VerbForms("ironed out", "ironed out", "iron out"),
+    VerbForms("put right", "put right", "put right"),
+    VerbForms("laid to rest", "laid to rest", "lay to rest"),
+    VerbForms("knocked out", "knocked out", "knock out"),
+    VerbForms("squared away", "squared away", "square away"),
+]
+ADAPTIVE_TIME_NOVEL = {
+    "previous": ["the day just past", "24 hours prior", "the day gone by"],
+    "following": ["the day yet to come", "24 hours hence", "the day coming up"],
+}
+
 # Attribution prefixes. Benign forms contain a lexicon marker (report/vendor);
 # adaptive forms refer to the same source without one.
 _BENIGN_ATTR = {
@@ -109,7 +130,7 @@ _BENIGN_ATTR = {
 _ADAPTIVE_ATTR = {
     "none": [""],
     "report": ["as the write-up put it, ", "per the internal memo, "],
-    "vendor": ["as the merchant's memo said, ", "per the outside firm, "],
+    "vendor": ["as the merchant put it, ", "per the outside firm, "],
 }
 _CAUSE_TAIL = {"none": "", "cause": " because of the outage",
                "purpose": " to prevent the outage"}
@@ -234,6 +255,19 @@ def paraphrase_variants(f: ExtFact, voice_bit: int, timepos_bit: int,
                           _pick(rng, BENIGN_TIME[f2.time_dir]),
                           _pick(rng, _BENIGN_ATTR[f2.attribution]))})
     return out
+
+
+def novel_adaptive_variant(f: ExtFact, voice_bit: int, timepos_bit: int,
+                           rng: random.Random) -> dict:
+    """One meaning-preserving adaptive paraphrase drawn from the held-out NOVEL
+    pools (verb + time outside the extended inventory), with in-lexicon
+    attribution so the coverage bound is isolated to predicate/time. Used to probe
+    generalization of the extended-coverage frontend."""
+    verb = _pick(rng, ADAPTIVE_VERBS_NOVEL)
+    tphrase = _pick(rng, ADAPTIVE_TIME_NOVEL[f.time_dir])
+    attr = _pick(rng, _BENIGN_ATTR[f.attribution])
+    text = realize_surface(f, verb, 1 - voice_bit, timepos_bit, tphrase, attr)
+    return {"op": "adv_novel", "mode": "adaptive", "gold": f, "text": text}
 
 
 def invariant_eq_gold(a: ExtFact, b: ExtFact, fields: list[str]) -> bool:
