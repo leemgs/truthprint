@@ -1,0 +1,83 @@
+{
+  "config": {
+    "n_items": 960,
+    "n_docs": 60,
+    "sents_per_doc": 16,
+    "benign_tpr_target": 0.95,
+    "seed": 20270301,
+    "backend": "bag-of-words",
+    "contract": "core6",
+    "thr_retrieval": 0.7923547734168841,
+    "theta_nli": 0.6470588235294118
+  },
+  "attribution_rank1": {
+    "benign": [
+      0.4239583333333333,
+      0.3930614227041698,
+      0.45546138292574684
+    ],
+    "tamper": [
+      0.6114583333333333,
+      0.5802394829477181,
+      0.6417887334577465
+    ]
+  },
+  "methods": {
+    "typed": {
+      "benign_tpr": [
+        1.0,
+        0.9960144287347942,
+        1.0
+      ],
+      "tamper_rejection": [
+        1.0,
+        0.9960144287347942,
+        1.0
+      ],
+      "localizes_field": true,
+      "needs_model": false
+    },
+    "retrieval": {
+      "benign_tpr": [
+        0.940625,
+        0.9238463201189007,
+        0.9538913952036367
+      ],
+      "tamper_rejection": [
+        0.046875,
+        0.035215161112495515,
+        0.062146762846597335
+      ],
+      "localizes_field": false,
+      "needs_model": false
+    },
+    "retrieval_nli_proxy": {
+      "benign_tpr": [
+        0.9177083333333333,
+        0.8986147887020585,
+        0.9334722653034676
+      ],
+      "tamper_rejection": [
+        0.06145833333333333,
+        0.04794355463641754,
+        0.07846879016077347
+      ],
+      "localizes_field": false,
+      "needs_model": true
+    },
+    "retrieval_nli_oracle": {
+      "benign_tpr": [
+        0.940625,
+        0.9238463201189007,
+        0.9538913952036367
+      ],
+      "tamper_rejection": [
+        1.0,
+        0.9960144287347942,
+        1.0
+      ],
+      "localizes_field": false,
+      "needs_model": true
+    }
+  }
+}
