@@ -116,14 +116,57 @@ formal analysis and reproducibility notes.
 |---|---|
 | Semantic fidelity by construction | Watermarking never alters locked meaning; carriers with no valid realization become erasures |
 | Unforgeability | Forging attribution reduces to forging the MAC (HMAC-SHA256) |
-| Bounded false positives | Cryptographic FP rate ≤ 2⁻ᵗᵃᵘ (0 observed over 20k trials at τ=32) |
+| Bounded false positives | Cryptographic FP rate ≤ 2⁻ᵗᵃᵘ (0 observed over 20k trials at τ=32); the meaning-digest's operative floor is the *contract-collision* probability (contract entropy), not 2⁻ᵗᵃᵘ |
+| Translation-robust authentication | Meaning-digest re-verifies a keyed tag over the invariant contract; survives real NLLB MT where surface carriers score 0/192 |
+| Tamper localization | A single-field meaning change breaks verification and names the field; similarity / robust-hash / store-and-retrieve baselines cannot |
+| Honest adaptive-attack accounting | Closed-lexicon removal is reported and localized; an extended-coverage frontend defends it (ValidRemoval 1.000→0.000) without weakening tamper rejection |
 | Erasure resilience | Full payload recovery to 42% carrier erasure, collapsing at the rate-½ cliff (≈50%) |
 | No global carrier rule | Keyed map is bound to (key, invariant digest, nonce) |
 
-## Diagnostic Stage-1 simulation
+## Evaluation highlights (measured, reproducible)
+
+Two provenance mechanisms share the IR; we report them **honestly and separately**.
+Every number below regenerates from a fixed seed (see `paper/results/`).
+
+- **Surface realization-carrier — honest negative under real MT.** Against real
+  NLLB‑200 translation the Stage‑1 surface parser recovers **0/192** outputs:
+  translation rewrites the carriers. (`paper/results/realmt_pilot.md`)
+- **Meaning-digest — survives real translation.** A keyed tag over the typed
+  invariant contract, re‑verified after transformation by a Stage‑2 multilingual
+  extractor. On **4,800 real NLLB translations across six languages**:
+  document‑level attribution **1.000 for five of six languages** (Arabic weaker),
+  tamper rejection **≥ 0.99**.
+  (`paper/results/provenance_realmt.md`, `paper/results/stage2_multilingual.md`)
+- **Real baseline comparison.** A real **KGW** token watermark collapses under real
+  translation (clean 0.96 → **0.00–0.38** translated) while the meaning‑digest
+  survives (**0.50–0.98**). At a matched 1% FPR, SemStamp survives round‑trip but
+  degrades cross‑lingually, while the typed digest survives and — unlike
+  similarity/robust hashing — rejects single‑field tampers.
+  (`paper/results/baselines_real.md`, `paper/results/semantic_baselines.md`)
+- **Paraphrase & adaptive attack (RQ4/RQ7).** Benign meaning‑preserving paraphrase
+  authenticates (TPR **1.000**); a schema‑aware adaptive attacker that swaps
+  out‑of‑lexicon synonyms removes the mark under the closed lexicon (ValidRemoval
+  **1.000**) — an honest negative localized to lexicon coverage (polarity and agent
+  still survive). (`paper/results/paraphrase.md`)
+- **Extended-lexicon defense.** A broader‑coverage frontend drives adaptive
+  ValidRemoval **1.000 → 0.000** while keeping benign auth and tamper rejection at
+  **1.000** (coverage widened, not tolerance); a held‑out out‑of‑inventory attack
+  still evades any *fixed* lexicon → the general answer is the open‑vocabulary
+  neural frontend. (`paper/results/paraphrase.md`)
+- **“Why not just store & retrieve?”** Under the *same* ledger, retrieval and a
+  cheap NLI proxy reject **≤ 0.06** of single‑field tampers at matched benign
+  acceptance; only a *perfect (unrealizable)* NLI matches the typed contract’s
+  **1.000** tamper rejection, and even then cannot localize the field or give a
+  keyed tag. (`paper/results/retrieval.md`)
+
+> All positive results are **closed‑domain and small‑scale**. Wide‑coverage neural
+> parsing, broader official baselines (SynthID, SWAN), open‑vocabulary adaptive
+> robustness, and human evaluation remain future work.
+
+## Diagnostic Stage-1 simulation (appendix — superseded by the real-MT results above)
 
 In a shared closed-domain diagnostic simulation (`code/scripts/eval_baselines.py`,
-paper Tables V–VI), method-inspired proxies respond to stipulated channel parameters. The outputs validate simulator behavior; they are not real translation results or method rankings:
+paper Appendix A), method-inspired proxies respond to stipulated channel parameters. The outputs validate simulator behavior; they are not real translation results or method rankings:
 
 | Method | Signal layer | Clean-text TPR | Translation TPR (EN→KO) |
 |---|---|---|---|
@@ -142,6 +185,13 @@ paper Tables V–VI), method-inspired proxies respond to stipulated channel para
 - The linguistic layer is a **closed-domain, rule-based** Stage-1 demonstrator.
   It proves the pipeline round-trips on real strings; it is **not** a
   wide-coverage semantic parser.
+- All positive translation/paraphrase results use a **closed-domain, lexicon-based
+  Stage-2 extractor**. A schema-aware adaptive attacker with out-of-lexicon
+  synonyms defeats any *fixed* lexicon (an extended lexicon only widens coverage),
+  so **open-vocabulary neural parsing is required** for general adaptive robustness.
+- The meaning-digest's false-positive floor is the **contract-collision
+  probability** (governed by contract entropy on the deployment text), not the
+  2⁻ᵗᵃᵘ cryptographic bound; estimate it per corpus before deployment.
 - Binary carriers only in this reference; higher-arity carriers are a natural
   extension.
 - Truthprint provides **authenticated attribution designed for transformation robustness**; it
