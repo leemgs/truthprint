@@ -59,12 +59,13 @@ truthprint/
 │   ├── multilingual.py    # Stage-2 EN/KO/HI invariant extractor (semantic frontend)
 │   ├── multilingual_ext.py # extended-coverage frontend (adaptive-attack defense)
 │   ├── provenance.py      # meaning-based provenance authentication (contracts)
+│   ├── retrieval.py       # ledger retrieval(+NLI) baseline ("just store & retrieve")
 │   ├── paraphrase.py      # paraphrase + schema-aware adaptive-attack transforms (RQ4/RQ7)
 │   ├── stats.py           # bootstrap + Wilson confidence intervals
 │   ├── baselines.py       # diagnostic method-inspired signal proxies
 │   └── cli.py             # `truthprint {selftest,demo-core,demo-linguistic,repro-table,challenge,paraphrase}`
 ├── examples/              # minimal runnable examples
-├── scripts/               # reproduce-table + eval_baselines + eval_challenge + eval_paraphrase
+├── scripts/               # reproduce-table + eval_baselines + eval_challenge + eval_paraphrase + eval_retrieval
 ├── tests/                 # pytest suite (also the reproducibility harness)
 └── .github/workflows/     # CI running tests on Python 3.9/3.11/3.12
 ```

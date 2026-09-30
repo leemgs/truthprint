@@ -26,7 +26,7 @@ from .linguistic import (Fact, LinguisticCodec, realize, parse,
                          doc_invariants, invariant_preserving_transform,
                          negate_transform)
 from . import (challenge, stats, multilingual, multilingual_ext, provenance,
-               paraphrase)
+               paraphrase, retrieval)
 
 __version__ = "0.1.0"
 

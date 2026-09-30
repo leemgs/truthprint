@@ -112,6 +112,7 @@ System-level false-positive rate & Not established & The tag bound is per tested
 Semantic-level false-positive rate (contract collision) & Measured (closed-domain) & The $2^{-\tau}$ bound covers cryptographic tag collision only; the meaning-digest floor is the contract-collision probability. On the closed-domain corpus this floor is $5.2\times10^{-3}$ ($\approx1/192$) for the six-field contract---matching the measured $0.001$--$0.010$ real-MT false positives and $\sim\!2\times10^{7}\times$ the $2^{-32}$ bound (Sec.~\ref{sec:provenance}). Open-domain text has lower contract entropy, so estimating it per corpus is a deployment prerequisite. \\
 Comparative robustness vs.\ token and semantic baselines & Demonstrated (real MT: KGW token; matched-FPR SemStamp $+$ robust hashing) & On the same pipeline a real KGW watermark collapses under real NLLB translation (TPR@$1\%$FPR $0.960$ clean $\to$ $0.000$--$0.380$ translated) while the meaning-digest scheme survives ($0.502$--$0.980$); Table~\ref{tab:baselines}, Sec.~\ref{sec:baselines}. At a matched $1\%$ FPR a real embedding-region baseline (SemStamp) survives round-trip but degrades cross-lingually ($0.937$ KO $\to$ $0.377$ AR) while the typed scheme survives, and only the typed contract rejects single-field tampers (Table~\ref{tab:matched}, Sec.~\ref{sec:matched}). Official implementations (SynthID, SWAN) remain future work. \\
 Distinction from robust/semantic hashing & Demonstrated (closed-domain, real MT) & Robust hashes (exact, MinHash, SimHash) either die under translation or cannot localize a typed field change (reject $0\%$ of single-field tampers vs.\ typed $1.000$); the meaning-digest is a typed, keyed member of the family with an analyzed collision floor (Secs.~\ref{sec:relhash},~\ref{sec:matched}). \\
+Distinction from store-and-retrieve (ledger) baseline & Demonstrated (closed-domain) & Under the same ledger, retrieval and a cheap NLI proxy reject $\le0.06$ of single-field tampers at matched benign acceptance; only a perfect (unrealizable) oracle NLI reaches $1.000$, and still does not localize the field or give a keyed tag, which the typed digest does (Sec.~\ref{sec:retrieval}). \\
 Translator-independent (separated) frontend & Pilot (open-domain positive on one field) & A model-separated embedding frontend recovers open-domain temporal direction ($0.944$) where the lexicon abstains ($0.000$); static embeddings remain insufficient for the full contract, motivating the separated-backend LLM frontend (Sec.~\ref{sec:neural}). \\
 \bottomrule
 \end{tabular}
@@ -943,6 +944,51 @@ Exact SHA-256             & 0.867 & 0.000 & 0.000 & 0.000 & 0.000 \\
 Meaning-digest            & \multicolumn{5}{c}{$1.000$\ \ [$0.981,1.000$]} \\
 SimHash / MinHash         & \multicolumn{5}{c}{$0.000$\ \ [$0.000,0.019$]} \\
 Exact SHA-256             & \multicolumn{5}{c}{$1.000$ (but $0.0$ TPR under MT)} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Ledger Retrieval and NLI Baselines}
+\label{sec:retrieval}
+Because the meaning-digest already uses an out-of-band ledger, the natural
+control is to store the source there and \emph{retrieve} it after transformation
+(nearest-neighbor over a sentence embedding), optionally adding an NLI/entailment
+check to reject edits---``why not just store and retrieve?''. We run this
+head-to-head under the same ledger assumption and \emph{id-addressed}
+verification (each candidate checked against its own registered source, exactly
+as our verifier looks up the ledger). With benign-paraphrase acceptance matched
+at $\approx0.95$ (Table~\ref{tab:retrieval}), plain retrieval and a cheap
+directional-coverage NLI proxy reject essentially no single-field tamper
+($0.047$ and $0.061$): a one-field meaning change stays nearest to its own source
+(a tamper is even \emph{more} retrievable to its source than a paraphrase, gallery
+rank-$1$ $0.61$ vs.\ $0.42$), so no similarity threshold separates the two. Only a
+\emph{perfect}, unrealizable oracle NLI matches the typed contract's tamper
+rejection ($1.000$), and even then it neither localizes which field changed nor
+yields a keyed, unforgeable tag---both of which the typed meaning-digest provides
+deterministically with no model. This is the retrieval-framed counterpart of
+challenge~C3 (Sec.~\ref{sec:challenge}) and the matched-FPR robust-hashing result
+(Sec.~\ref{sec:matched}). Closed-domain, bag-of-words backend (a real encoder
+behaves the same on a one-field edit, which is embedding-close to its source); the
+harness ships with the artifact (\texttt{scripts/eval\_retrieval.py}).
+
+\begin{table}[t]
+\centering
+\caption{Ledger retrieval(+NLI) vs.\ the typed meaning-digest, same ledger and
+id-addressed verification, benign-paraphrase acceptance matched at $\approx0.95$
+($960$ closed-domain items, Wilson $95\%$ CI). Storing and retrieving the source
+survives paraphrase but cannot reject a single-field tamper; only a perfect
+(unrealizable) NLI matches the typed contract, and even then does not localize the
+field or give a keyed tag.}
+\label{tab:retrieval}
+\footnotesize
+\begin{tabular}{lcccc}
+\toprule
+Method & Benign TPR & Tamper rej. & Localizes & Model \\
+\midrule
+Meaning-digest (typed)      & $1.000$ & $1.000$ & yes & none \\
+Retrieval (NN)              & $0.941$ & $0.047$ & no  & encoder \\
+Retrieval $+$ NLI (proxy)   & $0.918$ & $0.061$ & no  & NLI \\
+Retrieval $+$ NLI (oracle)  & $0.941$ & $1.000$ & no  & perfect NLI \\
 \bottomrule
 \end{tabular}
 \end{table}

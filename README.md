@@ -94,6 +94,7 @@ truthprint paraphrase            # paraphrase (RQ4) + adaptive-attack (RQ7) robu
 python scripts/eval_baselines.py # regenerate the baseline comparison (paper Tables V/VI)
 python scripts/eval_challenge.py # regenerate the field-level challenge results
 python scripts/eval_paraphrase.py # regenerate the paraphrase/adaptive-attack table
+python scripts/eval_retrieval.py # regenerate the ledger retrieval(+NLI) baseline
 ```
 
 ### Build the paper
