@@ -43,6 +43,22 @@ def test_neural_defends_heldout_where_lexicon_cannot():
 
 
 @pytest.mark.skipif(not CACHE.exists(), reason="neural cache not present")
+def test_gpt4omini_scaled_run_defends_heldout():
+    mod = _load()
+    # scaled second model (N=40) scored from the committed cache
+    res = mod.evaluate(n=40, seed=20270401, model="openai/gpt-4o-mini",
+                       use_cache_only=True)
+    fe = res["frontends"]
+    assert fe["extended"]["held_out_novel_valid_removal"][0] >= 0.9
+    # neural defends the held-out attack far below the fixed lexicon, tightly
+    assert fe["neural"]["held_out_novel_valid_removal"][0] <= 0.2
+    assert fe["neural"]["held_out_novel_valid_removal"][2] < \
+        fe["extended"]["held_out_novel_valid_removal"][1]  # CIs disjoint
+    assert fe["neural"]["benign_tpr"][0] >= 0.95
+    assert fe["neural"]["tamper_rejection"][0] >= 0.95
+
+
+@pytest.mark.skipif(not CACHE.exists(), reason="neural cache not present")
 def test_cache_scoring_is_deterministic():
     mod = _load()
     a = mod.evaluate(n=10, seed=20270401, use_cache_only=True)
