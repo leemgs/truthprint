@@ -95,6 +95,7 @@ python scripts/eval_baselines.py # regenerate the baseline comparison (paper Tab
 python scripts/eval_challenge.py # regenerate the field-level challenge results
 python scripts/eval_paraphrase.py # regenerate the paraphrase/adaptive-attack table
 python scripts/eval_retrieval.py # regenerate the ledger retrieval(+NLI) baseline
+python scripts/eval_neural_defense.py --use-cache # score the neural adaptive-defense from cache (no key)
 ```
 
 ### Build the paper
@@ -153,6 +154,13 @@ Every number below regenerates from a fixed seed (see `paper/results/`).
   **1.000** (coverage widened, not tolerance); a held‑out out‑of‑inventory attack
   still evades any *fixed* lexicon → the general answer is the open‑vocabulary
   neural frontend. (`paper/results/paraphrase.md`)
+- **Open-vocabulary neural frontend closes the held-out gap.** A real instruction
+  LLM (Llama‑3.3‑70B via an OpenAI‑compatible API, schema‑guided) drives the
+  **held‑out novel** adaptive ValidRemoval from **1.000** (both fixed lexicons) to
+  **0.100** (CI disjoint from the lexicons’) at benign/tamper **1.000** — it reads
+  the invariants from out‑of‑inventory synonyms a fixed lexicon cannot. Neural
+  extractions are cached, so scoring reproduces with no key.
+  (`paper/results/neural_defense.md`)
 - **“Why not just store & retrieve?”** Under the *same* ledger, retrieval and a
   cheap NLI proxy reject **≤ 0.06** of single‑field tampers at matched benign
   acceptance; only a *perfect (unrealizable)* NLI matches the typed contract’s

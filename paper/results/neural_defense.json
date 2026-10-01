@@ -1,0 +1,187 @@
+{
+  "config": {
+    "n_items": 10,
+    "seed": 20270401,
+    "model": "meta-llama/llama-3.3-70b-instruct",
+    "contract": "core6",
+    "neural_live_calls": 0
+  },
+  "frontends": {
+    "closed": {
+      "benign_tpr": [
+        1.0,
+        0.7224672000430039,
+        1.0
+      ],
+      "adaptive_seen_valid_removal": [
+        1.0,
+        0.8864866067788025,
+        1.0
+      ],
+      "held_out_novel_valid_removal": [
+        1.0,
+        0.7224672000430039,
+        1.0
+      ],
+      "tamper_rejection": [
+        1.0,
+        0.7224672000430039,
+        1.0
+      ]
+    },
+    "extended": {
+      "benign_tpr": [
+        1.0,
+        0.7224672000430039,
+        1.0
+      ],
+      "adaptive_seen_valid_removal": [
+        0.0,
+        0.0,
+        0.11351339322119768
+      ],
+      "held_out_novel_valid_removal": [
+        1.0,
+        0.7224672000430039,
+        1.0
+      ],
+      "tamper_rejection": [
+        1.0,
+        0.7224672000430039,
+        1.0
+      ]
+    },
+    "neural": {
+      "benign_tpr": [
+        1.0,
+        0.7224672000430039,
+        1.0
+      ],
+      "adaptive_seen_valid_removal": [
+        0.2,
+        0.09505107175641472,
+        0.37305696417630385
+      ],
+      "held_out_novel_valid_removal": [
+        0.1,
+        0.017876213089152576,
+        0.4041500268764443
+      ],
+      "tamper_rejection": [
+        1.0,
+        0.7224672000430039,
+        1.0
+      ]
+    }
+  },
+  "examples": [
+    {
+      "adv_combo": "On one day later, 5 cache misss was cleared up by the engineer to prevent the outage.",
+      "closed": {
+        "agent": "the engineer",
+        "patient": "cache miss",
+        "predicate": null,
+        "polarity": "positive",
+        "quantity": 5,
+        "time_dir": null,
+        "modality": "asserted",
+        "attribution": "none",
+        "causation": "purpose"
+      },
+      "extended": {
+        "agent": "the engineer",
+        "patient": "cache miss",
+        "predicate": "FIX",
+        "polarity": "positive",
+        "quantity": 5,
+        "time_dir": "following",
+        "modality": "asserted",
+        "attribution": "none",
+        "causation": "purpose"
+      },
+      "neural": {
+        "agent": "the engineer",
+        "patient": null,
+        "predicate": "FIX",
+        "polarity": "positive",
+        "quantity": 5,
+        "time_dir": "following",
+        "modality": "asserted",
+        "attribution": "none",
+        "causation": "none"
+      }
+    },
+    {
+      "adv_combo": "As the merchant put it, the operator must have sorted out the memory leak to prevent the outage on one day later.",
+      "closed": {
+        "agent": "the operator",
+        "patient": "memory leak",
+        "predicate": null,
+        "polarity": "positive",
+        "quantity": 1,
+        "time_dir": null,
+        "modality": "necessary",
+        "attribution": "none",
+        "causation": "purpose"
+      },
+      "extended": {
+        "agent": "the operator",
+        "patient": "memory leak",
+        "predicate": "FIX",
+        "polarity": "positive",
+        "quantity": 1,
+        "time_dir": "following",
+        "modality": "necessary",
+        "attribution": "vendor",
+        "causation": "purpose"
+      },
+      "neural": {
+        "agent": "the operator",
+        "patient": null,
+        "predicate": "FIX",
+        "polarity": "positive",
+        "quantity": 1,
+        "time_dir": "following",
+        "modality": "asserted",
+        "attribution": "vendor",
+        "causation": "none"
+      }
+    },
+    {
+      "adv_combo": "Per the internal memo, the developer did not clear up 2 server errors to prevent the outage on 24 hours later.",
+      "closed": {
+        "agent": "the developer",
+        "patient": "server error",
+        "predicate": null,
+        "polarity": "negative",
+        "quantity": 2,
+        "time_dir": null,
+        "modality": "asserted",
+        "attribution": "none",
+        "causation": "purpose"
+      },
+      "extended": {
+        "agent": "the developer",
+        "patient": "server error",
+        "predicate": "FIX",
+        "polarity": "negative",
+        "quantity": 2,
+        "time_dir": "following",
+        "modality": "asserted",
+        "attribution": "report",
+        "causation": "purpose"
+      },
+      "neural": {
+        "agent": "the developer",
+        "patient": null,
+        "predicate": "FIX",
+        "polarity": "negative",
+        "quantity": 2,
+        "time_dir": "following",
+        "modality": "asserted",
+        "attribution": "report",
+        "causation": "none"
+      }
+    }
+  ]
+}
