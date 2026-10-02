@@ -17,3 +17,15 @@ The `core6` contract-collision floor (5.15e-03, ~1/192) matches the 0.001--0.010
 ## Caveat
 
 This uniform closed-domain corpus is an *upper* bound on contract entropy. Real, non-templated text -- especially short or formulaic sentences -- has lower entropy and therefore a *higher* collision floor. Estimating contract entropy per corpus is a deployment prerequisite; the cryptographic bound applies only once contract entropy exceeds tau bits.
+
+## When does the cryptographic bound bind? (entropy crossover)
+
+The achievable floor is ~2^-H for contract entropy H; the cryptographic 2^-32 bound binds only once H > 32. Entropy = fixed closed categoricals + the entity fields (agent/patient), whose cardinality scales with the deployment's named-entity vocabulary V. `V*` is the per-role vocabulary at which H first exceeds 32 bits.
+
+| Contract | entity fields | non-entity bits | H @ V=10 | floor @ V=10 | H @ V=1000 | floor @ V=1000 | **V\*** |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `core6` | 1 | 5.58 b | 8.9 b | 2.08e-03 | 15.6 b | 2.08e-05 | **8.95e+07** |
+| `robust7` | 1 | 7.17 b | 10.5 b | 6.94e-04 | 17.1 b | 6.94e-06 | **2.98e+07** |
+| `full9` | 2 | 8.75 b | 15.4 b | 2.31e-05 | 28.7 b | 2.31e-09 | **3.15e+03** |
+
+So a contract with two entity fields (`full9`) needs only ~3153 distinct values per role before the crypto bound binds, whereas a single-entity contract (`core6`) needs ~8.9e+07 -- effectively never for realistic text. Below V*, the contract-collision floor dominates and must be estimated on the deployment corpus; typed fields with open entity vocabularies are what push a deployment into the crypto regime.
