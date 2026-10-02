@@ -826,8 +826,18 @@ bound; widening to nine fields lowers the floor to $\sim\!1.8\times10^{-4}$ at
 the cost of translation robustness. Open-domain and especially short or
 formulaic text has \emph{lower} contract entropy and thus a \emph{higher} floor,
 so estimating contract entropy per corpus is a deployment prerequisite; the
-$2^{-\tau}$ bound applies only once contract entropy exceeds $\tau$ bits.
-It remains a closed-%
+$2^{-\tau}$ bound applies only once contract entropy exceeds $\tau$ bits. We make
+that crossover quantitative (\texttt{truthprint.semantic\_fp.crossover}): writing
+the contract entropy as the fixed closed-categorical bits plus the entity fields'
+$\log_2 V$ (for a per-role named-entity vocabulary $V$), the $2^{-32}$ bound
+begins to bind only above a threshold $V^\star=2^{(\tau-\text{nonentity bits})/
+n_{\text{entity}}}$. A two-entity contract (full9) reaches it at a realistic
+$V^\star\!\approx\!3.2\times10^{3}$ distinct values per role, whereas a
+single-entity contract (core6/robust7) needs $V^\star\!\approx\!3$--$9\times10^{7}$
+---unreachable for ordinary text---so there the contract-collision floor always
+governs. Typed fields with open entity vocabularies are thus what push a
+deployment into the cryptographic regime; below $V^\star$ the floor must be
+measured on the corpus. It remains a closed-%
 domain Stage-2 result; a wide-coverage semantic parser and more documents/%
 languages are the next steps. The method and evaluation ship with the artifact
 (\texttt{scripts/eval\_provenance.py}).

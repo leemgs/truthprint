@@ -70,6 +70,52 @@ def _fmt_md(r: dict) -> str:
         "the cryptographic bound applies only once contract entropy exceeds tau "
         "bits.",
     ]
+    cx = r.get("crossover")
+    if cx:
+        lines += [
+            "",
+            "## When does the cryptographic bound bind? (entropy crossover)",
+            "",
+            f"The achievable floor is ~2^-H for contract entropy H; the "
+            f"cryptographic 2^-{cx['tau_bits']} bound binds only once H > "
+            f"{cx['tau_bits']}. Entropy = fixed closed categoricals + the entity "
+            f"fields (agent/patient), whose cardinality scales with the "
+            f"deployment's named-entity vocabulary V. `V*` is the per-role "
+            f"vocabulary at which H first exceeds {cx['tau_bits']} bits.",
+            "",
+            "| Contract | entity fields | non-entity bits | H @ V=10 | floor @ V=10 "
+            "| H @ V=1000 | floor @ V=1000 | **V\\*** |",
+            "|---|---:|---:|---:|---:|---:|---:|---:|",
+        ]
+
+        def _row_at(rows, v):
+            for row in rows:
+                if row["entity_vocab"] == v:
+                    return row
+            return None
+        for name, c in cx["contracts"].items():
+            r10, r1k = _row_at(c["rows"], 10), _row_at(c["rows"], 1000)
+            vstar = c["threshold_entity_vocab"]
+            vstar_s = ("inf" if vstar == float("inf") else f"{vstar:.2e}")
+            lines.append(
+                f"| `{name}` | {c['n_entity_fields']} | {c['nonentity_bits']:.2f} b "
+                f"| {r10['contract_entropy_bits']:.1f} b | {r10['uniform_floor']:.2e} "
+                f"| {r1k['contract_entropy_bits']:.1f} b | {r1k['uniform_floor']:.2e} "
+                f"| **{vstar_s}** |")
+        f9 = cx["contracts"].get("full9", {})
+        c6 = cx["contracts"].get("core6", {})
+        if f9 and c6:
+            lines += [
+                "",
+                f"So a contract with two entity fields (`full9`) needs only "
+                f"~{f9['threshold_entity_vocab']:.0f} distinct values per role before "
+                f"the crypto bound binds, whereas a single-entity contract (`core6`) "
+                f"needs ~{c6['threshold_entity_vocab']:.1e} -- effectively never for "
+                "realistic text. Below V*, the contract-collision floor dominates and "
+                "must be estimated on the deployment corpus; typed fields with open "
+                "entity vocabularies are what push a deployment into the crypto "
+                "regime.",
+            ]
     return "\n".join(lines) + "\n"
 
 

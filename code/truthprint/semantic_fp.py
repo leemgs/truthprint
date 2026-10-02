@@ -36,7 +36,15 @@ from collections import Counter
 from .challenge import ext_invariants, sample_fact
 from .provenance import CONTRACTS, contract_digest
 
-__all__ = ["DOMAIN_CARDINALITY", "space_size", "measure"]
+__all__ = ["DOMAIN_CARDINALITY", "space_size", "measure", "crossover",
+           "ENTITY_FIELDS"]
+
+# Fields whose cardinality scales with the deployment's named-entity vocabulary
+# (roles/objects), as opposed to the small closed categoricals (polarity, time,
+# modality, ...). Open-domain text has many distinct entities; the categoricals
+# stay small. The contract-collision floor is governed by the total contract
+# entropy, so these are the fields a richer corpus adds bits through.
+ENTITY_FIELDS = ("agent", "patient")
 
 # Field value cardinalities of the closed-domain generator
 # (truthprint.challenge.sample_fact / ext_invariants). ``predicate`` is fixed to
@@ -62,6 +70,59 @@ def space_size(fields: list[str]) -> int:
     return s
 
 
+def _nonentity_bits(fields: list[str]) -> float:
+    """Max entropy (bits) contributed by the non-entity (closed categorical)
+    fields of a contract, using the closed-domain cardinalities."""
+    return sum(math.log2(DOMAIN_CARDINALITY[f])
+               for f in fields if f not in ENTITY_FIELDS)
+
+
+def crossover(tau_bits: int = 32,
+              entity_sizes=(4, 10, 100, 1000, 10000)) -> dict:
+    """When does the cryptographic ``2**-tau`` bound actually bind?
+
+    The achievable false-positive floor is the contract-collision probability
+    ``~2**-H`` where ``H`` is the contract's entropy on the deployment text. The
+    crypto bound binds only once ``H > tau``. Entropy splits into small closed
+    categoricals (fixed) plus the entity fields (agent/patient), whose
+    cardinality scales with the deployment's named-entity vocabulary ``V``. For
+    each named contract we report ``H`` and the uniform floor ``2**-H`` as ``V``
+    grows, and solve the threshold vocabulary ``V*`` at which ``H`` first exceeds
+    ``tau`` (so the floor drops below ``2**-tau``):
+
+        H(V) = nonentity_bits + n_entity_fields * log2(V) = tau
+        =>  V* = 2 ** ((tau - nonentity_bits) / n_entity_fields).
+
+    This turns the "estimate contract entropy per corpus" caveat into a concrete
+    curve: it says how rich the deployment vocabulary must be before the typed
+    tag's cryptographic bound, rather than the contract-collision floor, governs
+    false positives.
+    """
+    out = {"tau_bits": tau_bits, "crypto_floor": 2.0 ** (-tau_bits),
+           "entity_sizes": list(entity_sizes), "contracts": {}}
+    for name, fields in CONTRACTS.items():
+        base = _nonentity_bits(fields)
+        ne = sum(1 for f in fields if f in ENTITY_FIELDS)
+        rows = []
+        for v in entity_sizes:
+            bits = base + ne * math.log2(v)
+            rows.append({
+                "entity_vocab": v,
+                "contract_entropy_bits": bits,
+                "uniform_floor": 2.0 ** (-bits),
+                "crypto_binds": bits > tau_bits,
+            })
+        vstar = (2.0 ** ((tau_bits - base) / ne)) if ne > 0 else float("inf")
+        out["contracts"][name] = {
+            "fields": list(fields),
+            "nonentity_bits": base,
+            "n_entity_fields": ne,
+            "threshold_entity_vocab": vstar,
+            "rows": rows,
+        }
+    return out
+
+
 def measure(n_facts: int = 800, seed: int = 7, tau_bits: int = 32) -> dict:
     """Measure the semantic-collision FP floor per named contract.
 
@@ -79,6 +140,7 @@ def measure(n_facts: int = 800, seed: int = 7, tau_bits: int = 32) -> dict:
         "tau_bits": tau_bits,
         "crypto_floor": 2.0 ** (-tau_bits),
         "contracts": {},
+        "crossover": crossover(tau_bits=tau_bits),
     }
     for name, fields in CONTRACTS.items():
         digests = [contract_digest(inv, fields).hex() for inv in facts]

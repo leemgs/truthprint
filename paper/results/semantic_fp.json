@@ -62,5 +62,157 @@
       "uniform_floor": 0.00014467592592592592,
       "crypto_floor_ratio": 752559.9767709638
     }
+  },
+  "crossover": {
+    "tau_bits": 32,
+    "crypto_floor": 2.3283064365386963e-10,
+    "entity_sizes": [
+      4,
+      10,
+      100,
+      1000,
+      10000
+    ],
+    "contracts": {
+      "core6": {
+        "fields": [
+          "polarity",
+          "quantity",
+          "time_dir",
+          "attribution",
+          "predicate",
+          "agent"
+        ],
+        "nonentity_bits": 5.584962500721156,
+        "n_entity_fields": 1,
+        "threshold_entity_vocab": 89478485.33333345,
+        "rows": [
+          {
+            "entity_vocab": 4,
+            "contract_entropy_bits": 7.584962500721156,
+            "uniform_floor": 0.005208333333333334,
+            "crypto_binds": false
+          },
+          {
+            "entity_vocab": 10,
+            "contract_entropy_bits": 8.906890595608518,
+            "uniform_floor": 0.002083333333333334,
+            "crypto_binds": false
+          },
+          {
+            "entity_vocab": 100,
+            "contract_entropy_bits": 12.228818690495881,
+            "uniform_floor": 0.00020833333333333327,
+            "crypto_binds": false
+          },
+          {
+            "entity_vocab": 1000,
+            "contract_entropy_bits": 15.550746785383243,
+            "uniform_floor": 2.0833333333333336e-05,
+            "crypto_binds": false
+          },
+          {
+            "entity_vocab": 10000,
+            "contract_entropy_bits": 18.872674880270605,
+            "uniform_floor": 2.0833333333333343e-06,
+            "crypto_binds": false
+          }
+        ]
+      },
+      "robust7": {
+        "fields": [
+          "agent",
+          "predicate",
+          "polarity",
+          "quantity",
+          "time_dir",
+          "modality",
+          "attribution"
+        ],
+        "nonentity_bits": 7.169925001442312,
+        "n_entity_fields": 1,
+        "threshold_entity_vocab": 29826161.777777784,
+        "rows": [
+          {
+            "entity_vocab": 4,
+            "contract_entropy_bits": 9.169925001442312,
+            "uniform_floor": 0.0017361111111111114,
+            "crypto_binds": false
+          },
+          {
+            "entity_vocab": 10,
+            "contract_entropy_bits": 10.491853096329674,
+            "uniform_floor": 0.0006944444444444448,
+            "crypto_binds": false
+          },
+          {
+            "entity_vocab": 100,
+            "contract_entropy_bits": 13.813781191217036,
+            "uniform_floor": 6.944444444444451e-05,
+            "crypto_binds": false
+          },
+          {
+            "entity_vocab": 1000,
+            "contract_entropy_bits": 17.1357092861044,
+            "uniform_floor": 6.944444444444437e-06,
+            "crypto_binds": false
+          },
+          {
+            "entity_vocab": 10000,
+            "contract_entropy_bits": 20.457637380991763,
+            "uniform_floor": 6.944444444444441e-07,
+            "crypto_binds": false
+          }
+        ]
+      },
+      "full9": {
+        "fields": [
+          "agent",
+          "patient",
+          "predicate",
+          "polarity",
+          "quantity",
+          "time_dir",
+          "modality",
+          "attribution",
+          "causation"
+        ],
+        "nonentity_bits": 8.754887502163468,
+        "n_entity_fields": 2,
+        "threshold_entity_vocab": 3153.1022701342745,
+        "rows": [
+          {
+            "entity_vocab": 4,
+            "contract_entropy_bits": 12.754887502163468,
+            "uniform_floor": 0.00014467592592592594,
+            "crypto_binds": false
+          },
+          {
+            "entity_vocab": 10,
+            "contract_entropy_bits": 15.398743691938193,
+            "uniform_floor": 2.3148148148148144e-05,
+            "crypto_binds": false
+          },
+          {
+            "entity_vocab": 100,
+            "contract_entropy_bits": 22.042599881712917,
+            "uniform_floor": 2.3148148148148164e-07,
+            "crypto_binds": false
+          },
+          {
+            "entity_vocab": 1000,
+            "contract_entropy_bits": 28.68645607148764,
+            "uniform_floor": 2.3148148148148185e-09,
+            "crypto_binds": false
+          },
+          {
+            "entity_vocab": 10000,
+            "contract_entropy_bits": 35.330312261262364,
+            "uniform_floor": 2.3148148148148202e-11,
+            "crypto_binds": true
+          }
+        ]
+      }
+    }
   }
 }
