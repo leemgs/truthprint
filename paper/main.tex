@@ -49,7 +49,7 @@
 \maketitle
 
 \begin{abstract}
-Token-level LLM watermarks are fragile under translation and paraphrasing because their signal lives in surface tokens. We propose \emph{Truthprint}, a semantic intermediate representation that separates \emph{locked invariants} (polarity, quantity, time, attribution, roles) from \emph{controlled realization} via a machine-checkable, typed mutability contract. We are explicit that the mechanism surviving transformation is \emph{ledger-based authenticated semantic provenance}---a keyed tag over the invariant digest, re-verified after transformation---not an in-text watermark; the alternative of hiding a payload in realization freedom is an honest negative under real MT (a surface parser recovers $0/192$ NLLB outputs). On $4{,}800$ real NLLB translations across six languages a Stage-2 extractor recovers the invariant fields ($0.90$--$1.00$) and the scheme attributes translated documents cross-lingually ($1.000$ for five of six languages; Arabic weaker) while rejecting single-field tampering. On the same pipeline a real KGW token watermark collapses under translation while the scheme survives; at a matched $1\%$ FPR it survives where SemStamp degrades cross-lingually, and---unlike similarity/robust hashing or a store-and-retrieve ledger baseline---it rejects single-field tampers and \emph{localizes} the changed field. Benign paraphrase is authenticated ($1.00$); a schema-aware adaptive attacker removes the mark under a fixed lexicon, but open-vocabulary neural frontends (GPT-4o-mini, Llama-3.3-70B) defend even held-out attacks (ValidRemoval $0.05$--$0.10$) at unchanged tamper rejection. We prove three \emph{conditional} properties (protected-field fidelity, fresh-payload unforgeability reducing to the MAC, a per-test $2^{-\tau}$ tag bound; the operative false-positive floor is the contract-collision rate, not $2^{-\tau}$) and ship a seeded, self-testing core (zero authenticated false positives in $20{,}000$ trials). All results are closed-domain and small-scale; wide-coverage parsing, official baselines (SynthID, SWAN), and scale remain future work. Truthprint verifies consistency with a participating keyed generator, not arbitrary AI text.
+Token-level LLM watermarks are fragile under translation and paraphrasing because their signal lives in surface tokens. We propose \emph{Truthprint}, a semantic intermediate representation that separates \emph{locked invariants} (polarity, quantity, time, attribution, roles) from \emph{controlled realization} via a machine-checkable, typed mutability contract. We are explicit that the mechanism surviving transformation is \emph{ledger-based authenticated semantic provenance}---a keyed tag over the invariant digest, re-verified after transformation---not an in-text watermark; the alternative of hiding a payload in realization freedom is an honest negative under real MT (a surface parser recovers $0/192$ NLLB outputs). On $4{,}800$ real NLLB translations across six languages (committed in-repo) a Stage-2 extractor recovers the invariant fields ($0.83$--$0.99$; closed categoricals $\ge0.97$) and the scheme attributes translated documents cross-lingually (core6 document attribution $1.000$ for German/Hindi, $0.90$--$0.98$ otherwise) while rejecting single-field tampering ($\ge0.996$). On the same pipeline a real KGW token watermark collapses under translation while the scheme survives; at a matched $1\%$ FPR it survives where SemStamp degrades cross-lingually, and---unlike similarity/robust hashing or a store-and-retrieve ledger baseline---it rejects single-field tampers and \emph{localizes} the changed field. Benign paraphrase is authenticated ($1.00$); a schema-aware adaptive attacker removes the mark under a fixed lexicon, but open-vocabulary neural frontends (GPT-4o-mini, Llama-3.3-70B) defend even held-out attacks (ValidRemoval $0.05$--$0.10$) at unchanged tamper rejection. We prove three \emph{conditional} properties (protected-field fidelity, fresh-payload unforgeability reducing to the MAC, a per-test $2^{-\tau}$ tag bound; the operative false-positive floor is the contract-collision rate, not $2^{-\tau}$) and ship a seeded, self-testing core (zero authenticated false positives in $20{,}000$ trials). All results are closed-domain and small-scale; wide-coverage parsing, official baselines (SynthID, SWAN), and scale remain future work. Truthprint verifies consistency with a participating keyed generator, not arbitrary AI text.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -104,12 +104,12 @@ Coding/authentication round trip & Demonstrated & Deterministic core tests P1--P
 Protected-field fidelity & Conditional (validator soundness measured) & Proposition~\ref{prop:fidelity}, assuming a sound invariant extractor and validator. The soundness assumption is measured as the validator's false-accept rate on meaning-altering edits: $0$ observed on the closed domain (C1) and $\le 0.01$ under real MT (Sec.~\ref{sec:provenance}); wide-coverage soundness remains open. \\
 Fresh-payload unforgeability & Conditional & Reduction to EUF-CMA security of the MAC; replay and nonce discovery are separate deployment concerns. \\
 Surface-carrier translation robustness & Refuted (real MT) & Stage-1 surface parser recovers $0/192$ real NLLB translations (Sec.~\ref{sec:realmt}). \\
-Meaning-layer recovery under real MT & Demonstrated (closed-domain, six languages) & Stage-2 extractor recovers fields at $0.90$--$1.00$ over $4{,}800$ real NLLB translations in six languages, document attribution $1.000$ (CI $[0.929,1.000]$) for five of six languages, and meaning-based authentication attributes cross-lingually (Secs.~\ref{sec:stage2},~\ref{sec:provenance}); wide-coverage parsing and larger document counts remain open. \\
+Meaning-layer recovery under real MT & Demonstrated (closed-domain, six languages; data committed) & Stage-2 extractor recovers fields at $0.83$--$0.99$ over $4{,}800$ real NLLB translations in six languages (closed categoricals $\ge0.97$; open entity/relational fields $0.83$--$0.92$), and the meaning-digest authenticates documents cross-lingually (core6 document attribution $1.000$ for German/Hindi, $0.90$--$0.98$ for the rest; Secs.~\ref{sec:stage2},~\ref{sec:provenance}). The full run ships in-repo (\texttt{paper/results/realmt\_b2/}); wide-coverage parsing and larger document counts remain open. \\
 Wide-coverage neural parsing on open-domain text & Pilot (positive on open domain) & In a small LLM-MT pilot ($96$ sentences, six conditions) a neural extractor beats the lexicon on open-domain wording ($0.614$ vs.\ $0.481$ field recovery) while the lexicon leads on closed templates; single-model and small-scale caveats apply (Sec.~\ref{sec:neural}). \\
 Benign paraphrase robustness & Demonstrated (closed-domain) & On $200$ documents $\times16$ sentences, meaning-preserving in-lexicon paraphrase (voice, time reflow, verb/time synonyms, discourse hedge) authenticates at TPR $1.000$ and document attribution $1.000$; single-field altering edits rejected $1.000$ (Sec.~\ref{sec:paraphrase}). \\
 Adaptive-attack robustness & Closed lexicon refuted; defended by extended coverage; open-vocabulary open & A schema-aware attacker swapping out-of-lexicon content synonyms (``took care of'' for ``fixed'') reaches ValidRemoval $1.000$ (Eq.~\ref{eq:validremoval}) under the closed lexicon, localized to the stripped predicate/time/attribution fields (polarity and agent survive $100\%$). An extended-coverage frontend recovers those fields, driving adaptive ValidRemoval to $0.000$ while benign auth ($1.000$) and tamper rejection ($1.000$) are unchanged; a held-out out-of-inventory attack still evades any fixed lexicon (ValidRemoval $1.000$), but two real open-vocabulary neural frontends (GPT-4o-mini, Llama-3.3-70B) defend even the held-out attack (ValidRemoval $0.050$/$0.100$, CIs disjoint from the lexicons') at benign/tamper $1.000$. Coverage, not the meaning-digest, is the lever; the neural frontend supplies open-vocabulary coverage (Sec.~\ref{sec:paraphrase}, Table~\ref{tab:neuraldefense}). \\
 System-level false-positive rate & Not established & The tag bound is per tested fresh candidate; parser search, tested key--nonce pairs, and fallback scores require end-to-end calibration. \\
-Semantic-level false-positive rate (contract collision) & Measured (closed-domain) & The $2^{-\tau}$ bound covers cryptographic tag collision only; the meaning-digest floor is the contract-collision probability. On the closed-domain corpus this floor is $5.2\times10^{-3}$ ($\approx1/192$) for the six-field contract---matching the measured $0.001$--$0.010$ real-MT false positives and $\sim\!2\times10^{7}\times$ the $2^{-32}$ bound (Sec.~\ref{sec:provenance}). Open-domain text has lower contract entropy, so estimating it per corpus is a deployment prerequisite. \\
+Semantic-level false-positive rate (contract collision) & Measured (closed-domain) & The $2^{-\tau}$ bound covers cryptographic tag collision only; the meaning-digest floor is the contract-collision probability. On the closed-domain corpus this floor is $5.2\times10^{-3}$ ($\approx1/192$) for the six-field contract---matching the measured $0.000$--$0.007$ real-MT false positives and $\sim\!2\times10^{7}\times$ the $2^{-32}$ bound (Sec.~\ref{sec:provenance}). Open-domain text has lower contract entropy, so estimating it per corpus is a deployment prerequisite. \\
 Comparative robustness vs.\ token and semantic baselines & Demonstrated (real MT: KGW token; matched-FPR SemStamp $+$ robust hashing) & On the same pipeline a real KGW watermark collapses under real NLLB translation (TPR@$1\%$FPR $0.960$ clean $\to$ $0.000$--$0.380$ translated) while the meaning-digest scheme survives ($0.502$--$0.980$); Table~\ref{tab:baselines}, Sec.~\ref{sec:baselines}. At a matched $1\%$ FPR a real embedding-region baseline (SemStamp) survives round-trip but degrades cross-lingually ($0.937$ KO $\to$ $0.377$ AR) while the typed scheme survives, and only the typed contract rejects single-field tampers (Table~\ref{tab:matched}, Sec.~\ref{sec:matched}). Official implementations (SynthID, SWAN) remain future work. \\
 Distinction from robust/semantic hashing & Demonstrated (closed-domain, real MT) & Robust hashes (exact, MinHash, SimHash) either die under translation or cannot localize a typed field change (reject $0\%$ of single-field tampers vs.\ typed $1.000$); the meaning-digest is a typed, keyed member of the family with an analyzed collision floor (Secs.~\ref{sec:relhash},~\ref{sec:matched}). \\
 Distinction from store-and-retrieve (ledger) baseline & Demonstrated (closed-domain) & Under the same ledger, retrieval and a cheap NLI proxy reject $\le0.06$ of single-field tampers at matched benign acceptance; only a perfect (unrealizable) oracle NLI reaches $1.000$, and still does not localize the field or give a keyed tag, which the typed digest does (Sec.~\ref{sec:retrieval}). \\
@@ -712,14 +712,17 @@ directly. We evaluate it on $4{,}800$ real NLLB translations spanning all six
 languages---English round-trip and direct translation into Korean, Hindi,
 Chinese, Arabic, and German ($800$ source sentences over $50$ documents $\times$
 six conditions). Where the Stage-1 parser recovered $0/192$, the Stage-2
-extractor recovers the meaning layer at high rates (aggregate over all
-conditions, Wilson $95\%$ CI): temporal direction $0.997$ $[0.995,0.998]$,
-agent $0.997$, polarity $0.992$, causation $0.975$, quantity $0.974$,
-attribution $0.969$, predicate $0.960$, modality $0.910$, and patient $0.905$
-$[0.896,0.913]$. Recovery is strong for Hindi, Korean, Chinese, and German (per-%
-condition all-exact recovery $0.81$--$0.88$) and weakest for Arabic ($0.29$),
-where the MT system renders entities most variably (Arabic patient recovery
-$0.50$). Two residual error sources are honest and instructive: entities the MT
+extractor recovers the meaning layer well (aggregate over all
+conditions, Wilson $95\%$ CI): polarity $0.995$ $[0.993,0.997]$, quantity
+$0.975$, attribution $0.973$, temporal direction $0.971$, agent $0.923$,
+predicate $0.868$, modality $0.860$, causation $0.854$, and patient $0.825$
+$[0.814,0.836]$. The small closed categoricals (polarity, quantity, time,
+attribution) survive at $\ge0.97$; the lower fields are the open entity
+(patient $0.825$) and relational (predicate, modality, causation $\approx0.86$)
+slots the MT system renders most variably. Strict all-nine-field exact recovery
+per condition is highest for Hindi and German ($0.69$/$0.66$) and lowest for
+Arabic ($0.25$), where the MT system renders entities most variably (Arabic
+patient recovery $0.40$). Two residual error sources are honest and instructive: entities the MT
 system renders inconsistently (e.g.\ ``config drift'', ``cache miss'', and
 Arabic patient nouns), and round-trip translation that itself alters a field
 (e.g.\ ``must not''$\to$``may not''), which the extractor faithfully reports
@@ -798,15 +801,18 @@ and recovered; a meaning-altering edit changes a contract field and is rejected;
 an unrelated document matches only with probability $2^{-\tau}$. On $4{,}800$ real
 NLLB translations across six languages (Wilson $95\%$ CI, $\tau=32$), a compact
 contract (polarity, quantity, temporal direction, attribution, predicate, agent)
-yields sentence-level authentication TPR of $0.968$ (DE), $0.968$ (KO), $0.955$
-(ZH), $0.946$ (HI), $0.936$ (round-trip), and $0.629$ (AR); tamper rejection
-$\ge 0.99$; and false positives consistent with the cryptographic bound
-($0.001$--$0.010$). Aggregating to the document level (a document is attributed
+yields sentence-level authentication TPR of $0.886$ (HI), $0.850$ (DE), $0.723$
+(round-trip), $0.682$ (KO), $0.666$ (ZH), and $0.618$ (AR); tamper rejection
+$\ge 0.996$; and false positives consistent with the cryptographic bound
+($0.000$--$0.007$). Aggregating to the document level (a document is attributed
 when at least half of its sentences authenticate) gives $1.000$ attribution
-($95\%$ CI $[0.929,1.000]$) for five of six conditions and $0.920$ for Arabic,
-over $50$ documents.
-Widening the contract to all nine fields lowers TPR (e.g.\ $0.289$ for AR) but authenticates more meaning:
-an explicit, measured fidelity/robustness trade-off. This is the translation-%
+($95\%$ CI $[0.929,1.000]$) for German and Hindi, $0.980$ for round-trip, $0.940$
+for Korean and Chinese, and $0.900$ ($[0.786,0.957]$) for Arabic, over $50$
+documents.
+Widening the contract to all nine fields lowers TPR (e.g.\ $0.253$ for AR) and
+collapses document attribution for the harder conditions (AR $0.02$, ZH $0.08$,
+round-trip $0.24$) while German/Hindi hold at $0.94$: an explicit, measured
+fidelity/robustness trade-off. This is the translation-%
 robust counterpart to the surface-carrier pilot's $0/192$: provenance verified
 on the meaning layer survives real machine translation. One caveat is essential
 and we make it quantitative. Because authentication reproduces a tag over an
@@ -819,7 +825,7 @@ contract on the deployment text---not by $\tau$. Measuring this floor on the
 closed-domain corpus (\texttt{scripts/eval\_semantic\_fp.py}) is revealing: the
 six-field contract admits only $192$ distinct values ($7.6$ bits), giving a
 collision floor of $5.2\times10^{-3}$ ($\approx1/192$). This \emph{matches} the
-$0.001$--$0.010$ false positives measured above and is $\sim\!2\times10^{7}$
+$0.000$--$0.007$ false positives measured above and is $\sim\!2\times10^{7}$
 times the cryptographic $2^{-32}$ bound. In other words, the meaning-digest
 scheme's observed false positives are the contract-entropy floor, not the tag
 bound; widening to nine fields lowers the floor to $\sim\!1.8\times10^{-4}$ at
@@ -840,7 +846,10 @@ deployment into the cryptographic regime; below $V^\star$ the floor must be
 measured on the corpus. It remains a closed-%
 domain Stage-2 result; a wide-coverage semantic parser and more documents/%
 languages are the next steps. The method and evaluation ship with the artifact
-(\texttt{scripts/eval\_provenance.py}).
+(\texttt{scripts/eval\_provenance.py}); unlike the earlier pilot, the full
+$4{,}800$-translation NLLB run is now committed with the repository
+(\texttt{paper/results/realmt\_b2/}), so every number here reproduces in-repo
+from the raw data with no GPU.
 
 \subsection{Real Baseline Comparison: Token Watermark vs.\ Meaning Digest}
 \label{sec:baselines}

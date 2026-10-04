@@ -136,10 +136,16 @@ Every number below regenerates from a fixed seed (see `paper/results/`).
   translation rewrites the carriers. (`paper/results/realmt_pilot.md`)
 - **Meaning-digest — survives real translation.** A keyed tag over the typed
   invariant contract, re‑verified after transformation by a Stage‑2 multilingual
-  extractor. On **4,800 real NLLB translations across six languages**:
-  document‑level attribution **1.000 for five of six languages** (Arabic weaker),
-  tamper rejection **≥ 0.99**.
-  (`paper/results/provenance_realmt.md`, `paper/results/stage2_multilingual.md`)
+  extractor. On **4,800 real NLLB translations across six languages** (the full
+  run is committed in‑repo under `paper/results/realmt_b2/`, so every number
+  below reproduces from the raw data with no GPU): the Stage‑2 extractor recovers
+  the invariant fields at **0.83–0.99** (closed categoricals — polarity, quantity,
+  time, attribution — at **≥ 0.97**; the open entity/relational fields at
+  **0.83–0.92**), core6 document‑level attribution is **1.000 for German/Hindi**
+  and **0.90–0.98** for the rest (Arabic weakest), and tamper rejection is
+  **≥ 0.996**.
+  (`paper/results/provenance_realmt.md`, `paper/results/stage2_multilingual.md`,
+  `paper/results/realmt_b2/`)
 - **Real baseline comparison.** A real **KGW** token watermark collapses under real
   translation (clean 0.96 → **0.00–0.38** translated) while the meaning‑digest
   survives (**0.50–0.98**). At a matched 1% FPR, SemStamp survives round‑trip but
