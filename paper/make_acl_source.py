@@ -10,6 +10,7 @@ SOURCE = ROOT / "main.tex"
 OUTPUT = ROOT / "acl_main.tex"
 
 PREAMBLE = r"""\documentclass[11pt]{article}
+\PassOptionsToPackage{numbers}{natbib}
 \usepackage[review]{acl}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{booktabs,multirow,array,graphicx,xcolor,url,listings,enumitem,microtype,tikz}
@@ -26,11 +27,11 @@ PREAMBLE = r"""\documentclass[11pt]{article}
 """
 
 IEEE_KEYWORDS = r"""\begin{IEEEkeywords}
-Intermediate representation, LLM watermarking, paraphrase robustness, provenance, semantic watermarking, SynthID-Text, translation robustness
+Intermediate representation, authenticated provenance, LLM watermarking, paraphrase robustness, semantic provenance, SynthID-Text, translation robustness
 \end{IEEEkeywords}"""
 ACL_KEYWORDS = (
-    r"\paragraph{Keywords.} Intermediate representation, LLM watermarking, "
-    r"provenance, semantic watermarking, translation robustness"
+    r"\paragraph{Keywords.} Intermediate representation, authenticated "
+    r"provenance, LLM watermarking, semantic provenance, translation robustness"
 )
 
 
