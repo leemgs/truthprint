@@ -270,7 +270,7 @@ Let a document have $S$ discourse units, $|C|$ carriers, $\kappa$ candidates per
 
 \section{Experiments}
 \label{sec:experiments}
-We evaluate Truthprint on a seeded, fully reproducible pipeline; the reference implementation, the closed-domain round-trip and field-level ablation, the full protocol and research questions, falsifiable hypotheses, and deployment notes are in the appendix. Unless noted, results are closed-domain and small-scale with Wilson $95\%$ confidence intervals.
+We evaluate on a seeded, reproducible pipeline (implementation, full protocol, research questions, hypotheses, and deployment notes in the appendix); unless noted, results are closed-domain and small-scale with Wilson $95\%$ CIs.
 
 \subsection{Surface carriers: an honest negative under real MT}
 \label{sec:realmt}
@@ -278,29 +278,53 @@ Translating $4$ documents of $16$ templated sentences with a real system (NLLB-2
 
 \subsection{The meaning layer survives real translation (Stage-2)}
 \label{sec:stage2}
-A closed-domain lexicon extractor over six languages (English, Korean, Hindi, Chinese, Arabic, German) recovers the nine invariant fields from $4{,}800$ real NLLB translations ($800$ source sentences over $50$ documents $\times$ six conditions). Aggregate recovery (Wilson $95\%$ CI) is $0.83$--$0.99$: the small closed categoricals survive at $\ge0.97$ (polarity, quantity, attribution, temporal direction), while the open entity/relational fields are lower ($0.83$--$0.92$: patient $0.825\,[0.814,0.836]$, causation/modality/predicate $\approx0.86$, agent $0.923$). Strict all-nine-field recovery per condition is highest for Hindi/German ($0.69$/$0.66$) and lowest for Arabic ($0.25$; patient $0.40$), where MT renders entities most variably. Because the recovered fields fix the invariant digest, a meaning-altering edit to any field is detected across languages---direct real-data evidence that the meaning layer survives MT where the surface carriers of Sec.~\ref{sec:realmt} do not. A wide-coverage neural parser is the next step (\texttt{scripts/eval\_multilingual.py}).
+A closed-domain lexicon extractor over six languages (English, Korean, Hindi, Chinese, Arabic, German) recovers the nine invariant fields from $4{,}800$ real NLLB translations ($800$ source sentences over $50$ documents $\times$ six conditions). Aggregate recovery (Wilson $95\%$ CI) is $0.83$--$0.99$: the small closed categoricals (polarity, quantity, attribution, time) survive at $\ge0.97$, while the open entity/relational fields are lower ($0.83$--$0.92$; patient $0.825$ weakest). Strict all-nine-field recovery is highest for Hindi/German ($0.69$/$0.66$) and lowest for Arabic ($0.25$), where MT renders entities most variably. Because the recovered fields fix the invariant digest, a meaning-altering edit to any field is detected across languages---direct real-data evidence that the meaning layer survives MT where the surface carriers of Sec.~\ref{sec:realmt} do not; a wide-coverage neural parser is the next step (\texttt{scripts/eval\_multilingual.py}).
 
 \subsection{A wide-coverage neural frontend on open-domain text}
 \label{sec:neural}
-A feasibility pilot ($96$ sentences over six conditions) ran an instruction LLM as a drop-in extractor: on \emph{closed} templates the hand-built lexicon leads ($0.970$ vs.\ $0.726$ field recovery), but on \emph{open-domain} wording the lexicon degrades below the neural frontend ($0.481\,[0.428,0.536]$ vs.\ $0.614\,[0.560,0.666]$), strongest on typed relational fields (predicate $0.896$, causation $0.948$). The harness enforces \emph{separate} translation and extraction models (removing the self-consistency confound), and a translator-independent embedding frontend (\texttt{model2vec}) recovers open-domain temporal direction at $0.944$ where the lexicon abstains ($0.000$)---though a static embedding is insufficient for the full contract.
+A feasibility pilot ($96$ sentences over six conditions) ran an instruction LLM as a drop-in extractor: on \emph{closed} templates the hand-built lexicon leads ($0.970$ vs.\ $0.726$ field recovery), but on \emph{open-domain} wording the lexicon degrades below the neural frontend ($0.481$ vs.\ $0.614$), strongest on typed relational fields (predicate $0.896$, causation $0.948$). The harness enforces \emph{separate} translation and extraction models (removing the self-consistency confound); a translator-independent embedding frontend (\texttt{model2vec}) recovers open-domain temporal direction at $0.944$ where the lexicon abstains, though a static embedding is insufficient for the full contract.
 
 \subsection{Meaning-based provenance authentication under real translation}
 \label{sec:provenance}
-The producer registers a keyed $\tau$-bit tag ($\tau{=}32$) over the canonical digest of a declared \emph{invariant contract} (a field subset) in the out-of-band ledger; the verifier re-extracts the invariants (Stage-2) and authenticates iff the tag reproduces. On the $4{,}800$ translations a compact contract (polarity, quantity, time, attribution, predicate, agent) gives document-level attribution---a document attributed when $\ge$ half its sentences authenticate---of $1.000$ (CI $[0.929,1.000]$) for German and Hindi, $0.980$ round-trip, $0.940$ Korean/Chinese, and $0.900\,[0.786,0.957]$ Arabic over $50$ documents; sentence-level TPR $0.618$--$0.886$, tamper rejection $\ge0.996$, false positives $0.000$--$0.007$. Widening to nine fields raises meaning coverage but lowers TPR (AR $0.253$) and collapses attribution for the hardest conditions (AR $0.02$, ZH $0.08$, RT $0.24$) while German/Hindi hold at $0.94$---an explicit fidelity/robustness trade-off, and the translation-robust counterpart of the $0/192$ surface pilot. One caveat is quantitative: authentication reproduces a tag over a contract, so two distinct low-entropy generations sharing a contract digest collide \emph{before} the tag is tested. The achievable false-positive floor is thus the \emph{contract-collision} probability, set by the contract's entropy on the deployment text, not by $\tau$. The six-field contract admits $192$ values ($7.6$ bits), a floor of $5.2\times10^{-3}$ ($\approx1/192$)---matching the measured $0.000$--$0.007$ and $\sim\!2\times10^{7}\times$ the $2^{-32}$ bound; nine fields lower it to $\sim\!1.8\times10^{-4}$, and the $2^{-\tau}$ bound binds only once the entity-vocabulary entropy pushes the contract above $\tau$ bits (Appendix~\ref{sec:impl}; \texttt{truthprint.semantic\_fp}). The full NLLB run is committed in-repo (\texttt{paper/results/realmt\_b2/}), so every number reproduces with no GPU (\texttt{scripts/eval\_provenance.py}).
+The producer registers a keyed $\tau$-bit tag ($\tau{=}32$) over the canonical digest of a declared \emph{invariant contract} (a field subset) in the out-of-band ledger; the verifier re-extracts the invariants (Stage-2) and authenticates iff the tag reproduces. On the $4{,}800$ translations a compact contract (polarity, quantity, time, attribution, predicate, agent) gives document-level attribution---a document attributed when $\ge$ half its sentences authenticate---of $1.000$ (CI $[0.929,1.000]$) for German and Hindi, $0.980$ round-trip, $0.940$ Korean/Chinese, and $0.900\,[0.786,0.957]$ Arabic over $50$ documents; sentence-level TPR $0.618$--$0.886$, tamper rejection $\ge0.996$, false positives $0.000$--$0.007$. Widening to nine fields raises meaning coverage but lowers TPR (AR $0.253$) and collapses attribution for the hardest conditions (AR $0.02$, ZH $0.08$, RT $0.24$) while German/Hindi hold at $0.94$---an explicit fidelity/robustness trade-off, and the translation-robust counterpart of the $0/192$ surface pilot. One caveat is quantitative: because authentication reproduces a tag over a \emph{contract}, two distinct low-entropy generations sharing a contract digest collide before the tag is tested, so the achievable false-positive floor is the \emph{contract-collision} probability set by the contract's entropy, not $\tau$. For the six-field contract this floor is $5.2\times10^{-3}$ ($\approx1/192$), matching the measured $0.000$--$0.007$ and $\sim\!2\times10^{7}\times$ the $2^{-32}$ bound; nine fields lower it to $\sim\!1.8\times10^{-4}$, and the $2^{-\tau}$ bound binds only once the entity-vocabulary entropy exceeds $\tau$ bits (Appendix~\ref{sec:impl}). The full NLLB run is committed in-repo (\texttt{paper/results/realmt\_b2/}), so every number reproduces with no GPU (\texttt{scripts/eval\_provenance.py}).
 
-\subsection{Real token baseline on the same pipeline}
-\label{sec:baselines}
-Against a \emph{real} token watermark (KGW \cite{kirchenbauer2023kgw}, $\gamma{=}0.25,\delta{=}2.0$) generated by a real model and translated by the same NLLB system, detection collapses from $0.960$ clean to $0.000$--$0.380$ across six conditions, while the meaning-digest survives ($0.502$--$0.980$); this is the real-data counterpart of the $0/192$ surface pilot and confirms the cross-lingual token-watermark removal reported by He et al.~\cite{he2024crosslingual} (Appendix Table~\ref{tab:baselines}). Arabic is weakest for the meaning-digest too ($0.502$).
+\subsection{Baseline comparison: token, semantic, and robust-hashing}
+\label{sec:baselines}\label{sec:matched}
+Against a \emph{real} KGW token watermark (\cite{kirchenbauer2023kgw}; $\gamma{=}0.25,\delta{=}2.0$) generated by a real model and translated by the same NLLB system, detection collapses from $0.960$ clean to $0.000$--$0.380$ across six conditions while the meaning-digest survives ($0.502$--$0.980$), confirming cross-lingual token-watermark removal \cite{he2024crosslingual} (Appendix Table~\ref{tab:baselines}). At a \emph{matched} $1\%$ FPR on the same cached real translations (real multilingual embedding), a real semantic baseline (SemStamp \cite{hou2024semstamp}) survives round-trip ($1.000$) and a near language (Korean $0.937$) but degrades cross-lingually (Hindi $0.617$, Chinese $0.460$, Arabic $0.377$); robust hashing collapses under cross-script translation (exact SHA-256 and token MinHash \cite{broder1997minhash} $0.000$; embedding SimHash \cite{charikar2002simhash} $0.000$--$0.883$); the typed meaning-digest survives all six ($1.000$). Decisively, a single-field meaning-altering edit is rejected by the typed contract ($1.000$, CI $[0.981,1.000]$) but by \emph{neither} similarity hash ($0.000$)---a near-duplicate fingerprint cannot see which typed field changed---while the exact hash that rejects every tamper also rejects every legitimate translation (Table~\ref{tab:matched}).
 
-\subsection{Matched-FPR semantic and robust-hashing baselines}
-\label{sec:matched}
-At a \emph{matched} $1\%$ FPR on the same cached real translations (real multilingual embedding), a real semantic baseline (SemStamp \cite{hou2024semstamp}) survives round-trip ($1.000$) and a near language (Korean $0.937$) but degrades cross-lingually (Hindi $0.617$, Chinese $0.460$, Arabic $0.377$); robust hashing collapses under cross-script translation (exact SHA-256 and token MinHash \cite{broder1997minhash} $0.000$; embedding SimHash \cite{charikar2002simhash} $0.000$--$0.883$); the typed meaning-digest survives all six ($1.000$). Decisively, a single-field meaning-altering edit is rejected by the typed contract ($1.000$, CI $[0.981,1.000]$) but by \emph{neither} similarity hash ($0.000$)---a near-duplicate fingerprint cannot see which typed field changed---while the exact hash that rejects every tamper also rejects every legitimate translation (Table~\ref{tab:matched}).
 
+\begin{table}[t]
+\centering
+\caption{Matched-FPR head-to-head on cached real LLM-MT translations: TPR at a
+common $1\%$ FPR ($300$ bootstrap documents of $16$ sentences, seeded; real
+multilingual embedding). RT $=$ English round-trip; KO/HI/ZH/AR $=$ direct
+translation. Only the typed contract both survives translation and rejects a
+single-field tamper ($1.000$ vs.\ $0.000$ for similarity hashes; in text).}
+\label{tab:matched}
+\footnotesize
+\begin{tabular}{lccccc}
+\toprule
+Method & RT & KO & HI & ZH & AR \\
+\midrule
+Meaning-digest (typed)    & 1.000 & 1.000 & 1.000 & 1.000 & 1.000 \\
+SemStamp (embed.\ region) & 1.000 & 0.937 & 0.617 & 0.460 & 0.377 \\
+SimHash (robust hash)     & 1.000 & 0.590 & 0.000 & 0.883 & 0.633 \\
+MinHash (robust hash)     & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+Exact SHA-256             & 0.867 & 0.000 & 0.000 & 0.000 & 0.000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Ledger retrieval and NLI baselines}
+\label{sec:retrieval}
+Because the scheme already uses an out-of-band ledger, the natural control is to store the source and \emph{retrieve} it after transformation (nearest neighbor over a sentence embedding), optionally with an NLI check. Under the same ledger and id-addressed verification with benign acceptance matched at $\approx0.95$, plain retrieval and a directional-coverage NLI proxy reject essentially no single-field tamper ($0.047$/$0.061$): a one-field edit stays nearest its own source. Only a \emph{perfect}, unrealizable oracle NLI matches the typed contract's $1.000$ rejection, and even then neither localizes the changed field nor yields a keyed tag, both of which the typed digest provides with no model (Appendix Table~\ref{tab:retrieval}).
+
+\subsection{Paraphrase and adaptive-attack robustness}
+\label{sec:paraphrase}
+Benign meaning-preserving paraphrase authenticates at TPR $1.000$ and document attribution $1.000$ (RQ4), and a single-field altering edit is rejected at $1.000$. A schema-aware adaptive attacker (RQ7) that swaps the predicate verb and time expression for \emph{out-of-lexicon} synonyms achieves ValidRemoval (Eq.~\eqref{eq:validremoval}) $1.000$ under the \emph{closed} lexicon---an honest negative we localize to exactly the abstained fields (predicate and time in all cases; attribution when present), with polarity and agent recovered in $100\%$ of attacks. The vulnerability is the fixed lexicon, not the meaning-digest: an \emph{extended-coverage} frontend drives it $1.000\!\to\!0.000$ at unchanged benign and tamper rejection, but a \emph{held-out} out-of-inventory attack still evades any fixed lexicon ($1.000$). The general defense is open-vocabulary parsing: two real instruction LLMs (schema-guided \texttt{neural\_parser}) drive the held-out novel ValidRemoval to $0.050$ (GPT-4o-mini, $N{=}40$) and $0.100$ (Llama-3.3-70B, $N{=}10$), both disjoint from the lexicons' upper CIs, at benign and tamper rejection $1.000$ (Appendix Tables~\ref{tab:neuraldefense},~\ref{tab:paraphrase}).
 
 \section{Conclusion}
-Truthprint is a proposed language-neutral, typed semantic IR for authenticated provenance. Its key contribution is a machine-checkable separation between immutable meaning and controlled realization choices; the mechanism that survives transformation is ledger-based authenticated semantic provenance---a keyed tag over the invariant contract, re-verified after transformation---complementary to token-level watermarks rather than an in-text watermark itself. A detector recovers the invariants after translation or paraphrasing through semantic parsing, canonicalization, and MAC verification, and attributes only when the tag reproduces.
-
-The method cannot guarantee detection after arbitrary rewriting or semantic destruction. It instead targets a narrower and defensible objective: preserving provenance evidence across transformations that retain a substantial portion of the original meaning. Its value must be established through multilingual experiments, calibrated false-positive analysis, strong adaptive attacks, semantic-integrity evaluation, and direct comparison with token-, embedding-, and structure-based baselines.
+Truthprint is a language-neutral, typed semantic IR for authenticated provenance whose key contribution is a machine-checkable separation between immutable meaning and controlled realization choices. The mechanism that survives transformation is ledger-based authenticated semantic provenance---a keyed tag over the invariant contract, re-verified after translation or paraphrasing through semantic parsing, canonicalization, and MAC verification---complementary to token-level watermarks rather than an in-text watermark. It cannot guarantee detection after arbitrary rewriting, but targets a narrower, defensible objective---preserving provenance across transformations that retain substantial meaning---which the real-MT evidence supports; wide-coverage parsing, official baselines, and scale remain future work.
 
 \section*{Limitations}
 Multilingual semantic parsing remains imperfect. Not every proposition admits multiple safe realization alternatives. Highly constrained text has low carrier capacity. Some apparently stylistic alternations change emphasis or information structure. Translation can omit modality, evidentiality, subjects, or discourse relations. Strong summarization can destroy both content and watermark evidence. Finally, candidate generation and semantic validation add computational overhead compared with direct token-level methods. The closed-domain adaptive paraphrase of Section~\ref{sec:paraphrase} shows the sharpest limitation directly: a schema-aware attacker who swaps out-of-lexicon content synonyms fully removes the meaning-digest under the closed lexicon while preserving meaning. An extended-coverage frontend defends that specific attack (ValidRemoval $1.000\!\to\!0.000$ without weakening tamper rejection); a held-out out-of-inventory attack still evades any fixed lexicon, but two real open-vocabulary neural runs (GPT-4o-mini $N{=}40$, Llama-3.3-70B $N{=}10$; Table~\ref{tab:neuraldefense}) defend even the held-out attack ($0.050$/$0.100$), establishing that wide-coverage \emph{open-vocabulary} parsing---not a longer lexicon---is the general defense. Those runs are closed-domain and modest in scale; the current artifact still does not evaluate real generators, human judgments, all official baselines, replay defenses, or open-vocabulary adaptive attacks \emph{at larger scale and across domains}; consequently it supports feasibility and closed-domain robustness claims, not comparative robustness or deployment readiness at wide coverage.
@@ -928,43 +952,7 @@ Proposed system & Truthprint & Typed invariants and controlled realization class
 
 
 % ---- tables relocated from Experiments to meet ACL page limit ----
-\begin{table}[t]
-\centering
-\caption{Matched-FPR head-to-head on cached real LLM-MT translations: TPR at a
-common $1\%$ FPR ($300$ bootstrap documents of $16$ sentences, seeded; real
-multilingual embedding). RT $=$ English round-trip; KO/HI/ZH/AR $=$ direct
-translation. Bottom: fraction of single-field meaning-altering edits correctly
-rejected. Only the typed contract both survives translation and rejects a typed
-tamper.}
-\label{tab:matched}
-\footnotesize
-\begin{tabular}{lccccc}
-\toprule
-Method & RT & KO & HI & ZH & AR \\
-\midrule
-Meaning-digest (typed)    & 1.000 & 1.000 & 1.000 & 1.000 & 1.000 \\
-SemStamp (embed.\ region) & 1.000 & 0.937 & 0.617 & 0.460 & 0.377 \\
-SimHash (robust hash)     & 1.000 & 0.590 & 0.000 & 0.883 & 0.633 \\
-MinHash (robust hash)     & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
-Exact SHA-256             & 0.867 & 0.000 & 0.000 & 0.000 & 0.000 \\
-\midrule
-\multicolumn{6}{l}{\emph{Single-field tamper rejection (closed domain, $n{=}200$):}}\\
-Meaning-digest            & \multicolumn{5}{c}{$1.000$\ \ [$0.981,1.000$]} \\
-SimHash / MinHash         & \multicolumn{5}{c}{$0.000$\ \ [$0.000,0.019$]} \\
-Exact SHA-256             & \multicolumn{5}{c}{$1.000$ (but $0.0$ TPR under MT)} \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{Ledger retrieval and NLI baselines}
-\label{sec:retrieval}
-Because the scheme already uses an out-of-band ledger, the natural control is to store the source and \emph{retrieve} it after transformation (nearest neighbor over a sentence embedding), optionally adding an NLI check---``why not just store and retrieve?''. Under the same ledger and id-addressed verification, with benign-paraphrase acceptance matched at $\approx0.95$, plain retrieval and a directional-coverage NLI proxy reject essentially no single-field tamper ($0.047$ and $0.061$): a one-field edit stays nearest its own source, so no similarity threshold separates tamper from paraphrase. Only a \emph{perfect}, unrealizable oracle NLI matches the typed contract's $1.000$ rejection, and even then neither localizes the changed field nor yields a keyed, unforgeable tag, both of which the typed digest provides deterministically with no model (Appendix Table~\ref{tab:retrieval}).
-
-\subsection{Paraphrase and adaptive-attack robustness}
-\label{sec:paraphrase}
-Benign meaning-preserving paraphrase authenticates at TPR $1.000$ and document attribution $1.000$ (RQ4), and a single-field altering edit is rejected at $1.000$. A schema-aware adaptive attacker (RQ7) that swaps the predicate verb and time expression for \emph{out-of-lexicon} synonyms achieves ValidRemoval (Eq.~\eqref{eq:validremoval}) $1.000$ under the \emph{closed} lexicon---an honest negative we localize to exactly the abstained fields (predicate and time in all cases; attribution when present), with polarity and agent recovered in $100\%$ of attacks. The vulnerability is a property of the fixed lexicon, not of the meaning-digest: an \emph{extended-coverage} frontend drives adaptive ValidRemoval $1.000\!\to\!0.000$ at unchanged benign ($1.000$) and tamper rejection ($1.000$), but a \emph{held-out} out-of-inventory attack still evades any fixed lexicon ($1.000$). The general defense is open-vocabulary parsing: two real instruction LLMs (schema-guided \texttt{neural\_parser}) drive the held-out novel ValidRemoval to GPT-4o-mini $0.050$ (CI $[0.014,0.165]$, $N{=}40$) and Llama-3.3-70B $0.100$ ($[0.018,0.404]$, $N{=}10$), both disjoint from the lexicons' upper CIs, while holding benign authentication and tamper rejection at $1.000$ (Appendix Table~\ref{tab:neuraldefense}); full paraphrase/adaptive detail is in Appendix Table~\ref{tab:paraphrase}.
-
-\begin{table}[t]
+\begin{table*}[t]
 \centering
 \caption{Open-vocabulary neural frontend vs.\ fixed lexicons on the adaptive
 corpus (contract core6, cached real-LLM extractions; Wilson $95\%$ CI). \emph{Two}
@@ -983,9 +971,9 @@ Neural: GPT-4o-mini ($N{=}40$)    & $1.000$ & $0.050$ & $0.050$ & $1.000$ \\
 Neural: Llama-3.3-70B ($N{=}10$)  & $1.000$ & $0.200$ & $0.100$ & $1.000$ \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 
-\begin{table}[t]
+\begin{table*}[t]
 \centering
 \caption{Real head-to-head on real NLLB translation. A real KGW token watermark
 collapses under translation while the meaning-digest scheme survives. KGW is at a
@@ -1005,9 +993,9 @@ KGW (token) & 0.960 & 0.380 & 0.040 & 0.040 & 0.020 & 0.000 & 0.080 \\
 Truthprint (meaning) & --- & 0.941 & 0.958 & 0.980 & 0.922 & 0.502 & 0.948 \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 
-\begin{table}[t]
+\begin{table*}[t]
 \centering
 \caption{Ledger retrieval(+NLI) vs.\ the typed meaning-digest, same ledger and
 id-addressed verification, benign-paraphrase acceptance matched at $\approx0.95$
@@ -1027,9 +1015,9 @@ Retrieval $+$ NLI (proxy)   & $0.918$ & $0.061$ & no  & NLI \\
 Retrieval $+$ NLI (oracle)  & $0.941$ & $1.000$ & no  & perfect NLI \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 
-\begin{table}[t]
+\begin{table*}[t]
 \centering
 \caption{Paraphrase, adaptive attack, and extended-lexicon defense on real
 English strings ($200$ documents $\times16$ sentences, contract core6, Wilson
@@ -1053,7 +1041,7 @@ Held-out novel, extended       & $0.000$ & $1.000$ & $0.000$ \\
 Altering (tamper), extended    & $0.000$ & --- ($1.000$ rej.) & $0.000$ \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 
 
 \label{app:protocol}
