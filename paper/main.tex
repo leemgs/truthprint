@@ -424,7 +424,6 @@ M. S. Charikar, ``Similarity estimation techniques from rounding algorithms,'' i
 \end{thebibliography}
 \appendix
 
-% ---- relocated from main body to meet ACL page limit ----
 \section{Reference Implementation and Verification}
 \label{sec:impl}
 To make the guarantees above concrete and reproducible, we provide a self-contained reference implementation (\texttt{reference/truthprint\_poc.py}, standard library only) of the language-independent core: the canonical invariant digest $h_I$, the authenticated payload $p=m\parallel\mathrm{MAC}_K(\cdot)$, the invariant-bound keyed carrier map, and a systematic GF(2) code with erasure decoding. This deliberately excludes the semantic parser so that the cryptographic and coding properties can be validated in isolation from model-dependent NLP. It exercises four properties and reports the following verified behavior (message $\mu=16$ bits, tag $\tau=32$ bits, code $[N,k]=[96,48]$):
@@ -901,7 +900,6 @@ Introduce multi-ary carrier alphabets, BCH or Reed--Solomon codes, carrier inter
 
 \section{Extended Evaluation Protocol}
 
-% ---- claim/positioning tables relocated to meet ACL page limit ----
 \begin{table*}[t]
 \centering
 \caption{Claim--evidence map for the present submission. ``Not established''
@@ -951,7 +949,6 @@ Proposed system & Truthprint & Typed invariants and controlled realization class
 
 
 
-% ---- tables relocated from Experiments to meet ACL page limit ----
 \begin{table*}[t]
 \centering
 \caption{Open-vocabulary neural frontend vs.\ fixed lexicons on the adaptive
