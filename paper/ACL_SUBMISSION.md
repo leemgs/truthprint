@@ -35,6 +35,8 @@ python3 make_acl_source.py --check  # fail if acl_main.tex is stale
   160 mm text block, below the 272 mm text bottom, or crossing the column
   gutter. The appendix claim–evidence map is split into Tables 7–8 so that
   no float is taller than a page.
+- **Abstract:** a single paragraph within the template's 200-word guidance
+  (currently 195 words); paste the same text into the OpenReview abstract field.
 - **Mandatory sections:** *Limitations* (unnumbered) and *Ethical
   Considerations* (unnumbered) are present, after the Conclusion.
 - **Anonymity:** author is "Anonymous ACL submission"; no identifying strings
