@@ -1,11 +1,10 @@
 \documentclass[11pt]{article}
-\PassOptionsToPackage{numbers}{natbib}
 \usepackage[review]{acl}
 \usepackage{amsmath,amssymb,amsthm}
-\usepackage{booktabs,multirow,array,graphicx,xcolor,url,listings,enumitem,microtype,tikz}
+\usepackage{booktabs,multirow,array,tabularx,graphicx,xcolor,url,listings,enumitem,microtype,tikz}
 \usetikzlibrary{arrows.meta,positioning,fit,backgrounds}
 \definecolor{codegray}{gray}{0.95}
-\lstset{basicstyle=\ttfamily\footnotesize,backgroundcolor=\color{codegray},frame=single,breaklines=true,columns=fullflexible,keepspaces=true,showstringspaces=false,tabsize=2}
+\lstset{basicstyle=\ttfamily\footnotesize,backgroundcolor=\color{codegray},frame=single,framesep=3pt,framerule=0.4pt,xleftmargin=3.4pt,xrightmargin=3.4pt,breaklines=true,columns=fullflexible,keepspaces=true,showstringspaces=false,tabsize=2}
 \newtheorem{theorem}{Theorem}
 \newtheorem{proposition}{Proposition}
 \newtheorem{definition}{Definition}
@@ -48,8 +47,7 @@ The delta over the closest prior work is precise. Embedding-based semantic water
   \item \textbf{Reproducible real-MT evidence.} On $4{,}800$ committed NLLB translations across six languages the meaning layer survives and authenticates cross-lingually where surface carriers and a real token watermark do not; at a matched FPR it beats a real semantic baseline and robust hashing and alone rejects \emph{and} localizes single-field tampers; and open-vocabulary neural frontends defend held-out adaptive attacks. Every number reproduces in-repo with no GPU; wide-coverage parsing and scale remain open.
 \end{itemize}
 
-\subsection{Claim--Evidence Boundary}
-To keep the design goal from being read as an empirical result, Table~\ref{tab:claims} (appendix) separates what the artifact \emph{demonstrates}, what the analysis proves only under explicit assumptions, and what remains a hypothesis; e.g.\ ``language-neutral'' describes the intended schema interface, not a measured property of the current English template frontend.
+\paragraph{Claim--evidence boundary.} Table~\ref{tab:claims} (appendix) separates what the artifact \emph{demonstrates}, what is proved only under explicit assumptions, and what remains a hypothesis (e.g., ``language-neutral'' names the intended schema interface, not a measured property).
 
 \begin{figure*}[t]
 \centering
@@ -64,28 +62,27 @@ To keep the design goal from being read as an empirical result, Table~\ref{tab:c
   >={Stealth[length=2mm]}
 ]
 \node[box] (x) {Content\\spec.\ $x$};
-\node[op, right=5mm of x] (build) {Build IR\\$G$};
-\node[lock, right=5mm of build] (inv) {Invariants $I$\\(locked)};
-\node[box, right=5mm of inv] (car) {Carriers $C$\\(realization)};
-\node[op, right=5mm of car] (enc) {Keyed encode\\$+$ MAC $+$ ECC};
-\node[op, right=5mm of enc] (real) {Realize\\+ validate};
-\node[box, right=5mm of real] (y) {Text $y$};
+\node[op, right=4mm of x] (build) {Build IR\\$G$};
+\node[lock, right=4mm of build] (inv) {Invariants $I$\\(locked)};
+\node[box, right=4mm of inv] (car) {Carriers $C$\\(realization)};
+\node[op, right=4mm of car] (enc) {Keyed encode\\$+$ MAC $+$ ECC};
+\node[op, right=4mm of enc] (real) {Realize\\+ validate};
+\node[box, right=4mm of real] (y) {Text $y$};
 \draw[->] (x)--(build); \draw[->] (build)--(inv); \draw[->] (inv)--(car);
 \draw[->] (car)--(enc); \draw[->] (enc)--(real); \draw[->] (real)--(y);
 
 \node[op, below=7mm of y, fill=orange!10] (att) {Transform $A$\\(translate/paraphrase)};
 \draw[->] (y)--(att);
 
-\node[op, left=5mm of att] (parse) {Parse\\$P(y')$};
-\node[op, left=5mm of parse] (canon) {Canonicalize\\invariants};
-\node[op, left=5mm of canon] (invert) {Invert keyed map\\(erasures)};
-\node[op, left=5mm of invert] (ecc) {ECC decode};
-\node[box, left=5mm of ecc, fill=green!8] (verify) {MAC verify\\$\Rightarrow$ attribute};
+\node[op, left=4mm of att] (parse) {Parse\\$P(y')$};
+\node[op, left=4mm of parse] (canon) {Canonicalize\\invariants};
+\node[op, left=4mm of canon] (invert) {Invert keyed map\\(erasures)};
+\node[op, left=4mm of invert] (ecc) {ECC decode};
+\node[box, left=4mm of ecc, fill=green!8] (verify) {MAC verify\\$\Rightarrow$ attribute};
 \draw[->] (att)--(parse); \draw[->] (parse)--(canon); \draw[->] (canon)--(invert);
 \draw[->] (invert)--(ecc); \draw[->] (ecc)--(verify);
 
-\draw[->, dashed] (inv.south) to[out=-90,in=90] node[midway,right,xshift=1pt]
-  {\scriptsize $h_I$ binds payload} (att.north);
+\node[below=1.5mm of inv, font=\footnotesize, inner sep=1pt] {($h_I$ binds the payload)};
 \end{tikzpicture}
 \caption{Truthprint data flow. Encoding (top, left$\to$right) locks the
 invariant set $I$, maps an authenticated, error-corrected payload onto
@@ -110,13 +107,11 @@ Embedding-region and semantic-context methods---SemStamp \cite{hou2024semstamp},
 \paragraph{Attacks and robust hashing.}
 \label{sec:relhash}
 Watermark presence and family can be identified by black-box probing \cite{gloaguen2024blackbox}, motivating a Kerckhoffs threat model (security in the key, not obscurity); scrubbing and spoofing under distillation \cite{yi2025unifiedattacks} and radioactive traces in fine-tuned models \cite{sander2024radioactive} motivate MAC-authenticated payloads rather than statistical agreement; and detector-guided adversarial paraphrasing \cite{cheng2025adversarial} motivates counting a removal as successful only when it both evades detection and preserves meaning:
-\begin{equation}
-\begin{split}
+\begin{multline}
 \label{eq:validremoval}
-\mathrm{ValidRemoval}=\mathbb{1}\big[\,&D_K(y')<\tau_D \ \land\\
-&\mathrm{InvariantEq}(P(y),P(y'))=1\,\big].
-\end{split}
-\end{equation}
+\mathrm{ValidRemoval}=\mathbf{1}\big[D_K(y')<\tau_D\big]\\
+\cdot\,\mathbf{1}\big[\mathrm{InvariantEq}(P(y),P(y'))=1\big].
+\end{multline}
 Registering a meaning-digest tag and re-verifying it after transformation resembles \emph{robust hashing} (MinHash \cite{broder1997minhash}, SimHash \cite{charikar2002simhash}, learned semantic hashing), but those answer a \emph{similarity} question that cannot localize a typed field change---a single-field edit stays within tolerance (Sec.~\ref{sec:matched}). Truthprint instead hashes a \emph{typed invariant contract} with a keyed MAC, a typed, keyed member of that family whose false-positive floor is the analyzed contract-collision probability (Sec.~\ref{sec:provenance}). Table~\ref{tab:positioning} (appendix) positions it against representative systems.
 
 \section{Problem Definition}
@@ -166,7 +161,7 @@ whose production calibration must account for dependence among carrier observati
 
 \section{Formal Analysis}
 \label{sec:analysis}
-This section makes the guarantees of Truthprint precise. The results isolate what the design provides unconditionally (given sound primitives) from what remains an empirical question about semantic parsing, which is deferred to Section~\ref{sec:eval}.
+We state what the design guarantees given sound primitives; what depends on semantic parsing is measured empirically (Sec.~\ref{sec:experiments}), and computational complexity is in Appendix~\ref{app:complexity}.
 
 \subsection{Carriers as Invariant-Equivalence Classes}
 \begin{definition}[Invariant equivalence]
@@ -189,7 +184,7 @@ Under Assumption~\ref{as:validator}, every committed output $y=R_\ell(E_K(x,m))$
 \begin{proof}[Proof sketch]
 Encoding commits a candidate only if $V$ accepts it, and carriers with no accepted candidate are recorded as erasures rather than realized (Sec.~\ref{sec:validation}). By soundness, acceptance implies invariant equality for that unit; taking the conjunction over committed units gives $I(P(y))=I(x)$.
 \end{proof}
-This is the structural property that logit-biasing methods cannot offer: they have no invariant checker in the loop, so quality preservation is measured post hoc rather than enforced.
+Logit-biasing methods lack such an in-loop invariant check, so they can only measure quality preservation post hoc.
 
 \paragraph{Empirical validator soundness.}
 We measure the load-bearing assumption as the validator's false-accept rate on single-field tampers. On the closed domain the typed contract flags every tamper across all six fields (property C1, $1.000$, CI $[0.998,1.000]$) while retaining attribution across benign paraphrase ($0.990$); a decode-only ablation accepts every tamper (C2, $0.000$), confirming that invariant re-extraction---not the coding layer---supplies soundness. Under real NLLB translation the Stage-2 extractor still rejects meaning-altering edits at $\ge0.99$ per condition (Sec.~\ref{sec:provenance}). Wide-coverage validator soundness remains open, so Proposition~\ref{prop:fidelity} stays conditional.
@@ -231,9 +226,6 @@ as a universal threshold.
 \end{proposition}
 Equation~(\ref{eq:cliff}) gives a necessary carrier-count condition $N\geq\lceil(\mu+\tau)/((1-\epsilon)\log_2\bar q)\rceil$ with $R\leq1-\epsilon$---a planning bound explaining why short or heavily summarized text falls below capacity (the finite-length transition in Appendix Table~\ref{tab:erasure} is specific to the implemented code).
 
-\subsection{Complexity}
-Let a document have $S$ discourse units, $|C|$ carriers, $\kappa$ candidates per carrier, and $N$ code positions. Encoding cost is $O(S\cdot|C|\cdot\kappa\cdot c_{\mathrm{val}})$, dominated by the validator cost $c_{\mathrm{val}}$ (a parse plus entailment check). Detection cost is $O(S\cdot c_{\mathrm{parse}} + N\cdot c_{\mathrm{map}} + D_{\mathrm{ECC}})$, where the keyed map $c_{\mathrm{map}}$ is one HMAC evaluation and $D_{\mathrm{ECC}}=O(N k)$ for GF(2) erasure elimination (worst case $O(Nk^2)$). The cryptographic and coding operations scale with the number of carriers and are independent of the generator parameter count. End-to-end latency is nevertheless unknown because candidate generation, reparsing, and validation dominate and may themselves invoke large models; it must be measured for each implementation.
-
 \section{Experiments}
 \label{sec:experiments}
 We evaluate on a seeded, reproducible pipeline (implementation, full protocol, research questions, hypotheses, and deployment notes in the appendix); unless noted, results are closed-domain and small-scale with Wilson $95\%$ CIs.
@@ -244,7 +236,7 @@ Translating $4$ documents of $16$ templated sentences with a real system (NLLB-2
 
 \subsection{The meaning layer survives real translation (Stage-2)}
 \label{sec:stage2}
-A closed-domain lexicon extractor over six languages (English, Korean, Hindi, Chinese, Arabic, German) recovers the nine invariant fields from $4{,}800$ real NLLB translations ($800$ source sentences over $50$ documents $\times$ six conditions). Aggregate recovery (Wilson $95\%$ CI) is $0.83$--$0.99$: the small closed categoricals (polarity, quantity, attribution, time) survive at $\ge0.97$, while the open entity/relational fields are lower ($0.83$--$0.92$; patient $0.825$ weakest). Strict all-nine-field recovery is highest for Hindi/German ($0.69$/$0.66$) and lowest for Arabic ($0.25$), where MT renders entities most variably. Because the recovered fields fix the invariant digest, a meaning-altering edit to any field is detected across languages---direct real-data evidence that the meaning layer survives MT where the surface carriers of Sec.~\ref{sec:realmt} do not; a wide-coverage neural parser is the next step (\texttt{scripts/eval\_multilingual.py}).
+A closed-domain lexicon extractor over six languages (English, Korean, Hindi, Chinese, Arabic, German) recovers the nine invariant fields from $4{,}800$ real NLLB translations ($800$ source sentences over $50$ documents $\times$ six conditions). Aggregate recovery (Wilson $95\%$ CI) is $0.83$--$0.99$: the small closed categoricals (polarity, quantity, attribution, time) survive at $\ge0.97$, while the open entity and relational fields are lower ($0.83$--$0.92$; patient $0.825$ weakest). Strict all-nine-field recovery is highest for Hindi/German ($0.69$/$0.66$) and lowest for Arabic ($0.25$), where MT renders entities most variably. Because the recovered fields fix the invariant digest, a meaning-altering edit to any field is detected across languages---direct real-data evidence that the meaning layer survives MT where the surface carriers of Sec.~\ref{sec:realmt} do not; a wide-coverage neural parser is the next step (\texttt{scripts/\allowbreak eval\_multilingual.py}).
 
 \subsection{A wide-coverage neural frontend on open-domain text}
 \label{sec:neural}
@@ -264,21 +256,22 @@ Against a \emph{real} KGW token watermark (\cite{kirchenbauer2023kgw}; $\gamma{=
 \caption{Matched-FPR head-to-head on cached real LLM-MT translations: TPR at a
 common $1\%$ FPR ($300$ bootstrap documents of $16$ sentences, seeded; real
 multilingual embedding). RT $=$ English round-trip; KO/HI/ZH/AR $=$ direct
-translation. Only the typed contract both survives translation and rejects a
-single-field tamper ($1.000$ vs.\ $0.000$ for similarity hashes; in text).}
+translation. SemStamp is an embedding-region watermark; SimHash/MinHash are
+robust hashes; SHA-256 is an exact hash. Only the typed contract both survives
+translation and rejects a single-field tamper ($1.000$ vs.\ $0.000$ for similarity hashes; in text).}
 \label{tab:matched}
 \footnotesize
-\begin{tabular}{lccccc}
+\begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}ccccc@{}}
 \toprule
 Method & RT & KO & HI & ZH & AR \\
 \midrule
-Meaning-digest (typed)    & 1.000 & 1.000 & 1.000 & 1.000 & 1.000 \\
-SemStamp (embed.\ region) & 1.000 & 0.937 & 0.617 & 0.460 & 0.377 \\
-SimHash (robust hash)     & 1.000 & 0.590 & 0.000 & 0.883 & 0.633 \\
-MinHash (robust hash)     & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
-Exact SHA-256             & 0.867 & 0.000 & 0.000 & 0.000 & 0.000 \\
+Typed digest   & 1.000 & 1.000 & 1.000 & 1.000 & 1.000 \\
+SemStamp       & 1.000 & 0.937 & 0.617 & 0.460 & 0.377 \\
+SimHash        & 1.000 & 0.590 & 0.000 & 0.883 & 0.633 \\
+MinHash        & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+SHA-256        & 0.867 & 0.000 & 0.000 & 0.000 & 0.000 \\
 \bottomrule
-\end{tabular}
+\end{tabular*}
 \end{table}
 
 \subsection{Ledger retrieval and NLI baselines}
@@ -290,7 +283,7 @@ Because the scheme already uses an out-of-band ledger, the natural control is to
 Benign meaning-preserving paraphrase authenticates at TPR $1.000$ and document attribution $1.000$ (RQ4), and a single-field altering edit is rejected at $1.000$. A schema-aware adaptive attacker (RQ7) that swaps the predicate verb and time expression for \emph{out-of-lexicon} synonyms achieves ValidRemoval (Eq.~\eqref{eq:validremoval}) $1.000$ under the \emph{closed} lexicon---an honest negative we localize to exactly the abstained fields (predicate and time in all cases; attribution when present), with polarity and agent recovered in $100\%$ of attacks. The vulnerability is the fixed lexicon, not the meaning-digest: an \emph{extended-coverage} frontend drives it $1.000\!\to\!0.000$ at unchanged benign and tamper rejection, but a \emph{held-out} out-of-inventory attack still evades any fixed lexicon ($1.000$). The general defense is open-vocabulary parsing: two real instruction LLMs (schema-guided \texttt{neural\_parser}) drive the held-out novel ValidRemoval to $0.050$ (GPT-4o-mini, $N{=}40$) and $0.100$ (Llama-3.3-70B, $N{=}10$), both disjoint from the lexicons' upper CIs, at benign and tamper rejection $1.000$ (Appendix Tables~\ref{tab:neuraldefense},~\ref{tab:paraphrase}).
 
 \section{Conclusion}
-Truthprint is a language-neutral, typed semantic IR for authenticated provenance whose key contribution is a machine-checkable separation between immutable meaning and controlled realization choices. The mechanism that survives transformation is ledger-based authenticated semantic provenance---a keyed tag over the invariant contract, re-verified after translation or paraphrasing through semantic parsing, canonicalization, and MAC verification---complementary to token-level watermarks rather than an in-text watermark. It cannot guarantee detection after arbitrary rewriting, but targets a narrower, defensible objective---preserving provenance across transformations that retain substantial meaning---which the real-MT evidence supports; wide-coverage parsing, official baselines, and scale remain future work.
+Truthprint is a language-neutral, typed semantic IR for authenticated provenance whose key contribution is a machine-checkable separation between immutable meaning and controlled realization choices. What survives transformation is ledger-based authenticated semantic provenance---a keyed tag over the invariant contract, re-verified after translation or paraphrase---complementary to, not a replacement for, token-level watermarks. It cannot guarantee detection after arbitrary rewriting, but targets a narrower, defensible objective---preserving provenance across transformations that retain substantial meaning---which the real-MT evidence supports; wide-coverage parsing, official baselines, and scale remain future work.
 
 \section*{Limitations}
 Multilingual semantic parsing remains imperfect. Not every proposition admits multiple safe realization alternatives. Highly constrained text has low carrier capacity. Some apparently stylistic alternations change emphasis or information structure. Translation can omit modality, evidentiality, subjects, or discourse relations. Strong summarization can destroy both content and watermark evidence. Finally, candidate generation and semantic validation add computational overhead compared with direct token-level methods. The closed-domain adaptive paraphrase of Section~\ref{sec:paraphrase} shows the sharpest limitation directly: a schema-aware attacker who swaps out-of-lexicon content synonyms fully removes the meaning-digest under the closed lexicon while preserving meaning. An extended-coverage frontend defends that specific attack (ValidRemoval $1.000\!\to\!0.000$ without weakening tamper rejection); a held-out out-of-inventory attack still evades any fixed lexicon, but two real open-vocabulary neural runs (GPT-4o-mini $N{=}40$, Llama-3.3-70B $N{=}10$; Table~\ref{tab:neuraldefense}) defend even the held-out attack ($0.050$/$0.100$), establishing that wide-coverage \emph{open-vocabulary} parsing---not a longer lexicon---is the general defense. Those runs are closed-domain and modest in scale; the current artifact still does not evaluate real generators, human judgments, all official baselines, replay defenses, or open-vocabulary adaptive attacks \emph{at larger scale and across domains}; consequently it supports feasibility and closed-domain robustness claims, not comparative robustness or deployment readiness at wide coverage.
@@ -300,93 +293,7 @@ A provenance detector can be misused to accuse authors, censor content, or make 
 
 The design has dual-use risks: public carrier families can aid removal attacks, while secret or overly detailed payloads can enable tracking. Payloads should exclude personal identifiers, prompts, and precise timestamps; keys and nonce registries require access control, rotation, and audit. Evaluation text should be licensed or consented, human annotation should be compensated and documented, and language-specific error disparities should be reported rather than hidden in an aggregate score. The present artifact uses synthetic template facts, no personal data, and no human subjects; the real-MT pilot (Secs.~\ref{sec:realmt}--\ref{sec:provenance}) translates those synthetic facts with a public open-weights model (NLLB-200-distilled-600M) and involves no personal data or human subjects. Any scaled evaluation that adds human invariant or factual-equivalence annotation must use licensed or consented text and compensated, documented annotation.
 
-\begin{thebibliography}{99}
-
-\bibitem{dathathri2024synthid}
-S. Dathathri \emph{et al.}, ``Scalable watermarking for identifying large language model outputs,'' \emph{Nature}, vol.~634, pp.~818--823, 2024. \url{https://www.nature.com/articles/s41586-024-08025-4}
-
-\bibitem{shumailov2024collapse}
-I. Shumailov, Z. Shumaylov, Y. Zhao, N. Papernot, R. Anderson, and Y. Gal, ``AI models collapse when trained on recursively generated data,'' \emph{Nature}, vol.~631, pp.~755--759, 2024. \url{https://www.nature.com/articles/s41586-024-07566-y}
-
-\bibitem{euaiact2024}
-European Parliament and Council, ``Regulation (EU) 2024/1689 laying down harmonised rules on artificial intelligence (Artificial Intelligence Act),'' Official Journal of the European Union, 2024. \url{https://eur-lex.europa.eu/eli/reg/2024/1689/oj}
-
-\bibitem{liu2024survey}
-A. Liu, L. Pan, Y. Lu, J. Li, X. Hu, X. Zhang, L. Wen, I. King, H. Xiong, and P. S. Yu, ``A survey of text watermarking in the era of large language models,'' \emph{ACM Comput. Surv.}, vol.~57, no.~2, 2024. \url{https://dl.acm.org/doi/10.1145/3691626}
-
-\bibitem{synthidgithub}
-Google DeepMind, ``SynthID-Text reference implementation,'' GitHub repository, 2024. \url{https://github.com/google-deepmind/synthid-text}
-
-\bibitem{hf_synthid}
-Google, ``SynthID: Tools for watermarking and detecting LLM-generated text,'' Responsible GenAI Toolkit; describes the Transformers integration, accessed 2026. \url{https://ai.google.dev/responsible/docs/safeguards/synthid}
-
-\bibitem{omidi2026synthidanalysis}
-R. Omidi, Y. Dong, and B. Wang, ``On Google's SynthID-Text LLM watermarking system: Theoretical analysis and empirical validation,'' arXiv:2603.03410, 2026. \url{https://arxiv.org/abs/2603.03410}
-
-\bibitem{han2025synguard}
-X. Han, Q. Li, J. Ni, and M. Zulkernine, ``Robustness assessment and enhancement of text watermarking for Google's SynthID,'' arXiv:2508.20228, 2025. \url{https://arxiv.org/abs/2508.20228}
-
-\bibitem{kirchenbauer2023kgw}
-J. Kirchenbauer, J. Geiping, Y. Wen, J. Katz, I. Miers, and T. Goldstein, ``A watermark for large language models,'' in \emph{Proc. ICML}, 2023. \url{https://arxiv.org/abs/2301.10226}
-
-\bibitem{zhao2023provable}
-X. Zhao, P. Ananth, L. Li, and Y.-X. Wang, ``Provable robust watermarking for AI-generated text,'' in \emph{Proc. ICLR}, 2024. \url{https://arxiv.org/abs/2306.17439}
-
-\bibitem{kuditipudi2024distortionfree}
-R. Kuditipudi, J. Thickstun, T. Hashimoto, and P. Liang, ``Robust distortion-free watermarks for language models,'' \emph{Trans. Mach. Learn. Res.}, 2024. \url{https://arxiv.org/abs/2307.15593}
-
-\bibitem{christ2024undetectable}
-M. Christ, S. Gunn, and O. Zamir, ``Undetectable watermarks for language models,'' in \emph{Proc. COLT}, 2024. \url{https://arxiv.org/abs/2306.09194}
-
-\bibitem{fernandez2023threebricks}
-P. Fernandez, A. Chaffin, K. Tit, V. Chappelier, and T. Furon, ``Three bricks to consolidate watermarks for large language models,'' in \emph{Proc. IEEE WIFS}, 2023. \url{https://arxiv.org/abs/2308.00113}
-
-\bibitem{liu2024unforgeable}
-A. Liu, L. Pan, X. Hu, S. Li, L. Wen, I. King, and P. S. Yu, ``An unforgeable publicly verifiable watermark for large language models,'' in \emph{Proc. ICLR}, 2024. \url{https://arxiv.org/abs/2307.16230}
-
-\bibitem{hou2024semstamp}
-A. B. Hou \emph{et al.}, ``SemStamp: A semantic watermark with paraphrastic robustness for text generation,'' in \emph{Proc. NAACL}, 2024. \url{https://arxiv.org/abs/2310.03991}
-
-\bibitem{ren2024semmark}
-J. Ren, H. Xu, Y. Liu, Y. Cui, S. Wang, D. Yin, and J. Tang, ``A robust semantics-based watermark for large language models against paraphrasing,'' in \emph{Findings of NAACL}, 2024. \url{https://aclanthology.org/2024.findings-naacl.40/}
-
-\bibitem{liu2023sir}
-A. Liu, L. Pan, X. Hu, S. Meng, and L. Wen, ``A semantic invariant robust watermark for large language models,'' in \emph{Proc. ICLR}, 2024. \url{https://arxiv.org/abs/2310.06356}
-
-\bibitem{ye2026swan}
-Z. Ye \emph{et al.}, ``SWAN: Semantic watermarking with Abstract Meaning Representation,'' in \emph{Proc. ACL}, 2026. \url{https://arxiv.org/abs/2605.04305}
-
-\bibitem{schaefer2026dew}
-J. Sch\"afer, C. Pilaszewicz, and G. Wunder, ``Robust text watermarking for large language models via dual semantic embeddings,'' arXiv:2606.31602, 2026. \url{https://arxiv.org/abs/2606.31602}
-
-\bibitem{he2024crosslingual}
-Z. He, B. Zhou, H. Hao, A. Liu, X. Wang, Z. Tu, Z. Zhang, and R. Wang, ``Can watermarks survive translation? On the cross-lingual consistency of text watermark for large language models,'' in \emph{Proc. ACL}, 2024. \url{https://aclanthology.org/2024.acl-long.226/}
-
-\bibitem{qu2024multibitecc}
-W. Qu, W. Zheng, T. Tao, D. Yin, Y. Jiang, Z. Tian, W. Zou, J. Jia, and J. Zhang, ``Provably robust multi-bit watermarking for AI-generated text via error correction code,'' arXiv:2401.16820, 2024. \url{https://arxiv.org/abs/2401.16820}
-
-\bibitem{gloaguen2024blackbox}
-T. Gloaguen, N. Jovanovi\'c, R. Staab, and M. Vechev, ``Black-box detection of language model watermarks,'' arXiv:2405.20777, 2024. \url{https://arxiv.org/abs/2405.20777}
-
-\bibitem{sander2024radioactive}
-T. Sander, P. Fernandez, A. Durmus, M. Douze, and T. Furon, ``Watermarking makes language models radioactive,'' in \emph{Proc. NeurIPS}, 2024. \url{https://arxiv.org/abs/2402.14904}
-
-\bibitem{yi2025unifiedattacks}
-X. Yi, Y. Li, S. Zheng, L. Wang, X. Wang, and L. He, ``Unified attacks to large language model watermarks: Spoofing and scrubbing in unauthorized knowledge distillation,'' arXiv:2504.17480, 2025. \url{https://arxiv.org/abs/2504.17480}
-
-\bibitem{cheng2025adversarial}
-Y. Cheng, V. S. Sadasivan, M. Saberi, S. Saha, and S. Feizi, ``Adversarial paraphrasing: A universal attack for humanizing AI-generated text,'' arXiv:2506.07001, 2025. \url{https://arxiv.org/abs/2506.07001}
-
-\bibitem{pan2024markllm}
-L. Pan \emph{et al.}, ``MarkLLM: An open-source toolkit for LLM watermarking,'' in \emph{Proc. EMNLP (System Demonstrations)}, 2024. \url{https://arxiv.org/abs/2405.10051}
-
-\bibitem{broder1997minhash}
-A. Z. Broder, ``On the resemblance and containment of documents,'' in \emph{Proc. Compression and Complexity of Sequences}, 1997.
-
-\bibitem{charikar2002simhash}
-M. S. Charikar, ``Similarity estimation techniques from rounding algorithms,'' in \emph{Proc. ACM STOC}, 2002.
-
-\end{thebibliography}
+\bibliography{references}
 \appendix
 
 \section{Reference Implementation and Verification}
@@ -439,7 +346,7 @@ Carrier erasure $\epsilon$ & Recovery rate \\
 \subsection{Closed-Domain Linguistic Round-Trip}
 The core PoC operates on abstract carrier bits. To validate the linguistic
 layer end to end, a second self-contained script
-(\texttt{reference/truthprint\_linguistic\_demo.py}) realizes an authenticated
+(\texttt{reference/\allowbreak truthprint\_\allowbreak linguistic\_\allowbreak demo.py}) realizes an authenticated
 payload across templated factual sentences using two invariant-preserving
 carriers---voice (active/passive) and time-phrase position---then rewrites,
 re-parses, and detects on actual sentence strings (the running example of
@@ -516,19 +423,20 @@ We propose the following research questions:
 \caption{Evaluation matrix: each research question mapped to its decisive comparison, manipulated factor, and primary outcome measure.}
 \label{tab:matrix}
 \renewcommand{\arraystretch}{1.15}
-\begin{tabular}{p{0.5cm}p{3.2cm}p{3.5cm}}
+\small
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
 \toprule
 RQ & Decisive comparison & Primary measure \\
 \midrule
 RQ1 & Truthprint vs.\ unconstrained paraphrase watermark & Invariant error rate (IER), contradiction rate \\
-RQ2 & Truthprint vs.\ token/embedding baselines, clean text & TPR@$\{$1,0.1,0.01$\}$\%FPR, ROC-AUC \\
+RQ2 & Truthprint vs.\ token/embedding baselines, clean text & TPR at $\{1, 0.1, 0.01\}\%$ FPR; ROC-AUC \\
 RQ3 & Pre- vs.\ post-translation (1-hop, round-trip) & Payload BER, partial-recovery rate \\
 RQ4 & Sentence- vs.\ paragraph-level paraphrase & TPR@1\%FPR vs.\ edit distance \\
 RQ5 & Watermarked vs.\ unwatermarked generation & Quality delta, added latency \\
 RQ6 & Recovery vs.\ document length & Authenticated bits recovered \\
 RQ7 & Adaptive attacker with vs.\ without invariant constraint & ValidRemoval rate (Eq.~\eqref{eq:validremoval}) \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 Table~\ref{tab:matrix} fixes, for each question, the single manipulated factor and the outcome that would confirm or falsify the corresponding hypothesis, so that results cannot be reported selectively. RQ4 (paraphrase) and RQ7 (adaptive removal, Eq.~\ref{eq:validremoval}) are measured on the closed domain in Section~\ref{sec:paraphrase}; the remaining questions await the wide-coverage frontend.
@@ -661,7 +569,8 @@ harness does not evaluate the security properties of the other systems.
   Detection saturates for all methods on clean text; the discriminating
   transformed setting appears in Table~\ref{tab:translation}.}
 \label{tab:clean}
-\begin{tabular}{lccc}
+\footnotesize
+\begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}ccc@{}}
 \toprule
 Method & TPR@1\%FPR & ROC-AUC & BLEU-1 \\
 \midrule
@@ -670,12 +579,12 @@ SemStamp         & 1.000 & 1.000 & --- \\
 SWAN             & 1.000 & 1.000 & --- \\
 Truthprint       & 1.000 & 1.000 & $0.84$ \\
 \bottomrule
-\multicolumn{4}{p{0.92\columnwidth}}{\footnotesize $^\dagger$Controlled
+\multicolumn{4}{@{}p{\linewidth}@{}}{$^\dagger$Controlled
   simulation only, not a neural or translation benchmark. BLEU-1 measured only for
   Truthprint (real sentences); baseline fluency needs each method's neural
   generator. Truthprint additionally applies a 20-bit tag check; this is not
   a measured end-to-end FPR.}
-\end{tabular}
+\end{tabular*}
 \end{table}
 
 \begin{table}[t]
@@ -685,7 +594,8 @@ Truthprint       & 1.000 & 1.000 & $0.84$ \\
   EN$\to$KO $(0.92,0.30)$, EN$\to$HI $(0.95,0.35)$, KO$\to$EN $(0.90,0.28)$.
   Outputs illustrate the stipulated channel equations, not real translation.}
 \label{tab:translation}
-\begin{tabular}{lccc}
+\footnotesize
+\begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}ccc@{}}
 \toprule
 Method & EN$\rightarrow$KO & EN$\rightarrow$HI & KO$\rightarrow$EN \\
 \midrule
@@ -695,12 +605,12 @@ SemStamp         & 0.996 & 0.988 & 0.994 \\
 SWAN             & 1.000 & 1.000 & 1.000 \\
 Truthprint       & 1.000 & 0.972 & 0.998 \\
 \bottomrule
-\multicolumn{4}{p{0.92\columnwidth}}{\footnotesize $^\dagger$Controlled
+\multicolumn{4}{@{}p{\linewidth}@{}}{$^\dagger$Controlled
   Stage-1 channel; $\tau_{\mathrm{tok}}$ (token replacement) and
   $\epsilon_{\mathrm{inv}}$ (meaning-carrier erasure) per translation event.
   Only the Truthprint proxy in this harness exercises authenticated recovery;
   this table does not evaluate baseline security.}
-\end{tabular}
+\end{tabular*}
 \end{table}
 
 
@@ -727,7 +637,7 @@ Table~\ref{tab:notation} maps paper symbols to identifiers in \texttt{reference/
 \label{tab:notation}
 \renewcommand{\arraystretch}{1.2}
 \footnotesize
-\begin{tabular}{p{0.8cm}p{2.5cm}p{3.7cm}}
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
 \toprule
 Symbol & Meaning & Code identifier \\
 \midrule
@@ -741,7 +651,7 @@ $a_j^\star$ & realized option & \texttt{realize\_option} \\
 $\hat c_j$ & recovered symbol & \texttt{recover\_symbol} \\
 $D_K$ & detector & \texttt{detect\_document} \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 \subsection{Parameters, Determinism, and How to Run}
@@ -754,6 +664,10 @@ make                                            # build main.pdf
 Expected results are those reported in Section~\ref{sec:impl}: P1--P4 hold, and L1--L3 hold on sentence strings.
 
 The same primitives are also packaged as an installable Python distribution (\texttt{code/} in the accompanying repository) with a unit-test suite and continuous integration. Its command-line interface reruns all properties (\texttt{truthprint selftest}) and regenerates Table~\ref{tab:erasure} deterministically from a fixed seed with $500$ trials per erasure rate (\texttt{truthprint repro-table}).
+
+\section{Computational Complexity}
+\label{app:complexity}
+Let a document have $S$ discourse units, $|C|$ carriers, $\kappa$ candidates per carrier, and $N$ code positions. Encoding cost is $O(S\cdot|C|\cdot\kappa\cdot c_{\mathrm{val}})$, dominated by the validator cost $c_{\mathrm{val}}$ (a parse plus entailment check). Detection cost is $O(S\cdot c_{\mathrm{parse}} + N\cdot c_{\mathrm{map}} + D_{\mathrm{ECC}})$, where the keyed map $c_{\mathrm{map}}$ is one HMAC evaluation and $D_{\mathrm{ECC}}=O(N k)$ for GF(2) erasure elimination (worst case $O(Nk^2)$). The cryptographic and coding operations scale with the number of carriers and are independent of the generator parameter count. End-to-end latency is nevertheless unknown because candidate generation, reparsing, and validation dominate and may themselves invoke large models; it must be measured for each implementation.
 
 \section{Encoding and Detection Pseudocode}
 \label{app:pseudocode}
@@ -870,11 +784,11 @@ Introduce multi-ary carrier alphabets, BCH or Reed--Solomon codes, carrier inter
 \caption{Claim--evidence map for the present submission. ``Not established''
 means that the claim must not be inferred from the diagnostic simulation.}
 \label{tab:claims}
-\begin{tabular}{p{3.5cm}p{3.2cm}p{8.5cm}}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.1cm}>{\raggedright\arraybackslash}p{3.0cm}X@{}}
 \toprule
 Claim & Status & Supporting evidence or missing test \\
 \midrule
-Coding/authentication round trip & Demonstrated & Deterministic core tests P1--P4 and closed-domain string tests L1--L3. \\
+Coding/\allowbreak authentication round trip & Demonstrated & Deterministic core tests P1--P4 and closed-domain string tests L1--L3. \\
 Protected-field fidelity & Conditional (validator soundness measured) & Proposition~\ref{prop:fidelity}, assuming a sound invariant extractor and validator. The soundness assumption is measured as the validator's false-accept rate on meaning-altering edits: $0$ observed on the closed domain (C1) and $\le 0.01$ under real MT (Sec.~\ref{sec:provenance}); wide-coverage soundness remains open. \\
 Fresh-payload unforgeability & Conditional & Reduction to EUF-CMA security of the MAC; replay and nonce discovery are separate deployment concerns. \\
 Surface-carrier translation robustness & Refuted (real MT) & Stage-1 surface parser recovers $0/192$ real NLLB translations (Sec.~\ref{sec:realmt}). \\
@@ -889,14 +803,14 @@ Distinction from robust/semantic hashing & Demonstrated (closed-domain, real MT)
 Distinction from store-and-retrieve (ledger) baseline & Demonstrated (closed-domain) & Under the same ledger, retrieval and a cheap NLI proxy reject $\le0.06$ of single-field tampers at matched benign acceptance; only a perfect (unrealizable) oracle NLI reaches $1.000$, and still does not localize the field or give a keyed tag, which the typed digest does (Sec.~\ref{sec:retrieval}). \\
 Translator-independent (separated) frontend & Pilot (open-domain positive on one field) & A model-separated embedding frontend recovers open-domain temporal direction ($0.944$) where the lexicon abstains ($0.000$); static embeddings remain insufficient for the full contract, motivating the separated-backend LLM frontend (Sec.~\ref{sec:neural}). \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table*}
 
 \begin{table*}[t]
 \centering
 \caption{Positioning of Truthprint relative to representative watermarking and attack research.}
 \label{tab:positioning}
-\begin{tabular}{p{2.7cm}p{3.3cm}p{3.2cm}p{6.0cm}}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}p{3.0cm}X@{}}
 \toprule
 Category & Representative work & Main carrier or focus & Limitation addressed by Truthprint \\
 \midrule
@@ -909,7 +823,7 @@ Dual embeddings & DEW & Context and token embeddings & Language invariance remai
 Attack analysis & Layer inflation, black-box probing, adversarial paraphrasing & Detector assumptions and adaptive transformation & Motivates authenticated payloads, conservative interfaces, and erasure-aware decoding. \\
 Proposed system & Truthprint & Typed invariants and controlled realization classes & Explicitly specifies what must remain fixed and what may carry symbols. \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table*}
 
 

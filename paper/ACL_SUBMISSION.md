@@ -7,7 +7,7 @@ source of truth in `main.tex`; the ACL source is generated from it.
 ## Build
 
 ```bash
-make acl        # python3 make_acl_source.py + 2x pdflatex -> acl_main.pdf
+make acl        # make_acl_source.py + pdflatex + bibtex + 2x pdflatex -> acl_main.pdf
 ```
 
 After editing `main.tex`, regenerate and verify synchronization:
@@ -26,6 +26,12 @@ python3 make_acl_source.py --check  # fail if acl_main.tex is stale
   Considerations* sections, and all appendices follow and do not count toward
   the limit. Verify after any edit with the body-length probe
   (last body section must end on page 8 or earlier).
+- **Citation style:** official ACL author-year citations via `acl.sty` +
+  `acl_natbib.bst` from `references.bib` (the IEEE build keeps its numeric
+  manual bibliography).
+- **Widths:** every table, figure, equation and listing fits its column or the
+  text block — 0 overfull boxes, and a page-by-page ink audit finds nothing
+  outside the 160 mm text block or crossing the column gutter.
 - **Mandatory sections:** *Limitations* (unnumbered) and *Ethical
   Considerations* (unnumbered) are present, after the Conclusion.
 - **Anonymity:** author is "Anonymous ACL submission"; no identifying strings
