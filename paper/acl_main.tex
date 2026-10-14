@@ -781,7 +781,9 @@ Introduce multi-ary carrier alphabets, BCH or Reed--Solomon codes, carrier inter
 
 \begin{table*}[t]
 \centering
-\caption{Claim--evidence map for the present submission. ``Not established''
+\small
+\caption{Claim--evidence map for the present submission (part 1 of 2: method
+and robustness claims; part 2 is Table~\ref{tab:claims2}). ``Not established''
 means that the claim must not be inferred from the diagnostic simulation.}
 \label{tab:claims}
 \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.1cm}>{\raggedright\arraybackslash}p{3.0cm}X@{}}
@@ -796,6 +798,20 @@ Meaning-layer recovery under real MT & Demonstrated (closed-domain, six language
 Wide-coverage neural parsing on open-domain text & Pilot (positive on open domain) & In a small LLM-MT pilot ($96$ sentences, six conditions) a neural extractor beats the lexicon on open-domain wording ($0.614$ vs.\ $0.481$ field recovery) while the lexicon leads on closed templates; single-model and small-scale caveats apply (Sec.~\ref{sec:neural}). \\
 Benign paraphrase robustness & Demonstrated (closed-domain) & On $200$ documents $\times16$ sentences, meaning-preserving in-lexicon paraphrase (voice, time reflow, verb/time synonyms, discourse hedge) authenticates at TPR $1.000$ and document attribution $1.000$; single-field altering edits rejected $1.000$ (Sec.~\ref{sec:paraphrase}). \\
 Adaptive-attack robustness & Closed lexicon refuted; defended by extended coverage; open-vocabulary open & A schema-aware attacker swapping out-of-lexicon content synonyms (``took care of'' for ``fixed'') reaches ValidRemoval $1.000$ (Eq.~\ref{eq:validremoval}) under the closed lexicon, localized to the stripped predicate/time/attribution fields (polarity and agent survive $100\%$). An extended-coverage frontend recovers those fields, driving adaptive ValidRemoval to $0.000$ while benign auth ($1.000$) and tamper rejection ($1.000$) are unchanged; a held-out out-of-inventory attack still evades any fixed lexicon (ValidRemoval $1.000$), but two real open-vocabulary neural frontends (GPT-4o-mini, Llama-3.3-70B) defend even the held-out attack (ValidRemoval $0.050$/$0.100$, CIs disjoint from the lexicons') at benign/tamper $1.000$. Coverage, not the meaning-digest, is the lever; the neural frontend supplies open-vocabulary coverage (Sec.~\ref{sec:paraphrase}, Table~\ref{tab:neuraldefense}). \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\begin{table*}[t]
+\centering
+\small
+\caption{Claim--evidence map (part 2 of 2, continued from Table~\ref{tab:claims}):
+false-positive and baseline-comparison claims.}
+\label{tab:claims2}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.1cm}>{\raggedright\arraybackslash}p{3.0cm}X@{}}
+\toprule
+Claim & Status & Supporting evidence or missing test \\
+\midrule
 System-level false-positive rate & Not established & The tag bound is per tested fresh candidate; parser search, tested key--nonce pairs, and fallback scores require end-to-end calibration. \\
 Semantic-level false-positive rate (contract collision) & Measured (closed-domain) & The $2^{-\tau}$ bound covers cryptographic tag collision only; the meaning-digest floor is the contract-collision probability. On the closed-domain corpus this floor is $5.2\times10^{-3}$ ($\approx1/192$) for the six-field contract---matching the measured $0.000$--$0.007$ real-MT false positives and $\sim\!2\times10^{7}\times$ the $2^{-32}$ bound (Sec.~\ref{sec:provenance}). Open-domain text has lower contract entropy, so estimating it per corpus is a deployment prerequisite. \\
 Comparative robustness vs.\ token and semantic baselines & Demonstrated (real MT: KGW token; matched-FPR SemStamp $+$ robust hashing) & On the same pipeline a real KGW watermark collapses under real NLLB translation (TPR@$1\%$FPR $0.960$ clean $\to$ $0.000$--$0.380$ translated) while the meaning-digest scheme survives ($0.502$--$0.980$); Table~\ref{tab:baselines}, Sec.~\ref{sec:baselines}. At a matched $1\%$ FPR a real embedding-region baseline (SemStamp) survives round-trip but degrades cross-lingually ($0.937$ KO $\to$ $0.377$ AR) while the typed scheme survives, and only the typed contract rejects single-field tampers (Table~\ref{tab:matched}, Sec.~\ref{sec:matched}). Official implementations (SynthID, SWAN) remain future work. \\

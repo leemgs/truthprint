@@ -30,8 +30,11 @@ python3 make_acl_source.py --check  # fail if acl_main.tex is stale
   `acl_natbib.bst` from `references.bib` (the IEEE build keeps its numeric
   manual bibliography).
 - **Widths:** every table, figure, equation and listing fits its column or the
-  text block — 0 overfull boxes, and a page-by-page ink audit finds nothing
-  outside the 160 mm text block or crossing the column gutter.
+  text block — 0 overfull boxes, no "Float too large" warnings (`make check`
+  fails on either), and a page-by-page ink audit finds nothing outside the
+  160 mm text block, below the 272 mm text bottom, or crossing the column
+  gutter. The appendix claim–evidence map is split into Tables 7–8 so that
+  no float is taller than a page.
 - **Mandatory sections:** *Limitations* (unnumbered) and *Ethical
   Considerations* (unnumbered) are present, after the Conclusion.
 - **Anonymity:** author is "Anonymous ACL submission"; no identifying strings
