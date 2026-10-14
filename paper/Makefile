@@ -7,6 +7,8 @@ all:
 acl:
 	python3 make_acl_source.py
 	pdflatex -interaction=nonstopmode -halt-on-error acl_main.tex
+	bibtex acl_main
+	pdflatex -interaction=nonstopmode -halt-on-error acl_main.tex
 	pdflatex -interaction=nonstopmode -halt-on-error acl_main.tex
 
 check:

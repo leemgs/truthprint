@@ -10,13 +10,12 @@ SOURCE = ROOT / "main.tex"
 OUTPUT = ROOT / "acl_main.tex"
 
 PREAMBLE = r"""\documentclass[11pt]{article}
-\PassOptionsToPackage{numbers}{natbib}
 \usepackage[review]{acl}
 \usepackage{amsmath,amssymb,amsthm}
-\usepackage{booktabs,multirow,array,graphicx,xcolor,url,listings,enumitem,microtype,tikz}
+\usepackage{booktabs,multirow,array,tabularx,graphicx,xcolor,url,listings,enumitem,microtype,tikz}
 \usetikzlibrary{arrows.meta,positioning,fit,backgrounds}
 \definecolor{codegray}{gray}{0.95}
-\lstset{basicstyle=\ttfamily\footnotesize,backgroundcolor=\color{codegray},frame=single,breaklines=true,columns=fullflexible,keepspaces=true,showstringspaces=false,tabsize=2}
+\lstset{basicstyle=\ttfamily\footnotesize,backgroundcolor=\color{codegray},frame=single,framesep=3pt,framerule=0.4pt,xleftmargin=3.4pt,xrightmargin=3.4pt,breaklines=true,columns=fullflexible,keepspaces=true,showstringspaces=false,tabsize=2}
 \newtheorem{theorem}{Theorem}
 \newtheorem{proposition}{Proposition}
 \newtheorem{definition}{Definition}
@@ -40,6 +39,11 @@ def render() -> str:
     body = source[source.index(r"\begin{document}") :]
     body = body.replace(IEEE_KEYWORDS, ACL_KEYWORDS)
     body = body.replace("\n\\balance\n", "\n")
+    # ACL uses the official author-year style (acl.sty + acl_natbib.bst) via
+    # BibTeX; the IEEE build keeps its manual numeric bibliography.
+    start = body.index(r"\begin{thebibliography}")
+    end = body.index(r"\end{thebibliography}") + len(r"\end{thebibliography}")
+    body = body[:start] + r"\bibliography{references}" + body[end:]
     return PREAMBLE + body
 
 
