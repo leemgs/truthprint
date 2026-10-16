@@ -17,6 +17,18 @@ python3 make_acl_source.py          # regenerate acl_main.tex
 python3 make_acl_source.py --check  # fail if acl_main.tex is stale
 ```
 
+Pre-submission audits (run after `make acl`):
+
+```bash
+make audit      # make check + page-by-page ink audit (tools/ink_audit.py)
+make refs       # every references.bib entry vs arXiv / Crossref / ACL Anthology (network)
+```
+
+`make refs` covers 25 of the 28 entries automatically; the three web-only
+entries (EU AI Act on EUR-Lex, the SynthID-Text GitHub repository, the Google
+SynthID page) have no arXiv id, DOI or Anthology record and are checked by
+opening their URLs.
+
 ## Submission compliance (desk-reject checklist)
 
 - **Format:** official `acl.sty`, `\documentclass[11pt]{article}`, `[review]`
