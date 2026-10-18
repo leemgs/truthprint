@@ -163,6 +163,49 @@
 ```bash
 cd code && python3 scripts/eval_ledger_search.py ../paper/results/realmt_b2 --out ../paper/results/ledger_search
 cd code && python3 -m truthprint.cli selftest          # P3: 0/20,000
-cd code && python3 -m pytest -q                         # 결과 일관성 테스트 포함
+cd code && pip install -e ".[dev]" && pytest -q         # CI와 동일한 방식 (결과 일관성 테스트 포함)
 cd paper && make acl && make audit && make refs
 ```
+
+---
+
+## 7. 부록: Nature에 제출한다면 — desk reject 점검 (2026-10-18 확인)
+
+Nature 공식 저자 지침(formatting guide, initial submission, editorial criteria)을 직접 확인해 현재 원고와 대조했습니다.
+**원고를 Nature 형식으로 바꾸지는 않았습니다.** 이유는 아래 7-1입니다.
+
+### 7-1. 가장 큰 문제: 동시 투고 금지 (양쪽 모두 desk reject 사유)
+- **Nature:** 게재 기준 첫 항목이 "주요 결과와 결론이 다른 곳에 출판되거나 *투고되지* 않았을 것"입니다.
+- **ACL/ARR:** 심사 중인 논문을 다른 곳에 동시에 투고하는 것을 금지합니다.
+- **결론:** ACL 2027과 Nature 중 **하나만** 골라야 합니다. ACL 원고를 Nature 형식으로 바꾸는 작업은 투고처를 결정한 뒤에 할 일입니다.
+
+### 7-2. 범위·중요도 (Nature desk reject의 주된 사유)
+- Nature는 투고 원고의 약 8%만 게재하고, "대부분의 원고는 심사에 보내지지 않고 거절된다"고 밝힙니다.
+- 게재 기준은 "outstanding scientific importance"와 "interdisciplinary readership"입니다.
+- 현재 증거는 닫힌 도메인의 합성 템플릿(50문서, 술어 1개)이고, 열린 도메인 증거는 96문장 파일럿뿐입니다. 이 상태로는 **편집 단계에서 거절될 가능성이 매우 높다**고 판단합니다.
+- §4의 P0-1(열린 도메인 실데이터)과 P0-2(통제된 기준선)는 Nature라면 최소 조건이고, 그보다 훨씬 큰 규모와 실제 배포 수준의 증거가 필요합니다.
+
+### 7-3. 형식 항목 대조 (Nature Article 기준)
+
+| 항목 | Nature 지침 | 현재 원고 | 판정 |
+|---|---|---|---|
+| 제목 | 인쇄 시 두 줄, **75자 이내**, 전문 용어·약어·능동 동사 지양 | 111자, 전문 용어 다수 | ✗ 수정 필요 |
+| 요약 단락 | 참고문헌을 단 요약 단락, **200단어 이내**, 숫자·약어·측정값은 꼭 필요할 때만, 분야 밖 독자 대상 | 195단어지만 수치와 약어(NLLB, KGW, MAC, FPR 등)가 많음 | ✗ 다시 써야 함 |
+| 본문 길이 | 8쪽 기사 기준 약 **4,300단어**(요약 포함), 표시 항목 5–6개 | 본문 약 3,700단어, 그림과 표 2개 | △ 분량은 맞지만 구성이 다름 |
+| Methods | 약 3,000단어 이내, **그림·표 불가**(Extended Data로) | ACL 부록에 표 12개 | ✗ Extended Data로 재구성 필요 |
+| 참고문헌 | 본문은 대략 **50개 이내**, 번호식, **논문 제목 포함** | 28개, IEEE판은 번호식이고 제목 포함 | ✓ |
+| 필수 진술 | Data availability, Code availability, Author contributions, Competing interests | 없음(ACL 익명판) | ✗ 추가 필요 |
+| 코드 | 핵심 코드는 편집자와 심사자에게 제공해야 하며, 없으면 거절할 수 있음 | 저장소는 있으나 익명 링크 없음 | △ 링크 제공 필요 |
+| 초기 투고 파일 | PDF 제출, 행 번호 필수(LaTeX는 게재 승인 후) | ACL PDF에 행 번호 있음 | ✓ |
+| 소제목 | 40자 이내 | 일부 초과(예: "Meaning-based provenance authentication under real translation") | △ |
+
+### 7-4. 표·그림 폭 (Nature 기준)
+- Nature는 표를 쪽마다 하나씩, 세로 방향으로, 가능한 한 작게 넣고, 굵은 한 줄 제목을 달도록 요구합니다.
+- 지금 표는 ACL의 2단 조판에 맞춰져 있습니다. 넘침 검사 결과 모든 쪽이 본문 영역 안에 들어오므로 그대로 옮겨도 폭은 문제가 없습니다. 다만 Nature 형식으로 바꾼다면 레이아웃을 다시 잡아야 합니다.
+
+### 7-5. Nature로 간다면 해야 할 일 (투고처 결정 후)
+1. ACL 투고를 하지 않거나 철회합니다(동시 투고 금지).
+2. P0-1과 P0-2를 훨씬 큰 규모로 수행합니다(실제 생성기, 열린 도메인, 여러 번역기).
+3. 제목(75자 이내)과 요약 단락(분야 밖 독자용, 수치 최소화)을 다시 씁니다.
+4. 본문, Methods, Extended Data 구조로 바꿉니다(Methods에는 표를 넣지 않음).
+5. Data, Code availability, Author contributions, Competing interests 진술을 추가합니다.
