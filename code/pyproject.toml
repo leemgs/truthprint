@@ -40,3 +40,6 @@ include = ["truthprint*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+# tests import the evaluation scripts as `scripts.*`; put code/ on sys.path
+# so a bare `pytest` (as CI runs it) finds them.
+pythonpath = ["."]
