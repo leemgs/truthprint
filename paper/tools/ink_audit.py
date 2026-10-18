@@ -2,8 +2,8 @@
 """Page-by-page ink audit of the ACL PDF (no third-party Python packages).
 
 Rasterizes every page with pdftoppm and fails if any ink lies outside the
-A4 text block (25 mm margins) or below the 272 mm text bottom, other than the
-page number. Pages whose ink crosses the column gutter are listed so they can
+A4 text block (25 mm margins) or more than 3 mm below the 272 mm text bottom
+(TeX box depth), other than the page number. Pages whose ink crosses the column gutter are listed so they can
 be checked against the full-width floats (figure*/table*).
 """
 from __future__ import annotations
@@ -17,6 +17,10 @@ from pathlib import Path
 DPI = 100
 MM = DPI / 25.4
 INK = 110  # grayscale threshold
+# The text block ends at 272 mm. TeX lets the last box hang below its baseline
+# (descenders, display-math denominators), so allow 3 mm; anything reaching the
+# page-number band at ~280 mm is still a real overflow.
+BOTTOM_LIMIT_MM = 275
 
 
 def read_pgm(path: str) -> tuple[int, int, bytes]:
@@ -45,7 +49,7 @@ def audit(pdf: str) -> int:
                 if any(103 * MM <= x <= 107 * MM for x in xs):
                     gutter_rows += 1
             name = Path(page).stem.split("-")[-1]
-            if xmin < 24 * MM or xmax > 186 * MM or last_text_row > 274 * MM:
+            if xmin < 24 * MM or xmax > 186 * MM or last_text_row > BOTTOM_LIMIT_MM * MM:
                 failures.append(name)
             note = f"  (gutter-crossing ink: {gutter_rows} rows)" if gutter_rows else ""
             print(f"page {name}: x {xmin / MM:.1f}-{xmax / MM:.1f} mm, "

@@ -146,11 +146,19 @@ Every number below regenerates from a fixed seed (see `paper/results/`).
   **≥ 0.996**.
   (`paper/results/provenance_realmt.md`, `paper/results/stage2_multilingual.md`,
   `paper/results/realmt_b2/`)
-- **Real baseline comparison.** A real **KGW** token watermark collapses under real
-  translation (clean 0.96 → **0.00–0.38** translated) while the meaning‑digest
-  survives (**0.50–0.98**). At a matched 1% FPR, SemStamp survives round‑trip but
-  degrades cross‑lingually, while the typed digest survives and — unlike
-  similarity/robust hashing — rejects single‑field tampers.
+- **Real baseline comparison.** A **KGW** token watermark on GPT‑2 generations
+  collapses under the same real NLLB translator (clean 0.96 → **0.00–0.38**
+  translated), while meaning‑digest document attribution on the template corpus
+  stays at **0.90–1.00** (sentence TPR 0.62–0.89). The source texts differ, so this
+  shows token‑signal removal rather than a controlled head‑to‑head. At a matched 1%
+  FPR (16 base sentences per condition), a SemStamp‑style re‑implementation survives
+  round‑trip but degrades cross‑lingually, while the typed digest survives and —
+  unlike similarity/robust hashing — rejects single‑field tampers.
+- **Id‑free ledger search.** With no document id, sentence‑level search is not
+  specific (a core6 sentence matches a wrong ledger entry 66–87% of the time), but
+  the ≥50% document rule attributes translated documents at 0.90–1.00 with 0/2,450
+  false document attributions per condition against a 50‑document ledger
+  (`paper/results/ledger_search.md`).
   (`paper/results/baselines_real.md`, `paper/results/semantic_baselines.md`)
 - **Paraphrase & adaptive attack (RQ4/RQ7).** Benign meaning‑preserving paraphrase
   authenticates (TPR **1.000**); a schema‑aware adaptive attacker that swaps

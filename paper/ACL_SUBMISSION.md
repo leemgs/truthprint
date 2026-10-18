@@ -63,7 +63,8 @@ opening their URLs.
 Content was relocated (not deleted; recoverable in git): the reference
 implementation and closed-domain round-trip/ablation, the experimental
 methodology and research questions, falsifiable hypotheses, deployment
-considerations, formal-analysis supporting detail, the encoding/detection
+considerations, formal-analysis supporting detail, the carrier-capacity /
+minimum-length analysis of the in-text channel, the encoding/detection
 pseudocode and the IR JSON example, the worked example, and the
 claim–evidence / positioning / extended result tables. The 8-page body keeps
 the core method (typed invariant contract), the formal statements, and the
@@ -72,10 +73,12 @@ matched-FPR baselines, paraphrase/adaptive defense).
 
 ## Reproducibility
 
-All real-MT numbers reproduce in-repo with no GPU from the committed raw run
-under `paper/results/realmt_b2/` via `scripts/eval_multilingual.py` and
-`scripts/eval_provenance.py`; other evaluations ship seeded, cached scripts
-(see `code/README.md`).
+All Truthprint real-MT numbers reproduce in-repo with no GPU from the committed
+raw run under `paper/results/realmt_b2/` via `scripts/eval_multilingual.py`,
+`scripts/eval_provenance.py` and `scripts/eval_ledger_search.py`; other
+evaluations ship seeded, cached scripts (see `code/README.md`). The KGW baseline
+row comes from `handoff/Truthprint_W4_Baselines_Kaggle.ipynb` (GPU); its raw
+detector scores are not committed yet.
 
 ## Camera-ready
 

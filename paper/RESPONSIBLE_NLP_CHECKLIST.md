@@ -31,8 +31,8 @@ table references are to the anonymous ACL build (`acl_main.tex` / `acl_main.pdf`
 ## B. Scientific artifacts
 
 - **B1. Did you cite the creators of artifacts you used?** **Yes** — NLLB-200
-  (translation), KGW (token-watermark baseline, cite), SemStamp (semantic
-  baseline, cite), MinHash/SimHash (robust-hashing baselines, cite), and the
+  (translation), KGW (token-watermark baseline on GPT-2 generations, cite), SemStamp (semantic
+  baseline; our SemStamp-style re-implementation, cite), MinHash/SimHash (robust-hashing baselines, cite), and the
   instruction LLMs used for the neural frontend (named in §Experiments /
   Table). All baseline and tool references are in the bibliography.
 - **B2. Did you discuss the license / terms of use?** **Partly — author to
