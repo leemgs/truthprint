@@ -3,7 +3,8 @@
 
 arXiv entries: title and full ordered author list against the arXiv abstract
 page's citation metadata, and the venue arXiv reports is printed next to the
-bib venue. DOI entries: title, volume, issue, pages and author count against
+bib venue; an entry still cited as a preprint fails if Crossref holds a
+published version with the same title. DOI entries: title, volume, issue, pages and author count against
 Crossref. ACL Anthology entries: title, booktitle, pages and year against
 the Anthology BibTeX record. Needs network access; exits non-zero on any mismatch.
 """
@@ -16,6 +17,7 @@ import sys
 import time
 import unicodedata
 import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -70,7 +72,21 @@ def check_arxiv(arxiv_id: str, body: str) -> list[str]:
     venue = field(body, "booktitle") or field(body, "journal") or "arXiv preprint"
     stated = re.sub("<[^>]+>", "", comment.group(1))[:70] if comment else "-"
     print(f"    venue: bib '{venue} {field(body, 'year')}' | arXiv says '{html.unescape(stated)}'")
+    if venue == "arXiv preprint":
+        problems += published_version(title)
     return problems
+
+
+def published_version(title: str) -> list[str]:
+    """Flag a preprint citation when Crossref holds a journal/proceedings
+    record with the same title (arXiv comments are often never updated)."""
+    query = urllib.parse.quote(title)
+    found = json.loads(fetch(f"https://api.crossref.org/works?query.title={query}&rows=5"))
+    return [f"published version exists: {item['container-title'][0]} "
+            f"{item['issued']['date-parts'][0][0]}, doi {item['DOI']}"
+            for item in found["message"]["items"]
+            if item.get("title") and norm(item["title"][0]) == norm(title)
+            and item.get("container-title") and item.get("type") != "posted-content"]
 
 
 def check_anthology(url: str, body: str) -> list[str]:
