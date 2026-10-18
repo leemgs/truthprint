@@ -14,7 +14,16 @@ rank methods.
 | Method | clean | EN round-trip | EN->KO | EN->HI | EN->ZH | EN->AR | EN->DE |
 |---|---|---|---|---|---|---|---|
 | KGW | 0.960 | 0.380 | 0.040 | 0.040 | 0.020 | 0.000 | 0.080 |
-| Truthprint (meaning-digest, core6) | --- | 0.941 | 0.958 | 0.980 | 0.922 | 0.502 | 0.948 |
+| Truthprint (meaning-digest, core6): document attribution | --- | 0.980 | 0.940 | 1.000 | 0.940 | 0.900 | 1.000 |
+| Truthprint (meaning-digest, core6): sentence TPR | --- | 0.723 | 0.682 | 0.886 | 0.666 | 0.618 | 0.850 |
+
+_Source text differs between rows:_ KGW is scored per generated document on gpt2
+free-form generations (Kaggle run; its raw detector scores are not committed,
+only `handoff/samples/05_baseline_outputs.jsonl` documents the schema), while the
+Truthprint rows are the committed core6 results in `provenance_realmt.json` on the
+template-fact corpus. Both are translated by the same NLLB system. The Truthprint
+rows were refreshed from that file; an earlier version of this table carried
+pre-B2 figures (0.502-0.980) that the committed run does not reproduce.
 
 _Implementations:_ **KGW**: self-contained KGW (Kirchenbauer 2023), gamma=0.25
 delta=2.0, LLM=gpt2, NLLB=distilled-600M; **Truthprint (meaning-digest, core6)**:
@@ -23,11 +32,13 @@ not a 1% threshold.
 
 Finding: the token watermark detects on clean text (0.960) but its signal is
 destroyed by real translation (0.000-0.380 across the six conditions), while the
-meaning-digest scheme survives (0.502-0.980). This confirms with a real token
+meaning-digest scheme attributes translated documents at 0.900-1.000
+(sentence-level TPR 0.618-0.886). This confirms with a real token
 watermark and real MT what the paper's surface-carrier pilot showed as 0/192,
 and what He et al. (2024) reported for cross-lingual token-watermark removal.
 
 Caveats: a single token baseline (KGW; SynthID/SIR via MarkLLM are an optional
 block and not included here), a small gpt2 generator, a closed-domain source,
-and one MT system; Arabic is weakest for the meaning-digest scheme too (0.502),
+and one MT system; Arabic is weakest for the meaning-digest scheme too (sentence
+TPR 0.618, document attribution 0.900),
 consistent with the extractor's Arabic entity variability reported in Stage-2.

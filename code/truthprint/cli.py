@@ -36,7 +36,7 @@ def _demo_core(seed: int = 7) -> bool:
     print(f"[P2] invariant tamper -> attributed={rt.attributed} (expect False)")
 
     fp = 0
-    trials = 5000
+    trials = 20000
     for _ in range(trials):
         rinv = {"events": [{"predicate": "SAY", "agent": f"x{rng.randint(0,9)}",
                             "polarity": rng.choice(["positive", "negative"])}]}

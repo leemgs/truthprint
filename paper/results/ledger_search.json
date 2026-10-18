@@ -1,0 +1,515 @@
+{
+  "tag_bits": 32,
+  "ledger_docs": 50,
+  "ledger_sentences": 800,
+  "contracts": {
+    "core6": {
+      "fields": [
+        "polarity",
+        "quantity",
+        "time_dir",
+        "attribution",
+        "predicate",
+        "agent"
+      ],
+      "conditions": {
+        "ar": {
+          "lang": "ar",
+          "sentence_matches_wrong_entry": [
+            0.77125,
+            0.7408885258151564,
+            0.7990189338420534
+          ],
+          "doc_true_attribution_id_free": [
+            0.9,
+            0.7863976855921404,
+            0.956524235076295
+          ],
+          "doc_false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "n_docs": 50,
+          "n_pairs": 2450,
+          "n_sent": 800
+        },
+        "de": {
+          "lang": "de",
+          "sentence_matches_wrong_entry": [
+            0.84375,
+            0.8169532116198146,
+            0.8672613109872485
+          ],
+          "doc_true_attribution_id_free": [
+            1.0,
+            0.9286524008355442,
+            1.0
+          ],
+          "doc_false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "n_docs": 50,
+          "n_pairs": 2450,
+          "n_sent": 800
+        },
+        "hi": {
+          "lang": "hi",
+          "sentence_matches_wrong_entry": [
+            0.87125,
+            0.846254933364713,
+            0.8926967510509151
+          ],
+          "doc_true_attribution_id_free": [
+            1.0,
+            0.9286524008355442,
+            1.0
+          ],
+          "doc_false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "n_docs": 50,
+          "n_pairs": 2450,
+          "n_sent": 800
+        },
+        "ko": {
+          "lang": "ko",
+          "sentence_matches_wrong_entry": [
+            0.69,
+            0.6571072349482057,
+            0.7210767920927892
+          ],
+          "doc_true_attribution_id_free": [
+            0.96,
+            0.8653990930933617,
+            0.9889611156753388
+          ],
+          "doc_false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "n_docs": 50,
+          "n_pairs": 2450,
+          "n_sent": 800
+        },
+        "rt": {
+          "lang": "en",
+          "sentence_matches_wrong_entry": [
+            0.73625,
+            0.7046371387200726,
+            0.7656048422716907
+          ],
+          "doc_true_attribution_id_free": [
+            1.0,
+            0.9286524008355442,
+            1.0
+          ],
+          "doc_false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "n_docs": 50,
+          "n_pairs": 2450,
+          "n_sent": 800
+        },
+        "zh": {
+          "lang": "zh",
+          "sentence_matches_wrong_entry": [
+            0.65625,
+            0.6226611808442009,
+            0.6883454203408279
+          ],
+          "doc_true_attribution_id_free": [
+            0.94,
+            0.8378290830794766,
+            0.9793850296558022
+          ],
+          "doc_false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "n_docs": 50,
+          "n_pairs": 2450,
+          "n_sent": 800
+        }
+      }
+    },
+    "robust7": {
+      "fields": [
+        "agent",
+        "predicate",
+        "polarity",
+        "quantity",
+        "time_dir",
+        "modality",
+        "attribution"
+      ],
+      "conditions": {
+        "ar": {
+          "lang": "ar",
+          "sentence_matches_wrong_entry": [
+            0.595,
+            0.5606078894868579,
+            0.6284841240336395
+          ],
+          "doc_true_attribution_id_free": [
+            0.9,
+            0.7863976855921404,
+            0.956524235076295
+          ],
+          "doc_false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "n_docs": 50,
+          "n_pairs": 2450,
+          "n_sent": 800
+        },
+        "de": {
+          "lang": "de",
+          "sentence_matches_wrong_entry": [
+            0.62625,
+            0.5921965210453678,
+            0.6590968127121354
+          ],
+          "doc_true_attribution_id_free": [
+            0.94,
+            0.8378290830794766,
+            0.9793850296558022
+          ],
+          "doc_false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "n_docs": 50,
+          "n_pairs": 2450,
+          "n_sent": 800
+        },
+        "hi": {
+          "lang": "hi",
+          "sentence_matches_wrong_entry": [
+            0.6525,
+            0.6188453739260819,
+            0.6846970688305062
+          ],
+          "doc_true_attribution_id_free": [
+            1.0,
+            0.9286524008355442,
+            1.0
+          ],
+          "doc_false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "n_docs": 50,
+          "n_pairs": 2450,
+          "n_sent": 800
+        },
+        "ko": {
+          "lang": "ko",
+          "sentence_matches_wrong_entry": [
+            0.52125,
+            0.4866148217423956,
+            0.5556820760187683
+          ],
+          "doc_true_attribution_id_free": [
+            0.7,
+            0.5624964953220304,
+            0.8089644650121872
+          ],
+          "doc_false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "n_docs": 50,
+          "n_pairs": 2450,
+          "n_sent": 800
+        },
+        "rt": {
+          "lang": "en",
+          "sentence_matches_wrong_entry": [
+            0.5475,
+            0.5128638731964303,
+            0.5816821335638183
+          ],
+          "doc_true_attribution_id_free": [
+            0.8,
+            0.6696289406437537,
+            0.8875624998575729
+          ],
+          "doc_false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "n_docs": 50,
+          "n_pairs": 2450,
+          "n_sent": 800
+        },
+        "zh": {
+          "lang": "zh",
+          "sentence_matches_wrong_entry": [
+            0.485,
+            0.45052245821254616,
+            0.519620908073691
+          ],
+          "doc_true_attribution_id_free": [
+            0.74,
+            0.6044684273177043,
+            0.8412847250833568
+          ],
+          "doc_false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "n_docs": 50,
+          "n_pairs": 2450,
+          "n_sent": 800
+        }
+      }
+    },
+    "full9": {
+      "fields": [
+        "agent",
+        "patient",
+        "predicate",
+        "polarity",
+        "quantity",
+        "time_dir",
+        "modality",
+        "attribution",
+        "causation"
+      ],
+      "conditions": {
+        "ar": {
+          "lang": "ar",
+          "sentence_matches_wrong_entry": [
+            0.04625,
+            0.03373840371409824,
+            0.06309842644457848
+          ],
+          "doc_true_attribution_id_free": [
+            0.02,
+            0.003539259270481737,
+            0.10495443592739594
+          ],
+          "doc_false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "n_docs": 50,
+          "n_pairs": 2450,
+          "n_sent": 800
+        },
+        "de": {
+          "lang": "de",
+          "sentence_matches_wrong_entry": [
+            0.09625,
+            0.07769977677612841,
+            0.11865916576175753
+          ],
+          "doc_true_attribution_id_free": [
+            0.94,
+            0.8378290830794766,
+            0.9793850296558022
+          ],
+          "doc_false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "n_docs": 50,
+          "n_pairs": 2450,
+          "n_sent": 800
+        },
+        "hi": {
+          "lang": "hi",
+          "sentence_matches_wrong_entry": [
+            0.07625,
+            0.059816840632098564,
+            0.09673325695410369
+          ],
+          "doc_true_attribution_id_free": [
+            0.94,
+            0.8378290830794766,
+            0.9793850296558022
+          ],
+          "doc_false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "n_docs": 50,
+          "n_pairs": 2450,
+          "n_sent": 800
+        },
+        "ko": {
+          "lang": "ko",
+          "sentence_matches_wrong_entry": [
+            0.0875,
+            0.06983842196220677,
+            0.10910415090931752
+          ],
+          "doc_true_attribution_id_free": [
+            0.3,
+            0.19103553498781273,
+            0.43750350467796956
+          ],
+          "doc_false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "n_docs": 50,
+          "n_pairs": 2450,
+          "n_sent": 800
+        },
+        "rt": {
+          "lang": "en",
+          "sentence_matches_wrong_entry": [
+            0.075,
+            0.05871000743651793,
+            0.09535203734020407
+          ],
+          "doc_true_attribution_id_free": [
+            0.24,
+            0.1429739139521664,
+            0.37412683761335064
+          ],
+          "doc_false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "n_docs": 50,
+          "n_pairs": 2450,
+          "n_sent": 800
+        },
+        "zh": {
+          "lang": "zh",
+          "sentence_matches_wrong_entry": [
+            0.055,
+            0.04122362792317211,
+            0.07302957190186622
+          ],
+          "doc_true_attribution_id_free": [
+            0.08,
+            0.03154951408206917,
+            0.18838246921607382
+          ],
+          "doc_false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "n_docs": 50,
+          "n_pairs": 2450,
+          "n_sent": 800
+        }
+      }
+    }
+  }
+}
