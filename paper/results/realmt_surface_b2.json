@@ -1,0 +1,72 @@
+{
+  "folder": "paper/results/realmt_b2",
+  "mode": "objective",
+  "n_transformations": 4800,
+  "conditions": {
+    "ar": {
+      "parse_coverage": [
+        0.0,
+        0.0,
+        0.004778876207908237
+      ],
+      "parseable": 0,
+      "n": 800
+    },
+    "de": {
+      "parse_coverage": [
+        0.0,
+        0.0,
+        0.004778876207908237
+      ],
+      "parseable": 0,
+      "n": 800
+    },
+    "hi": {
+      "parse_coverage": [
+        0.0,
+        0.0,
+        0.004778876207908237
+      ],
+      "parseable": 0,
+      "n": 800
+    },
+    "ko": {
+      "parse_coverage": [
+        0.0,
+        0.0,
+        0.004778876207908237
+      ],
+      "parseable": 0,
+      "n": 800
+    },
+    "rt": {
+      "parse_coverage": [
+        0.00125,
+        0.00022068978275413932,
+        0.007046239234634327
+      ],
+      "parseable": 1,
+      "n": 800
+    },
+    "zh": {
+      "parse_coverage": [
+        0.0,
+        0.0,
+        0.004778876207908237
+      ],
+      "parseable": 0,
+      "n": 800
+    }
+  },
+  "overall_parse_coverage": [
+    0.00020833333333333335,
+    3.677689560609306e-05,
+    0.0011792205249101372
+  ],
+  "note": "Carrier recovery requires the frontend to read the transformed text. 0% parse coverage means the closed-domain Stage-1 frontend cannot recover any carrier from real MT output, so payload recovery is impossible without a wide-coverage semantic frontend.",
+  "source_control": {
+    "parseable": 800,
+    "n": 800,
+    "note": "Stage-1 parser applied to the 800 English source sentences (watermarked_text) before translation"
+  }
+}

@@ -125,7 +125,7 @@ formal analysis and reproducibility notes.
 | Semantic fidelity by construction | Watermarking never alters locked meaning; carriers with no valid realization become erasures |
 | Unforgeability | Forging attribution reduces to forging the MAC (HMAC-SHA256) |
 | Bounded false positives | Cryptographic FP rate ≤ 2⁻ᵗᵃᵘ (0 observed over 20k trials at τ=32); the meaning-digest's operative floor is the *contract-collision* probability (contract entropy), not 2⁻ᵗᵃᵘ |
-| Translation-robust authentication | Meaning-digest re-verifies a keyed tag over the invariant contract; survives real NLLB MT where surface carriers score 0/192 |
+| Translation-robust authentication | Meaning-digest re-verifies a keyed tag over the invariant contract; survives real NLLB MT where the surface parser reads 1/4,800 outputs |
 | Tamper localization | A single-field meaning change breaks verification and names the field; similarity / robust-hash / store-and-retrieve baselines cannot |
 | Honest adaptive-attack accounting | Closed-lexicon removal is reported and localized; an extended-coverage frontend defends it (ValidRemoval 1.000→0.000) without weakening tamper rejection |
 | Erasure resilience | Full payload recovery to 42% carrier erasure, collapsing at the rate-½ cliff (≈50%) |
@@ -136,9 +136,10 @@ formal analysis and reproducibility notes.
 Two provenance mechanisms share the IR; we report them **honestly and separately**.
 Every number below regenerates from a fixed seed (see `paper/results/`).
 
-- **Surface realization-carrier — honest negative under real MT.** Against real
-  NLLB‑200 translation the Stage‑1 surface parser recovers **0/192** outputs:
-  translation rewrites the carriers. (`paper/results/realmt_pilot.md`)
+- **Surface realization-carrier — negative result under real MT.** The Stage‑1
+  surface parser reads all 800 English source sentences but only **1/4,800** of
+  their NLLB‑200 translations (an earlier 192-output pilot: 0/192): translation
+  rewrites the carriers. (`paper/results/realmt_surface_b2.md`)
 - **Meaning-digest — survives real translation.** A keyed tag over the typed
   invariant contract, re‑verified after transformation by a Stage‑2 multilingual
   extractor. On **4,800 real NLLB translations across six languages** (the full

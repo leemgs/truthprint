@@ -11,3 +11,6 @@ __pycache__/
 *.bbl
 *.blg
 *.synctex.gz
+
+# anonymized supplementary artifact (built by tools/make_anonymous_artifact.py)
+dist/
