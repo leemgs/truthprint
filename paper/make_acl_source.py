@@ -20,7 +20,7 @@ PREAMBLE = r"""\documentclass[11pt]{article}
 \newtheorem{proposition}{Proposition}
 \newtheorem{definition}{Definition}
 \newtheorem{assumption}{Assumption}
-\title{Truthprint: Designing an Invariant-Constrained Semantic Intermediate Representation for Provenance Watermarking}
+\title{Truthprint: Typed Invariant Contracts for Translation-Robust Authenticated Semantic Provenance}
 \author{Anonymous ACL Submission}
 
 """

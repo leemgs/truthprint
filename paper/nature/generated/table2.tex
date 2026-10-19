@@ -1,0 +1,10 @@
+\begin{tabular}{@{}p{38mm}c>{\centering\arraybackslash}p{15mm}>{\centering\arraybackslash}p{29mm}>{\centering\arraybackslash}p{29mm}>{\centering\arraybackslash}p{15mm}@{}}
+\toprule
+Extractor & $n$ & Benign accepted & Seen attack removes & Held-out attack removes & Tamper rejected \\
+\midrule
+Closed lexicon & 40 & 1.000 & 1.000 (0.969--1.000) & 1.000 (0.912--1.000) & 1.000 \\
+Extended lexicon & 40 & 1.000 & 0.000 (0.000--0.031) & 1.000 (0.912--1.000) & 1.000 \\
+Neural extractor (GPT-4o-mini) & 40 & 1.000 & 0.050 (0.023--0.105) & 0.050 (0.014--0.165) & 1.000 \\
+Neural extractor (Llama-3.3-70B) & 10 & 1.000 & 0.200 (0.095--0.373) & 0.100 (0.018--0.404) & 1.000 \\
+\bottomrule
+\end{tabular}

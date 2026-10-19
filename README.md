@@ -4,6 +4,10 @@
 
 # Truthprint
 
+> **Submission venue: Nature** (decided 2026-10-19). The Nature manuscript is
+> [`paper/nature/`](paper/nature/) (`make nature`); the ACL and IEEE builds in
+> `paper/` are kept as archives and must not be submitted in parallel.
+
 **Invariant-constrained semantic provenance watermarking for LLM-generated text.**
 
 Truthprint carries a watermark in the *meaning* of text rather than in its
