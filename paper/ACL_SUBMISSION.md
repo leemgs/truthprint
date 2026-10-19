@@ -1,9 +1,9 @@
 # ACL/ARR submission source
 
-> **Venue decision (2026-10-19): Nature.** Do **not** submit this ACL build.
-> Nature requires that the main results are not submitted elsewhere, and ARR
-> forbids concurrent submission. The Nature manuscript is `paper/nature/`; this
-> build is kept only as an archive.
+> **Venue decision (2026-10-19, final): ACL 2027.** This anonymous ACL build is the
+> submission. `paper/nature/` holds a Nature-format version kept only as an archive;
+> do not submit it anywhere while the ACL submission is under review (ARR forbids
+> concurrent submission).
 
 `acl_main.tex` is the **anonymous ACL/ARR long-paper submission** (anonymous,
 line- and page-numbered `[review]` mode). The manuscript body has a single

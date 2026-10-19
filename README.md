@@ -4,9 +4,10 @@
 
 # Truthprint
 
-> **Submission venue: Nature** (decided 2026-10-19). The Nature manuscript is
-> [`paper/nature/`](paper/nature/) (`make nature`); the ACL and IEEE builds in
-> `paper/` are kept as archives and must not be submitted in parallel.
+> **Submission venue: ACL 2027** (final decision, 2026-10-19). The submission is the
+> anonymous ACL build [`paper/acl_main.pdf`](paper/) (`make acl`). The Nature-format
+> manuscript in [`paper/nature/`](paper/nature/) is an archive and must **not** be
+> submitted in parallel (ARR forbids concurrent submission).
 
 **Invariant-constrained semantic provenance watermarking for LLM-generated text.**
 

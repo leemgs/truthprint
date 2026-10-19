@@ -1,4 +1,8 @@
-# Nature submission package
+# Nature submission package (archived)
+
+> **Not the active submission.** The venue was finally set to ACL 2027 on
+> 2026-10-19. Keep this build only as an archive and do not submit it while the
+> ACL submission is under review (concurrent submission is forbidden).
 
 Manuscript: `nature_main.tex` → `nature_main.pdf` (single PDF with figures,
 legends with their figures, line numbers, double spacing, as Nature asks for
