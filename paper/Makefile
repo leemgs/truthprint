@@ -1,4 +1,4 @@
-.PHONY: all acl nature check audit refs clean
+.PHONY: all acl nature check audit refs artifact clean
 
 all:
 	pdflatex -interaction=nonstopmode -halt-on-error main.tex
@@ -28,6 +28,9 @@ audit: check
 
 refs:
 	python3 tools/check_refs.py
+
+artifact: acl
+	python3 ../tools/make_anonymous_artifact.py --self-test
 
 clean:
 	rm -f *.aux *.log *.out *.toc *.bbl *.blg *.synctex.gz

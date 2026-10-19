@@ -34,6 +34,25 @@ entries (EU AI Act on EUR-Lex, the SynthID-Text GitHub repository, the Google
 SynthID page) have no arXiv id, DOI or Anthology record and are checked by
 opening their URLs.
 
+## Anonymized supplementary artifact
+
+```bash
+cd paper && make artifact   # -> dist/truthprint-anonymous-artifact.zip
+```
+
+`tools/make_anonymous_artifact.py` never touches the repository. It copies an
+allow-list of tracked files (code, `paper/results/`, the ACL source and style
+files, the three GPU notebooks behind paper results, schemas and samples) into
+a fresh tree, drops `code/CITATION.cff`, Korean working notes and the generic
+hand-off notebooks, replaces repository URLs with `<ANONYMIZED-REPOSITORY-URL>`,
+renders the B2 notebook's instructions in English, and writes an anonymous
+README and paper Makefile. It refuses to write the zip if any identifying string
+(owner handle, name, e-mail, affiliation, local paths, assistant names) or
+Korean prose survives, and `--self-test` builds the paper and runs the test
+suite inside the artifact. Upload the zip as OpenReview supplementary material.
+`paper/nature/`, the IEEE source, `docs/`, `patent/`, `ppt/` and the review notes
+are never included.
+
 ## Submission compliance (desk-reject checklist)
 
 - **Format:** official `acl.sty`, `\documentclass[11pt]{article}`, `[review]`
