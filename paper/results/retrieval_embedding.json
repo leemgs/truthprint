@@ -1,0 +1,83 @@
+{
+  "config": {
+    "n_items": 960,
+    "n_docs": 60,
+    "sents_per_doc": 16,
+    "benign_tpr_target": 0.95,
+    "seed": 20270301,
+    "backend": "embedding:minishlab/potion-multilingual-128M",
+    "contract": "core6",
+    "thr_retrieval": 0.817987456100606,
+    "theta_nli": 0.6470588235294118
+  },
+  "attribution_rank1": {
+    "benign": [
+      0.640625,
+      0.6097678177446464,
+      0.6703612403370145
+    ],
+    "tamper": [
+      0.41770833333333335,
+      0.3868993503023507,
+      0.4491732749683811
+    ]
+  },
+  "methods": {
+    "typed": {
+      "benign_tpr": [
+        1.0,
+        0.9960144287347942,
+        1.0
+      ],
+      "tamper_rejection": [
+        1.0,
+        0.9960144287347942,
+        1.0
+      ],
+      "localizes_field": true,
+      "needs_model": false
+    },
+    "retrieval": {
+      "benign_tpr": [
+        0.946875,
+        0.9308230936449885,
+        0.9593648020367339
+      ],
+      "tamper_rejection": [
+        0.13854166666666667,
+        0.11812490978691338,
+        0.16183965944022508
+      ],
+      "localizes_field": false,
+      "needs_model": false
+    },
+    "retrieval_nli_proxy": {
+      "benign_tpr": [
+        0.9072916666666667,
+        0.8872869890517657,
+        0.9240497643551188
+      ],
+      "tamper_rejection": [
+        0.15104166666666666,
+        0.1297830394318142,
+        0.17508189051369408
+      ],
+      "localizes_field": false,
+      "needs_model": true
+    },
+    "retrieval_nli_oracle": {
+      "benign_tpr": [
+        0.946875,
+        0.9308230936449885,
+        0.9593648020367339
+      ],
+      "tamper_rejection": [
+        1.0,
+        0.9960144287347942,
+        1.0
+      ],
+      "localizes_field": false,
+      "needs_model": true
+    }
+  }
+}

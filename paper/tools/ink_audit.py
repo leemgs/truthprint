@@ -30,7 +30,7 @@ def read_pgm(path: str) -> tuple[int, int, bytes]:
     return width, height, parts[4][-width * height:]
 
 
-def audit(pdf: str) -> int:
+def audit(pdf: str, left_mm: float = 24) -> int:
     failures = []
     with tempfile.TemporaryDirectory() as tmp:
         subprocess.run(["pdftoppm", "-r", str(DPI), "-gray", pdf, f"{tmp}/p"], check=True)
@@ -49,7 +49,7 @@ def audit(pdf: str) -> int:
                 if any(103 * MM <= x <= 107 * MM for x in xs):
                     gutter_rows += 1
             name = Path(page).stem.split("-")[-1]
-            if xmin < 24 * MM or xmax > 186 * MM or last_text_row > BOTTOM_LIMIT_MM * MM:
+            if xmin < left_mm * MM or xmax > 186 * MM or last_text_row > BOTTOM_LIMIT_MM * MM:
                 failures.append(name)
             note = f"  (gutter-crossing ink: {gutter_rows} rows)" if gutter_rows else ""
             print(f"page {name}: x {xmin / MM:.1f}-{xmax / MM:.1f} mm, "
@@ -59,4 +59,8 @@ def audit(pdf: str) -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(audit(sys.argv[1] if len(sys.argv) > 1 else "acl_main.pdf"))
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    # --line-numbers: the manuscript prints line numbers in the left margin
+    # (Nature), so allow ink from 15 mm instead of the 25 mm text edge.
+    left = 15 if "--line-numbers" in sys.argv else 24
+    raise SystemExit(audit(args[0] if args else "acl_main.pdf", left))

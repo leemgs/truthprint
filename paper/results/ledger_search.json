@@ -511,5 +511,25 @@
         }
       }
     }
+  },
+  "independence_model": {
+    "core6": {
+      "collision_floor": 0.005150187734668335,
+      "sentence_hits_doc": 0.07929530619143177,
+      "false_attribution_per_pair": 1.1233257641733752e-05,
+      "ledger_docs_per_expected_false_attribution": 89021.3713504446
+    },
+    "robust7": {
+      "collision_floor": 0.0017271589486858574,
+      "sentence_hits_doc": 0.02727944294603446,
+      "false_attribution_per_pair": 3.243929010591644e-09,
+      "ledger_docs_per_expected_false_attribution": 308268151.594851
+    },
+    "full9": {
+      "collision_floor": 0.00017521902377972467,
+      "sentence_hits_doc": 0.002799823186538042,
+      "false_attribution_per_pair": 4.763945922266346e-17,
+      "ledger_docs_per_expected_false_attribution": 2.0991002339595644e+16
+    }
   }
 }

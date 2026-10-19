@@ -1,0 +1,11 @@
+\begin{tabular}{@{}lccccccc@{}}
+\toprule
+Method & RT & KO & HI & ZH & AR & DE & Tamper rejected \\
+\midrule
+Typed meaning digest (this work) & 1.000 & 1.000 & 1.000 & 1.000 & 1.000 & 1.000 & 1.000 \\
+Embedding region (SemStamp-style) & 0.423 & 0.027 & 0.077 & 0.040 & 0.010 & 0.020 & -- \\
+Embedding SimHash & 0.973 & 0.587 & 0.560 & 0.767 & 0.050 & 0.500 & 0.000 \\
+Character MinHash & 0.753 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+Exact hash (SHA-256) & 0.020 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 1.000 \\
+\bottomrule
+\end{tabular}

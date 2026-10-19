@@ -1,0 +1,12 @@
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+ & \multicolumn{2}{c}{Bag-of-words} & \multicolumn{2}{c}{Multilingual encoder} \\
+\cmidrule(lr){2-3}\cmidrule(l){4-5}
+Method & Benign accepted & Tamper rejected & Benign accepted & Tamper rejected \\
+\midrule
+Typed meaning digest & 1.000 & 1.000 & 1.000 & 1.000 \\
+Retrieval & 0.941 & 0.047 & 0.947 & 0.139 \\
+Retrieval + entailment proxy & 0.918 & 0.061 & 0.907 & 0.151 \\
+Retrieval + oracle entailment & 0.941 & 1.000 & 0.947 & 1.000 \\
+\bottomrule
+\end{tabular}

@@ -99,6 +99,27 @@ def evaluate(folder: str) -> dict:
     return out
 
 
+def independence_model(fp_path: Path, doc_len: int = 16) -> dict:
+    """Predicted id-free false attribution per document pair if sentence
+    records were independent draws at the measured contract-collision floor p
+    (``semantic_fp.json``): a sentence matches some sentence of a 16-sentence
+    document with q = 1-(1-p)^16, and a pair is falsely attributed when at
+    least half of the sentences match, P[Bin(16, q) >= 8]."""
+    from math import comb
+    fp = json.loads(fp_path.read_text(encoding="utf-8"))["contracts"]
+    out = {}
+    for cname, c in fp.items():
+        p = c["collision_prob"]
+        q = 1 - (1 - p) ** doc_len
+        need = -(-doc_len // 2)
+        pair = sum(comb(doc_len, k) * q ** k * (1 - q) ** (doc_len - k)
+                   for k in range(need, doc_len + 1))
+        out[cname] = {"collision_floor": p, "sentence_hits_doc": q,
+                      "false_attribution_per_pair": pair,
+                      "ledger_docs_per_expected_false_attribution": (1 / pair) if pair else None}
+    return out
+
+
 def _ci(d) -> str:
     point, lo, hi = d
     return f"{point:.3f} [{lo:.3f},{hi:.3f}]"
@@ -122,6 +143,16 @@ def render(res: dict) -> str:
                          f"{_ci(d['doc_false_attribution_per_pair'])} (n={d['n_pairs']}) | "
                          f"{_ci(d['docs_with_any_false_attribution'])} |")
         lines.append("")
+    if "independence_model" in res:
+        lines += ["## Independence model (prediction, not a measurement)", "",
+                  "| Contract | Collision floor p | Sentence hits a 16-sentence doc | "
+                  "False attribution per pair | Ledger docs per expected false attribution |",
+                  "|---|---|---|---|---|"]
+        for cname, m in res["independence_model"].items():
+            lines.append(f"| {cname} | {m['collision_floor']:.3g} | {m['sentence_hits_doc']:.3g} | "
+                         f"{m['false_attribution_per_pair']:.2g} | "
+                         f"{m['ledger_docs_per_expected_false_attribution']:.2g} |")
+        lines.append("")
     lines += ["> Sentence-level search is not usable on its own: with a per-pair contract-"
               "collision floor near 1/192, a sentence collides with some wrong entry of a "
               "large ledger. The document rule is what keeps id-free attribution specific; "
@@ -142,6 +173,9 @@ def main() -> int:
         for f in r["facts"]:
             docs_of[f["sent_id"]] = r["doc_id"]
     res = evaluate(args.folder)
+    fp_path = Path(args.folder).parent / "semantic_fp.json"
+    if fp_path.exists():
+        res["independence_model"] = independence_model(fp_path)
     md = render(res)
     if args.out:
         Path(args.out + ".json").write_text(json.dumps(res, indent=2), encoding="utf-8")

@@ -35,4 +35,12 @@ The verifier receives only a translated document and searches the whole ledger (
 | rt (en) | 0.075 [0.059,0.095] | 0.240 [0.143,0.374] | 0.000 [0.000,0.002] (n=2450) | 0.000 [0.000,0.071] |
 | zh (zh) | 0.055 [0.041,0.073] | 0.080 [0.032,0.188] | 0.000 [0.000,0.002] (n=2450) | 0.000 [0.000,0.071] |
 
+## Independence model (prediction, not a measurement)
+
+| Contract | Collision floor p | Sentence hits a 16-sentence doc | False attribution per pair | Ledger docs per expected false attribution |
+|---|---|---|---|---|
+| core6 | 0.00515 | 0.0793 | 1.1e-05 | 8.9e+04 |
+| robust7 | 0.00173 | 0.0273 | 3.2e-09 | 3.1e+08 |
+| full9 | 0.000175 | 0.0028 | 4.8e-17 | 2.1e+16 |
+
 > Sentence-level search is not usable on its own: with a per-pair contract-collision floor near 1/192, a sentence collides with some wrong entry of a large ledger. The document rule is what keeps id-free attribution specific; the per-pair rate is the quantity that scales with ledger size.

@@ -59,7 +59,7 @@ from truthprint.multilingual import extract_invariants  # noqa: E402
 from truthprint.stats import wilson_ci  # noqa: E402
 
 CONDITIONS = ["rt", "ko", "hi", "zh", "ar"]  # 'clean' is the registration ref
-_LANG = {"rt": "en", "ko": "ko", "hi": "hi", "zh": "zh", "ar": "ar"}
+_LANG = {"rt": "en", "ko": "ko", "hi": "hi", "zh": "zh", "ar": "ar", "de": "de"}
 _KEY = b"acl-2027-semantic-baselines-key"
 _NONCE = b"\x00" * 8
 
@@ -78,6 +78,25 @@ def _load(jsonl: Path):
     # keep only base items that have a clean reference and at least one condition
     items = {k: v for k, v in items.items() if "clean" in v}
     return items
+
+
+def _load_b2(folder: Path):
+    """Load a committed real-MT run (e.g. paper/results/realmt_b2) in the same
+    ``items[base_id] = {'clean': rec, cond: rec}`` shape: 'clean' is the English
+    source sentence, each condition is its NLLB translation, gold = source facts."""
+    src = _read_jsonl(folder / "01_source_items.jsonl")
+    items = defaultdict(dict)
+    for doc in src:
+        for f in doc["facts"]:
+            sid = f["sent_id"]
+            gold = {k: v for k, v in f.items() if k != "sent_id"}
+            items[sid]["clean"] = {"text": doc["watermarked_text"][sid], "gold": gold}
+    for t in _read_jsonl(folder / "02_transformations.jsonl"):
+        cond = t["transform_id"].rsplit("-", 1)[1]
+        if t["sent_id"] in items and cond in _LANG:
+            items[t["sent_id"]][cond] = {"text": t["output_text"],
+                                         "gold": items[t["sent_id"]]["clean"]["gold"]}
+    return dict(items)
 
 
 # --------------------------- per-method verifiers --------------------------- #
@@ -336,6 +355,9 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--jsonl", default=str(Path(__file__).resolve().parent.parent.parent
                                            / "paper/results/neural_parser_llmmt_outputs.jsonl"))
+    ap.add_argument("--b2", default=None,
+                    help="committed real-MT run folder (e.g. paper/results/realmt_b2); "
+                         "overrides --jsonl and adds the German condition")
     ap.add_argument("--out", default=None)
     ap.add_argument("--docs", type=int, default=300)
     ap.add_argument("--doc-len", type=int, default=16)
@@ -361,7 +383,12 @@ def main() -> int:
               file=sys.stderr)
         return 2
 
-    items = _load(Path(args.jsonl))
+    global CONDITIONS
+    if args.b2:
+        items = _load_b2(Path(args.b2))
+        CONDITIONS = ["rt", "ko", "hi", "zh", "ar", "de"]
+    else:
+        items = _load(Path(args.jsonl))
     cfg = {
         "docs": args.docs, "doc_len": args.doc_len, "fpr": args.fpr,
         "semstamp_bits": args.semstamp_bits, "simhash_bits": args.simhash_bits,
@@ -369,6 +396,7 @@ def main() -> int:
                         else int(0.30 * args.simhash_bits)),
         "minhash_thr": args.minhash_thr, "seed": args.seed, "model": model,
         "n_items": len(items), "tamper_n": args.tamper_n,
+        "source": args.b2 or args.jsonl,
     }
     feat = build_features(items, model)
     res = evaluate(items, feat, cfg)
