@@ -1,0 +1,17 @@
+Shared Stage-1 testbed: 500 docs x 32 sentences x 8 tokens; threshold @ 1% FPR.
+
+=== TABLE V: clean-text detection ===
+Method                TPR@1%FPR   ROC-AUC   Quality
+KGW proxy                 1.000     1.000        --
+DEW                       1.000     1.000        --
+SemStamp                  1.000     1.000        --
+SWAN                      1.000     1.000        --
+Truthprint                1.000     1.000      0.85
+
+=== TABLE VI: diagnostic transformed-channel simulation (TPR @ 1% FPR) ===
+Method                  EN->KO    EN->HI    KO->EN
+KGW proxy                0.020     0.018     0.030
+DEW                      0.000     0.000     0.000
+SemStamp                 0.996     0.988     0.994
+SWAN                     1.000     1.000     1.000
+Truthprint               1.000     0.972     0.998
