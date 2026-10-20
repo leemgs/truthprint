@@ -533,8 +533,8 @@ $1\%$ FPR on null (un-watermarked) documents; TPR is measured at that
 threshold after the channel; ROC-AUC is computed from watermarked-vs-null
 score populations. Truthprint is run through its real linguistic codec on
 actual sentences ($\mu=12$, $\tau=20$, $[64,32]$ GF(2) code); its quality is
-unigram BLEU between the watermarked and an unconstrained realization of the
-same facts. Baseline fluency/quality is not measured because it requires each
+unigram token overlap (a BLEU-1-style precision without brevity penalty)
+between the watermarked and an independently realized copy of the same facts. Baseline fluency/quality is not measured because it requires each
 method's neural generator, absent from the Stage-1 abstraction.
 
 \textbf{Reading the tables.} The clean setting saturates because the proxy
@@ -554,17 +554,18 @@ harness does not evaluate the security properties of the other systems.
   transformed setting appears in Table~\ref{tab:translation}.}
 \label{tab:clean}
 \footnotesize
+\setlength{\tabcolsep}{3pt}
 \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}ccc@{}}
 \toprule
-Method & TPR@1\%FPR & ROC-AUC & BLEU-1 \\
+Method & TPR@1\%FPR & ROC-AUC & Overlap \\
 \midrule
 KGW proxy        & 1.000 & 1.000 & --- \\
-SemStamp         & 1.000 & 1.000 & --- \\
-SWAN             & 1.000 & 1.000 & --- \\
+SemStamp proxy   & 1.000 & 1.000 & --- \\
+SWAN proxy       & 1.000 & 1.000 & --- \\
 Truthprint       & 1.000 & 1.000 & $0.84$ \\
 \bottomrule
 \multicolumn{4}{@{}p{\linewidth}@{}}{$^\dagger$Controlled
-  simulation only, not a neural or translation benchmark. BLEU-1 measured only for
+  simulation only, not a neural or translation benchmark. Overlap (unigram token overlap with an independently realized copy) measured only for
   Truthprint (real sentences); baseline fluency needs each method's neural
   generator. Truthprint additionally applies a 20-bit tag check; this is not
   a measured end-to-end FPR.}
@@ -576,7 +577,9 @@ Truthprint       & 1.000 & 1.000 & $0.84$ \\
 \caption{Diagnostic transformed-channel simulation (TPR at $1\%$ FPR)
   $(\tau_{\mathrm{tok}},\epsilon_{\mathrm{inv}})$ per language pair$^\dagger$:
   EN$\to$KO $(0.92,0.30)$, EN$\to$HI $(0.95,0.35)$, KO$\to$EN $(0.90,0.28)$.
-  Outputs illustrate the stipulated channel equations, not real translation.}
+  Outputs illustrate the stipulated channel equations, not real translation;
+  rows are method proxies in the simulator, not implementations. Real-MT
+  comparisons are Tables~\ref{tab:matched} and~\ref{tab:baselines}.}
 \label{tab:translation}
 \footnotesize
 \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}ccc@{}}
@@ -584,9 +587,9 @@ Truthprint       & 1.000 & 1.000 & $0.84$ \\
 Method & EN$\rightarrow$KO & EN$\rightarrow$HI & KO$\rightarrow$EN \\
 \midrule
 KGW proxy        & 0.020 & 0.018 & 0.030 \\
-DEW              & 0.000 & 0.000 & 0.000 \\
-SemStamp         & 0.996 & 0.988 & 0.994 \\
-SWAN             & 1.000 & 1.000 & 1.000 \\
+DEW proxy        & 0.000 & 0.000 & 0.000 \\
+SemStamp proxy   & 0.996 & 0.988 & 0.994 \\
+SWAN proxy       & 1.000 & 1.000 & 1.000 \\
 Truthprint       & 1.000 & 0.972 & 0.998 \\
 \bottomrule
 \multicolumn{4}{@{}p{\linewidth}@{}}{$^\dagger$Controlled
