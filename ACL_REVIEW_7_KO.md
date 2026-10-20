@@ -114,3 +114,20 @@ cd paper && make acl && make audit && make refs
   - 저자 식별 문자열이나 한국어 문서가 하나라도 남으면 zip을 만들지 않습니다.
   - `--self-test`는 아티팩트만으로 논문 빌드(경고 0건)와 테스트(98건 통과)를 확인합니다.
 - **판단이 필요한 잔여 사항:** "Truthprint"라는 시스템 이름으로 검색하면 공개 저장소를 찾을 수 있습니다. 논문 본문에는 링크가 없으므로 ARR 규정 위반은 아니지만, 우려된다면 심사 기간 동안 저장소를 비공개로 돌리는 방법이 있습니다.
+
+---
+
+## 7. 재점검 (2026-10-20)
+
+- **제목은 변경이 필요 없습니다.**
+  - 현재 제목 *"Truthprint: Typed Invariant Contracts for Translation-Robust Authenticated Semantic Provenance"*은 실제 기여(타입 계약)와 살아남는 메커니즘(인증된 의미 출처)을 정확히 가리킵니다.
+  - "Translation-Robust"는 실제 기계번역 측정으로 뒷받침되고, 닫힌 도메인이라는 범위는 초록과 Limitations에서 한정합니다.
+  - 제목을 또 바꾸면 OpenReview에 이미 입력한 내용과 어긋날 위험만 커집니다.
+- **이번에 고친 정밀도 문제(근거 대조로 발견)**
+  - 변조 거부 "≥0.99 per condition"은 full9에서 틀린 값이었습니다(최솟값 0.989). "core6 ≥0.996, 모든 계약 ≥0.989"로 고쳤습니다.
+  - 초록의 "세 성질 모두 MAC으로 환원"은 부정확했습니다. 필드 충실도는 MAC과 무관하므로 "셋 중 둘이 MAC으로 환원"으로 고쳤습니다(초록 199단어).
+  - 신경망 방어 문장의 "lexicons' upper CIs"를 "CIs disjoint from the lexicons'"로 고쳤습니다.
+  - Contributions의 "measured crossover"는 실측이 아니라 해석적 모형이라 "analytic crossover"로 고쳤습니다.
+  - Contributions에 남아 있던 "committed"를 "released"로 고쳤습니다.
+  - 이 수정으로 생긴 1.7pt 폭 초과 1건도 고쳤습니다.
+- **남은 거절 사유와 P0는 §2·§4와 같습니다.** 열린 도메인 실데이터, 같은 원문에서의 기준선 비교, KGW 원점수 커밋은 모두 저자가 실험해야 하는 항목입니다.
