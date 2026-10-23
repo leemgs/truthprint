@@ -25,6 +25,8 @@ python3 make_acl_source.py --check  # fail if acl_main.tex is stale
 Pre-submission audits (run after `make acl`):
 
 ```bash
+make check      # sync, anonymity, LaTeX warnings, and format gates (tools/check_submission.py:
+                #   A4, fonts embedded, empty PDF metadata, abstract <= 200 words, body <= 8 pages, no "??")
 make audit      # make check + page-by-page ink audit (tools/ink_audit.py)
 make refs       # every references.bib entry vs arXiv / Crossref / ACL Anthology (network)
 ```

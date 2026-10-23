@@ -22,6 +22,7 @@ check:
 	python3 make_acl_source.py --check
 	@! grep -E 'Geunsik|leemgs@gmail|Independent researcher|IEEEtran|IEEEkeywords|markboth' acl_main.tex
 	@! grep -E 'Float too large|Overfull|undefined|Citation .* undefined' acl_main.log
+	python3 tools/check_submission.py acl_main.pdf
 
 audit: check
 	python3 tools/ink_audit.py acl_main.pdf
