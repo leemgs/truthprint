@@ -164,7 +164,10 @@ Every number below regenerates from a fixed seed (see `paper/results/`).
   specific (a core6 sentence matches a wrong ledger entry 66–87% of the time), but
   the ≥50% document rule attributes translated documents at 0.90–1.00 with 0/2,450
   false document attributions per condition against a 50‑document ledger
-  (`paper/results/ledger_search.md`).
+  (`paper/results/ledger_search.md`). Growing the ledger to 100,050 documents
+  (distractors from the corpus generator) gives core6 1–6 / 3–61 false
+  attributions per condition at 10,050 / 100,050 documents and full9 none
+  (`paper/results/ledger_scale.md`).
   (`paper/results/baselines_real.md`, `paper/results/semantic_baselines.md`)
 - **Paraphrase & adaptive attack (RQ4/RQ7).** Benign meaning‑preserving paraphrase
   authenticates (TPR **1.000**); a schema‑aware adaptive attacker that swaps

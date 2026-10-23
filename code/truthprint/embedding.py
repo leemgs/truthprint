@@ -61,6 +61,16 @@ def get_model(model_name: str = DEFAULT_MODEL):
     Raises :class:`EmbeddingUnavailable` (never a bare ImportError) so callers
     can uniformly skip when the optional backend or its weights are absent.
     """
+    if model_name.startswith("st:"):
+        # Optional contextual encoder via sentence-transformers, e.g.
+        # "st:sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2".
+        try:
+            from sentence_transformers import SentenceTransformer  # type: ignore
+            return SentenceTransformer(model_name[3:], device="cpu")
+        except Exception as e:  # pragma: no cover - environment dependent
+            raise EmbeddingUnavailable(
+                f"could not load sentence-transformers model {model_name[3:]!r}: {e}"
+            ) from e
     try:
         from model2vec import StaticModel  # type: ignore
     except Exception as e:  # pragma: no cover - environment dependent
