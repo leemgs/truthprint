@@ -123,9 +123,12 @@ cd code
 python3 scripts/eval_multilingual.py ../paper/results/realmt_b2          # Stage-2 field recovery
 python3 scripts/eval_provenance.py   ../paper/results/realmt_b2          # authentication by contract
 python3 scripts/eval_ledger_search.py ../paper/results/realmt_b2         # verification without an identifier
+python3 scripts/eval_ledger_scale.py ../paper/results/realmt_b2 --validate   # ledgers up to 100,050 documents
 python3 scripts/eval_handoff.py      ../paper/results/realmt_b2 --objective   # surface-carrier parse coverage
 pip install model2vec   # optional embedding backend for the baselines below
 python3 scripts/eval_semantic_baselines.py --b2 ../paper/results/realmt_b2   # matched-FPR comparison (Table 1)
+pip install sentence-transformers   # optional paraphrase-tuned encoder (Table 1, rows marked *)
+python3 scripts/eval_semantic_baselines.py --b2 ../paper/results/realmt_b2 --model st:sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
 python3 scripts/eval_retrieval.py --real-embedding                       # retrieval / NLI baselines
 ```
 

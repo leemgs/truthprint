@@ -1,0 +1,939 @@
+{
+  "query_docs": 50,
+  "distractor_seed": 20261023,
+  "method": "contract-record index (equivalent to tag verification up to 2^-32)",
+  "contracts": {
+    "core6": {
+      "50": {
+        "ar": {
+          "own_attribution": [
+            0.9,
+            0.7863976855921404,
+            0.956524235076295
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 2450,
+          "false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ]
+        },
+        "de": {
+          "own_attribution": [
+            1.0,
+            0.9286524008355442,
+            1.0
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 2450,
+          "false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ]
+        },
+        "hi": {
+          "own_attribution": [
+            1.0,
+            0.9286524008355442,
+            1.0
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 2450,
+          "false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ]
+        },
+        "ko": {
+          "own_attribution": [
+            0.96,
+            0.8653990930933617,
+            0.9889611156753388
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 2450,
+          "false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ]
+        },
+        "rt": {
+          "own_attribution": [
+            1.0,
+            0.9286524008355442,
+            1.0
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 2450,
+          "false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ]
+        },
+        "zh": {
+          "own_attribution": [
+            0.94,
+            0.8378290830794766,
+            0.9793850296558022
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 2450,
+          "false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ]
+        }
+      },
+      "1050": {
+        "ar": {
+          "own_attribution": [
+            0.9,
+            0.7863976855921404,
+            0.956524235076295
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 52450,
+          "false_attribution_per_pair": [
+            0.0,
+            6.776263578034403e-21,
+            7.323503323417629e-05
+          ]
+        },
+        "de": {
+          "own_attribution": [
+            1.0,
+            0.9286524008355442,
+            1.0
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 52450,
+          "false_attribution_per_pair": [
+            0.0,
+            6.776263578034403e-21,
+            7.323503323417629e-05
+          ]
+        },
+        "hi": {
+          "own_attribution": [
+            1.0,
+            0.9286524008355442,
+            1.0
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 52450,
+          "false_attribution_per_pair": [
+            0.0,
+            6.776263578034403e-21,
+            7.323503323417629e-05
+          ]
+        },
+        "ko": {
+          "own_attribution": [
+            0.96,
+            0.8653990930933617,
+            0.9889611156753388
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 52450,
+          "false_attribution_per_pair": [
+            0.0,
+            6.776263578034403e-21,
+            7.323503323417629e-05
+          ]
+        },
+        "rt": {
+          "own_attribution": [
+            1.0,
+            0.9286524008355442,
+            1.0
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 52450,
+          "false_attribution_per_pair": [
+            0.0,
+            6.776263578034403e-21,
+            7.323503323417629e-05
+          ]
+        },
+        "zh": {
+          "own_attribution": [
+            0.94,
+            0.8378290830794766,
+            0.9793850296558022
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 52450,
+          "false_attribution_per_pair": [
+            0.0,
+            6.776263578034403e-21,
+            7.323503323417629e-05
+          ]
+        }
+      },
+      "10050": {
+        "ar": {
+          "own_attribution": [
+            0.9,
+            0.7863976855921404,
+            0.956524235076295
+          ],
+          "docs_with_any_false_attribution": [
+            0.06,
+            0.02061497034419782,
+            0.16217091692052338
+          ],
+          "false_attributions": 3,
+          "pairs": 502450,
+          "false_attribution_per_pair": [
+            5.970743357548015e-06,
+            2.030593588094692e-06,
+            1.7556198292973285e-05
+          ]
+        },
+        "de": {
+          "own_attribution": [
+            1.0,
+            0.9286524008355442,
+            1.0
+          ],
+          "docs_with_any_false_attribution": [
+            0.06,
+            0.02061497034419782,
+            0.16217091692052338
+          ],
+          "false_attributions": 6,
+          "pairs": 502450,
+          "false_attribution_per_pair": [
+            1.194148671509603e-05,
+            5.472901597614524e-06,
+            2.6055285701149188e-05
+          ]
+        },
+        "hi": {
+          "own_attribution": [
+            1.0,
+            0.9286524008355442,
+            1.0
+          ],
+          "docs_with_any_false_attribution": [
+            0.04,
+            0.0110388843246612,
+            0.13460090690663823
+          ],
+          "false_attributions": 3,
+          "pairs": 502450,
+          "false_attribution_per_pair": [
+            5.970743357548015e-06,
+            2.030593588094692e-06,
+            1.7556198292973285e-05
+          ]
+        },
+        "ko": {
+          "own_attribution": [
+            0.96,
+            0.8653990930933617,
+            0.9889611156753388
+          ],
+          "docs_with_any_false_attribution": [
+            0.02,
+            0.003539259270481737,
+            0.10495443592739594
+          ],
+          "false_attributions": 1,
+          "pairs": 502450,
+          "false_attribution_per_pair": [
+            1.990247785849338e-06,
+            3.513276908844953e-07,
+            1.1274533911719661e-05
+          ]
+        },
+        "rt": {
+          "own_attribution": [
+            1.0,
+            0.9286524008355442,
+            1.0
+          ],
+          "docs_with_any_false_attribution": [
+            0.02,
+            0.003539259270481737,
+            0.10495443592739594
+          ],
+          "false_attributions": 1,
+          "pairs": 502450,
+          "false_attribution_per_pair": [
+            1.990247785849338e-06,
+            3.513276908844953e-07,
+            1.1274533911719661e-05
+          ]
+        },
+        "zh": {
+          "own_attribution": [
+            0.94,
+            0.8378290830794766,
+            0.9793850296558022
+          ],
+          "docs_with_any_false_attribution": [
+            0.04,
+            0.0110388843246612,
+            0.13460090690663823
+          ],
+          "false_attributions": 4,
+          "pairs": 502450,
+          "false_attribution_per_pair": [
+            7.960991143397353e-06,
+            3.095878201516282e-06,
+            2.0471378818783604e-05
+          ]
+        }
+      },
+      "100050": {
+        "ar": {
+          "own_attribution": [
+            0.9,
+            0.7863976855921404,
+            0.956524235076295
+          ],
+          "docs_with_any_false_attribution": [
+            0.16,
+            0.08337420676765053,
+            0.2851421606641795
+          ],
+          "false_attributions": 9,
+          "pairs": 5002450,
+          "false_attribution_per_pair": [
+            1.7991184319683356e-06,
+            9.465513004263129e-07,
+            3.4195976965882495e-06
+          ]
+        },
+        "de": {
+          "own_attribution": [
+            1.0,
+            0.9286524008355442,
+            1.0
+          ],
+          "docs_with_any_false_attribution": [
+            0.3,
+            0.19103553498781273,
+            0.43750350467796956
+          ],
+          "false_attributions": 61,
+          "pairs": 5002450,
+          "false_attribution_per_pair": [
+            1.2194024927785385e-05,
+            9.493937452190448e-06,
+            1.5662008571651127e-05
+          ]
+        },
+        "hi": {
+          "own_attribution": [
+            1.0,
+            0.9286524008355442,
+            1.0
+          ],
+          "docs_with_any_false_attribution": [
+            0.24,
+            0.1429739139521664,
+            0.37412683761335064
+          ],
+          "false_attributions": 26,
+          "pairs": 5002450,
+          "false_attribution_per_pair": [
+            5.197453247908525e-06,
+            3.5470514545090416e-06,
+            7.615761955122047e-06
+          ]
+        },
+        "ko": {
+          "own_attribution": [
+            0.96,
+            0.8653990930933617,
+            0.9889611156753388
+          ],
+          "docs_with_any_false_attribution": [
+            0.06,
+            0.02061497034419782,
+            0.16217091692052338
+          ],
+          "false_attributions": 3,
+          "pairs": 5002450,
+          "false_attribution_per_pair": [
+            5.997061439894451e-07,
+            2.0395422854780697e-07,
+            1.7633720346020995e-06
+          ]
+        },
+        "rt": {
+          "own_attribution": [
+            1.0,
+            0.9286524008355442,
+            1.0
+          ],
+          "docs_with_any_false_attribution": [
+            0.1,
+            0.04347576492370503,
+            0.2136023144078597
+          ],
+          "false_attributions": 11,
+          "pairs": 5002450,
+          "false_attribution_per_pair": [
+            2.198922527961299e-06,
+            1.2278861557538017e-06,
+            3.937870419215645e-06
+          ]
+        },
+        "zh": {
+          "own_attribution": [
+            0.94,
+            0.8378290830794766,
+            0.9793850296558022
+          ],
+          "docs_with_any_false_attribution": [
+            0.08,
+            0.03154951408206917,
+            0.18838246921607382
+          ],
+          "false_attributions": 29,
+          "pairs": 5002450,
+          "false_attribution_per_pair": [
+            5.79715939189797e-06,
+            4.0365566886417e-06,
+            8.325668087921715e-06
+          ]
+        }
+      }
+    },
+    "full9": {
+      "50": {
+        "ar": {
+          "own_attribution": [
+            0.02,
+            0.003539259270481737,
+            0.10495443592739594
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 2450,
+          "false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ]
+        },
+        "de": {
+          "own_attribution": [
+            0.94,
+            0.8378290830794766,
+            0.9793850296558022
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 2450,
+          "false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ]
+        },
+        "hi": {
+          "own_attribution": [
+            0.94,
+            0.8378290830794766,
+            0.9793850296558022
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 2450,
+          "false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ]
+        },
+        "ko": {
+          "own_attribution": [
+            0.3,
+            0.19103553498781273,
+            0.43750350467796956
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 2450,
+          "false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ]
+        },
+        "rt": {
+          "own_attribution": [
+            0.24,
+            0.1429739139521664,
+            0.37412683761335064
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 2450,
+          "false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ]
+        },
+        "zh": {
+          "own_attribution": [
+            0.08,
+            0.03154951408206917,
+            0.18838246921607382
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 2450,
+          "false_attribution_per_pair": [
+            0.0,
+            0.0,
+            0.0015654877818962463
+          ]
+        }
+      },
+      "1050": {
+        "ar": {
+          "own_attribution": [
+            0.02,
+            0.003539259270481737,
+            0.10495443592739594
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 52450,
+          "false_attribution_per_pair": [
+            0.0,
+            6.776263578034403e-21,
+            7.323503323417629e-05
+          ]
+        },
+        "de": {
+          "own_attribution": [
+            0.94,
+            0.8378290830794766,
+            0.9793850296558022
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 52450,
+          "false_attribution_per_pair": [
+            0.0,
+            6.776263578034403e-21,
+            7.323503323417629e-05
+          ]
+        },
+        "hi": {
+          "own_attribution": [
+            0.94,
+            0.8378290830794766,
+            0.9793850296558022
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 52450,
+          "false_attribution_per_pair": [
+            0.0,
+            6.776263578034403e-21,
+            7.323503323417629e-05
+          ]
+        },
+        "ko": {
+          "own_attribution": [
+            0.3,
+            0.19103553498781273,
+            0.43750350467796956
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 52450,
+          "false_attribution_per_pair": [
+            0.0,
+            6.776263578034403e-21,
+            7.323503323417629e-05
+          ]
+        },
+        "rt": {
+          "own_attribution": [
+            0.24,
+            0.1429739139521664,
+            0.37412683761335064
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 52450,
+          "false_attribution_per_pair": [
+            0.0,
+            6.776263578034403e-21,
+            7.323503323417629e-05
+          ]
+        },
+        "zh": {
+          "own_attribution": [
+            0.08,
+            0.03154951408206917,
+            0.18838246921607382
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 52450,
+          "false_attribution_per_pair": [
+            0.0,
+            6.776263578034403e-21,
+            7.323503323417629e-05
+          ]
+        }
+      },
+      "10050": {
+        "ar": {
+          "own_attribution": [
+            0.02,
+            0.003539259270481737,
+            0.10495443592739594
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 502450,
+          "false_attribution_per_pair": [
+            0.0,
+            8.470329472543003e-22,
+            7.645396463372246e-06
+          ]
+        },
+        "de": {
+          "own_attribution": [
+            0.94,
+            0.8378290830794766,
+            0.9793850296558022
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 502450,
+          "false_attribution_per_pair": [
+            0.0,
+            8.470329472543003e-22,
+            7.645396463372246e-06
+          ]
+        },
+        "hi": {
+          "own_attribution": [
+            0.94,
+            0.8378290830794766,
+            0.9793850296558022
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 502450,
+          "false_attribution_per_pair": [
+            0.0,
+            8.470329472543003e-22,
+            7.645396463372246e-06
+          ]
+        },
+        "ko": {
+          "own_attribution": [
+            0.3,
+            0.19103553498781273,
+            0.43750350467796956
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 502450,
+          "false_attribution_per_pair": [
+            0.0,
+            8.470329472543003e-22,
+            7.645396463372246e-06
+          ]
+        },
+        "rt": {
+          "own_attribution": [
+            0.24,
+            0.1429739139521664,
+            0.37412683761335064
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 502450,
+          "false_attribution_per_pair": [
+            0.0,
+            8.470329472543003e-22,
+            7.645396463372246e-06
+          ]
+        },
+        "zh": {
+          "own_attribution": [
+            0.08,
+            0.03154951408206917,
+            0.18838246921607382
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 502450,
+          "false_attribution_per_pair": [
+            0.0,
+            8.470329472543003e-22,
+            7.645396463372246e-06
+          ]
+        }
+      },
+      "100050": {
+        "ar": {
+          "own_attribution": [
+            0.02,
+            0.003539259270481737,
+            0.10495443592739594
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 5002450,
+          "false_attribution_per_pair": [
+            0.0,
+            5.293955920339377e-23,
+            7.679148962175788e-07
+          ]
+        },
+        "de": {
+          "own_attribution": [
+            0.94,
+            0.8378290830794766,
+            0.9793850296558022
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 5002450,
+          "false_attribution_per_pair": [
+            0.0,
+            5.293955920339377e-23,
+            7.679148962175788e-07
+          ]
+        },
+        "hi": {
+          "own_attribution": [
+            0.94,
+            0.8378290830794766,
+            0.9793850296558022
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 5002450,
+          "false_attribution_per_pair": [
+            0.0,
+            5.293955920339377e-23,
+            7.679148962175788e-07
+          ]
+        },
+        "ko": {
+          "own_attribution": [
+            0.3,
+            0.19103553498781273,
+            0.43750350467796956
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 5002450,
+          "false_attribution_per_pair": [
+            0.0,
+            5.293955920339377e-23,
+            7.679148962175788e-07
+          ]
+        },
+        "rt": {
+          "own_attribution": [
+            0.24,
+            0.1429739139521664,
+            0.37412683761335064
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 5002450,
+          "false_attribution_per_pair": [
+            0.0,
+            5.293955920339377e-23,
+            7.679148962175788e-07
+          ]
+        },
+        "zh": {
+          "own_attribution": [
+            0.08,
+            0.03154951408206917,
+            0.18838246921607382
+          ],
+          "docs_with_any_false_attribution": [
+            0.0,
+            0.0,
+            0.0713475991644559
+          ],
+          "false_attributions": 0,
+          "pairs": 5002450,
+          "false_attribution_per_pair": [
+            0.0,
+            5.293955920339377e-23,
+            7.679148962175788e-07
+          ]
+        }
+      }
+    }
+  }
+}
