@@ -129,6 +129,7 @@ pip install model2vec   # optional embedding backend for the baselines below
 python3 scripts/eval_semantic_baselines.py --b2 ../paper/results/realmt_b2   # matched-FPR comparison (Table 1)
 pip install sentence-transformers   # optional paraphrase-tuned encoder (Table 1, rows marked *)
 python3 scripts/eval_semantic_baselines.py --b2 ../paper/results/realmt_b2 --model st:sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+python3 scripts/eval_same_text.py ../paper/results/realmt_b2 --docs 30 --work ../paper/results/same_text --stage score   # same-text KGW/SynthID-Text vs Truthprint (cached generations)
 python3 scripts/eval_retrieval.py --real-embedding                       # retrieval / NLI baselines
 ```
 
