@@ -17,7 +17,10 @@ def test_baselines_truthprint_rows_match_committed_provenance_run():
 
 def test_same_text_table_matches_committed_run():
     res = json.loads((RESULTS / "same_text_nllb.json").read_text(encoding="utf-8"))
-    tex = (RESULTS.parent / "main.tex").read_text(encoding="utf-8")
+    src = RESULTS.parent / "main.tex"
+    if not src.exists():  # the anonymous artifact ships only the ACL source
+        src = RESULTS.parent / "acl_main.tex"
+    tex = src.read_text(encoding="utf-8")
     i = tex.index("\\label{tab:sametext}")
     table = tex[tex.rindex("\\begin{table*}", 0, i):]
     table = table[: table.index("\\end{table*}")]
