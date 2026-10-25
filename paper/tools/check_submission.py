@@ -40,10 +40,12 @@ def main(pdf: str) -> int:
     if unembedded:
         errors.append(f"fonts not embedded: {unembedded}")
 
-    first = page_text(pdf, 1)
-    i = next(k for k, l in enumerate(first) if l.strip() == "Abstract")
-    j = next(k for k, l in enumerate(first) if re.fullmatch(r"(1\s+)?Introduction", l.strip()))
-    words = len(" ".join(first[i + 1:j]).split())
+    # -raw keeps reading order on page 1; drop line numbers, re-join hyphenated breaks
+    raw = run("pdftotext", "-raw", "-f", "1", "-l", "1", pdf, "-").splitlines()
+    i = raw.index("Abstract")
+    j = next(k for k in range(i, len(raw)) if re.match(r"(1\s+Introduction|Keywords)", raw[k]))
+    body = [l for l in raw[i + 1:j] if not re.fullmatch(r"\s*\d+\s*", l)]
+    words = len(re.sub(r"-\n", "", "\n".join(body)).split())
     if words > MAX_ABSTRACT_WORDS:
         errors.append(f"abstract has {words} words (> {MAX_ABSTRACT_WORDS})")
 
