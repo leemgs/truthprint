@@ -240,3 +240,27 @@ cd paper && make acl && make audit && make refs
 **게이트 개선:** `check_submission.py`의 초록 단어 수 계산을 `pdftotext -raw` 기반으로 바꿨습니다. 줄번호와 하이픈 줄바꿈을 제거하고, Keywords 줄은 세지 않습니다. 결과는 198단어입니다.
 
 **남은 항목 (실험이나 저자 작업 필요, 변경 없음):** 열린 도메인 실데이터와 사람 주석, 더 큰 규모의 same-text 비교, GPT-2 KGW 원점수 커밋, 신경 방어 실험 N 확대, SemStamp·SWAN 공식 구현과의 비교.
+
+---
+
+## 12. 제출 규약 재점검 기록 (2026-10-25, main 0ad0491)
+
+이번 점검에서는 수정할 사항이 없었습니다.
+
+- **Desk reject 점검 (`make check`):** 모두 통과했습니다.
+  - `acl.sty` `[review]` 모드, A4 용지, 모든 폰트 임베드
+  - PDF 메타데이터(Author/Title)가 비어 있음
+  - 초록 198단어(200단어 이하)
+  - 본문은 8쪽에서 끝나고 Limitations는 9쪽에서 시작
+  - 깨진 참조(`??`)와 미정의 인용 없음
+  - 신원 문자열 0건. 저장소 URL·자기 인용·감사의 글 없음. 본문의 "GitHub" 언급은 SynthID 참고문헌(Google DeepMind 저장소) 하나뿐입니다.
+- **표·그림 폭:**
+  - `make audit` 결과 ACL 22쪽 전체에서 텍스트 영역(25–185 mm)을 벗어난 잉크가 0건입니다.
+  - LaTeX Overfull·Float too large 경고는 0건입니다.
+  - IEEE 빌드(15쪽)도 Overfull hbox가 0건입니다.
+  - `\resizebox`·`\scalebox`·`\tiny`로 억지로 줄인 표는 없습니다.
+- **참고문헌 (`make refs`):** 32편 모두 실제로 존재하고 불일치는 0건입니다.
+  - arXiv에서 제목과 저자 전체·순서를 확인했습니다.
+  - Crossref에서 제목, 권, 호, 쪽, 저자 수를 확인했습니다.
+  - ACL Anthology의 bib 레코드와 대조했습니다.
+- **테스트:** `pytest` 99개 모두 통과했습니다.
