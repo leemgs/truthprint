@@ -20,6 +20,7 @@ PREAMBLE = r"""\documentclass[11pt]{article}
 \newtheorem{proposition}{Proposition}
 \newtheorem{definition}{Definition}
 \newtheorem{assumption}{Assumption}
+\newtheorem{remark}{Remark}
 \title{Truthprint: Typed Invariant Contracts for Translation-Robust Authenticated Semantic Provenance}
 \author{Anonymous ACL Submission}
 
