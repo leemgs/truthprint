@@ -175,10 +175,10 @@ def evaluate(n_docs=60, sents_per_doc=16, benign_tpr=0.95, seed=20270301,
         rank1_tamper += 1 if asid == sid_true else 0
 
     meta = {
-        "typed": {"localizes_field": True, "needs_model": False},
-        "retrieval": {"localizes_field": False, "needs_model": False},
-        "retrieval_nli_proxy": {"localizes_field": False, "needs_model": True},
-        "retrieval_nli_oracle": {"localizes_field": False, "needs_model": True},
+        "typed": {"needs_model": False},
+        "retrieval": {"needs_model": False},
+        "retrieval_nli_proxy": {"needs_model": True},
+        "retrieval_nli_oracle": {"needs_model": True},
     }
     methods = {}
     for m, a in acc.items():
@@ -216,7 +216,7 @@ def _fmt(res):
          f"unrealizable NLI ceiling that knows the gold contract.",
          "",
          "| Method | Benign accept (TPR) | Single-field tamper rejection | "
-         "Localizes field | Needs semantic model |", "|---|---|---|---|---|"]
+         "Needs semantic model |", "|---|---|---|---|"]
     order = ["typed", "retrieval", "retrieval_nli_proxy", "retrieval_nli_oracle"]
     label = {"typed": "Meaning-digest (typed)", "retrieval": "Retrieval (NN)",
              "retrieval_nli_proxy": "Retrieval + NLI (proxy)",
@@ -225,7 +225,6 @@ def _fmt(res):
         d = res["methods"][m]
         L.append(f"| {label[m]} | {_ci(d['benign_tpr'])} | "
                  f"{_ci(d['tamper_rejection'])} | "
-                 f"{'yes' if d['localizes_field'] else 'no'} | "
                  f"{'yes' if d['needs_model'] else 'no'} |")
     ar = res["attribution_rank1"]
     L += ["",
@@ -237,9 +236,8 @@ def _fmt(res):
           "> Storing the source and retrieving it survives paraphrase but cannot "
           "reject a single-field meaning change: retrieval alone and a cheap NLI "
           "proxy leave the tamper accepted, and only a *perfect* (unrealizable) NLI "
-          "matches the typed contract's tamper rejection --- yet even that neither "
-          "localizes the changed field nor yields a keyed, unforgeable tag, both of "
-          "which the typed meaning-digest provides deterministically with no model. "
+          "matches the typed contract's tamper rejection, and it needs a semantic model "
+          "where the typed meaning-digest decides deterministically with none. "
           "Closed-domain, bag-of-words backend by default; a real encoder behaves "
           "the same on tamper (a one-field edit is embedding-close to its source).",
           ""]

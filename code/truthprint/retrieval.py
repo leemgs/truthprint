@@ -28,9 +28,9 @@ The decisive contrast (measured in ``scripts/eval_retrieval.py``): retrieval
 attributes a transformed sentence back to its source across paraphrase, but a
 single-field meaning-altering edit stays nearest to that same source, so
 retrieval *cannot reject the tamper* and a cheap NLI proxy barely helps; only a
-perfect (oracle) NLI matches the typed contract's tamper rejection --- and even
-then it neither *localizes which field changed* nor gives a *keyed, unforgeable*
-tag, which the typed meaning-digest does deterministically with no model.
+perfect (oracle) NLI matches the typed contract's tamper rejection --- and it
+needs a semantic model, where the typed meaning-digest decides deterministically
+with none.
 """
 from __future__ import annotations
 
@@ -118,6 +118,5 @@ def contract_preserved(gold_source: dict, gold_candidate: dict,
                        fields: list[str]) -> bool:
     """Oracle NLI ceiling: True iff the candidate truly preserves the source's
     typed contract (ground-truth invariants). This is what a *perfect* NLI model
-    would return; it is unrealizable at deploy time and, unlike the typed digest,
-    does not localize the changed field or yield a keyed tag."""
+    would return; it is unrealizable at deploy time."""
     return all(gold_source.get(k) == gold_candidate.get(k) for k in fields)
