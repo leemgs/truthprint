@@ -309,7 +309,7 @@ cd paper && make acl && make audit && make refs
    - "establishing … is the general defense"는 "suggesting"으로 낮췄습니다.
 4. **검증 불가 수치 삭제:** Sec. 10.1의 "earlier 192-output pilot gave 0/192"를 지웠습니다. 입력 데이터가 커밋되지 않아 재현할 수 없는 수치입니다.
 
-**분량 맞춤:** 결론, 충돌 하한 문장, 기준선 문단, 신경 프런트엔드 문단(model2vec 절), 탐지 문장을 줄여 본문 8쪽을 유지했습니다. 초록은 197단어입니다.
+**분량 맞춤:** 결론, 충돌 하한 문장, 기준선 문단, 신경 프런트엔드 문단(model2vec 절), Sec. 10.1의 carrier-survival 주석 문장을 줄여 본문 8쪽을 유지했습니다. 초록은 197단어입니다.
 
 **남은 실험 항목:**
 - 실제 편집문을 번역한 뒤 변조 거부 측정(계약 밖 필드 포함)
