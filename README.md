@@ -126,7 +126,7 @@ formal analysis and reproducibility notes.
 | Unforgeability | Forging attribution reduces to forging the MAC (HMAC-SHA256) |
 | Bounded false positives | Cryptographic FP rate ≤ 2⁻ᵗᵃᵘ (0 observed over 20k trials at τ=32); the meaning-digest's operative floor is the *contract-collision* probability (contract entropy), not 2⁻ᵗᵃᵘ |
 | Translation-robust authentication | Meaning-digest re-verifies a keyed tag over the invariant contract; survives real NLLB MT where the surface parser reads 1/4,800 outputs |
-| Tamper localization | A single-field meaning change breaks verification and names the field; similarity / robust-hash / store-and-retrieve baselines cannot |
+| Tamper rejection | A single-field change to a contract field breaks verification; similarity / robust-hash / store-and-retrieve baselines do not reject it (naming *which* field changed would need per-field tags or a stored record; not evaluated) |
 | Honest adaptive-attack accounting | Closed-lexicon removal is reported and localized; an extended-coverage frontend defends it (ValidRemoval 1.000→0.000) without weakening tamper rejection |
 | Erasure resilience | Full payload recovery to 42% carrier erasure, collapsing at the rate-½ cliff (≈50%) |
 | No global carrier rule | Keyed map is bound to (key, invariant digest, nonce) |
@@ -190,8 +190,8 @@ Every number below regenerates from a fixed seed (see `paper/results/`).
 - **“Why not just store & retrieve?”** Under the *same* ledger, retrieval and a
   cheap NLI proxy reject **≤ 0.06** of single‑field tampers at matched benign
   acceptance; only a *perfect (unrealizable)* NLI matches the typed contract’s
-  **1.000** tamper rejection, and even then cannot localize the field or give a
-  keyed tag. (`paper/results/retrieval.md`)
+  **1.000** tamper rejection, and it needs a semantic model where the typed
+  digest needs none. (`paper/results/retrieval.md`)
 
 > All positive results are **closed‑domain and small‑scale**. Wide‑coverage neural
 > parsing, broader official baselines (SynthID, SWAN), open‑vocabulary adaptive

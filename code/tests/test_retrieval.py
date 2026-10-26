@@ -56,10 +56,9 @@ def test_eval_retrieval_decisive_contrast_and_determinism():
     r2 = mod.evaluate(n_docs=30, sents_per_doc=12, seed=20270301)
     assert r1 == r2, "evaluation must be deterministic under a fixed seed"
     m = r1["methods"]
-    # typed contract: accepts paraphrase, rejects tamper, no model, localizes
+    # typed contract: accepts paraphrase, rejects tamper, no model
     assert m["typed"]["benign_tpr"][0] >= 0.99
     assert m["typed"]["tamper_rejection"][0] >= 0.99
-    assert m["typed"]["localizes_field"] is True
     assert m["typed"]["needs_model"] is False
     # retrieval + cheap NLI: matched benign acceptance but cannot reject the tamper
     assert m["retrieval"]["benign_tpr"][0] >= 0.85
@@ -67,7 +66,6 @@ def test_eval_retrieval_decisive_contrast_and_determinism():
     assert m["retrieval_nli_proxy"]["tamper_rejection"][0] <= 0.3
     # only the perfect (unrealizable) NLI ceiling matches typed tamper rejection
     assert m["retrieval_nli_oracle"]["tamper_rejection"][0] >= 0.99
-    assert m["retrieval_nli_oracle"]["localizes_field"] is False
     # a single-field tamper is at least as retrievable to its source as a paraphrase
     ar = r1["attribution_rank1"]
     assert ar["tamper"][0] >= ar["benign"][0]

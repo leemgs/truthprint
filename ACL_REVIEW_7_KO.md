@@ -316,3 +316,23 @@ cd paper && make acl && make audit && make refs
 - 고엔트로피 원장에서의 충돌률 측정
 - 개발/평가 분리 확인(저자)
 - 열린 도메인 데이터와 사람 주석
+
+---
+
+## 15. 4차 재점검 지적사항 반영 (2026-10-26)
+
+1. **측정하지 않은 "필드 특정(localizing)" 주장 철회**
+   - 이 성질은 `eval_retrieval.py`에 상수 `"localizes_field": True`로 써 넣었을 뿐 측정한 적이 없습니다. 게다가 계약 다이제스트에 태그가 하나뿐이라 설계상으로도 어느 필드가 바뀌었는지 알 수 없습니다.
+   - 초록, Contributions, Related Work, Sec. 10.6, Claims 표, 부록 Table `tab:retrieval`, README에서 이 주장을 지웠습니다. 대신 측정된 "변조 거부"와 "의미 모델이 필요 없음"으로 바꿨습니다.
+   - Limitations에 "태그 하나로는 *바뀌었는지*만 알 수 있고 *어느 필드*인지는 모른다. 필드를 특정하려면 필드별 태그나 기록 원문을 저장해야 하며, 이는 평가하지 않았고 노출 위험을 키운다"를 추가했습니다.
+   - `eval_retrieval.py`와 `retrieval.py`에서 해당 상수와 문구를 지웠습니다. 결과를 다시 생성했고(`retrieval*.json/md`), 수치는 그대로이며 상수 키만 빠졌습니다.
+   - 이 상수를 확인하던 테스트 단언 2개도 지웠습니다. 동작이 아니라 상수만 확인하던 단언입니다.
+2. **모델·데이터 라이선스 (부록 "Models, Data, and Licenses")**
+   - Hugging Face model card API로 확인했습니다: NLLB-200-distilled-600M CC-BY-NC-4.0, Qwen2.5-0.5B-Instruct Apache-2.0, GPT-2 MIT, paraphrase-multilingual-MiniLM-L12-v2 Apache-2.0, potion-multilingual-128M MIT, Llama-3.3-70B-Instruct Llama 3.3 Community License.
+   - GPT-4o-mini는 OpenAI API 약관을 따릅니다. 코드는 MIT입니다.
+   - NLLB의 비상업 라이선스 때문에, 측정에 쓴 파이프라인 자체는 상용 배포할 수 없다는 점을 명시했습니다.
+   - IEEE 판에도 nllb2024 `\bibitem`을 추가했습니다. 참고문헌은 33편이고 불일치는 0건입니다.
+
+**게이트:** ACL 22쪽, 본문은 8쪽에서 끝나고 초록은 197→192단어입니다. 폭 초과와 미정의 참조는 모두 0건이고, 테스트 99개가 통과했습니다.
+
+**저자가 할 일:** OpenReview의 Responsible NLP 체크리스트를 작성해야 합니다. AI 도구 사용 공개(E1)와 라이선스 항목(B2·B3, 위 부록 단락 참조)을 포함합니다.

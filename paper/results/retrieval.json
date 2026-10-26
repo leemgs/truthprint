@@ -34,7 +34,6 @@
         0.9960144287347942,
         1.0
       ],
-      "localizes_field": true,
       "needs_model": false
     },
     "retrieval": {
@@ -48,7 +47,6 @@
         0.035215161112495515,
         0.062146762846597335
       ],
-      "localizes_field": false,
       "needs_model": false
     },
     "retrieval_nli_proxy": {
@@ -62,7 +60,6 @@
         0.04794355463641754,
         0.07846879016077347
       ],
-      "localizes_field": false,
       "needs_model": true
     },
     "retrieval_nli_oracle": {
@@ -76,7 +73,6 @@
         0.9960144287347942,
         1.0
       ],
-      "localizes_field": false,
       "needs_model": true
     }
   }
