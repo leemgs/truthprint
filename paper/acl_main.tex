@@ -60,13 +60,14 @@ The delta over the closest prior work is precise. Embedding-based semantic water
                inner xsep=3pt, fill=red!6},
   op/.style={draw, rounded corners=2pt, align=center, minimum height=7.5mm,
              inner xsep=3pt, fill=black!4},
+  intext/.style={op, dashed, text=black!60},
   >={Stealth[length=2mm]}
 ]
 \node[box] (x) {Content\\spec.\ $x$};
 \node[op, right=4mm of x] (build) {Build IR\\$G$};
 \node[lock, right=4mm of build] (inv) {Invariants $I$\\(locked)};
 \node[box, right=4mm of inv] (car) {Carriers $C$\\(realization)};
-\node[op, right=4mm of car] (enc) {Keyed encode\\$+$ MAC $+$ ECC};
+\node[intext, right=4mm of car] (enc) {Keyed encode\\$+$ MAC $+$ ECC};
 \node[op, right=4mm of enc] (real) {Realize\\+ validate};
 \node[box, right=4mm of real] (y) {Text $y$};
 \draw[->] (x)--(build); \draw[->] (build)--(inv); \draw[->] (inv)--(car);
@@ -77,25 +78,23 @@ The delta over the closest prior work is precise. Embedding-based semantic water
 
 \node[op, left=4mm of att] (parse) {Parse\\$P(y')$};
 \node[op, left=4mm of parse] (canon) {Canonicalize\\invariants};
-\node[op, left=4mm of canon] (invert) {Invert keyed map\\(erasures)};
-\node[op, left=4mm of invert] (ecc) {ECC decode};
+\node[intext, left=4mm of canon] (invert) {Invert keyed map\\(erasures)};
+\node[intext, left=4mm of invert] (ecc) {ECC decode};
 \node[box, left=4mm of ecc, fill=green!8] (verify) {MAC verify\\$\Rightarrow$ attribute};
-\draw[->] (att)--(parse); \draw[->] (parse)--(canon); \draw[->] (canon)--(invert);
-\draw[->] (invert)--(ecc); \draw[->] (ecc)--(verify);
+\draw[->] (att)--(parse); \draw[->] (parse)--(canon);
+\draw[->, dashed] (canon)--(invert); \draw[->, dashed] (invert)--(ecc); \draw[->, dashed] (ecc)--(verify);
+\draw[->, thick] (canon.south) -- ++(0,-3.5mm) -| node[pos=0.25, below, font=\scriptsize, inner sep=1pt] {evaluated ledger path: keyed tag over $h_I$ re-verified (Sec.~\ref{sec:provenance})} (verify.south);
 
 \node[below=1.5mm of inv, font=\footnotesize, inner sep=1pt] {($h_I$ binds the payload)};
 \end{tikzpicture}
-\caption{Truthprint data flow. Encoding (top, left$\to$right) locks the
-invariant set $I$, maps an authenticated, error-corrected payload onto
-realization carriers $C$, and validates every candidate against the contract
-before emitting text. Detection (bottom, right$\to$left) re-parses possibly
-transformed text, canonicalizes invariants, inverts the keyed map with
-erasures, decodes, and attributes only on MAC verification. The invariant
-digest $h_I$ binds the payload, so an invariant-altering transform breaks
-attribution (Proposition~\ref{thm:fpr}). Under real MT the in-text carrier path is
-a negative result (Sec.~\ref{sec:realmt}); the mechanism that survives is the
-out-of-band ledger tag over $h_I$, re-verified after re-extraction
-(Sec.~\ref{sec:provenance}).}
+\caption{Truthprint data flow. Encoding (top) locks the invariant set $I$ and
+validates every candidate realization against the contract before emitting text;
+detection (bottom) re-parses possibly transformed text and canonicalizes the
+invariants. Dashed boxes form the in-text carrier path (keyed encoding, inversion,
+ECC), a negative result under real MT (Sec.~\ref{sec:realmt}). The evaluated
+mechanism is the solid bypass: a keyed tag over the invariant digest $h_I$,
+registered out of band and re-verified after re-extraction
+(Sec.~\ref{sec:provenance}); an invariant-altering transform breaks it.}
 \label{fig:pipeline}
 \end{figure*}
 
