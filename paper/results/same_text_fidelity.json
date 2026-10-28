@@ -1,0 +1,32 @@
+{
+  "proxy": "Stage-2 extractor reads back the source core6 record (clean English)",
+  "kgw": [
+    0.4625,
+    0.4183702791617603,
+    0.5072251832700629
+  ],
+  "synthid": [
+    0.5041666666666667,
+    0.45958318667266934,
+    0.5486839841682392
+  ],
+  "unwatermarked_first_sample": [
+    0.5895833333333333,
+    0.5450352893694135,
+    0.6327088837101202
+  ],
+  "truthprint_validated": [
+    0.8958333333333334,
+    0.8652906376528057,
+    0.9200905922335062
+  ],
+  "sentences": 480,
+  "draws_per_sentence_mean": 1.7875,
+  "draws_histogram": {
+    "1": 283,
+    "2": 90,
+    "3": 33,
+    "4": 74
+  },
+  "no_valid_realization": 50
+}

@@ -130,6 +130,7 @@ python3 scripts/eval_semantic_baselines.py --b2 ../paper/results/realmt_b2   # m
 pip install sentence-transformers   # optional paraphrase-tuned encoder (Table 1, rows marked *)
 python3 scripts/eval_semantic_baselines.py --b2 ../paper/results/realmt_b2 --model st:sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
 python3 scripts/eval_same_text.py ../paper/results/realmt_b2 --docs 30 --work ../paper/results/same_text --stage score   # same-text KGW/SynthID-Text vs Truthprint (cached generations)
+python3 scripts/eval_same_text_fidelity.py ../paper/results/realmt_b2 ../paper/results/same_text   # same-text fact fidelity and draws per sentence
 python3 scripts/eval_retrieval.py --real-embedding                       # retrieval / NLI baselines
 ```
 

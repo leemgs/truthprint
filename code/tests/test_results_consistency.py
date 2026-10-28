@@ -35,3 +35,22 @@ def test_same_text_table_matches_committed_run():
         assert t["docs_with_false_attribution"][0] == 0.0
     v = res["truthprint_valid_realization"]
     assert f"${v[0]:.3f}$ $[{v[1]:.3f},{v[2]:.3f}]$" in table
+
+
+def test_same_text_fidelity_matches_committed_run_and_paper():
+    import importlib.util
+    root = RESULTS.parent.parent / "code" / "scripts" / "eval_same_text_fidelity.py"
+    spec = importlib.util.spec_from_file_location("fid", root)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    res = mod.evaluate(RESULTS / "realmt_b2", RESULTS / "same_text")
+    committed = json.loads((RESULTS / "same_text_fidelity.json").read_text(encoding="utf-8"))
+    assert json.loads(json.dumps(res)) == committed
+    src = RESULTS.parent / "main.tex"
+    if not src.exists():  # the anonymous artifact ships only the ACL source
+        src = RESULTS.parent / "acl_main.tex"
+    tex = src.read_text(encoding="utf-8")
+    ci = lambda c: f"${c[0]:.3f}$ $[{c[1]:.3f},{c[2]:.3f}]$"  # noqa: E731
+    for key in ("unwatermarked_first_sample", "kgw", "synthid"):
+        assert ci(res[key]) in tex, key
+    assert f"${res['draws_per_sentence_mean']:.2f}$" in tex
