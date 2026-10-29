@@ -383,3 +383,21 @@ cd paper && make acl && make audit && make refs
 3. **초록 표현 완화:** "We prove two properties that reduce to the MAC"를 "We state two standard reductions to the MAC"로 바꿨습니다.
 
 **게이트 결과:** ACL 23쪽(부록이 늘어남), 본문은 8쪽에서 끝나고 초록은 191단어입니다. 폭 초과 0건, IEEE 15쪽에 경고 0건, 참고문헌 33편에 불일치 0건, 테스트 100개 통과, 아티팩트 통과입니다.
+
+---
+
+## 18. 제출 규약 재점검 기록 (2026-10-29, main 9e0f6c6)
+
+수정이 필요한 사항은 없었습니다.
+
+- **Desk reject 점검 (`make check`):** 통과했습니다.
+  - `acl.sty` `[review]` 모드, A4 용지, 모든 폰트 임베드, PDF 메타데이터 비어 있음
+  - 초록 191단어(200단어 이하)
+  - 본문은 8쪽에서 끝나고 Limitations는 9쪽에서 시작
+  - 깨진 참조(`??`)와 미정의 인용 없음
+  - 신원 문자열 0건
+- **표·그림 폭:**
+  - `make audit` 결과 ACL 23쪽 전체에서 텍스트 영역 밖 잉크가 0건입니다.
+  - IEEE 빌드(15쪽)도 Overfull hbox와 미정의 참조가 0건입니다.
+- **참고문헌 (`make refs`):** 33편 모두 실제로 존재하고 서지 정보 불일치는 0건입니다.
+- **테스트:** `pytest` 100개 모두 통과했습니다.
