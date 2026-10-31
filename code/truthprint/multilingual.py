@@ -2,7 +2,7 @@
 
 The Stage-1 frontend (:mod:`truthprint.linguistic`, :mod:`truthprint.challenge`)
 only parses the exact English template it generated, so it cannot read real
-machine-translation output (Section ``sec:realmt``: 0/192 parse coverage). This
+machine-translation output (Section ``sec:realmt``: 1/4,800 parse coverage). This
 module is a first, honest step toward the wide-coverage semantic frontend the
 paper defers to future work: a **closed-domain, lexicon-based extractor** that
 reads a sentence in English, Korean, Hindi, Chinese, Arabic, or German and

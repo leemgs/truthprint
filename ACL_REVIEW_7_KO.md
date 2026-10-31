@@ -401,3 +401,21 @@ cd paper && make acl && make audit && make refs
   - IEEE 빌드(15쪽)도 Overfull hbox와 미정의 참조가 0건입니다.
 - **참고문헌 (`make refs`):** 33편 모두 실제로 존재하고 서지 정보 불일치는 0건입니다.
 - **테스트:** `pytest` 100개 모두 통과했습니다.
+
+---
+
+## 19. 종합 점검의 직접 수정 항목 반영 (2026-10-31)
+
+종합 점검에서 남은 직접 수정 항목(P2-8)을 반영했습니다. 논문 본문(PDF)은 바뀌지 않았습니다.
+
+- **수정 내용:** 입력 데이터가 커밋되지 않은 "0/192" 파일럿 수치가 아티팩트에 남아 있던 것을 모두 걷어냈습니다. 논문에서는 6차 이전 라운드에 이미 지운 수치입니다. 커밋된 데이터 기준인 "1/4,800"(`realmt_surface_b2.md`)으로 바꿨습니다.
+  - 생성 스크립트 3개: `eval_multilingual.py`, `eval_provenance.py`, `eval_paraphrase.py`
+  - 모듈 docstring 2개: `multilingual.py`, `paraphrase.py`
+  - README
+  - 수작업 노트 `baselines_real.md`
+- **조건 설명 수정:** `stage2_multilingual.md`의 "ko/hi = direct translation; rt = round-trip English"를 실제 조건인 "ko/hi/zh/ar/de, rt = round-trip via Korean"으로 고쳤습니다.
+- **재생성 확인:** `stage2_multilingual.*`와 `provenance_realmt.*`를 스크립트로 다시 생성했습니다. JSON 수치는 바이트 단위로 같고, md의 설명 문장 한 줄씩만 바뀌었습니다.
+
+**게이트:** 테스트 100개 통과, `make check` 통과(본문 8쪽, 초록 191단어), 아티팩트 통과(식별 문자열 0건).
+
+**남은 항목:** 모두 실험이나 저자 작업이 필요합니다(§18 이후 종합 점검의 P0·P1과 저자 할 일).

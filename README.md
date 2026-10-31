@@ -138,7 +138,7 @@ Every number below regenerates from a fixed seed (see `paper/results/`).
 
 - **Surface realization-carrier — negative result under real MT.** The Stage‑1
   surface parser reads all 800 English source sentences but only **1/4,800** of
-  their NLLB‑200 translations (an earlier 192-output pilot: 0/192): translation
+  their NLLB‑200 translations: translation
   rewrites the carriers. (`paper/results/realmt_surface_b2.md`)
 - **Meaning-digest — survives real translation.** A keyed tag over the typed
   invariant contract, re‑verified after transformation by a Stage‑2 multilingual

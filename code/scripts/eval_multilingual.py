@@ -6,7 +6,7 @@ translation, runs :func:`truthprint.multilingual.extract_invariants` on the
 actual translated text, then scores each recovered field against the source gold
 invariants. Reports per-field, per-condition accuracy with Wilson 95% CIs -- a
 real measurement of how much of the *meaning layer* survives real translation
-and is machine-recoverable, unlike the Stage-1 surface parser (0/192).
+and is machine-recoverable, unlike the Stage-1 surface parser (1/4,800).
 
 Also reports cross-lingual tamper detection: because the recovered fields
 determine the invariant digest, a meaning-altering edit to any locked field is
@@ -98,9 +98,9 @@ def _fmt(res: dict) -> str:
         return f"# Stage-2 multilingual extractor\n\n**{res['error']}**\n"
     L = ["# Stage-2 multilingual invariant extractor on real MT output", "",
          "Field-level recovery of the typed invariants from **real** NLLB "
-         "translations, per condition (ko/hi = direct translation; rt = "
-         "round-trip English). Wilson 95% CIs. Contrast: the Stage-1 surface "
-         "parser recovers 0/192 (Section real-MT pilot).", ""]
+         "translations, per condition (ko/hi/zh/ar/de = direct translation; rt = "
+         "round-trip via Korean). Wilson 95% CIs. Contrast: the Stage-1 surface "
+         "parser reads 1/4,800 of the same translations (realmt_surface_b2.md).", ""]
     # per-field aggregate table
     L.append("## Aggregate field recovery (all conditions)")
     L.append("")
