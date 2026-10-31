@@ -11,7 +11,7 @@ End-to-end, on the real NLLB translations in a handoff folder:
     ~0; cryptographic bound 2^-tau).
 
 This is the translation-robust, meaning-layer counterpart to the surface-carrier
-pilot (which scored 0/192): provenance is verified as consistency with a
+channel (which reads 1/4,800 translations): provenance is verified as consistency with a
 participating keyed generator, not via a hidden surface payload.
 
 Usage: python3 scripts/eval_provenance.py /path/to/handoff_folder [--out PATH]
@@ -134,7 +134,7 @@ def _fmt(res: dict) -> str:
          f"Verifier re-extracts invariants (Stage-2) and checks a keyed "
          f"{res['tag_bits']}-bit tag over an invariant contract; the tag lives "
          "in an out-of-band ledger, not the text. Contrast: the surface-carrier "
-         "pilot scored 0/192. FPR bound per test = 2^-tau.", ""]
+         "parser reads 1/4,800 translations. FPR bound per test = 2^-tau.", ""]
     for cname, c in res["contracts"].items():
         L.append(f"## Contract `{cname}` = {c['fields']}")
         L.append("")

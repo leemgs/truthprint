@@ -34,7 +34,7 @@ Finding: the token watermark detects on clean text (0.960) but its signal is
 destroyed by real translation (0.000-0.380 across the six conditions), while the
 meaning-digest scheme attributes translated documents at 0.900-1.000
 (sentence-level TPR 0.618-0.886). This confirms with a real token
-watermark and real MT what the paper's surface-carrier pilot showed as 0/192,
+watermark and real MT what the paper's surface-carrier channel shows (1/4,800 translations read),
 and what He et al. (2024) reported for cross-lingual token-watermark removal.
 
 Caveats: a single token baseline (KGW; SynthID/SIR via MarkLLM are an optional

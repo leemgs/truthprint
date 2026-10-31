@@ -25,7 +25,7 @@ Three operator families (see :mod:`truthprint.paraphrase`):
 
 Reported per operator (Wilson 95% CIs): authentication TPR, document-level
 attribution, ValidRemoval rate, tamper rejection, mean surface distance, and the
-Stage-1 *surface-carrier* recovery rate (the paraphrase counterpart of the 0/192
+Stage-1 *surface-carrier* recovery rate (the paraphrase counterpart of the 1/4,800
 translation negative). The headline is that benign paraphrase is authenticated at
 high rates while the adaptive attacker's residual success is bounded by the
 *closed lexicon's coverage* (localized to the predicate/time fields it strips),

@@ -37,7 +37,7 @@ at high rates while the adaptive attacker's residual success is bounded by the
 *closed lexicon's coverage* --- not by the meaning-digest principle --- which is
 exactly what the wide-coverage neural frontend (:mod:`truthprint.neural_parser`)
 is meant to close. Surface carriers (the Stage-1 parser) die under any
-content-word paraphrase, the paraphrase counterpart of the ``0/192`` translation
+content-word paraphrase, the paraphrase counterpart of the 1/4,800 translation
 negative.
 """
 from __future__ import annotations

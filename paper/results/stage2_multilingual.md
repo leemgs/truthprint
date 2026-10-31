@@ -1,6 +1,6 @@
 # Stage-2 multilingual invariant extractor on real MT output
 
-Field-level recovery of the typed invariants from **real** NLLB translations, per condition (ko/hi = direct translation; rt = round-trip English). Wilson 95% CIs. Contrast: the Stage-1 surface parser recovers 0/192 (Section real-MT pilot).
+Field-level recovery of the typed invariants from **real** NLLB translations, per condition (ko/hi/zh/ar/de = direct translation; rt = round-trip via Korean). Wilson 95% CIs. Contrast: the Stage-1 surface parser reads 1/4,800 of the same translations (realmt_surface_b2.md).
 
 ## Aggregate field recovery (all conditions)
 
