@@ -21,7 +21,7 @@ PREAMBLE = r"""\documentclass[11pt]{article}
 \newtheorem{definition}{Definition}
 \newtheorem{assumption}{Assumption}
 \newtheorem{remark}{Remark}
-\title{Truthprint: Typed Invariant Contracts for Translation-Robust Authenticated Semantic Provenance}
+\title{Truthprint: Typed Invariant Contracts for Authenticated Semantic Provenance Across Machine Translation}
 \author{Anonymous ACL Submission}
 
 """
