@@ -11,7 +11,8 @@
     "model": "st:sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
     "n_items": 800,
     "tamper_n": 200,
-    "source": "../paper/results/realmt_b2"
+    "source": "../paper/results/realmt_b2",
+    "mt": "NLLB-200"
   },
   "conditions": {
     "rt": {
@@ -23,19 +24,19 @@
         ],
         "threshold": 0.0625,
         "achieved_fpr": 0.0,
-        "mean_pos": 0.7192,
+        "mean_pos": 0.7169,
         "mean_null": 0.0033
       },
       "SemStamp": {
-        "tpr_at_fpr": 0.2233,
+        "tpr_at_fpr": 0.2133,
         "ci": [
-          0.1799,
-          0.2738
+          0.1708,
+          0.2632
         ],
         "threshold": 0.8438,
         "achieved_fpr": 0.0033,
-        "mean_pos": 0.8156,
-        "mean_null": 0.727
+        "mean_pos": 0.8137,
+        "mean_null": 0.7266
       },
       "SimHash-hash": {
         "tpr_at_fpr": 0.9967,
@@ -44,20 +45,20 @@
           0.9994
         ],
         "threshold": 0.5,
-        "achieved_fpr": 0.0033,
-        "mean_pos": 0.8467,
-        "mean_null": 0.2219
+        "achieved_fpr": 0.0,
+        "mean_pos": 0.8471,
+        "mean_null": 0.2221
       },
       "MinHash-hash": {
-        "tpr_at_fpr": 0.7533,
+        "tpr_at_fpr": 0.7367,
         "ci": [
-          0.7016,
-          0.7987
+          0.6841,
+          0.7833
         ],
         "threshold": 0.0625,
         "achieved_fpr": 0.0,
-        "mean_pos": 0.1577,
-        "mean_null": 0.005
+        "mean_pos": 0.1515,
+        "mean_null": 0.0044
       },
       "exact-hash": {
         "tpr_at_fpr": 0.02,
@@ -80,30 +81,30 @@
         ],
         "threshold": 0.0625,
         "achieved_fpr": 0.0033,
-        "mean_pos": 0.6963,
+        "mean_pos": 0.6985,
         "mean_null": 0.0031
       },
       "SemStamp": {
-        "tpr_at_fpr": 0.1033,
+        "tpr_at_fpr": 0.11,
         "ci": [
-          0.0738,
-          0.1429
+          0.0794,
+          0.1505
         ],
-        "threshold": 0.8281,
-        "achieved_fpr": 0.0067,
-        "mean_pos": 0.762,
-        "mean_null": 0.7157
+        "threshold": 0.8359,
+        "achieved_fpr": 0.01,
+        "mean_pos": 0.7638,
+        "mean_null": 0.7153
       },
       "SimHash-hash": {
-        "tpr_at_fpr": 0.98,
+        "tpr_at_fpr": 0.99,
         "ci": [
-          0.9571,
-          0.9908
+          0.971,
+          0.9966
         ],
         "threshold": 0.375,
         "achieved_fpr": 0.0067,
-        "mean_pos": 0.691,
-        "mean_null": 0.1467
+        "mean_pos": 0.6998,
+        "mean_null": 0.1452
       },
       "MinHash-hash": {
         "tpr_at_fpr": 0.0,
@@ -136,9 +137,9 @@
           1.0
         ],
         "threshold": 0.0625,
-        "achieved_fpr": 0.0033,
-        "mean_pos": 0.8894,
-        "mean_null": 0.0054
+        "achieved_fpr": 0.0067,
+        "mean_pos": 0.9023,
+        "mean_null": 0.0056
       },
       "SemStamp": {
         "tpr_at_fpr": 0.09,
@@ -148,8 +149,8 @@
         ],
         "threshold": 0.8047,
         "achieved_fpr": 0.01,
-        "mean_pos": 0.7447,
-        "mean_null": 0.6747
+        "mean_pos": 0.744,
+        "mean_null": 0.6754
       },
       "SimHash-hash": {
         "tpr_at_fpr": 1.0,
@@ -159,7 +160,7 @@
         ],
         "threshold": 0.4688,
         "achieved_fpr": 0.01,
-        "mean_pos": 0.8927,
+        "mean_pos": 0.8679,
         "mean_null": 0.2215
       },
       "MinHash-hash": {
@@ -194,19 +195,19 @@
         ],
         "threshold": 0.0625,
         "achieved_fpr": 0.0,
-        "mean_pos": 0.6702,
+        "mean_pos": 0.671,
         "mean_null": 0.004
       },
       "SemStamp": {
-        "tpr_at_fpr": 0.0733,
+        "tpr_at_fpr": 0.06,
         "ci": [
-          0.0489,
-          0.1085
+          0.0383,
+          0.0928
         ],
-        "threshold": 0.8516,
-        "achieved_fpr": 0.01,
-        "mean_pos": 0.7792,
-        "mean_null": 0.7219
+        "threshold": 0.8438,
+        "achieved_fpr": 0.0067,
+        "mean_pos": 0.7778,
+        "mean_null": 0.7229
       },
       "SimHash-hash": {
         "tpr_at_fpr": 1.0,
@@ -216,8 +217,8 @@
         ],
         "threshold": 0.5,
         "achieved_fpr": 0.0,
-        "mean_pos": 0.8979,
-        "mean_null": 0.2192
+        "mean_pos": 0.8929,
+        "mean_null": 0.2202
       },
       "MinHash-hash": {
         "tpr_at_fpr": 0.0,
@@ -251,7 +252,7 @@
         ],
         "threshold": 0.0938,
         "achieved_fpr": 0.01,
-        "mean_pos": 0.6108,
+        "mean_pos": 0.6125,
         "mean_null": 0.005
       },
       "SemStamp": {
@@ -262,8 +263,8 @@
         ],
         "threshold": 0.8594,
         "achieved_fpr": 0.0067,
-        "mean_pos": 0.7706,
-        "mean_null": 0.7387
+        "mean_pos": 0.7723,
+        "mean_null": 0.7378
       },
       "SimHash-hash": {
         "tpr_at_fpr": 1.0,
@@ -273,8 +274,8 @@
         ],
         "threshold": 0.5,
         "achieved_fpr": 0.0067,
-        "mean_pos": 0.8356,
-        "mean_null": 0.2431
+        "mean_pos": 0.8383,
+        "mean_null": 0.2442
       },
       "MinHash-hash": {
         "tpr_at_fpr": 0.0,
@@ -312,15 +313,15 @@
         "mean_null": 0.004
       },
       "SemStamp": {
-        "tpr_at_fpr": 0.0567,
+        "tpr_at_fpr": 0.0533,
         "ci": [
-          0.0357,
-          0.0889
+          0.0331,
+          0.0849
         ],
         "threshold": 0.8281,
         "achieved_fpr": 0.0033,
-        "mean_pos": 0.7572,
-        "mean_null": 0.6908
+        "mean_pos": 0.755,
+        "mean_null": 0.6906
       },
       "SimHash-hash": {
         "tpr_at_fpr": 1.0,
@@ -328,10 +329,10 @@
           0.9874,
           1.0
         ],
-        "threshold": 0.4375,
-        "achieved_fpr": 0.0067,
-        "mean_pos": 0.8456,
-        "mean_null": 0.1717
+        "threshold": 0.4688,
+        "achieved_fpr": 0.01,
+        "mean_pos": 0.8329,
+        "mean_null": 0.1708
       },
       "MinHash-hash": {
         "tpr_at_fpr": 0.0,

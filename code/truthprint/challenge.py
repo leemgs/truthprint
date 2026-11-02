@@ -45,6 +45,7 @@ a Stage-1 closed-domain demonstration, not a wide-coverage multilingual parser.
 """
 from __future__ import annotations
 
+from contextlib import contextmanager
 import math
 import random
 from dataclasses import dataclass, replace
@@ -117,10 +118,35 @@ def doc_invariants(facts) -> dict:
     return {"facts": [ext_invariants(f) for f in facts]}
 
 
+_LEGACY_PLURAL = False
+
+
+@contextmanager
+def legacy_plural():
+    """Reproduce the pre-fix generator, which appended "s" ("cache misss").
+
+    The cached neural-defense LLM calls were made on that text, so their inputs
+    can only be rebuilt exactly with this switch on.
+    """
+    global _LEGACY_PLURAL
+    old, _LEGACY_PLURAL = _LEGACY_PLURAL, True
+    try:
+        yield
+    finally:
+        _LEGACY_PLURAL = old
+
+
+def plural(noun: str) -> str:
+    """English plural for the closed patient inventory ("cache miss" -> "cache misses")."""
+    if _LEGACY_PLURAL:
+        return noun + "s"
+    return noun + ("es" if noun.endswith(("s", "x", "z", "ch", "sh")) else "s")
+
+
 def _patient_phrase(f: ExtFact) -> str:
     if f.quantity == 1:
         return f"the {f.patient}"
-    return f"{f.quantity} {f.patient}s"
+    return f"{f.quantity} {plural(f.patient)}"
 
 
 # --------------------------------------------------------------- realization
@@ -163,9 +189,12 @@ def _parse_patient(pp: str):
     m = pp.split(" ", 1)
     if pp.startswith("the "):
         return 1, pp[4:].strip()
-    # "<q> <patient>s"
+    # "<q> <plural patient>"
     qty = int(m[0])
     noun = m[1].strip()
+    for p in PATIENTS:
+        if noun == plural(p):
+            return qty, p
     if noun.endswith("s"):
         noun = noun[:-1]
     return qty, noun

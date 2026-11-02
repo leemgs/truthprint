@@ -10,7 +10,9 @@
     "seed": 20270101,
     "model": "minishlab/potion-multilingual-128M",
     "n_items": 16,
-    "tamper_n": 200
+    "tamper_n": 200,
+    "source": "neural_parser_llmmt_outputs.jsonl",
+    "mt": "LLM-MT"
   },
   "conditions": {
     "rt": {

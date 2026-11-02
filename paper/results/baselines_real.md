@@ -15,7 +15,7 @@ rank methods.
 |---|---|---|---|---|---|---|---|
 | KGW | 0.960 | 0.380 | 0.040 | 0.040 | 0.020 | 0.000 | 0.080 |
 | Truthprint (meaning-digest, core6): document attribution | --- | 0.980 | 0.940 | 1.000 | 0.940 | 0.900 | 1.000 |
-| Truthprint (meaning-digest, core6): sentence TPR | --- | 0.723 | 0.682 | 0.886 | 0.666 | 0.618 | 0.850 |
+| Truthprint (meaning-digest, core6): sentence TPR | --- | 0.720 | 0.684 | 0.901 | 0.666 | 0.619 | 0.850 |
 
 _Source text differs between rows:_ KGW is scored per generated document on gpt2
 free-form generations (Kaggle run; its raw detector scores are not committed,
@@ -33,7 +33,7 @@ not a 1% threshold.
 Finding: the token watermark detects on clean text (0.960) but its signal is
 destroyed by real translation (0.000-0.380 across the six conditions), while the
 meaning-digest scheme attributes translated documents at 0.900-1.000
-(sentence-level TPR 0.618-0.886). This confirms with a real token
+(sentence-level TPR 0.619-0.901). This confirms with a real token
 watermark and real MT what the paper's surface-carrier channel shows (1/4,800 translations read),
 and what He et al. (2024) reported for cross-lingual token-watermark removal.
 

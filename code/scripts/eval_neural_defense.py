@@ -165,7 +165,10 @@ class _CachedNeural:
 def evaluate(n=48, seed=20270401, model="meta-llama/llama-3.3-70b-instruct",
              cache=DEFAULT_CACHE, use_cache_only=False):
     fields = CONTRACTS[CONTRACT]
-    items = _build_corpus(seed, n)
+    # The cached LLM calls were made on the pre-fix generator text ("cache misss"),
+    # so the inputs are rebuilt with the legacy plural to reproduce them exactly.
+    with ch.legacy_plural():
+        items = _build_corpus(seed, n)
     neural = _CachedNeural(cache, model, use_cache_only)
 
     frontends = {"closed": extract_closed, "extended": extract_extended,
