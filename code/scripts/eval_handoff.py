@@ -210,6 +210,16 @@ def objective_evaluate(folder: str) -> dict:
             cov[tag][0] += 1
         except Exception:
             pass
+    # Control: the same parser on the English sources before translation.
+    src_p = src_n = 0
+    for r in _read_jsonl(base / "01_source_items.jsonl"):
+        for text in r.get("watermarked_text", {}).values():
+            src_n += 1
+            try:
+                ch.parse(text)
+                src_p += 1
+            except Exception:
+                pass
     conditions = {}
     tot_p = tot_n = 0
     for tag, (p, n) in sorted(cov.items()):
@@ -225,13 +235,18 @@ def objective_evaluate(folder: str) -> dict:
                  "Stage-1 frontend cannot recover any carrier from real MT "
                  "output, so payload recovery is impossible without a "
                  "wide-coverage semantic frontend."),
+        "source_control": {
+            "parseable": src_p, "n": src_n,
+            "note": "Stage-1 parser applied to the English source sentences "
+                    "(watermarked_text) before translation"},
     }
 
 
 def _fmt_objective(res: dict) -> str:
     if "error" in res:
         return f"# Real-MT pilot (objective)\n\n**{res['error']}**\n"
-    L = ["# Real-MT pilot — objective frontend measurement", "",
+    L = [f"# Surface-carrier parse coverage on the committed real-MT run "
+         f"({res['n_transformations']:,} NLLB outputs)", "",
          f"- transformations: {res['n_transformations']}",
          "- Metric: fraction of transformed sentences the closed-domain frontend",
          "  can actually parse (a carrier is unrecoverable if its text cannot be",
@@ -246,6 +261,10 @@ def _fmt_objective(res: dict) -> str:
     oc = res["overall_parse_coverage"]
     L.append(f"| **all** | **{oc[0]:.3f} [{oc[1]:.3f}, {oc[2]:.3f}]** | |")
     L += ["", f"> {res['note']}", ""]
+    sc = res.get("source_control")
+    if sc and sc["n"]:
+        L += [f"Control: the same Stage-1 parser reads {sc['parseable']}/{sc['n']} English "
+              "source sentences before translation.", ""]
     return "\n".join(L)
 
 

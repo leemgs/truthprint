@@ -50,7 +50,7 @@ def sources() -> list[dict]:
     return rows
 
 
-def translate(rows: list[dict]) -> list[dict]:
+def translate(rows: list[dict], cache: Path | None = None) -> list[dict]:
     import torch
     from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
     torch.set_num_threads(4)
@@ -58,27 +58,44 @@ def translate(rows: list[dict]) -> list[dict]:
     model = AutoModelForSeq2SeqLM.from_pretrained(MODEL).eval()
 
     def tr_batch(texts, s, g):
+        # Batches are checkpointed to ``cache/{s}-{g}.jsonl`` so an interrupted run resumes
+        # at the same batch boundary (outputs are unchanged by resuming).
+        ck = cache / f"{s}-{g}.jsonl" if cache else None
+        out = []
+        if ck and ck.exists():
+            for line in ck.read_text(encoding="utf-8").splitlines():
+                try:
+                    out.append(json.loads(line))
+                except json.JSONDecodeError:  # a line cut off by the interruption
+                    break
+            if len(out) < len(texts):
+                out = out[:len(out) - len(out) % BATCH]
+            ck.write_text("".join(json.dumps(x, ensure_ascii=False) + "\n" for x in out), encoding="utf-8")
         tok.src_lang = NLLB[s]
         bos = tok.convert_tokens_to_ids(NLLB[g])
-        out = []
-        for i in range(0, len(texts), BATCH):
+        for i in range(len(out), len(texts), BATCH):
             enc = tok(texts[i:i + BATCH], return_tensors="pt", padding=True, truncation=True,
                       max_length=256)
             with torch.no_grad():
                 o = model.generate(**enc, forced_bos_token_id=bos, max_length=256)
-            out.extend(tok.batch_decode(o, skip_special_tokens=True))
+            dec = tok.batch_decode(o, skip_special_tokens=True)
+            out.extend(dec)
+            if ck:
+                with ck.open("a", encoding="utf-8") as fh:
+                    fh.writelines(json.dumps(x, ensure_ascii=False) + "\n" for x in dec)
             print(f"  {s}->{g} {min(i + BATCH, len(texts))}/{len(texts)}", flush=True)
         return out
 
     items = [(r["doc_id"], sid, t) for r in rows for sid, t in r["watermarked_text"].items()]
     srcs = [t for _, _, t in items]
-    tf = []
+    tf, direct = [], {}
     for lg in TGT:
-        for (doc, sid, _), o in zip(items, tr_batch(srcs, "en", lg)):
+        direct[lg] = tr_batch(srcs, "en", lg)
+        for (doc, sid, _), o in zip(items, direct[lg]):
             tf.append({"transform_id": f"{sid}-{lg}", "doc_id": doc, "sent_id": sid,
                        "transform_type": "translation", "direction": f"en->{lg}",
                        "system": SYSTEM, "params": {}, "output_text": o, "round_trip": False})
-    back = tr_batch(tr_batch(srcs, "en", "ko"), "ko", "en")
+    back = tr_batch(direct["ko"], "ko", "en")  # the en->ko leg is the direct Korean pass
     for (doc, sid, _), o in zip(items, back):
         tf.append({"transform_id": f"{sid}-rt", "doc_id": doc, "sent_id": sid,
                    "transform_type": "roundtrip_translation", "direction": "en->ko->en",
@@ -107,6 +124,7 @@ def main() -> int:
     ap.add_argument("folder")
     ap.add_argument("--compare", default=None)
     ap.add_argument("--compare-only", action="store_true")
+    ap.add_argument("--cache", default=None, help="checkpoint folder for resumable runs")
     args = ap.parse_args()
     out = Path(args.folder)
     if not args.compare_only:
@@ -115,7 +133,10 @@ def main() -> int:
         with (out / "01_source_items.jsonl").open("w", encoding="utf-8") as fh:
             for r in rows:
                 fh.write(json.dumps(r, ensure_ascii=False) + "\n")
-        tf = translate(rows)
+        cache = Path(args.cache) if args.cache else None
+        if cache:
+            cache.mkdir(parents=True, exist_ok=True)
+        tf = translate(rows, cache)
         with (out / "02_transformations.jsonl").open("w", encoding="utf-8") as fh:
             for x in tf:
                 fh.write(json.dumps(x, ensure_ascii=False) + "\n")

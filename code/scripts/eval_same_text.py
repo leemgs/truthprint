@@ -94,10 +94,8 @@ def generate(sources: list[dict], work: Path, tries: int, seed: int) -> None:
                               SynthIDTextWatermarkingConfig)
     out = work / "generations.jsonl"
     done = {(r["sent_id"], r["variant"]) for r in read_jsonl(out)}
-    todo = [s for s in sources if any((s["sent_id"], v) not in done for v in ("none", "kgw", "synthid"))]
-    if not todo:
+    if all((s["sent_id"], v) in done for s in sources for v in ("none", "kgw", "synthid")):
         return
-    torch.manual_seed(seed)
     torch.set_num_threads(4)
     tok = AutoTokenizer.from_pretrained(GEN_MODEL)
     tok.padding_side = "left"
@@ -117,8 +115,11 @@ def generate(sources: list[dict], work: Path, tries: int, seed: int) -> None:
                 for x in ids]
 
     B = 8
-    for i in range(0, len(todo), B):
-        batch = todo[i:i + B]
+    for i in range(0, len(sources), B):
+        batch = sources[i:i + B]
+        if all((s["sent_id"], v) in done for s in batch for v in ("none", "kgw", "synthid")):
+            continue  # resumed run: batch already generated
+        torch.manual_seed(seed + i)  # per-batch seed, so a resumed run matches an uninterrupted one
         rows = []
         # Truthprint arm: unwatermarked candidates, accept the first whose core6 record reads back
         accepted = {s["sent_id"]: None for s in batch}
@@ -141,7 +142,7 @@ def generate(sources: list[dict], work: Path, tries: int, seed: int) -> None:
         for s, text in zip(batch, run(batch, watermarking_config=synth)):
             rows.append({"sent_id": s["sent_id"], "doc_id": s["doc_id"], "variant": "synthid", "text": text})
         append_jsonl(out, rows)
-        print(f"[generate] {min(i + B, len(todo))}/{len(todo)}", flush=True)
+        print(f"[generate] {min(i + B, len(sources))}/{len(sources)}", flush=True)
 
 
 # ---------------------------------------------------------------- translation
@@ -160,9 +161,11 @@ def translate(work: Path, conds: list[str]) -> None:
     tok.src_lang = NLLB["en"]
     B = 16
     for c in conds:
-        cj = [g for g, cc in jobs if cc == c]
+        cj = gens  # fixed batch boundaries, so a resumed run batches (and pads) as an uninterrupted one
         for i in range(0, len(cj), B):
             batch = cj[i:i + B]
+            if all((g["sent_id"], g["variant"], c) in done for g in batch):
+                continue
             enc = tok([g["text"] for g in batch], return_tensors="pt", padding=True,
                       truncation=True, max_length=128)
             with torch.no_grad():
