@@ -46,7 +46,7 @@ import random
 from dataclasses import dataclass, replace
 from typing import Callable
 
-from .challenge import ExtFact, ext_invariants, altering_edit, cosine_bow
+from .challenge import ExtFact, ext_invariants, altering_edit, cosine_bow, plural
 
 __all__ = [
     "VerbForms", "BENIGN_VERBS", "ADAPTIVE_VERBS",
@@ -146,7 +146,7 @@ _HEDGES = ["Notably, ", "In fact, ", "As documented, "]
 # (an attacker rewrites content words, not the function-word scaffolding).
 # --------------------------------------------------------------------------- #
 def _patient_phrase(f: ExtFact) -> str:
-    return f"the {f.patient}" if f.quantity == 1 else f"{f.quantity} {f.patient}s"
+    return f"the {f.patient}" if f.quantity == 1 else f"{f.quantity} {plural(f.patient)}"
 
 
 def _active_vp(v: VerbForms, pol: str, mod: str, pp: str) -> str:
