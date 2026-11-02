@@ -54,3 +54,25 @@ def test_same_text_fidelity_matches_committed_run_and_paper():
     for key in ("unwatermarked_first_sample", "kgw", "synthid"):
         assert ci(res[key]) in tex, key
     assert f"${res['draws_per_sentence_mean']:.2f}$" in tex
+
+
+def test_plural_artifact_matches_committed_run_and_paper():
+    import importlib.util
+    root = RESULTS.parent.parent / "code" / "scripts" / "eval_plural_artifact.py"
+    spec = importlib.util.spec_from_file_location("plural", root)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    res = json.loads(json.dumps(mod.evaluate(str(RESULTS / "realmt_b2"))))
+    assert res == json.loads((RESULTS / "plural_artifact.json").read_text(encoding="utf-8"))
+    # the "all sentences" column must reproduce the committed provenance run
+    prov = json.loads((RESULTS / "provenance_realmt.json").read_text(encoding="utf-8"))
+    core6 = prov["contracts"]["core6"]["conditions"]
+    for cond, d in res["doc_attribution_all_vs_without_affected"].items():
+        assert abs(d["all"][0] - core6[cond]["document_attribution"][0]) < 1e-9, cond
+    src = RESULTS.parent / "main.tex"
+    if not src.exists():  # the anonymous artifact ships only the ACL source
+        src = RESULTS.parent / "acl_main.tex"
+    tex = src.read_text(encoding="utf-8")
+    ar = res["doc_attribution_all_vs_without_affected"]["ar"]["without_affected"]
+    assert f"${ar[0]:.3f}\\,[{ar[1]:.3f},{ar[2]:.3f}]$" in tex
+    assert f"${res['affected_sources']}$ of the $800$" in tex

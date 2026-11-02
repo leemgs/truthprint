@@ -98,8 +98,8 @@ NOTEBOOK_EN = {
 README = """# Truthprint — anonymized supplementary artifact
 
 Code, committed data and result files for the anonymous ACL 2027 submission
-*Truthprint: Typed Invariant Contracts for Translation-Robust Authenticated
-Semantic Provenance*. Every number of the paper's Truthprint results recomputes
+*Truthprint: Typed Invariant Contracts for Authenticated Semantic Provenance
+Across Machine Translation*. Every number of the paper's Truthprint results recomputes
 on a CPU from the files here.
 
 ## Contents
@@ -131,6 +131,7 @@ pip install sentence-transformers   # optional paraphrase-tuned encoder (Table 1
 python3 scripts/eval_semantic_baselines.py --b2 ../paper/results/realmt_b2 --model st:sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
 python3 scripts/eval_same_text.py ../paper/results/realmt_b2 --docs 30 --work ../paper/results/same_text --stage score   # same-text KGW/SynthID-Text vs Truthprint (cached generations)
 python3 scripts/eval_same_text_fidelity.py ../paper/results/realmt_b2 ../paper/results/same_text   # same-text fact fidelity and draws per sentence
+python3 scripts/eval_plural_artifact.py ../paper/results/realmt_b2   # generator plural artifact (cache misss) sensitivity
 python3 scripts/eval_retrieval.py --real-embedding                       # retrieval / NLI baselines
 ```
 

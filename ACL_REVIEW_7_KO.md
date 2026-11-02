@@ -438,3 +438,58 @@ cd paper && make acl && make audit && make refs
 - **참고문헌 (`make refs`):** 33편 모두 실제로 존재하고 서지 정보 불일치는 0건입니다.
 - **수치 추적:** 본문과 부록의 소수 181개를 모두 커밋된 결과 파일과 대조했습니다(8차 점검).
 - **테스트:** `pytest` 100개 모두 통과했습니다.
+
+---
+
+## 21. ACL 2027 최종 재정비: 생성기 복수형 결함 공개·민감도 분석, 제목 변경 (2026-11-02)
+
+### 제목 변경 (권장안 적용)
+- **이전:** Truthprint: Typed Invariant Contracts for **Translation-Robust** Authenticated Semantic Provenance
+- **이후:** Truthprint: Typed Invariant Contracts for Authenticated Semantic Provenance **Across Machine Translation**
+- **이유:** 결함 보정 후 아랍어 귀속은 0.700이고, same-text의 KO/AR은 0.700/0.567입니다. "Translation-Robust"는 이 결과에 비해 과장입니다. 새 제목은 평가 범위(기계번역을 거친 출처 인증)만 서술합니다.
+- **저자 할 일:** OpenReview에 입력하는 제목도 같이 바꿔야 합니다.
+
+### 생성기 복수형 결함("cache misss") 공개와 민감도 분석
+- 스크립트 `code/scripts/eval_plural_artifact.py`, 결과 `paper/results/plural_artifact.*`
+- 커밋된 데이터만 분석했고 새 번역은 하지 않았습니다. 대조군은 다른 patient이면서 quantity>1인 문장 454개입니다.
+- **결함 내용:** `challenge.py:123`이 복수형을 만들 때 `s`를 그냥 붙입니다. 그래서 NLLB 입력 800문장 중 153문장(19%)이 비문입니다.
+- **추출 결과에 미친 영향:**
+  - 결함 문장은 아랍어 번역과 왕복 번역에서 patient를 거의 잃습니다(AR 0.007 vs 대조군 0.476, RT 0.510 vs 0.960).
+  - 반대로 core6 기록은 6개 조건 중 5개에서 대조군보다 더 잘 회복됩니다(AR 0.837 vs 0.522). HI만 예외입니다(0.699 vs 0.919).
+- **결함 문장을 빼고 다시 계산한 결과:**
+
+  | 지표 | 전체 | 결함 문장 제외 |
+  |---|---|---|
+  | 문장 단위 core6 | 0.618–0.886 | 0.566–0.930 |
+  | 문서 귀속 | 0.900–1.000 | 0.700–1.000 (**AR 0.900→0.700**) |
+
+- **논문 반영:**
+  - 초록: "0.90–1.00; 0.70–1.00 without 153 generator-misspelled sources"
+  - Sec. 10.4 본문에 보정 수치를 넣었습니다.
+  - Stage-2 문단에서 "Arabic 0.25, where MT renders entities most variably"라는 원인 추정을 "partly the generator artifact"로 고쳤습니다.
+  - 부록 "Generator Plural Artifact"를 새로 추가했습니다.
+  - Limitations에 "19%의 MT 입력이 아랍어 귀속을 부풀린다"를 추가했습니다.
+  - README에도 반영했습니다.
+- consistency test를 추가했습니다. 재계산 결과가 커밋된 JSON과 같은지, "전체" 열이 `provenance_realmt.json`과 정확히 같은지, 논문 수치와 같은지 확인합니다.
+- 신경 방어와 paraphrase 실험 입력도 같은 결함을 갖고 있다는 점을 명시했습니다.
+
+### 분량 맞춤
+결론, 변조 범위 문장, 충돌 하한 문장을 줄여 본문 8쪽을 유지했습니다. 초록은 196단어입니다.
+
+### 게이트
+ACL 23쪽, 본문은 8쪽에서 끝납니다. 폭 초과 0건, IEEE 16쪽에 경고 0건, 참고문헌 33편에 불일치 0건, 테스트 101개 통과, 아티팩트 통과입니다.
+
+### Accept를 위한 필수 TODO (우선순위)
+- **P0, 실험 필요**
+  1. 생성기 복수형을 수정한 뒤 NLLB 번역을 다시 생성하고 모든 결과를 갱신합니다. CPU에서도 1–2시간이면 가능합니다. 다만 신경 방어 실험은 API 키가 있어야 다시 돌릴 수 있습니다.
+  2. 열린 도메인 실데이터를 사람이 주석하고, 신경 추출기로 end-to-end 평가합니다.
+  3. 실제로 편집한 문장을 번역해 변조 시험을 하고, 필드별 태그로 바뀐 필드를 특정하는 능력도 측정합니다.
+- **P1, 실험 필요**
+  4. 고엔트로피 원장 실험
+  5. same-text 비교 확대(7B 이상 생성기, 학습된 SynthID 판정기, 문서 100개 이상)
+  6. 신경 방어 실험 N을 200 이상으로 확대
+  7. KGW 원점수 커밋
+- **저자 할 일**
+  8. 개발/평가 분리 확인
+  9. OpenReview 제목 갱신
+  10. Responsible NLP 체크리스트: AI 도구 사용 공개(E1), 연산 예산(C), 라이선스(B2·B3)
