@@ -162,7 +162,7 @@ Every number below regenerates from a fixed seed (see `paper/results/`).
   unlike similarity/robust hashing — rejects single‑field tampers.
 - **Id‑free ledger search.** With no document id, sentence‑level search is not
   specific (a core6 sentence matches a wrong ledger entry 66–87% of the time), but
-  the ≥50% document rule attributes translated documents at 0.90–1.00 (0.70–1.00 without the 153 sources carrying the generator's "cache misss" plural; `paper/results/plural_artifact.md`) with 0/2,450
+  the ≥50% document rule attributes translated documents at 0.90–1.00 (corpus re-translated after a generator plural fix; unchanged, see `paper/results/plural_artifact.md`) with 0/2,450
   false document attributions per condition against a 50‑document ledger
   (`paper/results/ledger_search.md`). Growing the ledger to 100,050 documents
   (distractors from the corpus generator) gives core6 1–6 / 3–61 false

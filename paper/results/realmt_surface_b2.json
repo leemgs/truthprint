@@ -1,5 +1,5 @@
 {
-  "folder": "paper/results/realmt_b2",
+  "folder": "../paper/results/realmt_b2",
   "mode": "objective",
   "n_transformations": 4800,
   "conditions": {
@@ -67,6 +67,6 @@
   "source_control": {
     "parseable": 800,
     "n": 800,
-    "note": "Stage-1 parser applied to the 800 English source sentences (watermarked_text) before translation"
+    "note": "Stage-1 parser applied to the English source sentences (watermarked_text) before translation"
   }
 }

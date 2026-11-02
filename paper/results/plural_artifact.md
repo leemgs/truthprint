@@ -1,6 +1,8 @@
-# Generator plural artifact ("cache misss")
+# Generator plural artifact ("cache misss"): legacy vs corrected corpus
 
-153 of 800 source sentences contain the ungrammatical plural *cache misss* (template generator appends "s"); they were translated as is. Stage-2 recovery on the committed NLLB outputs (Wilson 95% CI): affected sentences vs a plural control (454 sources with another patient and quantity > 1, grammatical plural) and singular sentences. The affected group differs from the control only in the patient noun, so the patient noun and the misspelling are confounded.
+The legacy generator appended "s" to form plurals, so 153 of 800 source sentences contained *cache misss*. The corrected generator changes exactly 153 sources (same as the affected set: True); all 800 sources were re-translated with the same NLLB system (`scripts/make_realmt.py`). Groups are defined on the legacy text: affected, a plural control (454 sources with another patient and quantity > 1) and singular sentences. Stage-2 recovery, Wilson 95% CI.
+
+## legacy corpus
 
 | Condition | Group | n | Patient | core6 record | All nine fields |
 |---|---|---|---|---|---|
@@ -23,24 +25,38 @@
 | zh | plural_control | 454 | 0.925 [0.897,0.946] | 0.601 [0.556,0.645] | 0.344 [0.301,0.388] |
 | zh | singular | 193 | 0.855 [0.798,0.898] | 0.694 [0.626,0.755] | 0.290 [0.231,0.358] |
 
-core6 record recovery, all sentences vs excluding affected ones:
+## fixed corpus
 
-| Condition | All | Without affected |
-|---|---|---|
-| ar | 0.618 [0.583,0.651] | 0.566 [0.527,0.603] |
-| de | 0.850 [0.824,0.873] | 0.815 [0.783,0.843] |
-| hi | 0.886 [0.862,0.906] | 0.930 [0.908,0.948] |
-| ko | 0.682 [0.649,0.714] | 0.631 [0.593,0.667] |
-| rt | 0.723 [0.690,0.752] | 0.700 [0.664,0.734] |
-| zh | 0.666 [0.633,0.698] | 0.629 [0.591,0.665] |
+| Condition | Group | n | Patient | core6 record | All nine fields |
+|---|---|---|---|---|---|
+| ar | affected | 153 | 0.026 [0.010,0.065] | 0.843 [0.777,0.892] | 0.026 [0.010,0.065] |
+| ar | plural_control | 454 | 0.476 [0.430,0.522] | 0.522 [0.476,0.568] | 0.271 [0.232,0.314] |
+| ar | singular | 193 | 0.549 [0.479,0.618] | 0.668 [0.599,0.731] | 0.404 [0.337,0.475] |
+| de | affected | 153 | 1.000 [0.976,1.000] | 1.000 [0.976,1.000] | 0.771 [0.699,0.831] |
+| de | plural_control | 454 | 1.000 [0.992,1.000] | 0.775 [0.735,0.811] | 0.566 [0.520,0.611] |
+| de | singular | 193 | 0.995 [0.971,0.999] | 0.907 [0.857,0.940] | 0.788 [0.725,0.839] |
+| hi | affected | 153 | 1.000 [0.976,1.000] | 0.778 [0.706,0.836] | 0.706 [0.629,0.772] |
+| hi | plural_control | 454 | 0.760 [0.719,0.797] | 0.919 [0.890,0.940] | 0.687 [0.643,0.728] |
+| hi | singular | 193 | 0.839 [0.781,0.884] | 0.959 [0.920,0.979] | 0.699 [0.631,0.760] |
+| ko | affected | 153 | 1.000 [0.976,1.000] | 0.908 [0.852,0.945] | 0.392 [0.318,0.471] |
+| ko | plural_control | 454 | 0.974 [0.954,0.985] | 0.590 [0.544,0.635] | 0.405 [0.361,0.451] |
+| ko | singular | 193 | 0.865 [0.810,0.906] | 0.725 [0.658,0.783] | 0.461 [0.392,0.532] |
+| rt | affected | 153 | 0.523 [0.444,0.600] | 0.804 [0.734,0.859] | 0.216 [0.158,0.287] |
+| rt | plural_control | 454 | 0.960 [0.938,0.975] | 0.707 [0.664,0.747] | 0.436 [0.391,0.482] |
+| rt | singular | 193 | 0.860 [0.804,0.902] | 0.684 [0.615,0.745] | 0.389 [0.323,0.459] |
+| zh | affected | 153 | 1.000 [0.976,1.000] | 0.824 [0.755,0.876] | 0.314 [0.246,0.391] |
+| zh | plural_control | 454 | 0.925 [0.897,0.946] | 0.601 [0.556,0.645] | 0.344 [0.301,0.388] |
+| zh | singular | 193 | 0.855 [0.798,0.898] | 0.694 [0.626,0.755] | 0.290 [0.231,0.358] |
 
-core6 document attribution (id-addressed, >= half of the sentences), all sentences vs excluding affected ones:
+## core6 sentence recovery and document attribution (all sentences)
 
-| Condition | All | Without affected |
-|---|---|---|
-| ar | 0.900 [0.786,0.957] | 0.700 [0.562,0.809] |
-| de | 1.000 [0.929,1.000] | 0.980 [0.895,0.996] |
-| hi | 1.000 [0.929,1.000] | 1.000 [0.929,1.000] |
-| ko | 0.940 [0.838,0.979] | 0.900 [0.786,0.957] |
-| rt | 0.980 [0.895,0.996] | 0.960 [0.865,0.989] |
-| zh | 0.940 [0.838,0.979] | 0.920 [0.812,0.968] |
+| Condition | Sentence, legacy | Sentence, corrected | Document, legacy | Document, corrected |
+|---|---|---|---|---|
+| ar | 0.618 [0.583,0.651] | 0.619 [0.585,0.652] | 0.900 [0.786,0.957] | 0.900 [0.786,0.957] |
+| de | 0.850 [0.824,0.873] | 0.850 [0.824,0.873] | 1.000 [0.929,1.000] | 1.000 [0.929,1.000] |
+| hi | 0.886 [0.862,0.906] | 0.901 [0.879,0.920] | 1.000 [0.929,1.000] | 1.000 [0.929,1.000] |
+| ko | 0.682 [0.649,0.714] | 0.684 [0.651,0.715] | 0.940 [0.838,0.979] | 0.940 [0.838,0.979] |
+| rt | 0.723 [0.690,0.752] | 0.720 [0.688,0.750] | 0.980 [0.895,0.996] | 0.980 [0.895,0.996] |
+| zh | 0.666 [0.633,0.698] | 0.666 [0.633,0.698] | 0.940 [0.838,0.979] | 0.940 [0.838,0.979] |
+
+Document attribution excluding the affected sentences (legacy / corrected): ar 0.700/0.700; de 0.980/0.980; hi 1.000/1.000; ko 0.900/0.900; rt 0.960/0.960; zh 0.920/0.920

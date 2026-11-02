@@ -313,7 +313,7 @@ def tamper_rejection(cfg):
 def _fmt_md(res, tamper, tamper_n, cfg):
     L = ["# Matched-FPR semantic/robust-hash baselines on real MT (W2/W3, Tasks 2-4)",
          "",
-         f"All methods run in-repo on cached **real** LLM-MT translations "
+         f"All methods run in-repo on cached **real** {cfg['mt']} translations "
          f"({cfg['n_items']} base items x 6 conditions) with a real multilingual "
          f"embedding backend (`{cfg['model']}`). TPR is reported at a **common "
          f"{cfg['fpr']*100:.0f}% FPR** calibrated per method on a null "
@@ -340,8 +340,9 @@ def _fmt_md(res, tamper, tamper_n, cfg):
     L.append("## Tamper rejection: single-field meaning-altering edit (closed domain)")
     L.append("")
     L.append(f"Fraction of single-field tampers correctly REJECTED (n={tamper_n} "
-             "minimal pairs). A similarity/hash gate cannot localize a typed "
-             "field change; the typed contract can.")
+             "minimal pairs). A similarity/hash gate tolerant enough to survive "
+             "translation also accepts a typed field change; the typed contract "
+             "rejects it (without naming which field changed).")
     L.append("")
     L.append("| Method | Tamper-rejection (95% CI) |")
     L.append("|---|---|")
@@ -396,7 +397,8 @@ def main() -> int:
                         else int(0.30 * args.simhash_bits)),
         "minhash_thr": args.minhash_thr, "seed": args.seed, "model": model,
         "n_items": len(items), "tamper_n": args.tamper_n,
-        "source": args.b2 or args.jsonl,
+        "source": args.b2 or Path(args.jsonl).name,  # no absolute path (anonymous artifact)
+        "mt": "NLLB-200" if args.b2 else "LLM-MT",
     }
     feat = build_features(items, model)
     res = evaluate(items, feat, cfg)

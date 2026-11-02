@@ -134,7 +134,7 @@ def _fmt(res: dict) -> str:
          f"Verifier re-extracts invariants (Stage-2) and checks a keyed "
          f"{res['tag_bits']}-bit tag over an invariant contract; the tag lives "
          "in an out-of-band ledger, not the text. Contrast: the surface-carrier "
-         "parser reads 1/4,800 translations. FPR bound per test = 2^-tau.", ""]
+         "parser reads 1/4,800 translations. The tag adds a 2^-tau forgery bound; the measured false-positive rate is set by contract collisions (low-entropy records), not by 2^-tau.", ""]
     for cname, c in res["contracts"].items():
         L.append(f"## Contract `{cname}` = {c['fields']}")
         L.append("")

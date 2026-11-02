@@ -16,7 +16,7 @@ All methods run in-repo on cached **real** LLM-MT translations (16 base items x 
 
 ## Tamper rejection: single-field meaning-altering edit (closed domain)
 
-Fraction of single-field tampers correctly REJECTED (n=200 minimal pairs). A similarity/hash gate cannot localize a typed field change; the typed contract can.
+Fraction of single-field tampers correctly REJECTED (n=200 minimal pairs). A similarity/hash gate tolerant enough to survive translation also accepts a typed field change; the typed contract rejects it (without naming which field changed).
 
 | Method | Tamper-rejection (95% CI) |
 |---|---|
