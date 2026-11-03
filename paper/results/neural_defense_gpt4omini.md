@@ -8,7 +8,7 @@ Same seeded closed-domain adaptive corpus (40 items, contract `core6`, Wilson 95
 | extended | 1.000 [0.912,1.000] | 0.000 [0.000,0.031] | 1.000 [0.912,1.000] | 1.000 [0.912,1.000] |
 | neural | 1.000 [0.912,1.000] | 0.050 [0.023,0.105] | 0.050 [0.014,0.165] | 1.000 [0.912,1.000] |
 
-> The closed lexicon is removed by the adaptive attack; the extended lexicon defends the *seen* synonyms but not the held-out novel ones (any fixed lexicon is escapable); the **open-vocabulary neural frontend defends both** --- it recovers the invariants from out-of-inventory synonyms --- while preserving benign authentication and tamper rejection. This closes the adaptive-robustness gap the fixed lexicons leave open. Closed-domain; a wider-domain, larger-scale neural run is the next step.
+> The closed lexicon is removed by the adaptive attack; the extended lexicon defends the *seen* synonyms but not the held-out novel ones (any fixed lexicon is escapable); the **open-vocabulary neural frontend defends both** --- it recovers the invariants from out-of-inventory synonyms --- while preserving benign authentication and tamper rejection, on this small closed-domain corpus (adaptive-seen scores three attack variants per item, so its n is three times the item count; the corpus keeps the pre-fix generator text, "cache misss", because the cached extractions are keyed to it). A wider-domain, larger-scale neural run is still needed.
 
 Example adaptive-combo sentences and recovered `predicate` / `time_dir` by frontend (closed vs extended vs neural):
 

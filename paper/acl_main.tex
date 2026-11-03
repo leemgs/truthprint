@@ -17,7 +17,7 @@
 \maketitle
 
 \begin{abstract}
-Token-level LLM watermarks are fragile under translation and paraphrasing because their signal lives in tokens. We propose \emph{Truthprint}, a semantic intermediate representation that separates \emph{locked invariants} (polarity, quantity, time, attribution, roles) from \emph{controlled realization} via a machine-checkable typed mutability contract. What survives transformation is \emph{ledger-based authenticated semantic provenance}---a keyed tag over the invariant digest, re-verified after transformation---not an in-text watermark: hiding a payload in realization freedom is a negative result under real MT (a surface parser reads $1$ of $4{,}800$ NLLB outputs). On $4{,}800$ NLLB translations across six languages, a Stage-2 extractor recovers the invariants ($0.83$--$0.99$) and the scheme attributes translated documents cross-lingually (core6 document attribution $0.90$--$1.00$), rejecting single-field tampers of contract fields ($\ge0.996$)---unlike a token watermark (KGW), a SemStamp-style embedding-region detector, or robust hashing. Benign rule-based paraphrase authenticates ($1.00$); a fixed-lexicon adaptive attacker removes the mark, while two small open-vocabulary neural runs resist a held-out attack (ValidRemoval $0.05$/$0.10$, $N{=}40$/$10$). We state two standard reductions to the MAC and show that the operative false-positive floor is the contract-collision rate, not $2^{-\tau}$. All results are closed-domain and small-scale; Truthprint verifies consistency with a participating keyed generator, not arbitrary AI text.
+Token-level LLM watermarks are fragile under translation and paraphrasing because their signal lives in tokens. We propose \emph{Truthprint}, a semantic intermediate representation that separates \emph{locked invariants} (polarity, quantity, time, attribution, roles) from \emph{controlled realization} via a machine-checkable typed mutability contract. What survives transformation is \emph{ledger-based authenticated semantic provenance}---a keyed tag over the invariant digest, re-verified after transformation---not an in-text watermark: hiding a payload in realization freedom is a negative result under real MT (a surface parser reads $1$ of $4{,}800$ NLLB outputs). On $4{,}800$ NLLB translations across six languages, a Stage-2 extractor recovers the invariants ($0.83$--$0.99$) and the scheme attributes translated documents cross-lingually (core6 document attribution $0.90$--$1.00$), where a token watermark (KGW) and a SemStamp-style embedding-region detector largely fail, and rejects single-field tampers of contract fields ($\ge0.996$), which robust hashing does not. Benign rule-based paraphrase authenticates ($1.00$); a fixed-lexicon adaptive attacker removes the mark, while two small open-vocabulary neural runs resist a held-out attack (ValidRemoval $0.05$/$0.10$, $N{=}40$/$10$). We state two standard reductions to the MAC and show that the operative false-positive floor is the contract-collision rate, not $2^{-\tau}$. All results are closed-domain and small-scale; Truthprint verifies consistency with a participating keyed generator, not arbitrary AI text.
 \end{abstract}
 
 \paragraph{Keywords.} Intermediate representation, authenticated provenance, LLM watermarking, semantic provenance, translation robustness
@@ -263,7 +263,7 @@ Because the scheme already uses an out-of-band ledger, the natural control is th
 
 \subsection{Paraphrase and adaptive-attack robustness}
 \label{sec:paraphrase}
-Rule-based, in-lexicon paraphrase (voice, time reflow, verb/time synonyms, hedge) authenticates at TPR $1.000$ and document attribution $1.000$, and a single-field altering edit is rejected at $1.000$. A schema-aware adaptive attacker that swaps the predicate verb and time expression for \emph{out-of-lexicon} synonyms achieves ValidRemoval (Eq.~\eqref{eq:validremoval}) $1.000$ under the \emph{closed} lexicon---a negative result we localize to exactly the abstained fields (predicate and time in all cases; attribution when present), with polarity and agent recovered in $100\%$ of attacks. The vulnerability is the fixed lexicon, not the meaning-digest: an \emph{extended-coverage} frontend drives it $1.000\!\to\!0.000$ at unchanged benign and tamper rejection, but a \emph{held-out} out-of-inventory attack still evades any fixed lexicon ($1.000$). Two small runs with real instruction LLMs as open-vocabulary parsers cut the held-out ValidRemoval to $0.050$ (GPT-4o-mini, $N{=}40$) and $0.100$ (Llama-3.3-70B, $N{=}10$) at benign and tamper rejection $1.000$, suggesting open-vocabulary parsing as the general defense (Appendix Tables~\ref{tab:neuraldefense},~\ref{tab:paraphrase}).
+Rule-based, in-lexicon paraphrase (voice, time reflow, verb/time synonyms, hedge) authenticates at TPR $1.000$ and document attribution $1.000$, and a single-field altering edit is rejected at $1.000$. A schema-aware adaptive attacker that swaps the predicate verb and time expression for \emph{out-of-lexicon} synonyms achieves ValidRemoval (Eq.~\eqref{eq:validremoval}) $1.000$ under the \emph{closed} lexicon---a negative result we localize to exactly the abstained fields (predicate and time in all cases; attribution when present), with polarity and agent recovered in $100\%$ of attacks. The vulnerability is the fixed lexicon, not the meaning-digest: an \emph{extended-coverage} frontend drives it $1.000\!\to\!0.000$ at unchanged benign and tamper rejection, but a \emph{held-out} out-of-inventory attack still evades any fixed lexicon ($1.000$). Two small runs with real instruction LLMs as open-vocabulary parsers cut the held-out ValidRemoval to $0.050$ (GPT-4o-mini, $N{=}40$, CI $[0.014,0.165]$) and $0.100$ (Llama-3.3-70B, $N{=}10$, CI $[0.018,0.404]$) at benign and tamper rejection $1.000$, though Llama still loses $0.200$ of the \emph{seen} attacks that the extended lexicon stops, suggesting open-vocabulary parsing as the general defense (Appendix Tables~\ref{tab:neuraldefense},~\ref{tab:paraphrase}).
 
 \section{Conclusion}
 Truthprint separates immutable meaning from controlled realization with a machine-checkable typed contract; what survives translation is a keyed tag over that contract, re-verified out of band---a complement to token-level watermarks.
@@ -835,13 +835,13 @@ Translator-independent (separated) frontend & Pilot (open-domain positive on one
 \toprule
 Category & Representative work & Main carrier or focus & Limitation addressed by Truthprint \\
 \midrule
-Token-level sampling & SynthID-Text & Keyed token-selection statistics & Translation and paraphrasing replace token decisions. \\
-Sentence-space watermarking & SemStamp & Keyed sentence-embedding regions & Embedding regions are not typed by invariant category. \\
-Semantic-context watermarking & SIR, SemaMark & Contextual semantic embeddings & Similarity does not explicitly protect negation, numbers, causality, or attribution. \\
-Hybrid defense & SynGuard & Token watermark plus semantic alignment & Semantic constraints are less explicit than a typed IR contract. \\
-Structured semantics & SWAN & AMR-level structures & Existing semantic form is not a complete watermark-specific mutability contract. \\
-Dual embeddings & DEW & Context and token embeddings & Language invariance remains implicit rather than represented as a canonical IR. \\
-Attack analysis & Layer inflation, black-box probing, adversarial paraphrasing & Detector assumptions and adaptive transformation & Motivates authenticated payloads, conservative interfaces, and erasure-aware decoding. \\
+Token-level sampling & SynthID-Text \cite{dathathri2024synthid} & Keyed token-selection statistics & Translation and paraphrasing replace token decisions. \\
+Sentence-space watermarking & SemStamp \cite{hou2024semstamp} & Keyed sentence-embedding regions & Embedding regions are not typed by invariant category. \\
+Semantic-context watermarking & SIR \cite{liu2023sir}, SemaMark \cite{ren2024semmark} & Contextual semantic embeddings & Similarity does not explicitly protect negation, numbers, causality, or attribution. \\
+Hybrid defense & SynGuard \cite{han2025synguard} & Token watermark plus semantic alignment & Semantic constraints are less explicit than a typed IR contract. \\
+Structured semantics & SWAN \cite{ye2026swan} & AMR-level structures & Existing semantic form is not a complete watermark-specific mutability contract. \\
+Dual embeddings & DEW \cite{schaefer2026dew} & Context and token embeddings & Language invariance remains implicit rather than represented as a canonical IR. \\
+Attack analysis & SynthID-Text analysis \cite{omidi2026synthidanalysis}, black-box probing \cite{gloaguen2024blackbox}, adversarial paraphrasing \cite{cheng2025adversarial} & Detector assumptions and adaptive transformation & Motivates authenticated payloads, conservative interfaces, and erasure-aware decoding. \\
 Proposed system & Truthprint & Typed invariants and controlled realization classes & Explicitly specifies what must remain fixed and what may carry symbols. \\
 \bottomrule
 \end{tabularx}
@@ -854,8 +854,8 @@ Proposed system & Truthprint & Typed invariants and controlled realization class
 \caption{Open-vocabulary neural frontend vs.\ fixed lexicons on the adaptive
 corpus (contract core6, cached real-LLM extractions; Wilson $95\%$ CI). \emph{Two}
 instruction LLMs resist the \emph{held-out novel} attack that both fixed lexicons
-fail, at unchanged benign auth and tamper rejection. $N$ = documents scored per
-frontend.}
+fail, at unchanged benign auth and tamper rejection. $N$ = items scored per
+frontend; the adaptive-seen column scores three attack variants per item ($3N$). The corpus keeps the pre-fix generator text (Appendix~\ref{app:plural}).}
 \label{tab:neuraldefense}
 \footnotesize
 \begin{tabular}{lcccc}
@@ -864,8 +864,8 @@ Frontend & Benign TPR & Adaptive-seen VR & Held-out novel VR & Tamper rej. \\
 \midrule
 Closed lexicon ($N{=}40$)         & $1.000$ & $1.000$ & $1.000$ & $1.000$ \\
 Extended lexicon ($N{=}40$)       & $1.000$ & $0.000$ & $1.000$ & $1.000$ \\
-Neural: GPT-4o-mini ($N{=}40$)    & $1.000$ & $0.050$ & $0.050$ & $1.000$ \\
-Neural: Llama-3.3-70B ($N{=}10$)  & $1.000$ & $0.200$ & $0.100$ & $1.000$ \\
+Neural: GPT-4o-mini ($N{=}40$)    & $1.000$ & $0.050$ $[0.023,0.105]$ & $0.050$ $[0.014,0.165]$ & $1.000$ \\
+Neural: Llama-3.3-70B ($N{=}10$)  & $1.000$ & $0.200$ $[0.095,0.373]$ & $0.100$ $[0.018,0.404]$ & $1.000$ \\
 \bottomrule
 \end{tabular}
 \end{table*}
