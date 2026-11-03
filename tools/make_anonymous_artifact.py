@@ -131,7 +131,8 @@ pip install sentence-transformers   # optional paraphrase-tuned encoder (Table 1
 python3 scripts/eval_semantic_baselines.py --b2 ../paper/results/realmt_b2 --model st:sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
 python3 scripts/eval_same_text.py ../paper/results/realmt_b2 --docs 30 --work ../paper/results/same_text --stage score   # same-text KGW/SynthID-Text vs Truthprint (cached generations)
 python3 scripts/eval_same_text_fidelity.py ../paper/results/realmt_b2 ../paper/results/same_text   # same-text fact fidelity and draws per sentence
-python3 scripts/eval_plural_artifact.py ../paper/results/realmt_b2   # generator plural artifact (cache misss) sensitivity
+python3 scripts/eval_plural_artifact.py ../paper/results/realmt_b2_legacy ../paper/results/realmt_b2   # generator plural fix: legacy vs corrected corpus
+python3 scripts/make_realmt.py /tmp/realmt_rebuild --compare ../paper/results/realmt_b2   # optional: re-translate on CPU (~30 min, 4 threads)
 python3 scripts/eval_retrieval.py --real-embedding                       # retrieval / NLI baselines
 ```
 

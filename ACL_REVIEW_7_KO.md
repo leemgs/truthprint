@@ -565,3 +565,8 @@ ACL 23쪽, 본문 8쪽 이내, 초록 191단어, 폰트 임베딩·메타데이�
 
 ### 게이트
 ACL 23쪽, 본문 8쪽 이내, 초록 191단어, 폭 초과 0건, 테스트 102개 통과.
+
+## 24. 직접 수정 가능한 항목 반영 (2026-11-03)
+- **아티팩트 README 재현 명령 오류 수정:** `eval_plural_artifact.py`가 두 폴더(legacy, 수정본)를 받도록 바뀌었는데 익명 아티팩트 README는 예전 한 폴더 명령이었습니다. 고치고, CPU 재번역 명령(`make_realmt.py --compare`)을 추가했습니다. 압축을 푼 아티팩트에서 명령들이 실제로 돌아가는 것을 확인했습니다.
+- **연산 예산(체크리스트 C1)·버전(C4):** 부록 "Models, Data, and Licenses"에 실측 CPU 시간(4스레드, NLLB 4,800개 재생성 약 30분, same-text 약 1.5시간)과 `torch` 2.14.1·`transformers` 5.20.2를 적었습니다. 원래 Kaggle GPU·API 실행은 시간을 기록하지 않았다고 명시했습니다.
+- **Responsible NLP 체크리스트:** B1(SynthID-Text, Qwen, 인코더, Krishna et al. 추가), B2·B3(부록 라이선스 목록과 MIT `code/LICENSE`로 "Yes"), B5(legacy 실행, "Evaluation Coverage" 절 이름), C1·C4를 갱신했습니다. A4(AI 도구 사용 공개)만 저자 확인으로 남습니다.

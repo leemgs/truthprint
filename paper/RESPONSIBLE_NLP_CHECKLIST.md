@@ -31,26 +31,32 @@ table references are to the anonymous ACL build (`acl_main.tex` / `acl_main.pdf`
 ## B. Scientific artifacts
 
 - **B1. Did you cite the creators of artifacts you used?** **Yes** — NLLB-200
-  (translation), KGW (token-watermark baseline on GPT-2 generations, cite), SemStamp (semantic
-  baseline; our SemStamp-style re-implementation, cite), MinHash/SimHash (robust-hashing baselines, cite), and the
-  instruction LLMs used for the neural frontend (named in §Experiments /
-  Table). All baseline and tool references are in the bibliography.
-- **B2. Did you discuss the license / terms of use?** **Partly — author to
-  confirm.** NLLB-200-distilled-600M is open-weights (CC-BY-NC for NLLB);
-  the released code/artifact is the authors'. State the artifact license in the
-  camera-ready (e.g., the repository's LICENSE).
+  (translation); KGW (token watermark on GPT-2 and Qwen2.5-0.5B-Instruct
+  generations); SynthID-Text (`transformers` implementation); SemStamp (our
+  SemStamp-style re-implementation); MinHash/SimHash (robust hashing); the
+  retrieval defense of Krishna et al. (2023); the encoders
+  `paraphrase-multilingual-MiniLM-L12-v2` (Reimers & Gurevych 2020) and
+  `potion-multilingual-128M`; and the instruction LLMs of the neural frontend
+  (GPT-4o-mini, Llama-3.3-70B). All are in the bibliography or the appendix
+  "Models, Data, and Licenses".
+- **B2. Did you discuss the license / terms of use?** **Yes** — appendix
+  "Models, Data, and Licenses" lists every model's license (NLLB-200
+  CC-BY-NC-4.0; GPT-2 MIT; Qwen2.5-0.5B-Instruct, `transformers`, MiniLM
+  encoder Apache-2.0; potion encoder MIT; GPT-4o-mini API terms; Llama 3.3
+  Community License). The released code is MIT (`code/LICENSE`).
 - **B3. Did you discuss whether your use was consistent with intended use?**
-  **Yes (implicitly) — author to confirm.** All third-party artifacts are used
-  for research evaluation, consistent with their research/benchmark intent;
-  NLLB is used non-commercially for research.
+  **Yes** — same appendix: every use is research evaluation within these terms,
+  and because of the NLLB license the measured pipeline is not a deployable
+  commercial system.
 - **B4. Did you discuss steps for PII / offensive content?** **Yes** — the
   evaluation uses **synthetic template facts only**: no personal data, no human
   subjects, no user content (stated in §Ethical Considerations). Payloads are
   specified to exclude personal identifiers, prompts, and exact timestamps.
 - **B5. Did you provide documentation of the artifacts?** **Yes** — the
-  repository ships the code, seeded scripts, cached extractions, and the full
-  raw real-MT run under `paper/results/realmt_b2/`; the appendix gives the
-  reproducibility/notation map and the extended evaluation protocol.
+  repository ships the code, seeded scripts, cached extractions, the full raw
+  real-MT run under `paper/results/realmt_b2/` (and the pre-fix run under
+  `realmt_b2_legacy/`); the appendix gives the reproducibility/notation map
+  and the "Evaluation Coverage" section.
 - **B6. Did you report statistics about the data?** **Yes** — 50 source
   documents × 16 sentences = 800 items; 4,800 real NLLB translations across six
   conditions (ko/hi/zh/ar/de + round-trip); paraphrase/adaptive corpora sizes
@@ -63,8 +69,11 @@ table references are to the anonymous ACL build (`acl_main.tex` / `acl_main.pdf`
   the neural-frontend extractors are named instruction LLMs (GPT-4o-mini,
   Llama-3.3-70B). The method's own cryptographic/coding core is parameter-free;
   end-to-end latency is explicitly stated as unmeasured (Appendix, Complexity).
-  Compute is modest (no training; translation + cached extraction). *Author:
-  add wall-clock/GPU-hours if the venue requires.*
+  No model is trained. Measured on four CPU threads: rebuilding the 4,800 NLLB
+  outputs ~30 min; the same-text run ~1.5 h (55 min generation, 36 min
+  translation); scoring scripts minutes (appendix "Models, Data, and
+  Licenses"). The original NLLB/KGW Kaggle GPU runs and the API neural-parser
+  runs did not record wall-clock time; state that if the form asks.
 - **C2. Did you report the experimental setup and hyperparameters?** **Yes** —
   KGW γ=0.25, δ=2.0; contracts core6/robust7/full9; τ=32-bit tags; matched 1%
   FPR calibration; seeds fixed; full protocol in Appendix (Extended Evaluation
@@ -74,10 +83,10 @@ table references are to the anonymous ACL build (`acl_main.tex` / `acl_main.pdf`
   contract-collision false-positive floor is derived and matched to measured
   values.
 - **C4. Did you use existing packages, and report versions/settings?**
-  **Partly — author to confirm versions.** NLLB-200-distilled-600M, a real
-  multilingual sentence embedding (model2vec), and OpenAI-compatible API
-  backends for the neural frontend. Pin versions in the artifact README for the
-  camera-ready.
+  **Yes** — NLLB-200-distilled-600M, Qwen2.5-0.5B-Instruct, model2vec and
+  sentence-transformers encoders, OpenAI-compatible API backends; the CPU
+  rebuilds used `torch` 2.14.1 and `transformers` 5.20.2 (stated in the
+  appendix).
 
 ## D. Human annotators / crowdsourcing
 
@@ -90,9 +99,9 @@ table references are to the anonymous ACL build (`acl_main.tex` / `acl_main.pdf`
 ## E. Notes for the author before submitting
 
 1. Confirm A4 (AI-assistant disclosure) in the venue's exact wording.
-2. Add the artifact license (B2) and pin tool/model versions (C4) in the
-   repository README for the camera-ready.
-3. If the venue's form asks for GPU-hours (C1), fill in the actual translation +
-   extraction compute.
+2. B2/B3/C4 are now answered in the appendix; check the wording against the
+   venue form.
+3. C1: the CPU times are measured; the original Kaggle GPU and API runs were not
+   timed, so answer "not recorded" for those if asked.
 4. The *Limitations* section is present and unnumbered; the 8-page body excludes
    it, the references, and the appendices, per ACL policy.
