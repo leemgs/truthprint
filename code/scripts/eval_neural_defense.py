@@ -238,9 +238,11 @@ def _fmt(res):
           "fixed lexicon is escapable); the **open-vocabulary neural frontend "
           "defends both** --- it recovers the invariants from out-of-inventory "
           "synonyms --- while preserving benign authentication and tamper "
-          "rejection. This closes the adaptive-robustness gap the fixed lexicons "
-          "leave open. Closed-domain; a wider-domain, larger-scale neural run is the "
-          "next step.", ""]
+          "rejection, on this small closed-domain corpus (adaptive-seen scores "
+          "three attack variants per item, so its n is three times the item "
+          "count; the corpus keeps the pre-fix generator text, \"cache misss\", "
+          "because the cached extractions are keyed to it). A wider-domain, "
+          "larger-scale neural run is still needed.", ""]
     if res.get("examples"):
         L.append("Example adaptive-combo sentences and recovered `predicate` / "
                  "`time_dir` by frontend (closed vs extended vs neural):")

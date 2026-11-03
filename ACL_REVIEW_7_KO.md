@@ -570,3 +570,24 @@ ACL 23쪽, 본문 8쪽 이내, 초록 191단어, 폭 초과 0건, 테스트 102�
 - **아티팩트 README 재현 명령 오류 수정:** `eval_plural_artifact.py`가 두 폴더(legacy, 수정본)를 받도록 바뀌었는데 익명 아티팩트 README는 예전 한 폴더 명령이었습니다. 고치고, CPU 재번역 명령(`make_realmt.py --compare`)을 추가했습니다. 압축을 푼 아티팩트에서 명령들이 실제로 돌아가는 것을 확인했습니다.
 - **연산 예산(체크리스트 C1)·버전(C4):** 부록 "Models, Data, and Licenses"에 실측 CPU 시간(4스레드, NLLB 4,800개 재생성 약 30분, same-text 약 1.5시간)과 `torch` 2.14.1·`transformers` 5.20.2를 적었습니다. 원래 Kaggle GPU·API 실행은 시간을 기록하지 않았다고 명시했습니다.
 - **Responsible NLP 체크리스트:** B1(SynthID-Text, Qwen, 인코더, Krishna et al. 추가), B2·B3(부록 라이선스 목록과 MIT `code/LICENSE`로 "Yes"), B5(legacy 실행, "Evaluation Coverage" 절 이름), C1·C4를 갱신했습니다. A4(AI 도구 사용 공개)만 저자 확인으로 남습니다.
+
+## 25. 엄격 재점검 (2026-11-03, main 7f6b40c)
+
+### 새로 찾아 바로 고친 것
+- **초록의 근거 범위 초과:** "rejecting single-field tampers … unlike a token watermark (KGW), a SemStamp-style detector, or robust hashing"은 KGW·SemStamp의 변조 거부까지 비교한 것처럼 읽히지만, 그 둘의 변조 거부는 측정하지 않았습니다. "번역 생존은 KGW·SemStamp 방식이 대체로 실패, 변조 거부는 robust hashing이 못 함"으로 각각의 근거에 맞게 나눴습니다(초록 198단어).
+- **신경 방어 표:** "N = documents"였지만 adaptive-seen 열은 항목당 공격 변형 3개(3N)를 채점합니다. 캡션을 고치고, 신경 행에 Wilson CI를 넣었으며(N=10이면 0.100의 CI가 [0.018,0.404]), 이 말뭉치가 수정 전 생성기 텍스트를 쓴다고 적었습니다.
+- **본문 Sec. 10.7:** 신경 방어 수치에 CI를 붙이고, Llama가 *본* 공격의 0.200을 놓친다는 점(확장 어휘는 0.000)을 숨기지 않고 적었습니다.
+- **위치 비교 표:** 대표 연구 열에 인용이 없었고 "Layer inflation"은 참고문헌 어디에도 근거가 없는 용어였습니다. 모든 행에 인용을 달고 해당 항목을 "SynthID-Text analysis (Omidi et al.)"로 바꿨습니다.
+- **결과 파일 문구:** `neural_defense*.md`의 "This closes the adaptive-robustness gap"이라는 단정을 지우고, 열별 n과 수정 전 텍스트 사용을 명시했습니다(캐시만으로 재생성, JSON 변화 없음).
+
+### 남은 거절 사유 (변화 없음, 실험 필요)
+1. 합성 닫힌 도메인과 어휘를 공유하는 추출기
+2. 방법(문장 내 carrier)과 증거(원장 태그)의 불일치, 검색 기반 방어 대비 새로움
+3. 시뮬레이션 변조
+4. id 없는 원장 검색은 10³ 문서까지만 특이적
+5. 신경 방어 N=40/10
+6. same-text 비교의 재샘플링 비대칭과 약한 SynthID 판정
+7. 품질·사람 평가 부재
+
+### 게이트
+ACL 24쪽(부록 표가 길어짐), 본문 8쪽 이내, 초록 198단어, 폭 초과 0건, 참고문헌 33편 불일치 0건.
