@@ -86,3 +86,33 @@ def test_cpu_rebuild_reproduces_unchanged_translations():
     chk = json.loads((RESULTS / "realmt_b2" / "rebuild_check.json").read_text(encoding="utf-8"))
     assert chk["changed_sources"] == 153
     assert chk["identical_to_old_run"] == chk["unchanged_translations"] == 647 * 6
+
+
+def _paper_tex() -> str:
+    src = RESULTS.parent / "main.tex"
+    if not src.exists():  # the anonymous artifact ships only the ACL source
+        src = RESULTS.parent / "acl_main.tex"
+    return src.read_text(encoding="utf-8")
+
+
+def _load_script(name: str):
+    import importlib.util
+    root = RESULTS.parent.parent / "code" / "scripts" / f"{name}.py"
+    spec = importlib.util.spec_from_file_location(name, root)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def test_same_text_noresample_matches_committed_run_and_paper():
+    mod = _load_script("eval_same_text_noresample")
+    res = json.loads(json.dumps(mod.evaluate(RESULTS / "realmt_b2", RESULTS / "same_text")))
+    assert res == json.loads((RESULTS / "same_text_noresample.json").read_text(encoding="utf-8"))
+    tex = _paper_tex()
+    c = res["conditions"]
+    assert (f"${c['ko']['document_attribution'][0]:.3f}$/${c['ar']['document_attribution'][0]:.3f}$/"
+            f"${c['de']['document_attribution'][0]:.3f}$") in tex
+    assert f"${res['first_sample_unavailable']}$ first samples" in tex
+    # the first-sample clean sentence rate equals the committed fidelity proxy
+    fid = json.loads((RESULTS / "same_text_fidelity.json").read_text(encoding="utf-8"))
+    assert abs(c["clean"]["sentence_authentication"][0] - fid["unwatermarked_first_sample"][0]) < 1e-9
