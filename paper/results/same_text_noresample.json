@@ -1,5 +1,7 @@
 {
   "sentences": 480,
+  "exact": false,
+  "redrawn": 0,
   "first_sample_unavailable": 122,
   "conditions": {
     "clean": {

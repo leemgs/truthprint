@@ -136,7 +136,7 @@ def generate(sources: list[dict], work: Path, tries: int, seed: int) -> None:
             a = accepted[s["sent_id"]]
             rows.append({"sent_id": s["sent_id"], "doc_id": s["doc_id"], "variant": "none",
                          "text": a[0] if a else first[s["sent_id"]], "valid": a is not None,
-                         "tries": a[1] if a else tries})
+                         "tries": a[1] if a else tries, "first_text": first[s["sent_id"]]})
         for s, text in zip(batch, run(batch, logits_processor=kgw)):
             rows.append({"sent_id": s["sent_id"], "doc_id": s["doc_id"], "variant": "kgw", "text": text})
         for s, text in zip(batch, run(batch, watermarking_config=synth)):
