@@ -112,7 +112,8 @@ def test_same_text_noresample_matches_committed_run_and_paper():
     c = res["conditions"]
     assert (f"${c['ko']['document_attribution'][0]:.3f}$/${c['ar']['document_attribution'][0]:.3f}$/"
             f"${c['de']['document_attribution'][0]:.3f}$") in tex
-    assert f"${res['first_sample_unavailable']}$ first samples" in tex
+    assert res["exact"] and res["first_sample_unavailable"] == 0
+    assert f"${res['redrawn']}$ redrawn sentences" in tex
     # the first-sample clean sentence rate equals the committed fidelity proxy
     fid = json.loads((RESULTS / "same_text_fidelity.json").read_text(encoding="utf-8"))
     assert abs(c["clean"]["sentence_authentication"][0] - fid["unwatermarked_first_sample"][0]) < 1e-9
@@ -133,3 +134,10 @@ def test_edited_tamper_matches_committed_run_and_paper():
     assert f"${pf['modality']['accepted'][0]:.3f}$/${pf['causation']['accepted'][0]:.3f}$" in tex
     # the abstract's 0.998 is 1 - core6 in-contract false accept
     assert f"${1 - fa[0]:.3f}$" in tex
+
+
+def test_same_text_quality_numbers_in_paper():
+    res = json.loads((RESULTS / "same_text_quality.json").read_text(encoding="utf-8"))
+    tex = _paper_tex()
+    for v in ("first", "kgw", "synthid", "none"):
+        assert f"${res['variants'][v]['ppl_geomean'][0]:.1f}$" in tex, v

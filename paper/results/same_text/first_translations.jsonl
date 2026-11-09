@@ -1,0 +1,366 @@
+{"sent_id": "D0001-s1", "condition": "ko", "text": "공급업체의 말에 따르면 개발자는 장애로 인한 메모리 누출을 수정해서는 안 됩니다."}
+{"sent_id": "D0001-s5", "condition": "ko", "text": "엔지니어가 5개의 캐시 오류를 수정해 놓았어요"}
+{"sent_id": "D0001-s8", "condition": "ko", "text": "분석가들은 보고서에 따르면 5개의 메모리 누출을 고치지 못했습니다."}
+{"sent_id": "D0001-s13", "condition": "ko", "text": "판매자들에 따르면 개발자는 3개의 메모리 누출을 수정하여"}
+{"sent_id": "D0002-s1", "condition": "ko", "text": "판매자들에 따르면 분석가는 정해진 다음 사업일 이전에 메모리 누출을 수정하여 정지하지 못하도록 했다."}
+{"sent_id": "D0002-s3", "condition": "ko", "text": "판매자는 개발자가 장애로 인해 서버 오류를 해결했다고 밝혔다."}
+{"sent_id": "D0002-s4", "condition": "ko", "text": "분석가 전날 2개의 캐시 오류를 수정했습니다."}
+{"sent_id": "D0002-s6", "condition": "ko", "text": "개발자는 장애로 인해 세 가지 구성 도로를 수정했을 수 있다고 보고했습니다."}
+{"sent_id": "D0002-s8", "condition": "ko", "text": "개발자는 그 다음 날의 캐시 오류를 해결하지 못했습니다."}
+{"sent_id": "D0002-s12", "condition": "ko", "text": "개발자는 다음 날 5개의 메모리 누출을 수정해야 합니다."}
+{"sent_id": "D0003-s8", "condition": "ko", "text": "개발자는 정전으로 인해 두 개의 구성 도로를 수정해야 합니다."}
+{"sent_id": "D0003-s10", "condition": "ko", "text": "공급자는 개발자가 장애가 발생하기 전에 서버 오류 5가지로 회견해서는 안 된다고 명시합니다."}
+{"sent_id": "D0003-s11", "condition": "ko", "text": "개발자는 보고서에 따르면 2개의 서버 오류를 수정했습니다."}
+{"sent_id": "D0003-s13", "condition": "ko", "text": "판매자들에 따르면, 사업자는 장애를 방지하기 위해 메모리 누출을 고쳐지 않았을 수도 있다."}
+{"sent_id": "D0004-s5", "condition": "ko", "text": "보고서에 따르면 개발자는 장애로 인해 5 개의 구성 파편을 수정하지 않았습니다."}
+{"sent_id": "D0004-s11", "condition": "ko", "text": "판매자에 따르면, 엔지니어는 정전으로 인해 서버 오류를 수정하지 않았을 수도 있습니다."}
+{"sent_id": "D0005-s11", "condition": "ko", "text": "보고서에 따르면 엔지니어가 3개의 캐시 오류를 정해놓지 못했을 수도 있습니다."}
+{"sent_id": "D0005-s13", "condition": "ko", "text": "엔지니어는 보고서에 따르면 5개의 서버 오류를 수정했을 것입니다."}
+{"sent_id": "D0005-s14", "condition": "ko", "text": "판매자들에 따르면, 분석가들은 정전 방지를 위해 5개의 구성 변동을 고정시켜야 한다."}
+{"sent_id": "D0005-s15", "condition": "ko", "text": "그 날엔지니어는 두 번의 메모리 누수가 있었습니다."}
+{"sent_id": "D0006-s2", "condition": "ko", "text": "판매자들에 따르면 개발자는 장애로 인해 5개의 서버 오류를 수정하지 않았을 수도 있다."}
+{"sent_id": "D0006-s7", "condition": "ko", "text": "판매자는 장애로 인해 운영자가 캐시 오류를 수정했을 수 있다고 주장합니다."}
+{"sent_id": "D0006-s8", "condition": "ko", "text": "보고서에 따르면, 엔지니어가 정전으로 인해 캐시 오류를 수정했습니다."}
+{"sent_id": "D0006-s10", "condition": "ko", "text": "보고서에 따르면 분석가들은 장애로 인해 캐시 오류를 수정하지 않았어야 합니다."}
+{"sent_id": "D0006-s13", "condition": "ko", "text": "판매자는 엔지니어가 정전으로 인해 두 개의 캐시 오류를 해결했다고 밝혔다."}
+{"sent_id": "D0006-s15", "condition": "ko", "text": "보고서에 따르면 엔지니어가 5개의 캐시 오류를 수정했을 수도 있습니다"}
+{"sent_id": "D0006-s16", "condition": "ko", "text": "개발자는 정전으로 인해 5개의 구성 변동을 고정했을 수 있습니다."}
+{"sent_id": "D0007-s2", "condition": "ko", "text": "보고서에 따르면 이전 데이터에 따르면, 운영자는 2개의 캐시 오류를 수정해야 합니다."}
+{"sent_id": "D0007-s5", "condition": "ko", "text": "판매자들에 따르면, 사업자는 이전에 메모리 누출을 수정하여 정전을 방지했다."}
+{"sent_id": "D0007-s6", "condition": "ko", "text": "보고서에 따르면 엔지니어가 오작동으로 인해 서버 오류 5개를 수정했을 수도 있습니다."}
+{"sent_id": "D0007-s7", "condition": "ko", "text": "판매자들에 따르면, 운영자는 파업을 피하기 위해 두 가지 서버 오류를 수정하지 못했다."}
+{"sent_id": "D0007-s10", "condition": "ko", "text": "개발자는 다음 날, 장애로 인해 3개의 캐시 오류를 수정해야 한다는 것을 알렸다."}
+{"sent_id": "D0008-s2", "condition": "ko", "text": "공급업체의 말에 따르면, 운영자는 장애로 인해 서버 오류를 수정했을 수 있습니다."}
+{"sent_id": "D0008-s7", "condition": "ko", "text": "판매자들에 따르면, 개발자는 정렬 유동이 발생하지 않도록 설정되어야 합니다."}
+{"sent_id": "D0008-s10", "condition": "ko", "text": "판매자들에 따르면, 사업자는 장애로 인해 세 번의 메모리 누출을 고쳐내지 않았을 수 있다."}
+{"sent_id": "D0008-s14", "condition": "ko", "text": "판매자들에 따르면, 엔지니어는 파업을 막기 전에 두 가지 서버 오류를 수정하지 않았습니다."}
+{"sent_id": "D0008-s15", "condition": "ko", "text": "판매자는 개발자가 캐시 오류를 수정하지 않았다고 말합니다."}
+{"sent_id": "D0009-s7", "condition": "ko", "text": "판매자는 엔지니어가 정전을 피하기 위해 5개의 구성 유동 문제를 해결했다고 밝혔다."}
+{"sent_id": "D0009-s12", "condition": "ko", "text": "운영자는 전날 두 가지 이상의 서버 오류를 수정해야 합니다."}
+{"sent_id": "D0010-s2", "condition": "ko", "text": "판매자는 사업자가 이전에 세 가지 서버 오류를 경험하지 않았어야 한다고 밝혔다."}
+{"sent_id": "D0010-s4", "condition": "ko", "text": "판매자들에 따르면, 운영자는 5개의 캐시 오류를 미리 수정하여 정전을 방지했습니다."}
+{"sent_id": "D0010-s8", "condition": "ko", "text": "판매자는 전날 개발자가 정전으로 인한 서버 오류를 해결해야 한다고 명시하고 있습니다."}
+{"sent_id": "D0010-s12", "condition": "ko", "text": "개발자는 정전으로 인해 두 개의 구성 파동을 고정하지 않아야 합니다."}
+{"sent_id": "D0010-s13", "condition": "ko", "text": "판매자는 개발자가 중단으로 인해 서버 오류를 해결했을 가능성이 있다고 명시합니다."}
+{"sent_id": "D0010-s15", "condition": "ko", "text": "분석가들은 전날 5개 이상의 변동이 안된다고 할 수 있습니다."}
+{"sent_id": "D0010-s16", "condition": "ko", "text": "보고서에 따르면 엔지니어는 장애가 발생하기 전에 두 가지 이상의 구성 파동이 고정되어 있는지 확인해야 합니다."}
+{"sent_id": "D0011-s1", "condition": "ko", "text": "엔지니어는 다음 날 다섯 개의 서버 오류를 수정해야 했습니다."}
+{"sent_id": "D0011-s13", "condition": "ko", "text": "보고서는 엔지니어가 차일 2번의 캐시 오류를 피해야 한다고 말합니다."}
+{"sent_id": "D0011-s15", "condition": "ko", "text": "분석가는 보고서에 따르면, 정전으로 인해 서버 오류 5개를 수정하지 못했습니다."}
+{"sent_id": "D0012-s10", "condition": "ko", "text": "보고서에 따르면, 사업자는 장애로 인해 세 개의 메모리 누출을 고쳐주지 않을 수 있습니다."}
+{"sent_id": "D0012-s11", "condition": "ko", "text": "판매자들에 따르면, 엔지니어는 장애로 인해 세 번의 메모리 누출을 수정했을 수 있습니다."}
+{"sent_id": "D0013-s1", "condition": "ko", "text": "엔지니어가 메모리 누출을 정해 놓을 수 있었던 것 같습니다."}
+{"sent_id": "D0013-s8", "condition": "ko", "text": "판매자는 다음 날 개발자가 장애로 인한 메모리 누출을 해결했다고 밝혔다."}
+{"sent_id": "D0013-s10", "condition": "ko", "text": "보고서에 따르면, 사업자는 중단으로 인해 세 가지 구성 파동을 고정해야 합니다."}
+{"sent_id": "D0013-s16", "condition": "ko", "text": "개발자는 전날 서버 오류를 해결했다고 보고했습니다."}
+{"sent_id": "D0014-s1", "condition": "ko", "text": "판매자들에 따르면, 운영자는 정지하지 않도록 2개의 캐시 오류를 수정하지 않아야 한다."}
+{"sent_id": "D0014-s6", "condition": "ko", "text": "보고서에 따르면 분석가는 3개의 메모리 누출을 수정해서"}
+{"sent_id": "D0014-s9", "condition": "ko", "text": "엔지니어는 보고서에 따르면 다음 날 서버 오류를 수정해야 합니다."}
+{"sent_id": "D0014-s10", "condition": "ko", "text": "판매자는 다음 일일 동안 엔지니어가 중단을 피하기 위해 5 개의 메모리 누출을 해결했을 가능성이 있다고 말합니다."}
+{"sent_id": "D0014-s11", "condition": "ko", "text": "판매자들에 따르면, 엔지니어는 장애를 피하기 위해 세 번의 메모리 누출을 수정하지 않을 수 있습니다."}
+{"sent_id": "D0014-s14", "condition": "ko", "text": "보고서에 따르면, 엔지니어는 2개의 서버 오류를 수정하지 않았으며,"}
+{"sent_id": "D0015-s8", "condition": "ko", "text": "판매자는 사업자가 이전에 세 가지 구성 유동 문제를 해결하지 못했다고 밝혔다."}
+{"sent_id": "D0015-s9", "condition": "ko", "text": "보고서에 따르면 분석가는 다음 날 캐시 오류가 발생하지 않도록 해야 합니다."}
+{"sent_id": "D0015-s10", "condition": "ko", "text": "운영자는 중단을 방지하기 위해 다음 날에는 2개의 캐시 오류를 수정하지 않도록 해야 합니다."}
+{"sent_id": "D0016-s4", "condition": "ko", "text": "판매자는 공학자가 정전을 피하기 위해 두 개의 서버 오류를 수정하지 않을 수 있다고 명시했다."}
+{"sent_id": "D0016-s6", "condition": "ko", "text": "판매자는 전날 개발자가 장애로 인해 두 번의 캐시 오류를 발생시키지 않았다고 밝혔다."}
+{"sent_id": "D0016-s7", "condition": "ko", "text": "판매자에게 따르면 개발자는 잠재적 장애가 발생할 수 있기 전에 두 가지 구성 유동을 수정해야 합니다."}
+{"sent_id": "D0016-s8", "condition": "ko", "text": "보고서는 정전으로 인해 사업자는 구성 유동을 수정하지 못했다고 명시하고 있습니다."}
+{"sent_id": "D0016-s12", "condition": "ko", "text": "판매자는 다음 날 분석가가가 캐시 오류를 수정하지 않도록 해야 한다고 주장합니다."}
+{"sent_id": "D0016-s13", "condition": "ko", "text": "판매자들에 따르면 개발자는 장애로 인해 5개의 메모리 누출을 수정하지 못했다."}
+{"sent_id": "D0017-s3", "condition": "ko", "text": "판매자들에 따르면 분석가는 정전으로 인해 두 개의 구성 변동을 수정했을 것이다."}
+{"sent_id": "D0017-s14", "condition": "ko", "text": "개발자는 그날 3개의 캐시 오류를 해결했습니다."}
+{"sent_id": "D0017-s16", "condition": "ko", "text": "사업자는 정전으로 인해 두 개의 구성 도로를 고정했을 수도 있습니다."}
+{"sent_id": "D0018-s3", "condition": "ko", "text": "보고서에 따르면 엔지니어는 장애로 인해 메모리 누출을 수정해야 했습니다."}
+{"sent_id": "D0018-s5", "condition": "ko", "text": "보고서에 따르면, 사업자는 중단으로 인해 세 가지 서버 오류를 수정하지 못했다."}
+{"sent_id": "D0019-s4", "condition": "ko", "text": "판매자는 운영자가 장애로 인해 캐시 오류를 수정하지 않았다고 주장합니다."}
+{"sent_id": "D0019-s10", "condition": "ko", "text": "공급업체의 말에 따르면 개발자는 정전으로 인해 서버 오류를 수정했습니다."}
+{"sent_id": "D0019-s14", "condition": "ko", "text": "개발자는 장애로 인해 서버 오류 5개를 수정했다고 보고되었습니다."}
+{"sent_id": "D0020-s2", "condition": "ko", "text": "보고서에 따르면, 사업자는 정전으로 인해 세 가지 서버 오류를 수정했다."}
+{"sent_id": "D0020-s6", "condition": "ko", "text": "보고서에 따르면 개발자는 장애로 인해 5 개의 구성 파동을 고정하지 않았을 수 있습니다."}
+{"sent_id": "D0020-s8", "condition": "ko", "text": "판매자들에 따르면, 사업자는 정전으로 인해 세 가지 구성 운항을 수정하지 못했다."}
+{"sent_id": "D0020-s10", "condition": "ko", "text": "판매자들에 따르면 개발자는 장애로 인해 구성 유동을 수정했을 수도 있습니다."}
+{"sent_id": "D0020-s13", "condition": "ko", "text": "판매자들에 따르면 개발자는 장애가 발생하기 전에 5개의 메모리 누출을 수정하지 못했다."}
+{"sent_id": "D0021-s1", "condition": "ko", "text": "보고서에 따르면 개발자는 장애로 인해 세 개의 서버 오류를 수정하지 않았습니다."}
+{"sent_id": "D0021-s6", "condition": "ko", "text": "판매자들에 따르면, 사업자는 장애로 인해 메모리 누출을 고르지 않았을 수도 있습니다."}
+{"sent_id": "D0021-s10", "condition": "ko", "text": "보고서에 따르면 엔지니어는 2개의 서버 오류를 수정하지 않았으며,"}
+{"sent_id": "D0021-s13", "condition": "ko", "text": "엔지니어는 정전 발생 전에 5개 이상의 구성 동기가 고정되어 있는지 확인해야 합니다."}
+{"sent_id": "D0021-s14", "condition": "ko", "text": "보고서에 따르면 엔지니어가 정전으로 인해 세 개의 서버 오류를 수정했습니다."}
+{"sent_id": "D0022-s5", "condition": "ko", "text": "보고서에 따르면, 엔지니어는 2개의 서버 오류를 수정하여"}
+{"sent_id": "D0022-s8", "condition": "ko", "text": "보고서에 따르면, 같은 날, 사업자는 서버 오류를 수정했습니다."}
+{"sent_id": "D0022-s10", "condition": "ko", "text": "보고서에 따르면 분석가는 정전으로 인해 5개의 구성 변동을 수정했을 수도 있습니다."}
+{"sent_id": "D0022-s14", "condition": "ko", "text": "개발자는 전날 5개의 캐시 오류를 수정했을 것입니다."}
+{"sent_id": "D0022-s16", "condition": "ko", "text": "판매자들에 따르면, 사업자는 파업을 방지하기 위해 세 가지 서버 오류를 수정했을 수 있습니다."}
+{"sent_id": "D0023-s10", "condition": "ko", "text": "판매자는 운영자가 다음 날 두 가지 서버 오류를 발생시키지 않도록 해야 한다고 명시합니다."}
+{"sent_id": "D0024-s1", "condition": "ko", "text": "엔지니어는 다음 날 세 개의 메모리 누출을 확인하고 수정해야 합니다."}
+{"sent_id": "D0024-s10", "condition": "ko", "text": "판매자에 따르면 엔지니어는 그 날 이전에 발생한 장애를 방지하기 위해 3개의 캐시 오류를 수정했을 수도 있습니다."}
+{"sent_id": "D0024-s11", "condition": "ko", "text": "판매자는 분석가가가 정전으로 인해 서버 오류 5개를 수정해야 한다고 주장합니다."}
+{"sent_id": "D0024-s13", "condition": "ko", "text": "판매자는 운영자가 장애를 방지하기 전에 세 가지 캐시 오류를 수정해야 한다고 명시합니다."}
+{"sent_id": "D0025-s2", "condition": "ko", "text": "엔지니어가 그 날 정전하지 않기 위해 서버 오류를 고쳐주지 않았을 수도 있습니다."}
+{"sent_id": "D0025-s3", "condition": "ko", "text": "보고서에 따르면 분석가들은 장애로 인해 세 개의 메모리 누출을 수정했을 수도 있습니다."}
+{"sent_id": "D0025-s5", "condition": "ko", "text": "공급업체의 말에 따르면, 사업자는 정전으로 인해 세 가지 서버 오류를 수정했습니다."}
+{"sent_id": "D0025-s10", "condition": "ko", "text": "운영자는 전날의 정전으로 인해 두 개의 서버 오류를 수정하지 않았을 수도 있습니다."}
+{"sent_id": "D0025-s11", "condition": "ko", "text": "분석가들은 그날 3개의 구성 변수를 수정하지 않았습니다."}
+{"sent_id": "D0025-s12", "condition": "ko", "text": "운영자는 정전으로 인해 2개의 메모리 누출을 수정하지 않아야 합니다."}
+{"sent_id": "D0026-s6", "condition": "ko", "text": "엔지니어가 5개의 캐시 오류를 수정하지 않아서 정전이 발생하지 않도록 해야 합니다."}
+{"sent_id": "D0026-s8", "condition": "ko", "text": "그 날 보고서에 따르면, 운영자는 5개의 메모리 누출을 수정했습니다."}
+{"sent_id": "D0026-s9", "condition": "ko", "text": "보고서에 따르면, 사업자는 세 가지 서버 오류를 해결하지 못했고 결과적으로 중단이 발생하지 못하였다."}
+{"sent_id": "D0026-s16", "condition": "ko", "text": "개발자는 이전에 세 가지 구성 유동 문제를 해결했다고 보고했습니다."}
+{"sent_id": "D0027-s5", "condition": "ko", "text": "판매자의 말에 따르면 전날엔 엔지니어가 5개의 캐시 오류를 수정했을 것입니다."}
+{"sent_id": "D0027-s9", "condition": "ko", "text": "엔지니어는 다음 날 세 번의 메모리 누출을 수정하여"}
+{"sent_id": "D0027-s15", "condition": "ko", "text": "판매자들에 따르면 분석가는 정전으로 인해 서버 오류를 수정하지 않을 수 있습니다."}
+{"sent_id": "D0028-s1", "condition": "ko", "text": "분석가들은 보고서에 따르면 세 개의 메모리 누출을 고쳐내지 못했을 겁니다."}
+{"sent_id": "D0028-s6", "condition": "ko", "text": "엔지니어는 장애로 인해 두 가지 구성 유동 문제를 해결하는 작업을 맡았습니다."}
+{"sent_id": "D0028-s7", "condition": "ko", "text": "분석가들은 공급업체의 말에 따르면,"}
+{"sent_id": "D0028-s11", "condition": "ko", "text": "분석가들은 보고서에 따르면 캐시 오류를 고쳐주지 않았을 수도 있습니다."}
+{"sent_id": "D0028-s14", "condition": "ko", "text": "개발자는 전날의 정전을 방지하기 위해 3개의 서버 오류를 수정해야 했습니다."}
+{"sent_id": "D0029-s2", "condition": "ko", "text": "운영자는 장애로 인해 세 가지 구성 변동을 고정했을 수도 있습니다."}
+{"sent_id": "D0029-s7", "condition": "ko", "text": "엔지니어는 장애로 인한 세 가지 구성 유동 문제를 해결하는 작업을 맡았습니다."}
+{"sent_id": "D0030-s1", "condition": "ko", "text": "개발자는 그 날 정전을 방지하기 위해 두 개의 서버 오류를 수정해야 합니다."}
+{"sent_id": "D0030-s4", "condition": "ko", "text": "판매자는 장애로 인해 엔지니어가 두 개의 캐시 오류를 수정하지 않았을 수 있다고 말합니다."}
+{"sent_id": "D0030-s7", "condition": "ko", "text": "판매자들에 따르면, 운영자는 장애로 인해 캐시 오류를 수정했을 것입니다."}
+{"sent_id": "D0030-s9", "condition": "ko", "text": "보고서에 따르면 개발자는 정전으로 인해 두 가지 서버 오류를 수정하지 않았습니다."}
+{"sent_id": "D0001-s1", "condition": "ar", "text": "ووفقاً للبائع، يجب على المطورين عدم إصلاح تسربات الذاكرة بسبب انقطاع."}
+{"sent_id": "D0001-s5", "condition": "ar", "text": "المهندس إصلاح 5 مخطئ التخفيض وفقا للتقرير لمنع انقطاع."}
+{"sent_id": "D0001-s8", "condition": "ar", "text": "المحلل لم يصلح خمسة تسربات في الذاكرة وفقاً للقراءة"}
+{"sent_id": "D0001-s13", "condition": "ar", "text": "وفقًا للمورد، قام المطور بتصليح ثلاثة تسربات في الذاكرة لمنع انقطاع."}
+{"sent_id": "D0002-s1", "condition": "ar", "text": "ووفقا للبائع، قد يكون المحلل قد قام بتصحيح تسرب الذاكرة قبل اليوم التالي المحدد من أجل تجنب انقطاع الطاقة."}
+{"sent_id": "D0002-s3", "condition": "ar", "text": "قال البائع إن المطور حل خطأ الخادم بسبب انقطاع."}
+{"sent_id": "D0002-s4", "condition": "ar", "text": "المحلل صعد 2 مخطئات في اليوم السابق"}
+{"sent_id": "D0002-s6", "condition": "ar", "text": "أبلغ المطور عن أنه قد يكون قد صلّح ثلاث تدفقات تشكيل بسبب انقطاع."}
+{"sent_id": "D0002-s8", "condition": "ar", "text": "لم يصلح المطور خطأ التخزين التخزين في ذلك اليوم التالي بسبب انقطاع."}
+{"sent_id": "D0002-s12", "condition": "ar", "text": "يجب أن يكون المطور قد صلاح 5 تسربات في الذاكرة في اليوم التالي."}
+{"sent_id": "D0003-s8", "condition": "ar", "text": "يجب أن يكون المطور قد أصلح اثنين من التحولات التشغيلية بسبب الانقطاع."}
+{"sent_id": "D0003-s10", "condition": "ar", "text": "يذكر البائع أن المطورين يجب ألا يواجهوا خمسة أخطاء خادم قبل وقوع انقطاع."}
+{"sent_id": "D0003-s11", "condition": "ar", "text": "قام المطور بتصحيح أخطاء الخادم 2 وفقاً للتقرير"}
+{"sent_id": "D0003-s13", "condition": "ar", "text": "ووفقا للبائع، قد لا يكون المشغل قد قام بتصليح تسرب الذاكرة لمنع انقطاع."}
+{"sent_id": "D0004-s5", "condition": "ar", "text": "ووفقاً للتقرير، لم يصلح المطور خمسة منحدرات التكوين بسبب انقطاع."}
+{"sent_id": "D0004-s11", "condition": "ar", "text": "ووفقاً للبائع، قد لا يكون المهندس قد أعيد إصلاح خطأ الخادم بسبب انقطاع."}
+{"sent_id": "D0005-s11", "condition": "ar", "text": "وفقًا للتقرير، قد لا يكون المهندس قد أصحح ثلاث أخطاء في التخزين بسبب انقطاع."}
+{"sent_id": "D0005-s13", "condition": "ar", "text": "يجب أن يكون المهندس قد إصلاح خمسة أخطاء الخادم وفقا للتقرير."}
+{"sent_id": "D0005-s14", "condition": "ar", "text": "ووفقا للبائع، يجب على المحلل أن يكون لديه خمس منحدرات تشكيل ثابتة لمنع الانقطاع."}
+{"sent_id": "D0005-s15", "condition": "ar", "text": "كان على المهندس إصلاح تسربات ذاكرة يومين"}
+{"sent_id": "D0006-s2", "condition": "ar", "text": "ووفقا للبائع، قد لا يكون المطور قد أصحح خمسة أخطاء خادم بسبب انقطاع."}
+{"sent_id": "D0006-s7", "condition": "ar", "text": "يزعم البائع أنه بسبب انقطاع، قد يكون لدى المشغل إصلاحات التخفيضات المتخفيثة."}
+{"sent_id": "D0006-s8", "condition": "ar", "text": "وفقًا للتقرير، قام المهندس بتصليح خطأ التخزين بسبب التوقف"}
+{"sent_id": "D0006-s10", "condition": "ar", "text": "وفقًا للتقرير، لا يمكن للمحلل أن يكون قد أصحح خطأ التخزين بسبب انقطاع."}
+{"sent_id": "D0006-s13", "condition": "ar", "text": "قال البائع أن المهندس حل خطأين في التخزين بسبب الانقطاع."}
+{"sent_id": "D0006-s15", "condition": "ar", "text": "وفقًا للتقرير، قد يكون المهندس قد أصحح 5 أخطاء في التخزين بسبب انقطاع."}
+{"sent_id": "D0006-s16", "condition": "ar", "text": "قد يكون المطور قد قام بتثبيت خمس تدفقات تشكيل بسبب الانقطاع."}
+{"sent_id": "D0007-s2", "condition": "ar", "text": "ويقول التقرير ان المدير يحتاج الى إصلاح 2 خطأ في التخزين الاحتياطي وفقا للبيانات السابقة."}
+{"sent_id": "D0007-s5", "condition": "ar", "text": "ووفقا للبائع، كان المشغل قد صعد مسبقا تسرب الذاكرة لمنع انقطاع."}
+{"sent_id": "D0007-s6", "condition": "ar", "text": "وفقًا للتقرير، قد يكون المهندس قد أصحح خمسة أخطاء خادم بسبب انقطاع."}
+{"sent_id": "D0007-s7", "condition": "ar", "text": "ووفقاً للبائع، فشل المشغل في إصلاح أخطاء خادمين لتجنب انقطاع."}
+{"sent_id": "D0007-s10", "condition": "ar", "text": "تم إخطار المطور بأن في اليوم التالي، بسبب انقطاع، كان عليهم إصلاح 3 أخطاء في التخزين."}
+{"sent_id": "D0008-s2", "condition": "ar", "text": "ووفقا للبائع، قد يكون المشغل قد أصحح خطأ الخادم بسبب انقطاع."}
+{"sent_id": "D0008-s7", "condition": "ar", "text": "ووفقا للبائع، يجب أن يكون المطور قد حدد التأثير التشغيلي من أجل منع وقوع الانقطاع."}
+{"sent_id": "D0008-s10", "condition": "ar", "text": "ووفقا للبائع، قد لا يكون المشغل قد قام بتصليح ثلاثة تسربات في الذاكرة بسبب انقطاع."}
+{"sent_id": "D0008-s14", "condition": "ar", "text": "ووفقاً للبائع، لم يصلح المهندس أخطاء خادمين قبل منع انقطاع."}
+{"sent_id": "D0008-s15", "condition": "ar", "text": "يقول البائع أن المطور لا ينبغي أن يكون قد إصلاح التخفيضات التخفيرية."}
+{"sent_id": "D0009-s7", "condition": "ar", "text": "قال البائع أن المهندس حل خمسة مشاكل في التشغيل لتجنب الانقطاع."}
+{"sent_id": "D0009-s12", "condition": "ar", "text": "يجب أن يكون المشغل قد إصلاح أقل من أخطاء خادمين في اليوم السابق."}
+{"sent_id": "D0010-s2", "condition": "ar", "text": "وقال البائع إن المشغل لم يكن ينبغي أن يواجه ثلاث أخطاء في الخادم سابقا."}
+{"sent_id": "D0010-s4", "condition": "ar", "text": "وفقًا للمورد، قام المشغل بتصليح 5 أخطاء في التخزين مسبقاً لتجنب انقطاع."}
+{"sent_id": "D0010-s8", "condition": "ar", "text": "يذكر البائع أن اليوم السابق، كان من المطلوب من المطور أن يعالج خطأ الخادم بسبب انقطاع."}
+{"sent_id": "D0010-s12", "condition": "ar", "text": "لا يجب أن يكون لدى المطور إثنين من التحولات التشريعية بسبب الانقطاع."}
+{"sent_id": "D0010-s13", "condition": "ar", "text": "يذكر البائع أن المطور ربما حل خطأ الخادم بسبب الانقطاع."}
+{"sent_id": "D0010-s15", "condition": "ar", "text": "قد يكون المحلل قد صياغ أقل من خمسة تغلبات التشغيل في اليوم السابق."}
+{"sent_id": "D0010-s16", "condition": "ar", "text": "ووفقاً للقراءة، يجب على المهندس التأكد من أن لا يزيد عن اثنين من التشغيلات التشغيلية يتم إصلاحها قبل وقوع أي انقطاع."}
+{"sent_id": "D0011-s1", "condition": "ar", "text": "كان من المطلوب من المهندس إصلاح خمسة أخطاء خادم في اليوم التالي."}
+{"sent_id": "D0011-s13", "condition": "ar", "text": "ويقول التقرير أن المهندس يجب أن يتجنب أن يكون هناك 2 تخطيطات في التخزين في اليوم التالي لمنع انقطاع."}
+{"sent_id": "D0011-s15", "condition": "ar", "text": "لم يصلح المحلل خمسة أخطاء في الخادم بسبب الانقطاع وفقاً للتقرير."}
+{"sent_id": "D0012-s10", "condition": "ar", "text": "ووفقاً للقراءة، قد لا يكون المشغل قد قام بتحسين ثلاثة تسربات في الذاكرة بسبب انقطاع."}
+{"sent_id": "D0012-s11", "condition": "ar", "text": "وفقًا للمورد، قد يكون المهندس قد قام بتصليح ثلاثة تسربات في الذاكرة بسبب انقطاع."}
+{"sent_id": "D0013-s1", "condition": "ar", "text": "المهندس كان على الأرجح قادر على إصلاح تسرب الذاكرة قبل أن تسبب انقطاع."}
+{"sent_id": "D0013-s8", "condition": "ar", "text": "قال البائع أنه في اليوم التالي، قام المطور بتعديل تسرب الذاكرة بسبب انقطاع."}
+{"sent_id": "D0013-s10", "condition": "ar", "text": "ووفقاً للقراءة، يجب أن يكون المشغل قد حدد ثلاث تدفقات إعدادية بسبب الانقطاع."}
+{"sent_id": "D0013-s16", "condition": "ar", "text": "أبلغ المطور أنهم حلوا خطأ الخادم في اليوم السابق."}
+{"sent_id": "D0014-s1", "condition": "ar", "text": "ووفقا للبائع، لا يجب على المشغل أن يكون قد إصلاح 2 أخطاء التخزين لتجنب انقطاع."}
+{"sent_id": "D0014-s6", "condition": "ar", "text": "وفقًا للتقرير، يجب أن يكون المحلل قد حلّ 3 تسربات في الذاكرة لتجنب انقطاع."}
+{"sent_id": "D0014-s9", "condition": "ar", "text": "المهندس مطلوب لإصلاح خطأ الخادم في اليوم التالي وفقا للتقرير."}
+{"sent_id": "D0014-s10", "condition": "ar", "text": "ويقول البائع أنه خلال اليوم العامل التالي، من المرجح أن يكون المهندس قد حل 5 تسربات في الذاكرة لتجنب انقطاع الطاقة."}
+{"sent_id": "D0014-s11", "condition": "ar", "text": "وفقًا للبائع، لا يجب أن يكون المهندس قد قام بتصليح ثلاثة تسربات في الذاكرة لتجنب انقطاع."}
+{"sent_id": "D0014-s14", "condition": "ar", "text": "ووفقاً للقراءة، لم يصلح المهندس أخطاء خادمين لتجنب انقطاع."}
+{"sent_id": "D0015-s8", "condition": "ar", "text": "وقال البائع إن المشغل فشل في حل ثلاثة مشاكل في التأثير التشغيلي في التكوين في وقت سابق."}
+{"sent_id": "D0015-s9", "condition": "ar", "text": "ووفقاً للقراءة، يجب على المحلل أن يضمن عدم وجود أي إغفال في التخزين في اليوم التالي."}
+{"sent_id": "D0015-s10", "condition": "ar", "text": "يجب على المشغل تجنب إصلاح 2 إغفال في التخزين في الأيام التالية لتجنب انقطاع."}
+{"sent_id": "D0016-s4", "condition": "ar", "text": "قال البائع إن المهندس لا يجب أن يكون قد أصحح خطأين في الخادم لتجنب الانقطاع."}
+{"sent_id": "D0016-s6", "condition": "ar", "text": "قال البائع أنه خلال اليوم السابق، لم يكن من المفترض أن يرتكب المطور إخطاءات في التخزين بسبب انقطاع."}
+{"sent_id": "D0016-s7", "condition": "ar", "text": "ووفقا للبائع، يتعين على المطور إصلاح اثنين من التأثيرات التشغيلية قبل وقوع أي انقطاع محتمل."}
+{"sent_id": "D0016-s8", "condition": "ar", "text": "ويقول التقرير أنه بسبب انقطاع، فشل المشغل في إصلاح التحركات التجهيزية."}
+{"sent_id": "D0016-s12", "condition": "ar", "text": "يزعم البائع أنه في الأيام التالية، يجب على المحلل تجنب إصلاح خطأ التخزين الآلي لتجنب انقطاع."}
+{"sent_id": "D0016-s13", "condition": "ar", "text": "ووفقا للبائع، لم يصلح المطور خمسة تسربات في الذاكرة بسبب انقطاع."}
+{"sent_id": "D0017-s3", "condition": "ar", "text": "ووفقا للبائع، يجب أن يكون المحلل قد صياغة اثنين من التأثيرات التشغيلية بسبب الانقطاع."}
+{"sent_id": "D0017-s14", "condition": "ar", "text": "المطور حل 3 أخطاء التخزين في ذلك اليوم"}
+{"sent_id": "D0017-s16", "condition": "ar", "text": "قد يكون المشغل قد قام بتثبيت اثنين من التحولات التشغيلية بسبب الانقطاع."}
+{"sent_id": "D0018-s3", "condition": "ar", "text": "كان من المطلوب من المهندس إصلاح تسرب الذاكرة بسبب انقطاع وفقا للتقرير."}
+{"sent_id": "D0018-s5", "condition": "ar", "text": "ووفقاً للتقرير، لم يصلح المشغل ثلاث أخطاء في الخادم بسبب الانقطاع."}
+{"sent_id": "D0019-s4", "condition": "ar", "text": "يزعم البائع أن المشغل لم يكن يجب أن يصلح خطأ التخزين الآلي بسبب انقطاع."}
+{"sent_id": "D0019-s10", "condition": "ar", "text": "ووفقاً للبائع، قام المطور بتصليح خطأ الخادم بسبب الانقطاع."}
+{"sent_id": "D0019-s14", "condition": "ar", "text": "تم الإبلاغ عن أن المطور قد أصحح خمسة أخطاء خادم بسبب انقطاع."}
+{"sent_id": "D0020-s2", "condition": "ar", "text": "ووفقاً للتقرير، قام المشغل بتصحيح ثلاثة أخطاء في الخادم بسبب الانقطاع."}
+{"sent_id": "D0020-s6", "condition": "ar", "text": "ووفقاً للقراءة، قد لا يكون المطور قد قام بتثبيت خمس منحدرات تشكيل بسبب انقطاع."}
+{"sent_id": "D0020-s8", "condition": "ar", "text": "ووفقا للبائع، لم يصلح المشغل ثلاث دفعات إعدادية بسبب انقطاع."}
+{"sent_id": "D0020-s10", "condition": "ar", "text": "ووفقا للبائع، قد يكون المطور قد صعد التأثير التشغيلي بسبب انقطاع."}
+{"sent_id": "D0020-s13", "condition": "ar", "text": "وفقًا للمورد، لم يصلح المطور خمسة تسربات في الذاكرة قبل انقطاع."}
+{"sent_id": "D0021-s1", "condition": "ar", "text": "ووفقاً للتقرير، لم يصلح المطور ثلاث أخطاء في الخادم بسبب انقطاع."}
+{"sent_id": "D0021-s6", "condition": "ar", "text": "ووفقا للبائع، قد لا يكون المشغل قد أعيد إصلاح تسرب الذاكرة بسبب انقطاع."}
+{"sent_id": "D0021-s10", "condition": "ar", "text": "ووفقاً للقراءة، لم يصلح المهندس أخطاء خادمين لمنع انقطاع الطاقة من حدوثها."}
+{"sent_id": "D0021-s13", "condition": "ar", "text": "يجب على المهندس التأكد من أن لا يزيد عن خمس منحدرات تشكيل يتم إصلاحها قبل وقوع انقطاع."}
+{"sent_id": "D0021-s14", "condition": "ar", "text": "وفقًا للتقرير، قام المهندس بتصحيح ثلاثة أخطاء في الخادم بسبب الانقطاع"}
+{"sent_id": "D0022-s5", "condition": "ar", "text": "ووفقاً للقراءة، فقد قام المهندس بتصحيح أخطاء خادمين لمنع انقطاع الطاقة."}
+{"sent_id": "D0022-s8", "condition": "ar", "text": "ووفقاً للتقرير، في نفس اليوم، قام المشغل بتصحيح خطأ الخادم."}
+{"sent_id": "D0022-s10", "condition": "ar", "text": "ووفقاً للقراءة، فقد قام المحلل بتحديد خمس تدفقات إعدادية بسبب الانقطاع."}
+{"sent_id": "D0022-s14", "condition": "ar", "text": "يجب أن يكون المطور قد إصلاح 5 مخطئات التخزين في اليوم السابق."}
+{"sent_id": "D0022-s16", "condition": "ar", "text": "ووفقا للبائع، قد يكون المشغل قد أصحح ثلاثة أخطاء خادم لمنع انقطاع."}
+{"sent_id": "D0023-s10", "condition": "ar", "text": "يذكر البائع أن المشغل يجب أن يتجنب وجود أخطاء خادمين في اليوم التالي."}
+{"sent_id": "D0024-s1", "condition": "ar", "text": "المهندس مطلوب لتحديد وتصحيح ثلاثة تسربات في الذاكرة في اليوم التالي."}
+{"sent_id": "D0024-s10", "condition": "ar", "text": "وفقًا للمورد، قد يكون المهندس قد أصحح ثلاث أخطاء في التخزين لمنع انقطاع التشغيل من الحدوث في وقت سابق من ذلك اليوم."}
+{"sent_id": "D0024-s11", "condition": "ar", "text": "يزعم البائع أن المحلل يحتاج إلى إصلاح خمسة أخطاء خادم بسبب انقطاع."}
+{"sent_id": "D0024-s13", "condition": "ar", "text": "يذكر البائع أن المشغل يجب أن يصلح ثلاثة أخطاء في التخزين قبل منع انقطاع."}
+{"sent_id": "D0025-s2", "condition": "ar", "text": "المهندس قد لا يكون إصلاح الخطأ الخادم لتجنب انقطاع في ذلك اليوم."}
+{"sent_id": "D0025-s3", "condition": "ar", "text": "وفقًا للتقرير، قد يكون المحلل قد حلّ ثلاثة تسربات في الذاكرة بسبب التوقف."}
+{"sent_id": "D0025-s5", "condition": "ar", "text": "ووفقاً للبائع، قام المشغل بتصحيح ثلاثة أخطاء في الخادم بسبب الانقطاع."}
+{"sent_id": "D0025-s10", "condition": "ar", "text": "قد يكون المشغل قد غاب عن إصلاح أخطاء خادمين بسبب انقطاع في اليوم السابق."}
+{"sent_id": "D0025-s11", "condition": "ar", "text": "لم يصلح المحلل ثلاث تشكيلات في ذلك اليوم"}
+{"sent_id": "D0025-s12", "condition": "ar", "text": "لا يجب أن يكون لدى المشغل إصلاح اثنين من تسربات الذاكرة بسبب التوقف."}
+{"sent_id": "D0026-s6", "condition": "ar", "text": "لا يجب أن يكون المهندس قد إصلاح 5 مخطئ التخزين لتجنب انقطاع."}
+{"sent_id": "D0026-s8", "condition": "ar", "text": "قام المشغل بتصليح خمسة تسربات في الذاكرة وفقاً لتقرير ذلك اليوم"}
+{"sent_id": "D0026-s9", "condition": "ar", "text": "ووفقاً للتقرير، فشل المشغل في حل ثلاثة أخطاء في الخادم، وبالتالي منع وقوع انقطاع."}
+{"sent_id": "D0026-s16", "condition": "ar", "text": "أبلغ المطور أنهم حلوا ثلاثة مشاكل في التشغيل التشغيلي في السابق."}
+{"sent_id": "D0027-s5", "condition": "ar", "text": "وفقًا للمورد، في اليوم السابق، يجب أن يكون المهندس قد أصحح 5 أخطاء في التخزين."}
+{"sent_id": "D0027-s9", "condition": "ar", "text": "من المتوقع أن يصلح المهندس ثلاثة تسربات في الذاكرة في اليوم التالي لتجنب انقطاع."}
+{"sent_id": "D0027-s15", "condition": "ar", "text": "ووفقا للبائع، لا يجب أن يكون المحلل قد أصحح خطأ الخادم بسبب الانقطاع."}
+{"sent_id": "D0028-s1", "condition": "ar", "text": "لا يمكن للمحلل أن يكون قد صيّر ثلاث تسربات في الذاكرة وفقاً للقراءة"}
+{"sent_id": "D0028-s6", "condition": "ar", "text": "تم تكليف المهندس بتصحيح مشاكل التجريد في التكوين بسبب انقطاع."}
+{"sent_id": "D0028-s7", "condition": "ar", "text": "يجب أن يكون المحلل قد صعد خطأ الخادم بسبب الانقطاع وفقا للمورد."}
+{"sent_id": "D0028-s11", "condition": "ar", "text": "المحلل قد لا يكون إصلاح الخلل التخفيزي وفقا للتقرير."}
+{"sent_id": "D0028-s14", "condition": "ar", "text": "كان من المطلوب من المطور إصلاح 3 أخطاء خادم لمنع انقطاع في اليوم السابق."}
+{"sent_id": "D0029-s2", "condition": "ar", "text": "قد يكون المشغل قد قام بتثبيت ثلاث تدفقات تشكيل بسبب انقطاع."}
+{"sent_id": "D0029-s7", "condition": "ar", "text": "تم تكليف المهندس بتصحيح ثلاثة مشاكل في التشغيل بسبب انقطاع."}
+{"sent_id": "D0030-s1", "condition": "ar", "text": "يجب أن يكون المطور قد أصحح خطأين في الخادم لمنع انقطاع في ذلك اليوم."}
+{"sent_id": "D0030-s4", "condition": "ar", "text": "يقول البائع أنه بسبب انقطاع، قد لا يكون المهندس قد إصلاح اثنين من أخطاء التخزين."}
+{"sent_id": "D0030-s7", "condition": "ar", "text": "وفقًا للبائع، يجب أن يكون المشغل قد أصحح خطأ التخزين بسبب الإقلاع."}
+{"sent_id": "D0030-s9", "condition": "ar", "text": "لم يصلح المطور خطأين في الخادم بسبب الانقطاع وفقاً للتقرير."}
+{"sent_id": "D0001-s1", "condition": "de", "text": "Laut dem Anbieter dürfen Entwickler keine Speicherlecks aufgrund von Ausfällen beheben."}
+{"sent_id": "D0001-s5", "condition": "de", "text": "Der Ingenieur hat 5 Cache-Fehler nach dem Bericht behoben, um einen Ausfall zu verhindern."}
+{"sent_id": "D0001-s8", "condition": "de", "text": "Der Analyst hat laut dem Bericht fünf Speicherlecks nicht behoben."}
+{"sent_id": "D0001-s13", "condition": "de", "text": "Laut dem Verkäufer hat der Entwickler drei Speicherlecks behoben, um einen Ausfall zu verhindern."}
+{"sent_id": "D0002-s1", "condition": "de", "text": "Nach Angaben des Anbieters könnte der Analyst das Speicherleck vor dem angegebenen nächsten Werktag behoben haben, um den Ausfall zu vermeiden."}
+{"sent_id": "D0002-s3", "condition": "de", "text": "Der Anbieter erklärte, dass der Entwickler den Serverfehler aufgrund eines Ausfalls behoben habe."}
+{"sent_id": "D0002-s4", "condition": "de", "text": "Der Analyst hat 2 Cache-Fehler am Vortag fixiert."}
+{"sent_id": "D0002-s6", "condition": "de", "text": "Der Entwickler berichtete, dass er aufgrund eines Ausfalls drei Konfigurationsdriften behoben haben könnte."}
+{"sent_id": "D0002-s8", "condition": "de", "text": "Der Entwickler hat den Cache-Fehler an jenem folgenden Tag wegen eines Ausfalls nicht behoben."}
+{"sent_id": "D0002-s12", "condition": "de", "text": "Der Entwickler muss am nächsten Tag 5 Speicherlecks behoben haben."}
+{"sent_id": "D0003-s8", "condition": "de", "text": "Der Entwickler muss zwei Konfigurationsdriften aufgrund des Ausfalls fixiert haben."}
+{"sent_id": "D0003-s10", "condition": "de", "text": "Der Anbieter erklärt, dass Entwickler nicht mit fünf Serverfehlern konfrontiert werden dürfen, bevor ein Ausfall auftritt."}
+{"sent_id": "D0003-s11", "condition": "de", "text": "Der Entwickler hat 2 Serverfehler nach dem Bericht behoben."}
+{"sent_id": "D0003-s13", "condition": "de", "text": "Nach Angaben des Anbieters könnte der Betreiber das Speicherleck nicht repariert haben, um einen Ausfall zu verhindern."}
+{"sent_id": "D0004-s5", "condition": "de", "text": "Nach dem Bericht hat der Entwickler aufgrund eines Ausfalls fünf Konfigurationsdriften nicht behoben."}
+{"sent_id": "D0004-s11", "condition": "de", "text": "Nach Angaben des Lieferanten kann der Ingenieur den Serverfehler aufgrund eines Ausfalls nicht behoben haben."}
+{"sent_id": "D0005-s11", "condition": "de", "text": "Laut dem Bericht hat der Ingenieur möglicherweise 3 Cache-Fehler aufgrund eines Ausfalls nicht behoben."}
+{"sent_id": "D0005-s13", "condition": "de", "text": "Der Ingenieur muss fünf Serverfehler nach dem Bericht behoben haben."}
+{"sent_id": "D0005-s14", "condition": "de", "text": "Nach Angaben des Anbieters muss ein Analyst fünf Konfigurationsdriften festgesetzt haben, um den Ausfall zu verhindern."}
+{"sent_id": "D0005-s15", "condition": "de", "text": "Der Ingenieur musste an diesem Tag zwei Speicherlecks reparieren."}
+{"sent_id": "D0006-s2", "condition": "de", "text": "Nach Angaben des Anbieters kann es sein, dass der Entwickler aufgrund eines Ausfalls fünf Serverfehler nicht behoben hat."}
+{"sent_id": "D0006-s7", "condition": "de", "text": "Der Anbieter behauptet, dass der Betreiber aufgrund eines Ausfalls möglicherweise Cache-Fehler fixiert habe."}
+{"sent_id": "D0006-s8", "condition": "de", "text": "Laut dem Bericht hat der Ingenieur den Cache-Fehler wegen des Ausfalls repariert."}
+{"sent_id": "D0006-s10", "condition": "de", "text": "Laut dem Bericht muss der Analyst den Cache-Fehler nicht wegen eines Ausfalls behoben haben."}
+{"sent_id": "D0006-s13", "condition": "de", "text": "Der Verkäufer erklärte, dass der Ingenieur zwei Cache-Fehler aufgrund des Ausfalls gelöst habe."}
+{"sent_id": "D0006-s15", "condition": "de", "text": "Laut dem Bericht hat der Ingenieur 5 Cache-Fehler aufgrund eines Ausfalls behoben."}
+{"sent_id": "D0006-s16", "condition": "de", "text": "Der Entwickler hat möglicherweise aufgrund des Ausfalls fünf Konfigurationsdriften festgesetzt."}
+{"sent_id": "D0007-s2", "condition": "de", "text": "Der Bericht besagt, dass der Betreiber nach früheren Daten 2 Cache-Fehler beheben muss."}
+{"sent_id": "D0007-s5", "condition": "de", "text": "Laut dem Verkäufer hatte der Betreiber das Speicherleck zuvor behoben, um einen Ausfall zu verhindern."}
+{"sent_id": "D0007-s6", "condition": "de", "text": "Laut dem Bericht hat der Ingenieur möglicherweise fünf Serverfehler aufgrund eines Ausfalls behoben."}
+{"sent_id": "D0007-s7", "condition": "de", "text": "Laut dem Lieferanten konnte der Betreiber zwei Serverfehler nicht beheben, um einen Ausfall zu vermeiden."}
+{"sent_id": "D0007-s10", "condition": "de", "text": "Der Entwickler wurde benachrichtigt, dass er am nächsten Tag wegen eines Ausfalls 3 Cache-Fehler fixieren musste."}
+{"sent_id": "D0008-s2", "condition": "de", "text": "Nach Angaben des Anbieters kann der Betreiber den Serverfehler aufgrund eines Ausfalls behoben haben."}
+{"sent_id": "D0008-s7", "condition": "de", "text": "Nach Angaben des Anbieters muss der Entwickler den Konfigurationsdrift festgesetzt haben, um zu verhindern, dass der Ausfall auftritt."}
+{"sent_id": "D0008-s10", "condition": "de", "text": "Nach Angaben des Anbieters kann der Betreiber aufgrund eines Ausfalls drei Speicherlecks nicht behoben haben."}
+{"sent_id": "D0008-s14", "condition": "de", "text": "Laut dem Lieferanten hat der Ingenieur zwei Serverfehler nicht behoben, bevor er einen Ausfall verhinderte."}
+{"sent_id": "D0008-s15", "condition": "de", "text": "Der Verkäufer erklärt, dass der Entwickler den Cache-Fehler nicht reparieren sollte."}
+{"sent_id": "D0009-s7", "condition": "de", "text": "Der Verkäufer erklärte, der Ingenieur habe fünf Konfigurationsdriftprobleme gelöst, um den Ausfall zu vermeiden."}
+{"sent_id": "D0009-s12", "condition": "de", "text": "Der Betreiber muss weniger als zwei Serverfehler am Vortag behoben haben."}
+{"sent_id": "D0010-s2", "condition": "de", "text": "Der Anbieter erklärte, dass der Betreiber zuvor nicht drei Serverfehler erlebt hätte."}
+{"sent_id": "D0010-s4", "condition": "de", "text": "Laut dem Lieferanten hat der Betreiber 5 Cache-Fehler im Voraus behoben, um einen Ausfall zu vermeiden."}
+{"sent_id": "D0010-s8", "condition": "de", "text": "Der Anbieter erklärt, dass der Entwickler am Vortag verpflichtet war, den Serverfehler aufgrund eines Ausfalls zu beheben."}
+{"sent_id": "D0010-s12", "condition": "de", "text": "Der Entwickler darf aufgrund des Ausfalls keine zwei Konfigurationsdriften festlegen."}
+{"sent_id": "D0010-s13", "condition": "de", "text": "Der Anbieter erklärt, dass der Entwickler den Serverfehler aufgrund des Ausfalls wahrscheinlich gelöst habe."}
+{"sent_id": "D0010-s15", "condition": "de", "text": "Der Analyst hätte am Vortag weniger als fünf Konfigurationsdriften reparieren können."}
+{"sent_id": "D0010-s16", "condition": "de", "text": "Nach dem Bericht muss der Ingenieur sicherstellen, dass vor Ausfällen nicht mehr als zwei Konfigurationsdriften fixiert werden."}
+{"sent_id": "D0011-s1", "condition": "de", "text": "Der Ingenieur musste am nächsten Tag fünf Serverfehler beheben."}
+{"sent_id": "D0011-s13", "condition": "de", "text": "Der Bericht besagt, dass der Ingenieur am nächsten Tag zwei Cache-Fehler vermeiden sollte, um einen Ausfall zu verhindern."}
+{"sent_id": "D0011-s15", "condition": "de", "text": "Der Analyst hat nach dem Bericht fünf Serverfehler aufgrund des Ausfalls nicht behoben."}
+{"sent_id": "D0012-s10", "condition": "de", "text": "Nach dem Bericht konnte der Betreiber aufgrund eines Ausfalls möglicherweise nicht drei Speicherlecks behoben haben."}
+{"sent_id": "D0012-s11", "condition": "de", "text": "Laut dem Lieferanten hat der Ingenieur möglicherweise drei Speicherlecks wegen eines Ausfalls behoben."}
+{"sent_id": "D0013-s1", "condition": "de", "text": "Der Ingenieur war wahrscheinlich in der Lage, das Speicherleck zu beheben, bevor es einen Ausfall verursachte."}
+{"sent_id": "D0013-s8", "condition": "de", "text": "Der Verkäufer erklärte, dass der Entwickler am folgenden Tag wegen eines Ausfalls das Speicherleck beseitigt habe."}
+{"sent_id": "D0013-s10", "condition": "de", "text": "Nach dem Bericht muss der Betreiber aufgrund des Ausfalls drei Konfigurationsstreifen festgesetzt haben."}
+{"sent_id": "D0013-s16", "condition": "de", "text": "Der Entwickler berichtete, dass er den Serverfehler am Vortag gelöst hatte."}
+{"sent_id": "D0014-s1", "condition": "de", "text": "Nach Angaben des Anbieters darf der Betreiber nicht 2 Cache-Fehler fixiert haben, um einen Ausfall zu verhindern."}
+{"sent_id": "D0014-s6", "condition": "de", "text": "Laut dem Bericht muss der Analyst 3 Speicherlecks behoben haben, um einen Ausfall zu vermeiden."}
+{"sent_id": "D0014-s9", "condition": "de", "text": "Der Ingenieur muss den Serverfehler am nächsten Tag nach dem Bericht beheben."}
+{"sent_id": "D0014-s10", "condition": "de", "text": "Der Verkäufer erklärt, dass der Ingenieur im nächsten Arbeitstag wahrscheinlich 5 Speicherlecks gelöst habe, um den Ausfall zu vermeiden."}
+{"sent_id": "D0014-s11", "condition": "de", "text": "Laut dem Verkäufer muss der Ingenieur nicht drei Speicherlecks repariert haben, um einen Ausfall zu vermeiden."}
+{"sent_id": "D0014-s14", "condition": "de", "text": "Laut dem Bericht hat der Ingenieur zwei Serverfehler nicht behoben, um einen Ausfall zu vermeiden."}
+{"sent_id": "D0015-s8", "condition": "de", "text": "Der Anbieter erklärte, dass der Betreiber bisher drei Konfigurationsdriftprobleme nicht gelöst habe."}
+{"sent_id": "D0015-s9", "condition": "de", "text": "Nach dem Bericht muss der Analyst sicherstellen, dass am nächsten Tag keine Cache-Fehler auftreten."}
+{"sent_id": "D0015-s10", "condition": "de", "text": "Der Betreiber sollte vermeiden, dass an den folgenden Tagen 2 Cache-Misses behoben werden, um einen Ausfall zu vermeiden."}
+{"sent_id": "D0016-s4", "condition": "de", "text": "Der Anbieter erklärte, dass ein Ingenieur nicht zwei Serverfehler behoben hätte, um den Ausfall zu vermeiden."}
+{"sent_id": "D0016-s6", "condition": "de", "text": "Der Verkäufer erklärte, dass der Entwickler während des Vortages aufgrund eines Ausfalls keine zwei Cache-Fehler gemacht hätte."}
+{"sent_id": "D0016-s7", "condition": "de", "text": "Nach Angaben des Anbieters ist der Entwickler verpflichtet, zwei Konfigurationsdriften zu beheben, bevor mögliche Ausfälle auftreten können."}
+{"sent_id": "D0016-s8", "condition": "de", "text": "Der Bericht besagt, dass der Betreiber aufgrund eines Ausfalls den Konfigurationsdrift nicht beheben konnte."}
+{"sent_id": "D0016-s12", "condition": "de", "text": "Der Verkäufer behauptet, dass der Analyst in den folgenden Tagen vermeiden sollte, den Cache-Fehler zu beheben, um einen Ausfall zu vermeiden."}
+{"sent_id": "D0016-s13", "condition": "de", "text": "Laut dem Verkäufer konnte der Entwickler wegen eines Ausfalls fünf Speicherlecks nicht beheben."}
+{"sent_id": "D0017-s3", "condition": "de", "text": "Nach Angaben des Anbieters muss der Analyst aufgrund des Ausfalls zwei Konfigurationsdriften behoben haben."}
+{"sent_id": "D0017-s14", "condition": "de", "text": "Der Entwickler hat an diesem Tag 3 Cache-Fehler gelöst."}
+{"sent_id": "D0017-s16", "condition": "de", "text": "Der Betreiber könnte aufgrund des Ausfalls zwei Konfigurationsdriften festgesetzt haben."}
+{"sent_id": "D0018-s3", "condition": "de", "text": "Der Ingenieur musste das Speicherleck aufgrund eines Ausfalls nach dem Bericht beheben."}
+{"sent_id": "D0018-s5", "condition": "de", "text": "Nach dem Bericht hat der Betreiber aufgrund des Ausfalls drei Serverfehler nicht behoben."}
+{"sent_id": "D0019-s4", "condition": "de", "text": "Der Anbieter behauptet, dass der Betreiber den Cache-Fehler aufgrund eines Ausfalls nicht reparieren sollte."}
+{"sent_id": "D0019-s10", "condition": "de", "text": "Laut dem Anbieter hat der Entwickler den Serverfehler aufgrund des Ausfalls behoben."}
+{"sent_id": "D0019-s14", "condition": "de", "text": "Der Entwickler berichtete, fünf Serverfehler aufgrund eines Ausfalls behoben zu haben."}
+{"sent_id": "D0020-s2", "condition": "de", "text": "Nach dem Bericht hat der Betreiber aufgrund des Ausfalls drei Serverfehler behoben."}
+{"sent_id": "D0020-s6", "condition": "de", "text": "Nach dem Bericht konnte der Entwickler aufgrund eines Ausfalls fünf Konfigurationsdriften nicht fixieren."}
+{"sent_id": "D0020-s8", "condition": "de", "text": "Nach Angaben des Anbieters hat der Betreiber aufgrund eines Ausfalls drei Konfigurationsdriften nicht behoben."}
+{"sent_id": "D0020-s10", "condition": "de", "text": "Nach Angaben des Anbieters kann der Entwickler die Konfigurationsdrift aufgrund eines Ausfalls behoben haben."}
+{"sent_id": "D0020-s13", "condition": "de", "text": "Laut dem Verkäufer hat der Entwickler vor einem Ausfall fünf Speicherlecks nicht behoben."}
+{"sent_id": "D0021-s1", "condition": "de", "text": "Nach dem Bericht hat der Entwickler aufgrund eines Ausfalls drei Serverfehler nicht behoben."}
+{"sent_id": "D0021-s6", "condition": "de", "text": "Nach Angaben des Anbieters könnte der Betreiber das Speicherleck aufgrund eines Ausfalls nicht behoben haben."}
+{"sent_id": "D0021-s10", "condition": "de", "text": "Laut dem Bericht hat der Ingenieur zwei Serverfehler nicht behoben, um zu verhindern, dass ein Ausfall auftritt."}
+{"sent_id": "D0021-s13", "condition": "de", "text": "Der Ingenieur muss sicherstellen, dass vor einem Ausfall nicht mehr als fünf Konfigurationsdriften fixiert werden."}
+{"sent_id": "D0021-s14", "condition": "de", "text": "Laut dem Bericht hat der Ingenieur 3 Serverfehler aufgrund des Ausfalls behoben."}
+{"sent_id": "D0022-s5", "condition": "de", "text": "Laut dem Bericht hat der Ingenieur zwei Serverfehler behoben, um zu verhindern, dass ein Ausfall auftritt."}
+{"sent_id": "D0022-s8", "condition": "de", "text": "Laut dem Bericht hat der Betreiber am selben Tag den Serverfehler behoben."}
+{"sent_id": "D0022-s10", "condition": "de", "text": "Nach dem Bericht könnte der Analyst aufgrund des Ausfalls fünf Konfigurationsdriften festgesetzt haben."}
+{"sent_id": "D0022-s14", "condition": "de", "text": "Der Entwickler muss 5 Cache-Fehler am Vortag behoben haben."}
+{"sent_id": "D0022-s16", "condition": "de", "text": "Nach Angaben des Anbieters kann der Betreiber drei Serverfehler behoben haben, um einen Ausfall zu verhindern."}
+{"sent_id": "D0023-s10", "condition": "de", "text": "Der Anbieter erklärt, dass der Betreiber am folgenden Tag zwei Serverfehler vermeiden sollte."}
+{"sent_id": "D0024-s1", "condition": "de", "text": "Der Ingenieur muss am nächsten Tag drei Speicherlecks erkennen und beheben."}
+{"sent_id": "D0024-s10", "condition": "de", "text": "Laut dem Lieferanten hat der Ingenieur 3 Cache-Fehler behoben, um zu verhindern, dass früher an diesem Tag ein Ausfall auftritt."}
+{"sent_id": "D0024-s11", "condition": "de", "text": "Der Anbieter behauptet, dass der Analyst fünf Serverfehler aufgrund eines Ausfalls beheben muss."}
+{"sent_id": "D0024-s13", "condition": "de", "text": "Der Anbieter erklärt, dass der Betreiber drei Cache-Fehler vor der Verhinderung eines Ausfalls beheben muss."}
+{"sent_id": "D0025-s2", "condition": "de", "text": "Der Ingenieur hätte den Serverfehler vielleicht nicht repariert, um einen Ausfall an diesem Tag zu vermeiden."}
+{"sent_id": "D0025-s3", "condition": "de", "text": "Laut dem Bericht hat der Analyst möglicherweise drei Speicherlecks wegen des Ausfalls behoben."}
+{"sent_id": "D0025-s5", "condition": "de", "text": "Laut dem Lieferanten hat der Betreiber aufgrund des Ausfalls drei Serverfehler behoben."}
+{"sent_id": "D0025-s10", "condition": "de", "text": "Der Betreiber hat möglicherweise aufgrund eines Ausfalls am Vortag zwei Serverfehler nicht behoben."}
+{"sent_id": "D0025-s11", "condition": "de", "text": "Der Analyst hat an diesem Tag nicht drei Konfigurationsdriften festgestellt."}
+{"sent_id": "D0025-s12", "condition": "de", "text": "Der Betreiber darf aufgrund des Ausfalls keine 2 Speicherlecks fixieren."}
+{"sent_id": "D0026-s6", "condition": "de", "text": "Der Ingenieur darf nicht 5 Cache-Fehler fixiert haben, um einen Ausfall zu vermeiden."}
+{"sent_id": "D0026-s8", "condition": "de", "text": "Der Betreiber hat fünf Speicherlecks nach dem Bericht an diesem Tag behoben."}
+{"sent_id": "D0026-s9", "condition": "de", "text": "Nach dem Bericht konnte der Betreiber drei Serverfehler nicht beheben und verhinderte somit, dass ein Ausfall auftritt."}
+{"sent_id": "D0026-s16", "condition": "de", "text": "Der Entwickler berichtete, dass sie drei Konfigurationsdrift-Probleme zuvor gelöst hätten."}
+{"sent_id": "D0027-s5", "condition": "de", "text": "Laut dem Verkäufer hat der Ingenieur am Vortag 5 Cache-Fehler behoben."}
+{"sent_id": "D0027-s9", "condition": "de", "text": "Der Ingenieur wird voraussichtlich am nächsten Tag drei Speicherlecks reparieren, um einen Ausfall zu vermeiden."}
+{"sent_id": "D0027-s15", "condition": "de", "text": "Nach Angaben des Anbieters muss der Analyst den Serverfehler aufgrund des Ausfalls nicht behoben haben."}
+{"sent_id": "D0028-s1", "condition": "de", "text": "Der Analyst muss nach dem Bericht nicht drei Speicherlecks behoben haben."}
+{"sent_id": "D0028-s6", "condition": "de", "text": "Der Ingenieur hatte die Aufgabe, zwei Konfigurationsdriftprobleme aufgrund eines Ausfalls zu beheben."}
+{"sent_id": "D0028-s7", "condition": "de", "text": "Der Analyst muss den Serverfehler aufgrund des Ausfalls nach Angaben des Anbieters behoben haben."}
+{"sent_id": "D0028-s11", "condition": "de", "text": "Der Analyst hat den Cache-Fehler nach dem Bericht vielleicht nicht behoben."}
+{"sent_id": "D0028-s14", "condition": "de", "text": "Der Entwickler musste 3 Serverfehler beheben, um einen Ausfall am Vortag zu verhindern."}
+{"sent_id": "D0029-s2", "condition": "de", "text": "Der Betreiber konnte aufgrund eines Ausfalls drei Konfigurationsdriften festlegen."}
+{"sent_id": "D0029-s7", "condition": "de", "text": "Der Ingenieur hatte die Aufgabe, drei Konfigurationsdriftprobleme aufgrund eines Ausfalls zu beheben."}
+{"sent_id": "D0030-s1", "condition": "de", "text": "Der Entwickler muss zwei Serverfehler behoben haben, um einen Ausfall an diesem Tag zu verhindern."}
+{"sent_id": "D0030-s4", "condition": "de", "text": "Der Verkäufer erklärt, dass der Ingenieur aufgrund eines Ausfalls möglicherweise zwei Cache-Fehler nicht behoben habe."}
+{"sent_id": "D0030-s7", "condition": "de", "text": "Laut dem Lieferanten muss der Betreiber die Cache-Fehler durch den Ausfall behoben haben."}
+{"sent_id": "D0030-s9", "condition": "de", "text": "Der Entwickler hat aufgrund des Ausfalls nach dem Bericht zwei Serverfehler nicht behoben."}
