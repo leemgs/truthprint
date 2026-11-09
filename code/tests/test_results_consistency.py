@@ -116,3 +116,20 @@ def test_same_text_noresample_matches_committed_run_and_paper():
     # the first-sample clean sentence rate equals the committed fidelity proxy
     fid = json.loads((RESULTS / "same_text_fidelity.json").read_text(encoding="utf-8"))
     assert abs(c["clean"]["sentence_authentication"][0] - fid["unwatermarked_first_sample"][0]) < 1e-9
+
+
+def test_edited_tamper_matches_committed_run_and_paper():
+    mod = _load_script("eval_edited_tamper")
+    res = json.loads(json.dumps(mod.evaluate(str(RESULTS / "realmt_b2"), str(RESULTS / "edited_tamper"))))
+    assert res == json.loads((RESULTS / "edited_tamper_eval.json").read_text(encoding="utf-8"))
+    tex = _paper_tex()
+    c6, f9 = res["contracts"]["core6"], res["contracts"]["full9"]
+    fa = c6["false_accept_in_contract"]
+    assert f"$0.002$ (CI $[{fa[1]:.3f},{fa[2]:.3f}]$, $n{{=}}3{{,}}000$)" in tex and f"{fa[0]:.3f}" == "0.002"
+    assert f"${c6['reads_edit_in_contract'][0]:.3f}$" in tex
+    assert f"${c6['accepted_outside_contract'][0]:.3f}$" in tex
+    assert f"${f9['false_accept_in_contract'][0]:.3f}$" in tex
+    pf = f9["per_field"]
+    assert f"${pf['modality']['accepted'][0]:.3f}$/${pf['causation']['accepted'][0]:.3f}$" in tex
+    # the abstract's 0.998 is 1 - core6 in-contract false accept
+    assert f"${1 - fa[0]:.3f}$" in tex

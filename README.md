@@ -148,20 +148,25 @@ Every number below regenerates from a fixed seed (see `paper/results/`).
   the invariant fields at **0.83–0.99** (closed categoricals — polarity, quantity,
   time, attribution — at **≥ 0.97**; the open entity/relational fields at
   **0.83–0.92**), core6 document‑level attribution is **1.000 for German/Hindi**
-  and **0.90–0.98** for the rest (Arabic weakest), and tamper rejection is
-  **≥ 0.996**.
+  and **0.90–0.98** for the rest (Arabic weakest). Re‑translating **edited
+  source text** (one field changed per sentence) through the same NLLB system,
+  core6 falsely accepts **0.002** of in‑contract edits (n = 3,000) and accepts
+  edits outside the contract by design (`paper/results/edited_tamper_eval.md`).
   (`paper/results/provenance_realmt.md`, `paper/results/stage2_multilingual.md`,
   `paper/results/realmt_b2/`)
 - **Real baseline comparison.** A **KGW** token watermark on GPT‑2 generations
   collapses under the same real NLLB translator (clean 0.96 → **0.00–0.38**
   translated), while meaning‑digest document attribution on the template corpus
-  stays at **0.90–1.00** (sentence TPR 0.62–0.89). The source texts differ, so this
+  stays at **0.90–1.00** (sentence TPR 0.62–0.90). The source texts differ, so this
   shows token‑signal removal rather than a controlled head‑to‑head. At a matched 1%
-  FPR (16 base sentences per condition), a SemStamp‑style re‑implementation survives
-  round‑trip but degrades cross‑lingually, while the typed digest survives and —
-  unlike similarity/robust hashing — rejects single‑field tampers.
+  FPR on the 800‑sentence NLLB corpus, a SemStamp‑style re‑implementation degrades
+  cross‑lingually (0.02–0.30), SimHash survives only with a paraphrase‑tuned
+  encoder, and only the typed digest also rejects single‑field tampers. On the
+  same LLM text (Qwen2.5‑0.5B), KGW and SynthID‑Text fall to 0.00–0.13 after
+  translation; Truthprint attributes 0.63–0.97 with its validation resampling but
+  only ≥ 0.17–0.63 on a single sample (`paper/results/same_text_noresample.md`).
 - **Id‑free ledger search.** With no document id, sentence‑level search is not
-  specific (a core6 sentence matches a wrong ledger entry 66–87% of the time), but
+  specific (a core6 sentence matches a wrong ledger entry 66–89% of the time), but
   the ≥50% document rule attributes translated documents at 0.90–1.00 (corpus re-translated after a generator plural fix; unchanged, see `paper/results/plural_artifact.md`) with 0/2,450
   false document attributions per condition against a 50‑document ledger
   (`paper/results/ledger_search.md`). Growing the ledger to 100,050 documents
@@ -189,7 +194,7 @@ Every number below regenerates from a fixed seed (see `paper/results/`).
   (`paper/results/neural_defense.md`, `paper/results/neural_defense_gpt4omini.md`)
 - **“Why not just store & retrieve?”** Under the *same* ledger, retrieval and a
   cheap NLI proxy reject **≤ 0.06** of single‑field tampers at matched benign
-  acceptance; only a *perfect (unrealizable)* NLI matches the typed contract’s
+  acceptance (≤ 0.20 with a real encoder); only a *perfect (unrealizable)* NLI matches the typed contract’s
   **1.000** tamper rejection, and it needs a semantic model where the typed
   digest needs none. (`paper/results/retrieval.md`)
 
