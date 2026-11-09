@@ -164,7 +164,7 @@ Every number below regenerates from a fixed seed (see `paper/results/`).
   encoder, and only the typed digest also rejects single‑field tampers. On the
   same LLM text (Qwen2.5‑0.5B), KGW and SynthID‑Text fall to 0.00–0.13 after
   translation; Truthprint attributes 0.63–0.97 with its validation resampling but
-  only ≥ 0.17–0.63 on a single sample (`paper/results/same_text_noresample.md`).
+  only 0.17–0.70 on a single sample (`paper/results/same_text_noresample.md`); by a GPT‑2 perplexity proxy the validated text is no less fluent than the unwatermarked first sample (85.1 vs 93.1; `paper/results/same_text_quality.md`).
 - **Id‑free ledger search.** With no document id, sentence‑level search is not
   specific (a core6 sentence matches a wrong ledger entry 66–89% of the time), but
   the ≥50% document rule attributes translated documents at 0.90–1.00 (corpus re-translated after a generator plural fix; unchanged, see `paper/results/plural_artifact.md`) with 0/2,450
