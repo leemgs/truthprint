@@ -151,7 +151,8 @@ Every number below regenerates from a fixed seed (see `paper/results/`).
   and **0.90–0.98** for the rest (Arabic weakest). Re‑translating **edited
   source text** (one field changed per sentence) through the same NLLB system,
   core6 falsely accepts **0.002** of in‑contract edits (n = 3,000) and accepts
-  edits outside the contract by design (`paper/results/edited_tamper_eval.md`).
+  edits outside the contract by design (`paper/results/edited_tamper_eval.md`). When the edited sentence is first reworded by a small LLM, the false accept rises to
+  **0.016** after translation (`paper/results/llm_edited_tamper_eval.md`).
   (`paper/results/provenance_realmt.md`, `paper/results/stage2_multilingual.md`,
   `paper/results/realmt_b2/`)
 - **Real baseline comparison.** A **KGW** token watermark on GPT‑2 generations

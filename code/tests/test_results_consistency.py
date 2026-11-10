@@ -141,3 +141,15 @@ def test_same_text_quality_numbers_in_paper():
     tex = _paper_tex()
     for v in ("first", "kgw", "synthid", "none"):
         assert f"${res['variants'][v]['ppl_geomean'][0]:.1f}$" in tex, v
+
+
+def test_llm_edited_tamper_matches_committed_run_and_paper():
+    mod = _load_script("eval_llm_edited_tamper")
+    src = mod.sources(RESULTS / "edited_tamper")
+    res = json.loads(json.dumps(mod.score(RESULTS / "realmt_b2", src, RESULTS / "llm_edited_tamper")))
+    assert res == json.loads((RESULTS / "llm_edited_tamper_eval.json").read_text(encoding="utf-8"))
+    tex = _paper_tex()
+    d = res["contracts"]["core6"]["in_contract"]
+    t, c = d["translated"]["accepted"], d["clean"]["accepted"]
+    assert f"${t[0]:.3f}$ $[{t[1]:.3f},{t[2]:.3f}]$" in tex
+    assert f"(${c[0]:.3f}$ in English" in tex
