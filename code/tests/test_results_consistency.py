@@ -153,3 +153,4 @@ def test_llm_edited_tamper_matches_committed_run_and_paper():
     t, c = d["translated"]["accepted"], d["clean"]["accepted"]
     assert f"${t[0]:.3f}$ $[{t[1]:.3f},{t[2]:.3f}]$" in tex
     assert f"(${c[0]:.3f}$ in English" in tex
+    assert f"${1 - t[0]:.3f}$ after LLM rewording" in tex
