@@ -134,6 +134,7 @@ python3 scripts/eval_same_text_fidelity.py ../paper/results/realmt_b2 ../paper/r
 python3 scripts/eval_same_text_noresample.py ../paper/results/realmt_b2 ../paper/results/same_text   # same-text, Truthprint on one sample (first draws stored)
 python3 scripts/eval_same_text_quality.py ../paper/results/same_text   # GPT-2 perplexity fluency proxy
 python3 scripts/eval_edited_tamper.py ../paper/results/realmt_b2 ../paper/results/edited_tamper   # edited-text tamper re-translated by NLLB
+python3 scripts/eval_llm_edited_tamper.py ../paper/results/realmt_b2 ../paper/results/edited_tamper --work ../paper/results/llm_edited_tamper --stage score   # edited facts reworded by an LLM, then translated
 python3 scripts/eval_plural_artifact.py ../paper/results/realmt_b2_legacy ../paper/results/realmt_b2   # generator plural fix: legacy vs corrected corpus
 python3 scripts/make_realmt.py /tmp/realmt_rebuild --compare ../paper/results/realmt_b2   # optional: re-translate on CPU (~30 min, 4 threads)
 python3 scripts/eval_retrieval.py --real-embedding                       # retrieval / NLI baselines
