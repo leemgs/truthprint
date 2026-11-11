@@ -31,7 +31,7 @@ make audit      # make check + page-by-page ink audit (tools/ink_audit.py)
 make refs       # every references.bib entry vs arXiv / Crossref / ACL Anthology (network)
 ```
 
-`make refs` covers 25 of the 28 entries automatically; the three web-only
+`make refs` covers 30 of the 33 entries automatically; the three web-only
 entries (EU AI Act on EUR-Lex, the SynthID-Text GitHub repository, the Google
 SynthID page) have no arXiv id, DOI or Anthology record and are checked by
 opening their URLs.
@@ -74,7 +74,7 @@ are never included.
   gutter. The appendix claim–evidence map is split into Tables 7–8 so that
   no float is taller than a page.
 - **Abstract:** a single paragraph within the template's 200-word guidance
-  (currently 195 words); paste the same text into the OpenReview abstract field.
+  (currently 199 words; `make check` fails above 200); paste the same text into the OpenReview abstract field.
 - **Mandatory sections:** *Limitations* (unnumbered) and *Ethical
   Considerations* (unnumbered) are present, after the Conclusion.
 - **Anonymity:** author is "Anonymous ACL submission"; no identifying strings
@@ -93,16 +93,22 @@ considerations, formal-analysis supporting detail, the carrier-capacity /
 minimum-length analysis of the in-text channel, the encoding/detection
 pseudocode and the IR JSON example, the worked example, and the
 claim–evidence / positioning / extended result tables. The 8-page body keeps
-the core method (typed invariant contract), the formal statements, and the
-headline real-MT evidence (Stage-2 recovery, provenance authentication,
-matched-FPR baselines, paraphrase/adaptive defense).
+the core method (typed invariant contract and the ledger-based provenance it
+authenticates), a one-paragraph summary of the in-text carrier path (its full
+construction is in the appendix), the formal statements, and the headline
+real-MT evidence (Stage-2 recovery, provenance authentication with edited-text
+tampering, matched-FPR and same-text baselines, paraphrase/adaptive defense).
 
 ## Reproducibility
 
 All Truthprint real-MT numbers reproduce in-repo with no GPU from the committed
 raw run under `paper/results/realmt_b2/` via `scripts/eval_multilingual.py`,
-`scripts/eval_provenance.py` and `scripts/eval_ledger_search.py`; other
-evaluations ship seeded, cached scripts (see `code/README.md`). The KGW baseline
+`scripts/eval_provenance.py`, `scripts/eval_ledger_search.py` and
+`scripts/eval_ledger_scale.py`; the edited-text tamper runs
+(`paper/results/edited_tamper/`, `llm_edited_tamper/`) and the same-text run
+(`paper/results/same_text/`) are committed with their scoring scripts. The NLLB
+corpus itself can be rebuilt on CPU (`scripts/make_realmt.py`, about 30 min).
+Other evaluations ship seeded, cached scripts (see the artifact README). The KGW baseline
 row comes from `handoff/Truthprint_W4_Baselines_Kaggle.ipynb` (GPU); its raw
 detector scores are not committed yet.
 
