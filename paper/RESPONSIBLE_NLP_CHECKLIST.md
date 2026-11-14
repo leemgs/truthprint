@@ -60,8 +60,8 @@ table references are to the anonymous ACL build (`acl_main.tex` / `acl_main.pdf`
 - **B6. Did you report statistics about the data?** **Yes** — 50 source
   documents × 16 sentences = 800 items; 4,800 real NLLB translations across six
   conditions (ko/hi/zh/ar/de + round-trip); an edited-text tamper corpus (800
-  edited sources, 4,800 translations) and its LLM rewording (480 sentences,
-  1,440 translations); the same-text run (30 documents, 480 sentences, three
+  edited sources, 4,800 translations) and its LLM rewording (800 sentences,
+  2,400 translations); the same-text run (50 documents, 800 sentences, three
   variants); paraphrase/adaptive corpora sizes and seeds are stated per
   experiment.
 
@@ -74,8 +74,9 @@ table references are to the anonymous ACL build (`acl_main.tex` / `acl_main.pdf`
   end-to-end latency is explicitly stated as unmeasured (Appendix, Complexity).
   No model is trained. Measured on four CPU threads: rebuilding the 4,800 NLLB
   outputs ~30 min; the edited-text tamper corpus ~22 min; the same-text run
-  ~1.5 h (55 min generation, 36 min translation); the LLM-reworded tamper run
-  ~20 min; scoring scripts minutes (appendix "Models, Data, and
+  ~1.5 h for 30 documents (55 min generation, 36 min translation) plus ~48 min
+  to extend it to 50; the LLM-reworded tamper run ~20 min for 30 documents plus
+  ~9 min to extend it to 50; scoring scripts minutes (appendix "Models, Data, and
   Licenses"). The original NLLB/KGW Kaggle GPU runs and the API neural-parser
   runs did not record wall-clock time; state that if the form asks.
 - **C2. Did you report the experimental setup and hyperparameters?** **Yes** —
