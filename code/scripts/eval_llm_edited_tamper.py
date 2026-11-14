@@ -13,7 +13,7 @@ English and translations) is verified against the tag registered for the
                    an edit to a contract field);
 * ``reads_edit`` - the re-extracted record equals the edited one.
 
-Only the first 30 documents (480 sentences) are used, matching the same-text run.
+All 50 documents (800 sentences) are used, matching the same-text run.
 Stages cache to ``--work`` (``generations.jsonl``, ``translations.jsonl``).
 
 Usage: python3 scripts/eval_llm_edited_tamper.py ../paper/results/realmt_b2 \
@@ -39,7 +39,7 @@ from truthprint.stats import wilson_ci  # noqa: E402
 
 NONCE = b"prov-nonce-01"
 SEED = 20261110
-DOCS = 30
+DOCS = 50
 CONDS = ["ko", "ar", "de"]
 
 
@@ -161,7 +161,7 @@ def score(source: Path, src: list[dict], work: Path) -> dict:
 def render(r: dict) -> str:
     f = lambda t: f"{t[0]:.3f} [{t[1]:.3f},{t[2]:.3f}]"  # noqa: E731
     L = ["# Tamper test with free LLM wording (edited fact, reworded, translated)", "",
-         f"{r['sentences']} sentences (30 documents), each with one field edited, reworded once by "
+         f"{r['sentences']} sentences ({r['sentences'] // 16} documents), each with one field edited, reworded once by "
          f"`{r['generator']}` (same prompt as the same-text run, no resampling), translated by "
          f"`{r['translator']}` into ko/ar/de. Verified against the tag of the *original* source "
          "(id-addressed). `accepted` on an in-contract edit is a false accept; `reads edit` = the "
