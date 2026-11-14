@@ -1,12 +1,12 @@
 # Same-text fact fidelity (extractor-based proxy)
 
-Proxy: Stage-2 extractor reads back the source core6 record (clean English); 480 sentences per variant; Wilson 95% CI. A mismatch may be a dropped fact or unread wording; no human judgment.
+Proxy: Stage-2 extractor reads back the source core6 record (clean English); 800 sentences per variant; Wilson 95% CI. A mismatch may be a dropped fact or unread wording; no human judgment.
 
 | Variant | core6 read back |
 |---|---|
-| Unwatermarked, first sample | 0.617 [0.572,0.659] |
-| KGW | 0.477 [0.433,0.522] |
-| SynthID-Text | 0.498 [0.453,0.542] |
-| Truthprint (validated, up to 4 draws) | 0.871 [0.838,0.898] |
+| Unwatermarked, first sample | 0.609 [0.574,0.642] |
+| KGW | 0.504 [0.469,0.538] |
+| SynthID-Text | 0.517 [0.483,0.552] |
+| Truthprint (validated, up to 4 draws) | 0.868 [0.842,0.889] |
 
-Truthprint draws per sentence: mean 1.79, histogram {'1': 296, '2': 72, '3': 29, '4': 83}; 62 sentences had no valid realization.
+Truthprint draws per sentence: mean 1.80, histogram {'1': 487, '2': 124, '3': 51, '4': 138}; 106 sentences had no valid realization.

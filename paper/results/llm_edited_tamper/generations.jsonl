@@ -478,3 +478,323 @@
 {"sent_id": "D0030-s14", "doc_id": "D0030", "text": "According to the vendor, on the previous day, the analyst did not fix three memory leaks in advance to avoid the outage."}
 {"sent_id": "D0030-s15", "doc_id": "D0030", "text": "The analyst fixed 3 server errors on the following day."}
 {"sent_id": "D0030-s16", "doc_id": "D0030", "text": "According to the report, the analyst fixed the server error due to the outage."}
+{"sent_id": "D0031-s1", "doc_id": "D0031", "text": "The developer must have fixed 5 cache misses on the following day."}
+{"sent_id": "D0031-s2", "doc_id": "D0031", "text": "The developer should not have fixed 8 config drifts due to the outage."}
+{"sent_id": "D0031-s3", "doc_id": "D0031", "text": "The vendor states that the operator might have fixed the configuration drift to avoid an outage on the previous day."}
+{"sent_id": "D0031-s4", "doc_id": "D0031", "text": "According to the report, the developer should not have fixed three server errors on the following day."}
+{"sent_id": "D0031-s5", "doc_id": "D0031", "text": "According to the report, the operator fixed three memory leaks on the previous day."}
+{"sent_id": "D0031-s6", "doc_id": "D0031", "text": "The vendor stated that the developer needed to fix five memory leaks on the following day in order to prevent an outage."}
+{"sent_id": "D0031-s7", "doc_id": "D0031", "text": "According to the vendor, they need to fix the server error before the next day to avoid the outage."}
+{"sent_id": "D0031-s8", "doc_id": "D0031", "text": "On the following day, the developer was able to fix two config drifts due to the outage."}
+{"sent_id": "D0031-s9", "doc_id": "D0031", "text": "The analyst did not fix two server errors on the previous day due to an outage."}
+{"sent_id": "D0031-s10", "doc_id": "D0031", "text": "The developer failed to fix three configuration drift issues due to an outage on the following day."}
+{"sent_id": "D0031-s11", "doc_id": "D0031", "text": "The operator may have fixed the config drift in advance to avoid an outage."}
+{"sent_id": "D0031-s12", "doc_id": "D0031", "text": "The analyst cannot have fixed three configuration drifts on the previous day."}
+{"sent_id": "D0031-s13", "doc_id": "D0031", "text": "The engineer was required to fix three cache misses to avoid an outage on that particular day."}
+{"sent_id": "D0031-s14", "doc_id": "D0031", "text": "The report states that on the following day, the operator should not have performed at least two cache misses."}
+{"sent_id": "D0031-s15", "doc_id": "D0031", "text": "According to the report, on the previous day, the analyst did not fix 3 server errors."}
+{"sent_id": "D0031-s16", "doc_id": "D0031", "text": "The developer fixed the server error on the previous day due to the outage."}
+{"sent_id": "D0032-s1", "doc_id": "D0032", "text": "According to the vendor, the engineer might not have fixed the server error due to an outage."}
+{"sent_id": "D0032-s2", "doc_id": "D0032", "text": "The developer fixed 3 cache misses on the previous day due to an outage."}
+{"sent_id": "D0032-s3", "doc_id": "D0032", "text": "According to the vendor, the analyst may have fixed 2 cache misses on the previous day."}
+{"sent_id": "D0032-s4", "doc_id": "D0032", "text": "The vendor claims that on the previous day, the operator may have fixed two memory leaks due to an outage."}
+{"sent_id": "D0032-s5", "doc_id": "D0032", "text": "The developer must have fixed 5 cache misses in order to prevent an outage from occurring on the previous day."}
+{"sent_id": "D0032-s6", "doc_id": "D0032", "text": "According to the report, the engineer must have fixed 2 cache misses to prevent an outage from occurring the previous day."}
+{"sent_id": "D0032-s7", "doc_id": "D0032", "text": "The engineer is required to avoid fixing two cache misses on subsequent days in order to prevent an outage."}
+{"sent_id": "D0032-s8", "doc_id": "D0032", "text": "According to the report, the operator fixed five server errors on the previous day."}
+{"sent_id": "D0032-s9", "doc_id": "D0032", "text": "The analyst did not fix 2 cache misses according to the report because of the outage."}
+{"sent_id": "D0032-s10", "doc_id": "D0032", "text": "The operator did not fix three server errors on the following day."}
+{"sent_id": "D0032-s11", "doc_id": "D0032", "text": "The operator should not have fixed 2 server errors on the following day to avoid an outage."}
+{"sent_id": "D0032-s12", "doc_id": "D0032", "text": "The developer was required to fix five configuration drifts due to the outage on that subsequent day."}
+{"sent_id": "D0032-s13", "doc_id": "D0032", "text": "The vendor stated that the developer should not have fixed three memory leaks the previous day."}
+{"sent_id": "D0032-s14", "doc_id": "D0032", "text": "According to the vendor, it is possible that the operator may not have fixed the configuration drift on the following day."}
+{"sent_id": "D0032-s15", "doc_id": "D0032", "text": "The analyst must have fixed five memory leaks on the following day."}
+{"sent_id": "D0032-s16", "doc_id": "D0032", "text": "The analyst was required to fix two config drifts due to an outage according to the report."}
+{"sent_id": "D0033-s1", "doc_id": "D0033", "text": "The analyst might not have fixed 2 cache misses due to an outage on the following day."}
+{"sent_id": "D0033-s2", "doc_id": "D0033", "text": "According to the report, the operator fixed the config drift to prevent outages the previous day."}
+{"sent_id": "D0033-s3", "doc_id": "D0033", "text": "According to the vendor, the engineer might not have fixed two memory leaks due to an outage."}
+{"sent_id": "D0033-s4", "doc_id": "D0033", "text": "The operator had to fix three server errors due to the outage on the previous day."}
+{"sent_id": "D0033-s5", "doc_id": "D0033", "text": "According to the report, the operator must not have fixed two server errors in order to avoid an outage."}
+{"sent_id": "D0033-s6", "doc_id": "D0033", "text": "According to the vendor, the developer is required to fix three configuration drifts within the following day to avoid the outage."}
+{"sent_id": "D0033-s7", "doc_id": "D0033", "text": "The analyst fixed five config drifts on the previous day."}
+{"sent_id": "D0033-s8", "doc_id": "D0033", "text": "The engineer might not have fixed the cache miss in order to prevent an outage."}
+{"sent_id": "D0033-s9", "doc_id": "D0033", "text": "The vendor stated that on the previous day, the engineer failed to resolve three memory leaks."}
+{"sent_id": "D0033-s10", "doc_id": "D0033", "text": "The operator may have fixed the config drift on the previous day."}
+{"sent_id": "D0033-s11", "doc_id": "D0033", "text": "The analyst must not have fixed 2 cache misses due to an outage on the following day."}
+{"sent_id": "D0033-s12", "doc_id": "D0033", "text": "The operator must not have fixed 5 config drifts on the previous day."}
+{"sent_id": "D0033-s13", "doc_id": "D0033", "text": "The engineer fixed 0 server errors on the following day."}
+{"sent_id": "D0033-s14", "doc_id": "D0033", "text": "The developer must have fixed three server errors in order to prevent an outage on the previous day."}
+{"sent_id": "D0033-s15", "doc_id": "D0033", "text": "The report stated that on the previous day, the operator failed to address the memory leak and prevented an outage."}
+{"sent_id": "D0033-s16", "doc_id": "D0033", "text": "According to the vendor, the developer fixed two cache misses to prevent an outage on the following day."}
+{"sent_id": "D0034-s1", "doc_id": "D0034", "text": "According to the vendor, the analyst fixed two config drifts to prevent the outage on the previous day."}
+{"sent_id": "D0034-s2", "doc_id": "D0034", "text": "The vendor stated that on the following day, the operator might not have fixed five memory leaks."}
+{"sent_id": "D0034-s3", "doc_id": "D0034", "text": "The developer failed to fix two cache misses on the following day."}
+{"sent_id": "D0034-s4", "doc_id": "D0034", "text": "The analyst fixed three configuration drifts due to an outage."}
+{"sent_id": "D0034-s5", "doc_id": "D0034", "text": "According to the report, the analyst must not have fixed three memory leaks due to an outage."}
+{"sent_id": "D0034-s6", "doc_id": "D0034", "text": "The analyst might have fixed five memory leaks due to an outage on the following day."}
+{"sent_id": "D0034-s7", "doc_id": "D0034", "text": "The analyst must not have fixed 2 cache misses due to the outage according to the report."}
+{"sent_id": "D0034-s8", "doc_id": "D0034", "text": "The vendor informed that on the subsequent day, the operator resolved the server issue to mitigate the downtime."}
+{"sent_id": "D0034-s9", "doc_id": "D0034", "text": "The developer may have fixed 5 memory leaks on the following day due to an outage."}
+{"sent_id": "D0034-s10", "doc_id": "D0034", "text": "The operator must not have fixed 8 config drifts due to an outage."}
+{"sent_id": "D0034-s11", "doc_id": "D0034", "text": "The developer had to fix the server error due to the outage on the following day."}
+{"sent_id": "D0034-s12", "doc_id": "D0034", "text": "The operator fixed 3 memory leaks on the following day."}
+{"sent_id": "D0034-s13", "doc_id": "D0034", "text": "According to the report, developers must fix cache misses the following day."}
+{"sent_id": "D0034-s14", "doc_id": "D0034", "text": "The analyst may have fixed 5 cache misses due to an outage on the following day."}
+{"sent_id": "D0034-s15", "doc_id": "D0034", "text": "According to the report, on the next day, the developer might not have fixed the cache miss due to an outage."}
+{"sent_id": "D0034-s16", "doc_id": "D0034", "text": "According to the vendor, the developer may have fixed the memory leak on the previous day."}
+{"sent_id": "D0035-s1", "doc_id": "D0035", "text": "According to the report, the operator must have fixed 5 server errors due to the outage on the following day."}
+{"sent_id": "D0035-s2", "doc_id": "D0035", "text": "According to the report, the analyst had to fix the cache miss due to the outage on the previous day."}
+{"sent_id": "D0035-s3", "doc_id": "D0035", "text": "On the following day, it is possible that the operator did not fix the server error."}
+{"sent_id": "D0035-s4", "doc_id": "D0035", "text": "According to the report, on the previous day, the developer must have fixed 3 cache misses."}
+{"sent_id": "D0035-s5", "doc_id": "D0035", "text": "On the following day, the engineer may have fixed 2 memory leaks due to the outage."}
+{"sent_id": "D0035-s6", "doc_id": "D0035", "text": "The analyst might have fixed three config drifts due to an outage on that subsequent day."}
+{"sent_id": "D0035-s7", "doc_id": "D0035", "text": "According to the report, on the previous day, the engineer may have fixed 2 server errors."}
+{"sent_id": "D0035-s8", "doc_id": "D0035", "text": "The vendor states that during the previous day, the analyst may have fixed two server errors in order to prevent an outage."}
+{"sent_id": "D0035-s9", "doc_id": "D0035", "text": "According to the vendor, the operator did not fix the config drift due to the outage."}
+{"sent_id": "D0035-s10", "doc_id": "D0035", "text": "The developer was notified that the server error had been resolved and thus prevented an outage the next day."}
+{"sent_id": "D0035-s11", "doc_id": "D0035", "text": "The vendor states that the operator should not fix the cache miss to avoid an outage."}
+{"sent_id": "D0035-s12", "doc_id": "D0035", "text": "According to the vendor, the operator might not have fixed two configuration drifts due to an outage."}
+{"sent_id": "D0035-s13", "doc_id": "D0035", "text": "According to the report, the analyst did not fix 2 server errors due to the outage."}
+{"sent_id": "D0035-s14", "doc_id": "D0035", "text": "The engineer did not fix the server error on the previous day in order to prevent an outage."}
+{"sent_id": "D0035-s15", "doc_id": "D0035", "text": "The engineer had to fix 3 cache misses due to the outage on the following day."}
+{"sent_id": "D0035-s16", "doc_id": "D0035", "text": "According to the vendor, the operator may not have fixed the memory leak and thus prevented an outage."}
+{"sent_id": "D0036-s1", "doc_id": "D0036", "text": "On the previous day, the operator may not have fixed three configuration drifts to prevent an outage."}
+{"sent_id": "D0036-s2", "doc_id": "D0036", "text": "The engineer fixed five server errors due to an outage on the previous day."}
+{"sent_id": "D0036-s3", "doc_id": "D0036", "text": "According to the report, on the following day, the analyst must have fixed two memory leaks."}
+{"sent_id": "D0036-s4", "doc_id": "D0036", "text": "The operator might not be able to fix two cache misses on the following day."}
+{"sent_id": "D0036-s5", "doc_id": "D0036", "text": "According to the vendor, they may have fixed three server errors on the following day."}
+{"sent_id": "D0036-s6", "doc_id": "D0036", "text": "According to the vendor, on the previous day, the developer may have fixed three cache misses to prevent an outage."}
+{"sent_id": "D0036-s7", "doc_id": "D0036", "text": "The report states that according to previous information, the engineer did not fix the memory leak."}
+{"sent_id": "D0036-s8", "doc_id": "D0036", "text": "According to the report, on the previous day, the operator fixed 3 cache misses due to an outage."}
+{"sent_id": "D0036-s9", "doc_id": "D0036", "text": "The report states that the engineer should avoid fixing two memory leaks on the following day."}
+{"sent_id": "D0036-s10", "doc_id": "D0036", "text": "The vendor states that on the following day, the developer should not have fixed the server error in order to avoid an outage."}
+{"sent_id": "D0036-s11", "doc_id": "D0036", "text": "The developer did not fix 2 memory leaks according to the report, which led to an outage on the following day."}
+{"sent_id": "D0036-s12", "doc_id": "D0036", "text": "The developer may not have fixed three cache misses to prevent an outage on that subsequent day."}
+{"sent_id": "D0036-s13", "doc_id": "D0036", "text": "The vendor stated that the developer did not fix three memory leaks before the outage due to potential issues preventing it from functioning properly."}
+{"sent_id": "D0036-s14", "doc_id": "D0036", "text": "According to the report, the developer is expected to fix three configuration drifts within the next day."}
+{"sent_id": "D0036-s15", "doc_id": "D0036", "text": "The operator did not fix 5 cache misses on the following day in order to prevent an outage."}
+{"sent_id": "D0036-s16", "doc_id": "D0036", "text": "According to the vendor, the operator failed to address the memory leak issue, leading to an outage."}
+{"sent_id": "D0037-s1", "doc_id": "D0037", "text": "The developer did not fix the memory leak on the previous day."}
+{"sent_id": "D0037-s2", "doc_id": "D0037", "text": "The vendor states that the engineer should not fix more than 8 config drifts within the following day to avoid an outage."}
+{"sent_id": "D0037-s3", "doc_id": "D0037", "text": "According to the report, on the previous day, the operator fixed 2 cache misses to prevent an outage."}
+{"sent_id": "D0037-s4", "doc_id": "D0037", "text": "The vendor informed that on the following day, the operator fixed five memory leaks to avoid an outage."}
+{"sent_id": "D0037-s5", "doc_id": "D0037", "text": "According to the report, the operator is likely to have fixed 3 cache misses due to the outage on the following day."}
+{"sent_id": "D0037-s6", "doc_id": "D0037", "text": "According to the report, on the previous day, the analyst must not have fixed three configuration drifts to prevent the outage."}
+{"sent_id": "D0037-s7", "doc_id": "D0037", "text": "The operator must not have fixed 5 memory leaks due to an outage on the following day."}
+{"sent_id": "D0037-s8", "doc_id": "D0037", "text": "The operator might have fixed 2 cache misses on the following day to prevent an outage."}
+{"sent_id": "D0037-s9", "doc_id": "D0037", "text": "The vendor claims that due to the outage, the operator needs to fix the configuration drift."}
+{"sent_id": "D0037-s10", "doc_id": "D0037", "text": "The analyst did not fix 2 server errors on the previous day due to an outage."}
+{"sent_id": "D0037-s11", "doc_id": "D0037", "text": "According to the vendor, on the previous day, the engineer did not fix 3 config drifts in order to prevent an outage."}
+{"sent_id": "D0037-s12", "doc_id": "D0037", "text": "According to the report, on the next day, the developer might not have fixed the cache miss to avoid an outage."}
+{"sent_id": "D0037-s13", "doc_id": "D0037", "text": "The engineer must have fixed 3 cache misses due to an outage on the following day."}
+{"sent_id": "D0037-s14", "doc_id": "D0037", "text": "According to the report, the developer was required to fix five memory leaks due to an outage last week."}
+{"sent_id": "D0037-s15", "doc_id": "D0037", "text": "The developer fixed two cache misses on the previous day."}
+{"sent_id": "D0037-s16", "doc_id": "D0037", "text": "The developer was required to fix 3 cache misses due to an outage reported in the report."}
+{"sent_id": "D0038-s1", "doc_id": "D0038", "text": "The analyst must have fixed two config drifts on the previous day."}
+{"sent_id": "D0038-s2", "doc_id": "D0038", "text": "According to the report, on the previous day, the operator may have fixed the cache miss."}
+{"sent_id": "D0038-s3", "doc_id": "D0038", "text": "The developer may not have fixed 5 cache misses on the previous day."}
+{"sent_id": "D0038-s4", "doc_id": "D0038", "text": "According to the vendor, on the following day, the operator did not fix 3 config drifts."}
+{"sent_id": "D0038-s5", "doc_id": "D0038", "text": "The vendor states that on the following day, the developer might not have fixed five configuration drifts."}
+{"sent_id": "D0038-s6", "doc_id": "D0038", "text": "On the following day, the analyst might not have fixed five configuration drifts to avoid an outage."}
+{"sent_id": "D0038-s7", "doc_id": "D0038", "text": "The analyst may have fixed two memory leaks due to the outage according to the vendor."}
+{"sent_id": "D0038-s8", "doc_id": "D0038", "text": "The vendor stated that on the previous day, the operator fixed two config drifts."}
+{"sent_id": "D0038-s9", "doc_id": "D0038", "text": "According to the report, the analyst did not fix the memory leak on the following day."}
+{"sent_id": "D0038-s10", "doc_id": "D0038", "text": "The developer cannot have fixed 8 cache misses on the previous day."}
+{"sent_id": "D0038-s11", "doc_id": "D0038", "text": "The operator did not fix 2 server errors on the previous day."}
+{"sent_id": "D0038-s12", "doc_id": "D0038", "text": "According to the vendor, the engineer must have fixed two config drifts in order to prevent the outage."}
+{"sent_id": "D0038-s13", "doc_id": "D0038", "text": "According to the report, on the previous day, the analyst fixed two config drifts."}
+{"sent_id": "D0038-s14", "doc_id": "D0038", "text": "The analyst was expected to fix five server errors due to the outage according to the report."}
+{"sent_id": "D0038-s15", "doc_id": "D0038", "text": "The engineer had to fix two memory leaks due to an outage on the previous day."}
+{"sent_id": "D0038-s16", "doc_id": "D0038", "text": "The report states that on the following day, the operator is required to fix two configuration drifts due to the outage."}
+{"sent_id": "D0039-s1", "doc_id": "D0039", "text": "The analyst fixed five server errors to prevent an outage on the following day."}
+{"sent_id": "D0039-s2", "doc_id": "D0039", "text": "According to the report, the analyst may have fixed 2 cache misses to prevent an outage on the previous day."}
+{"sent_id": "D0039-s3", "doc_id": "D0039", "text": "The engineer must have fixed the cache miss on the previous day."}
+{"sent_id": "D0039-s4", "doc_id": "D0039", "text": "The analyst fixed 4 server errors on the previous day."}
+{"sent_id": "D0039-s5", "doc_id": "D0039", "text": "The vendor states that during the previous day, the developer could potentially fix five configuration drift issues."}
+{"sent_id": "D0039-s6", "doc_id": "D0039", "text": "According to the vendor, the analyst might not fix the cache miss before the next day to avoid an outage."}
+{"sent_id": "D0039-s7", "doc_id": "D0039", "text": "According to the report, on the following day, the operator did not fix 2 cache misses due to the outage."}
+{"sent_id": "D0039-s8", "doc_id": "D0039", "text": "On the previous day, the analyst fixed 3 server errors to prevent an outage."}
+{"sent_id": "D0039-s9", "doc_id": "D0039", "text": "According to the vendor, on the previous day, the operator was expected to fix 3 server errors to prevent an outage."}
+{"sent_id": "D0039-s10", "doc_id": "D0039", "text": "The analyst did not fix the server error due to an outage according to the vendor."}
+{"sent_id": "D0039-s11", "doc_id": "D0039", "text": "The analyst must have fixed three server errors due to the outage."}
+{"sent_id": "D0039-s12", "doc_id": "D0039", "text": "According to the vendor, on the next working day, the developer may have fixed 2 memory leaks."}
+{"sent_id": "D0039-s13", "doc_id": "D0039", "text": "The vendor states that on the following day, the operator should not have experienced five configuration drifts in order to avoid an outage."}
+{"sent_id": "D0039-s14", "doc_id": "D0039", "text": "According to the vendor, it is possible that the analyst might not have fixed five server errors due to an outage."}
+{"sent_id": "D0039-s15", "doc_id": "D0039", "text": "According to the report, the engineer fixed the memory leak to prevent an outage from occurring on the previous day."}
+{"sent_id": "D0039-s16", "doc_id": "D0039", "text": "The analyst might not have fixed the cache miss due to an outage on the previous day."}
+{"sent_id": "D0040-s1", "doc_id": "D0040", "text": "According to the vendor, the operator may not have fixed the memory leak due to an outage."}
+{"sent_id": "D0040-s2", "doc_id": "D0040", "text": "The developer did not fix 2 cache misses according to the report and was responsible for preventing an outage."}
+{"sent_id": "D0040-s3", "doc_id": "D0040", "text": "According to the report, the developer failed to fix five memory leaks on the following day."}
+{"sent_id": "D0040-s4", "doc_id": "D0040", "text": "The operator might have fixed 2 cache misses due to an outage."}
+{"sent_id": "D0040-s5", "doc_id": "D0040", "text": "The engineer cannot have fixed 5 server errors on the following day."}
+{"sent_id": "D0040-s6", "doc_id": "D0040", "text": "According to the report, on the previous day, the analyst may not have fixed three configuration drifts in order to prevent an outage."}
+{"sent_id": "D0040-s7", "doc_id": "D0040", "text": "According to the vendor, the analyst must not have fixed five configuration drifts due to an outage."}
+{"sent_id": "D0040-s8", "doc_id": "D0040", "text": "According to the vendor, the engineer must have fixed 5 cache misses due to the outage."}
+{"sent_id": "D0040-s9", "doc_id": "D0040", "text": "According to the report, on the previous day, the engineer was required to fix three server errors due to an outage."}
+{"sent_id": "D0040-s10", "doc_id": "D0040", "text": "According to the vendor, the analyst must have fixed at least eight server errors in order to prevent an outage from occurring."}
+{"sent_id": "D0040-s11", "doc_id": "D0040", "text": "According to the vendor, on the next day, the developer fixed five cache misses to prevent an outage."}
+{"sent_id": "D0040-s12", "doc_id": "D0040", "text": "According to the report, the engineer must not have fixed the memory leak due to an outage."}
+{"sent_id": "D0040-s13", "doc_id": "D0040", "text": "The analyst reported that they fixed the memory leak due to an outage."}
+{"sent_id": "D0040-s14", "doc_id": "D0040", "text": "According to the report, the developer may have fixed the config drift to prevent an outage from occurring the previous day."}
+{"sent_id": "D0040-s15", "doc_id": "D0040", "text": "According to the vendor, the operator should not have fixed the config drift on the previous day."}
+{"sent_id": "D0040-s16", "doc_id": "D0040", "text": "The engineer must not fix 2 memory leaks according to the report on the following day."}
+{"sent_id": "D0041-s1", "doc_id": "D0041", "text": "According to the vendor, the engineer must have fixed two server errors to prevent an outage from occurring."}
+{"sent_id": "D0041-s2", "doc_id": "D0041", "text": "According to the report, on the previous day, the operator failed to fix three server errors."}
+{"sent_id": "D0041-s3", "doc_id": "D0041", "text": "The developer may have fixed three memory leaks on the previous day."}
+{"sent_id": "D0041-s4", "doc_id": "D0041", "text": "The vendor stated that on the previous day, the developer was responsible for fixing three memory leaks so as to avoid the outage."}
+{"sent_id": "D0041-s5", "doc_id": "D0041", "text": "The engineer might have fixed 2 cache misses on the following day."}
+{"sent_id": "D0041-s6", "doc_id": "D0041", "text": "According to the vendor, the operator may not have fixed the memory leak on the previous day."}
+{"sent_id": "D0041-s7", "doc_id": "D0041", "text": "The operator fixed 5 cache misses on the following day."}
+{"sent_id": "D0041-s8", "doc_id": "D0041", "text": "According to the vendor, on the following day, the operator might not have fixed five memory leaks due to an outage."}
+{"sent_id": "D0041-s9", "doc_id": "D0041", "text": "The vendor stated that on the previous day, the operator had fixed five memory leaks."}
+{"sent_id": "D0041-s10", "doc_id": "D0041", "text": "The analyst was required to fix five server errors due to the outage reported in the previous paragraph."}
+{"sent_id": "D0041-s11", "doc_id": "D0041", "text": "The developer is required to fix five memory leaks before the next working day due to an outage."}
+{"sent_id": "D0041-s12", "doc_id": "D0041", "text": "The operator did not fix 5 config drifts due to the outage."}
+{"sent_id": "D0041-s13", "doc_id": "D0041", "text": "On the previous day, it was not possible for the developer to fix two memory leaks."}
+{"sent_id": "D0041-s14", "doc_id": "D0041", "text": "The operator must not have fixed 3 cache misses due to an outage."}
+{"sent_id": "D0041-s15", "doc_id": "D0041", "text": "The vendor stated that the developer did not address the configuration drift due to an outage."}
+{"sent_id": "D0041-s16", "doc_id": "D0041", "text": "According to the vendor, the analyst must not have fixed any two server errors to avoid an outage."}
+{"sent_id": "D0042-s1", "doc_id": "D0042", "text": "The operator failed to resolve 5 configuration drift issues to avoid the outage on the previous day."}
+{"sent_id": "D0042-s2", "doc_id": "D0042", "text": "The report states that on the previous day, the operator had to fix two server errors in order to avoid an outage."}
+{"sent_id": "D0042-s3", "doc_id": "D0042", "text": "The engineer must not have fixed the config drift due to the outage."}
+{"sent_id": "D0042-s4", "doc_id": "D0042", "text": "The vendor stated that on the previous day, the analyst was required to avoid fixing two configuration drifts."}
+{"sent_id": "D0042-s5", "doc_id": "D0042", "text": "According to the report, the analyst fixed two memory leaks on the following day."}
+{"sent_id": "D0042-s6", "doc_id": "D0042", "text": "According to the report, on the next day, the developer might have fixed 5 cache misses due to an outage."}
+{"sent_id": "D0042-s7", "doc_id": "D0042", "text": "According to the report, on the previous day, the engineer must not have fixed two memory leaks due to an outage."}
+{"sent_id": "D0042-s8", "doc_id": "D0042", "text": "On the following day, the operator did not fix 2 memory leaks due to the outage."}
+{"sent_id": "D0042-s9", "doc_id": "D0042", "text": "The engineer did not fix the cache miss due to the outage according to the report."}
+{"sent_id": "D0042-s10", "doc_id": "D0042", "text": "The analyst fixed two config drifts on the following day to prevent an outage."}
+{"sent_id": "D0042-s11", "doc_id": "D0042", "text": "The engineer was required to fix the server error due to the outage on the following day."}
+{"sent_id": "D0042-s12", "doc_id": "D0042", "text": "According to the vendor, the developer did not fix two config drifts on the previous day."}
+{"sent_id": "D0042-s13", "doc_id": "D0042", "text": "The operator did not fix five memory leaks to prevent an outage on the previous day."}
+{"sent_id": "D0042-s14", "doc_id": "D0042", "text": "The operator was likely responsible for fixing 2 cache misses due to an outage."}
+{"sent_id": "D0042-s15", "doc_id": "D0042", "text": "The vendor states that the engineer had to fix the cache miss the previous day."}
+{"sent_id": "D0042-s16", "doc_id": "D0042", "text": "On the following day, it was unclear whether the engineer had fixed five server errors due to an outage."}
+{"sent_id": "D0043-s1", "doc_id": "D0043", "text": "The analyst must not have fixed 5 cache misses on the previous day."}
+{"sent_id": "D0043-s2", "doc_id": "D0043", "text": "According to the report, on the following day, the analyst failed to resolve 8 configuration drift issues to avoid the outage."}
+{"sent_id": "D0043-s3", "doc_id": "D0043", "text": "The analyst was required to fix five configuration drifts due to the outage according to the report."}
+{"sent_id": "D0043-s4", "doc_id": "D0043", "text": "The operator might not have fixed two config drifts due to an outage."}
+{"sent_id": "D0043-s5", "doc_id": "D0043", "text": "The operator failed to fix the cache miss and thus prevented an outage on the previous day."}
+{"sent_id": "D0043-s6", "doc_id": "D0043", "text": "The operator might not have fixed three server errors due to an outage."}
+{"sent_id": "D0043-s7", "doc_id": "D0043", "text": "The engineer had to fix five server errors in order to prevent an outage on the following day."}
+{"sent_id": "D0043-s8", "doc_id": "D0043", "text": "The engineer cannot have fixed three server errors in order to prevent an outage from occurring on the previous day."}
+{"sent_id": "D0043-s9", "doc_id": "D0043", "text": "According to the report, the developer fixed three config drifts to prevent outages on the previous day."}
+{"sent_id": "D0043-s10", "doc_id": "D0043", "text": "According to the report, the engineer must ensure that they do not fix three server errors before preventing an outage from occurring."}
+{"sent_id": "D0043-s11", "doc_id": "D0043", "text": "The vendor states that on the following day, the developer might not have resolved three configuration drift issues."}
+{"sent_id": "D0043-s12", "doc_id": "D0043", "text": "The engineer reported that they had fixed three memory leaks before the specified day to avoid an outage."}
+{"sent_id": "D0043-s13", "doc_id": "D0043", "text": "The developer must not have fixed two memory leaks due to an outage."}
+{"sent_id": "D0043-s14", "doc_id": "D0043", "text": "According to the report, the developer is uncertain whether they will fix all five config drifts by the next day."}
+{"sent_id": "D0043-s15", "doc_id": "D0043", "text": "The developer might have fixed 2 cache misses in order to prevent an outage from occurring on the previous day."}
+{"sent_id": "D0043-s16", "doc_id": "D0043", "text": "According to the vendor, the developer must not have fixed five configuration drifts due to an outage."}
+{"sent_id": "D0044-s1", "doc_id": "D0044", "text": "The analyst fixed five server errors according to the report."}
+{"sent_id": "D0044-s2", "doc_id": "D0044", "text": "According to the vendor, they might have fixed the config drift on the previous day."}
+{"sent_id": "D0044-s3", "doc_id": "D0044", "text": "The developer reported that on the following day, they may have fixed five cache misses to avoid an outage."}
+{"sent_id": "D0044-s4", "doc_id": "D0044", "text": "The developer might have fixed two configuration drifts on that subsequent day."}
+{"sent_id": "D0044-s5", "doc_id": "D0044", "text": "According to the report, the developer must have fixed 3 cache misses on the following day to prevent an outage."}
+{"sent_id": "D0044-s6", "doc_id": "D0044", "text": "The operator was likely to have fixed the memory leak on the previous day."}
+{"sent_id": "D0044-s7", "doc_id": "D0044", "text": "The analyst might not have fixed 2 cache misses according to the vendor."}
+{"sent_id": "D0044-s8", "doc_id": "D0044", "text": "The developer must not have fixed five memory leaks due to an outage on the following day."}
+{"sent_id": "D0044-s9", "doc_id": "D0044", "text": "According to the vendor, the analyst must have fixed 5 memory leaks to prevent an outage from occurring the previous day."}
+{"sent_id": "D0044-s10", "doc_id": "D0044", "text": "The analyst had fixed 8 server errors on the previous day."}
+{"sent_id": "D0044-s11", "doc_id": "D0044", "text": "The operator must not have fixed five memory leaks on the previous day."}
+{"sent_id": "D0044-s12", "doc_id": "D0044", "text": "According to the vendor, the operator did not fix 2 memory leaks on the following day."}
+{"sent_id": "D0044-s13", "doc_id": "D0044", "text": "According to the report, on the following day, the developer may have fixed the server error due to an outage."}
+{"sent_id": "D0044-s14", "doc_id": "D0044", "text": "According to the vendor, the developer may have fixed the config drift on the following day."}
+{"sent_id": "D0044-s15", "doc_id": "D0044", "text": "On the previous day, the engineer did not fix two config drifts."}
+{"sent_id": "D0044-s16", "doc_id": "D0044", "text": "According to the vendor, the analyst had to fix five configuration drift issues due to the outage."}
+{"sent_id": "D0045-s1", "doc_id": "D0045", "text": "The vendor claims that within the following day, the developer must fix 3 cache misses to avoid an outage."}
+{"sent_id": "D0045-s2", "doc_id": "D0045", "text": "The engineer was reported to have fixed eight config drifts on the previous day."}
+{"sent_id": "D0045-s3", "doc_id": "D0045", "text": "According to the report, on the previous day, the developer may not have fixed five cache misses in advance to avoid an outage."}
+{"sent_id": "D0045-s4", "doc_id": "D0045", "text": "According to the vendor, the developer should not fix the server error before the next working day to avoid an outage."}
+{"sent_id": "D0045-s5", "doc_id": "D0045", "text": "On the following day, the engineer did not fix 3 cache misses."}
+{"sent_id": "D0045-s6", "doc_id": "D0045", "text": "The operator might not have fixed five memory leaks due to an outage."}
+{"sent_id": "D0045-s7", "doc_id": "D0045", "text": "According to the report, the analyst did not fix 2 memory leaks due to the outage."}
+{"sent_id": "D0045-s8", "doc_id": "D0045", "text": "On the previous day, the engineer was not responsible for preventing the outage due to the server error being unfixed."}
+{"sent_id": "D0045-s9", "doc_id": "D0045", "text": "The vendor claims that on the previous day, the engineer had to fix five server errors due to an outage."}
+{"sent_id": "D0045-s10", "doc_id": "D0045", "text": "The developer fixed the server error on the previous day."}
+{"sent_id": "D0045-s11", "doc_id": "D0045", "text": "The vendor states that during the following day, the operator is required to avoid performing 5 cache misses due to an outage."}
+{"sent_id": "D0045-s12", "doc_id": "D0045", "text": "The analyst may not have fixed 2 cache misses to prevent an outage on the previous day."}
+{"sent_id": "D0045-s13", "doc_id": "D0045", "text": "According to the vendor, the engineer did not fix 2 cache misses due to an outage."}
+{"sent_id": "D0045-s14", "doc_id": "D0045", "text": "According to the vendor, the analyst may not have fixed 2 cache misses due to an outage on the following day."}
+{"sent_id": "D0045-s15", "doc_id": "D0045", "text": "According to the report, the developer is expected to fix the memory leak on the following day."}
+{"sent_id": "D0045-s16", "doc_id": "D0045", "text": "The vendor stated that the engineer should not have fixed two server errors the previous day."}
+{"sent_id": "D0046-s1", "doc_id": "D0046", "text": "The developer failed to address the config drift issue that prevented an outage from occurring on the previous day."}
+{"sent_id": "D0046-s2", "doc_id": "D0046", "text": "The engineer fixed the cache miss on the following day."}
+{"sent_id": "D0046-s3", "doc_id": "D0046", "text": "According to the vendor, the operator fixed the config drift due to an outage."}
+{"sent_id": "D0046-s4", "doc_id": "D0046", "text": "The engineer must not have fixed three memory leaks to prevent an outage from occurring."}
+{"sent_id": "D0046-s5", "doc_id": "D0046", "text": "According to the vendor, the analyst did not fix 3 config drifts on the previous day."}
+{"sent_id": "D0046-s6", "doc_id": "D0046", "text": "The analyst was required to fix the memory leak on the following day."}
+{"sent_id": "D0046-s7", "doc_id": "D0046", "text": "The vendor stated that during the previous day, the engineer was responsible for fixing two configuration drifts in order to mitigate the outage."}
+{"sent_id": "D0046-s8", "doc_id": "D0046", "text": "The engineer must not have fixed 2 cache misses due to an outage."}
+{"sent_id": "D0046-s9", "doc_id": "D0046", "text": "The analyst might have fixed 2 cache misses to avoid an outage on the previous day."}
+{"sent_id": "D0046-s10", "doc_id": "D0046", "text": "According to the report, the engineer may not have fixed three memory leaks on the following day."}
+{"sent_id": "D0046-s11", "doc_id": "D0046", "text": "According to the vendor, the engineer might not have fixed the configuration drift due to an outage."}
+{"sent_id": "D0046-s12", "doc_id": "D0046", "text": "According to the report, on the previous day, the engineer fixed five server errors."}
+{"sent_id": "D0046-s13", "doc_id": "D0046", "text": "According to the report, the engineer is required to ensure that no more than five config drifts occur within the following day."}
+{"sent_id": "D0046-s14", "doc_id": "D0046", "text": "According to the report, if the operator does not have five configurations drifting within two days, an outage will not occur."}
+{"sent_id": "D0046-s15", "doc_id": "D0046", "text": "According to the vendor, the operator must not have fixed two config drifts to prevent an outage from occurring."}
+{"sent_id": "D0046-s16", "doc_id": "D0046", "text": "The engineer fixed five server errors due to the outage."}
+{"sent_id": "D0047-s1", "doc_id": "D0047", "text": "The engineer did not fix 3 cache misses on the previous day due to an outage."}
+{"sent_id": "D0047-s2", "doc_id": "D0047", "text": "The analyst did not fix 3 cache misses due to the outage according to the report."}
+{"sent_id": "D0047-s3", "doc_id": "D0047", "text": "According to the vendor, an analyst may not have fixed two server errors that could prevent an outage on the following day."}
+{"sent_id": "D0047-s4", "doc_id": "D0047", "text": "According to the vendor, the operator did not fix five memory leaks due to the outage."}
+{"sent_id": "D0047-s5", "doc_id": "D0047", "text": "The analyst cannot have fixed 2 cache misses to avoid an outage on the previous day."}
+{"sent_id": "D0047-s6", "doc_id": "D0047", "text": "The developer might have fixed five memory leaks due to the outage on the following day."}
+{"sent_id": "D0047-s7", "doc_id": "D0047", "text": "The vendor stated that during the previous day, the analyst might have fixed the configuration drift in order to avoid the outage."}
+{"sent_id": "D0047-s8", "doc_id": "D0047", "text": "According to the report, on the following day, the operator is likely to have fixed two memory leaks."}
+{"sent_id": "D0047-s9", "doc_id": "D0047", "text": "According to the report, on the following day, the engineer was likely to have fixed the config drift to prevent an outage."}
+{"sent_id": "D0047-s10", "doc_id": "D0047", "text": "According to the vendor, the operator failed to fix the cache miss and caused an outage on the previous day."}
+{"sent_id": "D0047-s11", "doc_id": "D0047", "text": "The engineer may have fixed 3 cache misses on the following day to prevent an outage."}
+{"sent_id": "D0047-s12", "doc_id": "D0047", "text": "According to the vendor, on the previous day, the analyst may have fixed three server errors to prevent the outage."}
+{"sent_id": "D0047-s13", "doc_id": "D0047", "text": "According to the report, the engineer had to fix the configuration drift due to the outage."}
+{"sent_id": "D0047-s14", "doc_id": "D0047", "text": "According to the report, the developer may have fixed the config drift due to an outage."}
+{"sent_id": "D0047-s15", "doc_id": "D0047", "text": "According to the vendor, on the next day, the operator fixed three config drifts."}
+{"sent_id": "D0047-s16", "doc_id": "D0047", "text": "The analyst had to fix the memory leak on the previous day."}
+{"sent_id": "D0048-s1", "doc_id": "D0048", "text": "The analyst must not have fixed two server errors on the following day to prevent an outage."}
+{"sent_id": "D0048-s2", "doc_id": "D0048", "text": "The developer failed to resolve 2 cache misses on the following day."}
+{"sent_id": "D0048-s3", "doc_id": "D0048", "text": "According to the report, the operator did not fix 2 server errors on the following day."}
+{"sent_id": "D0048-s4", "doc_id": "D0048", "text": "According to the vendor, on the following day, the developer may have fixed the server error due to an outage."}
+{"sent_id": "D0048-s5", "doc_id": "D0048", "text": "The report states that if the operator does not have 5 cache misses within two days due to an outage, then they must be fixed."}
+{"sent_id": "D0048-s6", "doc_id": "D0048", "text": "The vendor stated that on the following day, the engineer might not have fixed 5 cache misses due to an outage."}
+{"sent_id": "D0048-s7", "doc_id": "D0048", "text": "According to the vendor, the operator is required to fix the memory leak immediately to avoid an outage."}
+{"sent_id": "D0048-s8", "doc_id": "D0048", "text": "According to the report, the operator must fix 3 cache misses to prevent an outage on the following day."}
+{"sent_id": "D0048-s9", "doc_id": "D0048", "text": "According to the report, on the previous day, the operator may have fixed 2 cache misses to prevent an outage."}
+{"sent_id": "D0048-s10", "doc_id": "D0048", "text": "The vendor states that the developer should not have fixed three configuration drift issues due to an outage."}
+{"sent_id": "D0048-s11", "doc_id": "D0048", "text": "According to the report, on the previous day, the operator failed to repair the cache miss."}
+{"sent_id": "D0048-s12", "doc_id": "D0048", "text": "The developer resolved five configuration drift issues that occurred on the following day."}
+{"sent_id": "D0048-s13", "doc_id": "D0048", "text": "According to the report, on the previous day, the engineer was unable to fix two config drifts due to an outage."}
+{"sent_id": "D0048-s14", "doc_id": "D0048", "text": "According to the vendor, on the previous day, the developer did not fix five memory leaks."}
+{"sent_id": "D0048-s15", "doc_id": "D0048", "text": "The analyst had to fix three server errors due to the outage on the previous day."}
+{"sent_id": "D0048-s16", "doc_id": "D0048", "text": "According to the report, the analyst must not have fixed two config drifts due to an outage."}
+{"sent_id": "D0049-s1", "doc_id": "D0049", "text": "According to the vendor, they may have fixed two server errors the previous day."}
+{"sent_id": "D0049-s2", "doc_id": "D0049", "text": "The vendor stated that on the previous day, the operator did not fix three server errors."}
+{"sent_id": "D0049-s3", "doc_id": "D0049", "text": "According to the vendor, the operator may not have fixed 2 cache misses due to an outage."}
+{"sent_id": "D0049-s4", "doc_id": "D0049", "text": "According to the vendor, the engineer must not have fixed 2 cache misses due to an outage."}
+{"sent_id": "D0049-s5", "doc_id": "D0049", "text": "According to the report, on the previous day, the operator did not fix two server errors."}
+{"sent_id": "D0049-s6", "doc_id": "D0049", "text": "The operator may have fixed the server error to prevent an outage on the previous day."}
+{"sent_id": "D0049-s7", "doc_id": "D0049", "text": "According to the report, on the following day, the analyst fixed two memory leaks to prevent an outage."}
+{"sent_id": "D0049-s8", "doc_id": "D0049", "text": "The developer must have fixed 3 cache misses in order to prevent an outage on the previous day."}
+{"sent_id": "D0049-s9", "doc_id": "D0049", "text": "The operator had to fix two server errors in order to prevent an outage from occurring on the previous day."}
+{"sent_id": "D0049-s10", "doc_id": "D0049", "text": "The analyst fixed five cache misses on the previous day."}
+{"sent_id": "D0049-s11", "doc_id": "D0049", "text": "According to the report, on the following day, the analyst might not have fixed 2 cache misses."}
+{"sent_id": "D0049-s12", "doc_id": "D0049", "text": "According to the report, the developer must have fixed 2 cache misses on the previous day."}
+{"sent_id": "D0049-s13", "doc_id": "D0049", "text": "The engineer had not fixed three configuration drifts to avoid an outage on the previous day."}
+{"sent_id": "D0049-s14", "doc_id": "D0049", "text": "On the previous day, the operator might not have fixed 2 memory leaks."}
+{"sent_id": "D0049-s15", "doc_id": "D0049", "text": "The analyst did not fix the memory leak because of the outage according to the report."}
+{"sent_id": "D0049-s16", "doc_id": "D0049", "text": "The developer was required to fix five memory leaks on the previous day according to the report."}
+{"sent_id": "D0050-s1", "doc_id": "D0050", "text": "The vendor states that during the previous day, the engineer did not fix five cache misses."}
+{"sent_id": "D0050-s2", "doc_id": "D0050", "text": "The developer might not have fixed three server errors on the following day."}
+{"sent_id": "D0050-s3", "doc_id": "D0050", "text": "According to the vendor, the engineer did not fix the server error before the previous day, which prevented the outage."}
+{"sent_id": "D0050-s4", "doc_id": "D0050", "text": "According to the report, the developer is required to fix 3 memory leaks within the next day due to the outage."}
+{"sent_id": "D0050-s5", "doc_id": "D0050", "text": "The operator must not have fixed three memory leaks due to the outage."}
+{"sent_id": "D0050-s6", "doc_id": "D0050", "text": "According to the report, the analyst must have fixed the server error."}
+{"sent_id": "D0050-s7", "doc_id": "D0050", "text": "According to the vendor, an analyst fixed two config drifts due to the outage."}
+{"sent_id": "D0050-s8", "doc_id": "D0050", "text": "The developer must not have fixed two memory leaks due to an outage according to the report."}
+{"sent_id": "D0050-s9", "doc_id": "D0050", "text": "According to the vendor, they expect that the operator will fix five memory leaks within the next day."}
+{"sent_id": "D0050-s10", "doc_id": "D0050", "text": "On the following day, the developer may have fixed 5 memory leaks to prevent the outage."}
+{"sent_id": "D0050-s11", "doc_id": "D0050", "text": "According to the vendor, the operator may have fixed 2 server errors due to the outage."}
+{"sent_id": "D0050-s12", "doc_id": "D0050", "text": "The engineer was unable to fix two configuration drifts due to an outage."}
+{"sent_id": "D0050-s13", "doc_id": "D0050", "text": "The operator fixed the cache miss on the following day to prevent an outage."}
+{"sent_id": "D0050-s14", "doc_id": "D0050", "text": "The developer did not fix 5 memory leaks on the previous day."}
+{"sent_id": "D0050-s15", "doc_id": "D0050", "text": "The analyst might not have fixed two configuration drifts due to an outage."}
+{"sent_id": "D0050-s16", "doc_id": "D0050", "text": "According to the vendor, the analyst fixed three memory leaks to prevent an outage on the following day."}

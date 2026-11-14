@@ -152,7 +152,7 @@ Every number below regenerates from a fixed seed (see `paper/results/`).
   source text** (one field changed per sentence) through the same NLLB system,
   core6 falsely accepts **0.002** of in‑contract edits (n = 3,000) and accepts
   edits outside the contract by design (`paper/results/edited_tamper_eval.md`). When the edited sentence is first reworded by a small LLM, the false accept rises to
-  **0.016** after translation (`paper/results/llm_edited_tamper_eval.md`).
+  **0.011** after translation (`paper/results/llm_edited_tamper_eval.md`).
   (`paper/results/provenance_realmt.md`, `paper/results/stage2_multilingual.md`,
   `paper/results/realmt_b2/`)
 - **Real baseline comparison.** A **KGW** token watermark on GPT‑2 generations
@@ -163,9 +163,9 @@ Every number below regenerates from a fixed seed (see `paper/results/`).
   FPR on the 800‑sentence NLLB corpus, a SemStamp‑style re‑implementation degrades
   cross‑lingually (0.02–0.30), SimHash survives only with a paraphrase‑tuned
   encoder, and only the typed digest also rejects single‑field tampers. On the
-  same LLM text (Qwen2.5‑0.5B), KGW and SynthID‑Text fall to 0.00–0.13 after
-  translation; Truthprint attributes 0.63–0.97 with its validation resampling but
-  only 0.17–0.70 on a single sample (`paper/results/same_text_noresample.md`); by a GPT‑2 perplexity proxy the validated text is no less fluent than the unwatermarked first sample (85.1 vs 93.1; `paper/results/same_text_quality.md`).
+  same LLM text (Qwen2.5‑0.5B), KGW and SynthID‑Text fall to 0.00–0.14 after
+  translation; Truthprint attributes 0.58–0.96 with its validation resampling but
+  only 0.16–0.66 on a single sample (50 documents) (`paper/results/same_text_noresample.md`); by a GPT‑2 perplexity proxy the validated text is no less fluent than the unwatermarked first sample (87.3 vs 95.6; `paper/results/same_text_quality.md`).
 - **Id‑free ledger search.** With no document id, sentence‑level search is not
   specific (a core6 sentence matches a wrong ledger entry 66–89% of the time), but
   the ≥50% document rule attributes translated documents at 0.90–1.00 (corpus re-translated after a generator plural fix; unchanged, see `paper/results/plural_artifact.md`) with 0/2,450
